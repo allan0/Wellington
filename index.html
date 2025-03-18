@@ -19,9 +19,11 @@
             --primary-color: #d4af37; /* Gold for buttons */
             --secondary-color: #6c757d;
             --text-color: #212529;
-            --bg-color: #e6f0fa; /* Very light blue background */
+            --bg-color: #cce5ff; /* Recognizable soft blue for body */
             --accent-color: #ffffff;
             --shadow: 0 8px 24px rgba(0,0,0,0.1);
+            --banner-blue-start: #0056b3; /* Original blue for banner */
+            --banner-blue-end: #007bff;
         }
 
         body {
@@ -30,6 +32,10 @@
             background-color: var(--bg-color);
             font-size: 1.1rem;
             line-height: 1.7;
+            /* Optional subtle texture */
+            background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
+                              linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
+            background-size: 20px 20px;
         }
 
         .navbar-custom {
@@ -49,7 +55,7 @@
 
         .banner {
             position: relative;
-            background: linear-gradient(135deg, rgba(212,175,55,0.8), rgba(255,215,0,0.8)), url('./wellington.svg') no-repeat center center;
+            background: linear-gradient(135deg, var(--banner-blue-start), var(--banner-blue-end)), url('./wellington.svg') no-repeat center center;
             background-size: contain;
             color: #ffffff;
             padding: 6rem 2rem;
