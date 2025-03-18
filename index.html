@@ -190,6 +190,7 @@
             height: 50px;
             z-index: 1100; /* Above bottom-nav (z-index 1000) */
             animation: breathe 2s infinite ease-in-out;
+            cursor: pointer; /* Indicate it's clickable */
         }
 
         @keyframes breathe {
@@ -201,27 +202,6 @@
             }
         }
 
-        /* Chat Bubble */
-        .chat-bubble {
-            position: fixed;
-            bottom: 120px; /* Above mascot */
-            right: 20px;
-            background-color: var(--primary-color);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            z-index: 1100;
-            font-size: 0.9rem;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-
-        .chat-bubble:hover {
-            background-color: #b8860b;
-            transform: scale(1.05);
-        }
-
         /* Enhanced Mascot Speaking Animation */
         .mascot.speaking {
             animation: speak 0.5s infinite alternate;
@@ -230,6 +210,68 @@
         @keyframes speak {
             0% { transform: scale(1) rotate(0deg); }
             100% { transform: scale(1.1) rotate(2deg); }
+        }
+
+        /* Chat Window */
+        .chat-window {
+            display: none;
+            position: fixed;
+            bottom: 120px;
+            right: 20px;
+            width: 300px;
+            background-color: var(--accent-color);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            z-index: 1200;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-window.active {
+            display: block;
+        }
+
+        .chat-header {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .chat-description {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input textarea {
+            flex-grow: 1;
+            resize: none;
+            height: 40px;
+            border-radius: 10px;
+            padding: 0.5rem;
+            border: 1px solid var(--secondary-color);
+        }
+
+        .chat-input button {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .chat-input button:hover {
+            background-color: #b8860b;
         }
 
         a:focus, button:focus {
@@ -260,8 +302,10 @@
             .mascot {
                 bottom: 70px; /* Adjusted for Telegram mini app bottom-nav */
             }
-            .chat-bubble {
-                bottom: 130px; /* Adjusted for mobile */
+            .chat-window {
+                bottom: 80px;
+                width: 90%;
+                right: 5%;
             }
         }
     </style>
@@ -358,13 +402,24 @@
         </div>
     </nav>
 
-    <!-- Chat Bubble and Mascot -->
-    <div class="chat-bubble" onclick="startChat()">Talk to Me</div>
-    <img src="./mascotwellington.png" alt="Wellington Mascot" class="mascot">
+    <!-- Chat Window -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">Welcome to Wellington!</div>
+        <div class="chat-description">
+            I'm your friendly campus assistant here to help you explore courses, admissions, and more!
+        </div>
+        <div class="chat-input">
+            <textarea placeholder="Type a message..."></textarea>
+            <button onclick="sendTextMessage()" aria-label="Send text message"><i class="fas fa-paper-plane"></i></button>
+            <button onclick="startVoiceRecording()" aria-label="Record voice message"><i class="fas fa-microphone"></i></button>
+        </div>
+    </div>
+
+    <!-- Mascot -->
+    <img src="./mascotwellington.png" alt="Wellington Mascot" class="mascot" onclick="toggleChat()">
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
     <script>
         // Subscription form handler
         document.querySelector('.subscription-form form').addEventListener('submit', function(e) {
@@ -373,24 +428,36 @@
             this.reset();
         });
 
-        // Chat bubble interaction
-        function startChat() {
-            alert("Send a voice message to @wellingtonedu_bot on Telegram!");
+        // Toggle chat window
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
             const mascot = document.querySelector('.mascot');
-            mascot.classList.add('speaking');
-            setTimeout(() => mascot.classList.remove('speaking'), 2000); // Stop after 2s
+            chatWindow.classList.toggle('active');
+            if (chatWindow.classList.contains('active')) {
+                mascot.classList.add('speaking');
+                setTimeout(() => mascot.classList.remove('speaking'), 2000); // Welcome animation
+            }
         }
 
-        // Handle bot response animation
-        function handleBotResponse() {
-            const mascot = document.querySelector('.mascot');
-            mascot.classList.add('speaking');
-            setTimeout(() => mascot.classList.remove('speaking'), 2000);
+        // Send text message (placeholder)
+        function sendTextMessage() {
+            const textarea = document.querySelector('.chat-input textarea');
+            const message = textarea.value.trim();
+            if (message) {
+                alert(`Message sent: ${message}`);
+                textarea.value = ''; // Clear input
+                // Here you could integrate with @wellingtonedu_bot via an API
+            }
         }
 
-        // Socket.IO connection (replace with your server URL)
-        const socket = io('http://your-server-ip:5000');
-        socket.on('trigger_animation', () => handleBotResponse());
+        // Start voice recording (placeholder)
+        function startVoiceRecording() {
+            const mascot = document.querySelector('.mascot');
+            mascot.classList.add('speaking');
+            alert('Voice recording not fully implemented in this demo. Send a voice message to @wellingtonedu_bot on Telegram!');
+            setTimeout(() => mascot.classList.remove('speaking'), 2000); // Simulate recording
+            // For real voice recording, use Web Audio API or MediaRecorder
+        }
     </script>
 </body>
 </html>
