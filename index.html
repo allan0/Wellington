@@ -13,26 +13,29 @@
     <meta property="og:url" content="https://wellingtoncampus.co">
     <meta property="og:image" content="https://wellingtoncampus.co/og-image.jpg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --primary-color: #0056b3;
             --secondary-color: #6c757d;
             --text-color: #212529;
-            --bg-color: #ffffff;
-            --accent-color: #f8f9fa;
+            --bg-color: #f5f7fa;
+            --accent-color: #ffffff;
+            --shadow: 0 8px 24px rgba(0,0,0,0.1);
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Roboto', sans-serif;
             color: var(--text-color);
             background-color: var(--bg-color);
-            font-size: 1rem;
-            line-height: 1.6;
+            font-size: 1.1rem;
+            line-height: 1.7;
         }
 
         .navbar-custom {
-            background-color: var(--bg-color);
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+            background-color: var(--accent-color);
+            box-shadow: var(--shadow);
+            padding: 1rem 0;
         }
 
         .navbar-brand, .nav-link {
@@ -40,70 +43,60 @@
             transition: color 0.3s ease;
         }
 
-        .nav-link:hover {
+        .nav-link:hover, .nav-link.active {
             color: var(--primary-color) !important;
         }
 
         .banner {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), #007bff);
             color: #ffffff;
             padding: 6rem 2rem;
             text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: var(--shadow);
         }
 
-        .highlight-section, .about-section, .contact-section {
+        .highlight-section {
             padding: 4rem 1rem;
         }
 
         .highlight-card {
-            padding: 2rem;
+            padding: 2.5rem;
             text-align: center;
             background-color: var(--accent-color);
-            border-radius: 8px;
+            border-radius: 15px;
             transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: var(--shadow);
         }
 
         .highlight-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
 
-        .subscription-form, .contact-form, .contact-info {
+        .subscription-form {
             background-color: var(--accent-color);
-            padding: 2.5rem;
-            border-radius: 8px;
+            padding: 3rem;
+            border-radius: 15px;
             margin: 2rem 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow);
         }
 
-        .btn-primary {
+        .btn-custom {
             background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            transition: background-color 0.3s, transform 0.3s;
+            color: #fff;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,86,179,0.3);
         }
 
-        .btn-primary:hover {
+        .btn-custom:hover {
             background-color: #004494;
-            border-color: #004494;
-            transform: translateY(-2px);
-        }
-
-        .map-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            margin: 2rem 0;
-            border-radius: 8px;
-        }
-
-        .map-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,86,179,0.4);
+            color: #fff;
         }
 
         .bottom-nav {
@@ -111,62 +104,72 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            background-color: var(--bg-color);
-            border-top: 1px solid #dee2e6;
+            background-color: var(--accent-color);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 0.5rem 0;
             z-index: 1000;
         }
 
-        .game-section, .leaderboard {
-            display: none;
-            padding: 2rem;
+        .bottom-nav .btn {
+            color: var(--secondary-color);
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bottom-nav .btn:hover, .bottom-nav .btn.active {
+            color: var(--primary-color);
+        }
+
+        .bottom-nav i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
         }
 
         a:focus, button:focus {
-            outline: 3px solid #0056b3;
+            outline: 3px solid var(--primary-color);
             outline-offset: 2px;
         }
 
         @media (max-width: 576px) {
             .navbar-custom { display: none; }
             .bottom-nav { display: flex; }
-            .game-section, .leaderboard { display: block; }
-            .banner, .contact-section, .about-section { padding: 3rem 1rem; }
-            .highlight-card { margin-bottom: 1.5rem; }
-            h1 { font-size: 2.25rem; }
-            .btn { padding: 0.6rem 1.2rem; }
-        }
-
-        @media (min-width: 577px) {
-            .bottom-nav { display: none !important; }
+            .banner { padding: 3rem 1rem; }
+            .highlight-section { padding: 2rem 1rem; }
+            h1 { font-size: 2rem; }
+            .btn-custom { padding: 0.6rem 1.5rem; }
         }
     </style>
 </head>
 <body>
+    <!-- Desktop Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom" aria-label="Main navigation">
         <div class="container">
-            <a class="navbar-brand" href="#">Wellington Campus</a>
+            <a class="navbar-brand" href="index.html">Wellington Campus</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Courses</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#bachelors">Bachelors</a></li>
-                            <li><a class="dropdown-item" href="#masters">Masters</a></li>
+                            <li><a class="dropdown-item" href="bachelors.html">Bachelors</a></li>
+                            <li><a class="dropdown-item" href="masters.html">Masters</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="#admissions">Admissions</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="admissions.html">Admissions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#about">About</a></li>
-                            <li><a class="dropdown-item" href="#events">Campus Events & Conferences</a></li>
-                            <li><a class="dropdown-item" href="#request">Request Info</a></li>
-                            <li><a class="dropdown-item" href="#blog">Blog</a></li>
+                            <li><a class="dropdown-item" href="about.html">About</a></li>
+                            <li><a class="dropdown-item" href="events.html">Campus Events</a></li>
+                            <li><a class="dropdown-item" href="request.html">Request Info</a></li>
+                            <li><a class="dropdown-item" href="blog.html">Blog</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -174,120 +177,65 @@
         </div>
     </nav>
 
+    <!-- Home Page Content -->
     <div class="container" id="home">
         <div class="banner">
-            <h1 class="display-4 fw-bold">Discover, Learn, and Thrive with Wellington Campus</h1>
-            <p class="lead">Spring 2025 Applications are Now Open</p>
-            <a href="#admissions" class="btn btn-light btn-lg mt-3">Admissions</a>
+            <h1 class="display-4 fw-bold">Discover, Learn, and Thrive</h1>
+            <p class="lead">Spring 2025 Applications are Now Open at Wellington Campus</p>
+            <a href="admissions.html" class="btn btn-custom mt-3">Apply Now</a>
         </div>
         <section class="highlight-section">
             <div class="row g-4">
-                <div class="col-md-4"><div class="highlight-card"><h3>Innovative Courses</h3><p>Explore a wide range of innovative and essential courses.</p></div></div>
-                <div class="col-md-4"><div class="highlight-card"><h3>Top Instructors</h3><p>Learn from the best experts and professors in the subjects.</p></div></div>
-                <div class="col-md-4"><div class="highlight-card"><h3>Online Education</h3><p>Allowing you to learn and experience anywhere, anytime.</p></div></div>
+                <div class="col-md-4">
+                    <div class="highlight-card">
+                        <h3>Innovative Courses</h3>
+                        <p>Explore cutting-edge programs in technology, design, and business tailored for the modern world.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="highlight-card">
+                        <h3>Top Instructors</h3>
+                        <p>Learn from industry leaders and renowned academics with decades of expertise.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="highlight-card">
+                        <h3>Online Education</h3>
+                        <p>Flexible learning options available 24/7, from anywhere in the world.</p>
+                    </div>
+                </div>
             </div>
         </section>
         <section class="subscription-form">
-            <h2 class="text-center mb-4">Subscribe for Latest Updates</h2>
+            <h2 class="text-center mb-4">Stay Informed</h2>
             <form class="row g-3 justify-content-center" aria-label="Subscription form">
-                <div class="col-md-6"><input type="email" class="form-control" placeholder="Enter your email" aria-label="Email" required></div>
-                <div class="col-md-2"><button type="submit" class="btn btn-primary w-100">Subscribe</button></div>
+                <div class="col-md-6">
+                    <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email" required>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-custom w-100">Subscribe</button>
+                </div>
             </form>
         </section>
     </div>
 
-    <div class="container" id="about">
-        <section class="about-section">
-            <div class="about-content text-center">
-                <h1 class="mb-4">We Are One of The Largest, Most Diverse Universities in The UAE</h1>
-                <p class="lead mb-4">At Wellington Campus, we're committed to reimagining the future of education. Our unique integration of a renowned design school with premier colleges creates an unparalleled academic environment. Our community thrives on diverse experiences, bringing together students, faculty, and staff from various backgrounds to foster innovation, creativity, and global perspectives.</p>
-                <a href="#request" class="btn btn-primary btn-lg">Read More</a>
-            </div>
-        </section>
-    </div>
-
-    <div class="container" id="contact">
-        <section class="contact-section">
-            <div class="row g-4">
-                <div class="col-lg-6">
-                    <div class="contact-form">
-                        <h2 class="mb-4">Get in Touch</h2>
-                        <form id="contact-form" aria-label="Contact form">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" required aria-required="true">
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" required aria-required="true">
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control" id="phone" required aria-required="true">
-                            </div>
-                            <div class="mb-3">
-                                <label for="program" class="form-label">Program of Interest</label>
-                                <select class="form-select" id="program" required aria-required="true">
-                                    <option value="">Select a program</option>
-                                    <option value="masters">Masters</option>
-                                    <option value="bachelors">Bachelors</option>
-                                    <option value="others">Others</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="source" class="form-label">How did you hear about us?</label>
-                                <select class="form-select" id="source" required aria-required="true">
-                                    <option value="">Select an option</option>
-                                    <option value="facebook">Facebook</option>
-                                    <option value="instagram">Instagram</option>
-                                    <option value="linkedin">LinkedIn</option>
-                                    <option value="television">Television</option>
-                                    <option value="highschool">High School Visit</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="contact-info">
-                        <h2 class="mb-4">Contact Information</h2>
-                        <p><strong>Address:</strong> 111, Block B1 Dubai Commerce City, 11 17th St - Umm Ramool, Dubai, UAE P.O. Box: 491</p>
-                        <p><strong>Phone:</strong> <a href="tel:+971542523922">+971 542523922</a></p>
-                        <p><strong>Email:</strong> <a href="mailto:Info@wellingtoncampus.co">Info@wellingtoncampus.co</a></p>
-                        <p><strong>Operating Hours:</strong> Monday - Saturday: 09:00 - 18:00</p>
-                    </div>
-                </div>
-            </div>
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.988887774392!2d55.36358931501032!3d25.238057983873606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5c6a6e8e9d7b%3A0x6f6e8c8f8e9d7b6e!2sUmm%20Ramool%20-%20Dubai%20-%20United%20Arab%20Emirates!5e0!3m2!1sen!2sus!4v1634567890123" allowfullscreen="" loading="lazy" aria-label="Campus location map"></iframe>
-            </div>
-        </section>
-    </div>
-
-    <div class="container">
-        <section id="bachelors">Bachelors Content</section>
-        <section id="masters">Masters Content</section>
-        <section id="admissions">Admissions Content</section>
-        <section id="events">Events Content</section>
-        <section id="request">Request Info Content</section>
-        <section id="blog">Blog Content</section>
-    </div>
-
-    <div class="game-section" id="game">
-        <h2>Campus Quiz Game</h2>
-        <div id="game-container">
-            <p id="question">What is the capital of New Zealand?</p>
-            <button class="btn btn-primary m-1 game-btn" onclick="checkAnswer('Wellington')">Wellington</button>
-            <button class="btn btn-primary m-1 game-btn" onclick="checkAnswer('Auckland')">Auckland</button>
-            <p id="score">Score: <span id="player-score">0</span></p>
+    <!-- Bottom Navigation for Telegram Mini App -->
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+        <div class="d-flex justify-content-around w-100">
+            <a href="index.html" class="btn active"><i class="fas fa-home"></i>Home</a>
+            <a href="courses.html" class="btn"><i class="fas fa-book"></i>Courses</a>
+            <a href="game.html" class="btn"><i class="fas fa-gamepad"></i>Game</a>
+            <a href="contact.html" class="btn"><i class="fas fa-envelope"></i>Contact</a>
         </div>
-    </div>
-    <div class="leaderboard" id="leaderboard">
-        <h2>Leaderboard</h2>
-        <table class="table">
-            <thead><tr><th>Rank</th><th>Player</th><th>Score</th></tr></thead>
-            <tbody id="leaderboard-body">
-                <tr><td>1</td><td>Player1</td><td>100</td></tr>
-                <tr><td>2</td><td>Player2</td><td>85</td></tr>
-                <tr><td>3</td><td>Player3</td><t
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelector('.subscription-form form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for subscribing!');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
