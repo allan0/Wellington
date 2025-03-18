@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO Meta Tags -->
+    <title>Wellington Campus - Innovative Education in UAE</title>
+    <meta name="description" content="Discover innovative courses and diverse education at Wellington Campus, one of the UAE's largest universities.">
+    <meta name="keywords" content="Wellington Campus, UAE university, education, courses, admissions">
+    <meta name="author" content="Wellington Campus">
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Wellington Campus - Innovative Education in UAE">
+    <meta property="og:description" content="Explore our diverse programs and innovative learning environment at Wellington Campus.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wellingtoncampus.co">
+    <meta property="og:image" content="https://wellingtoncampus.co/og-image.jpg">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --text-color: #212529;
+            --bg-color: #ffffff;
+            --accent-color: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .navbar-custom {
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+
+        .navbar-brand, .nav-link {
+            color: var(--text-color) !important;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .banner {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .highlight-section, .about-section, .contact-section {
+            padding: 3rem 1rem;
+        }
+
+        .highlight-card {
+            padding: 2rem;
+            text-align: center;
+            background-color: var(--accent-color);
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .subscription-form, .contact-form, .contact-info {
+            background-color: var(--accent-color);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .map-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--bg-color);
+            border-top: 1px solid #dee2e6;
+            z-index: 1000;
+        }
+
+        .game-section, .leaderboard {
+            display: none;
+            padding: 2rem;
+        }
+
+        /* Accessibility */
+        a:focus, button:focus {
+            outline: 3px solid #0056b3;
+            outline-offset: 2px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 576px) {
+            .navbar-custom { display: none; }
+            .bottom-nav { display: flex; }
+            .game-section, .leaderboard { display: block; }
+            .banner, .contact-section, .about-section { padding: 2rem 1rem; }
+            .highlight-card { margin-bottom: 1rem; }
+            h1 { font-size: 2rem; }
+            .btn { padding: 0.5rem 1rem; }
+        }
+
+        @media (min-width: 577px) {
+            .bottom-nav { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Desktop Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom" aria-label="Main navigation">
+        <div class="container">
+            <a class="navbar-brand" href="#">Wellington Campus</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Courses</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#bachelors">Bachelors</a></li>
+                            <li><a class="dropdown-item" href="#masters">Masters</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#admissions">Admissions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#about">About</a></li>
+                            <li><a class="dropdown-item" href="#events">Campus Events & Conferences</a></li>
+                            <li><a class="dropdown-item" href="#request">Request Info</a></li>
+                            <li><a class="dropdown-item" href="#blog">Blog</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div class="container" id="home">
+        <div class="banner">
+            <h1 class="display-4 fw-bold">Discover, Learn, and Thrive with Wellington Campus</h1>
+            <p class="lead">Spring 2025 Applications are Now Open</p>
+            <a href="#admissions" class="btn btn-light btn-lg mt-3">Admissions</a>
+        </div>
+        <section class="highlight-section">
+            <div class="row g-4">
+                <div class="col-md-4"><div class="highlight-card"><h3>Innovative Courses</h3><p>Explore a wide range of innovative and essential courses.</p></div></div>
+                <div class="col-md-4"><div class="highlight-card"><h3>Top Instructors</h3><p>Learn from the best experts and professors in the subjects.</p></div></div>
+                <div class="col-md-4"><div class="highlight-card"><h3>Online Education</h3><p>Allowing you to learn and experience anywhere, anytime.</p></div></div>
+            </div>
+        </section>
+        <section class="subscription-form">
+            <h2 class="text-center mb-4">Subscribe for Latest Updates</h2>
+            <form class="row g-3 justify-content-center" aria-label="Subscription form">
+                <div class="col-md-6"><input type="email" class="form-control" placeholder="Enter your email" aria-label="Email" required></div>
+                <div class="col-md-2"><button type="submit" class="btn btn-primary w-100">Subscribe</button></div>
+            </form>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div class="container" id="about">
+        <section class="about-section">
+            <div class="about-content text-center">
+                <h1 class="mb-4">We Are One of The Largest, Most Diverse Universities in The UAE</h1>
+                <p class="lead mb-4">At Wellington Campus, we're committed to reimagining the future of education. Our unique integration of a renowned design school with premier colleges creates an unparalleled academic environment. Our community thrives on diverse experiences, bringing together students, faculty, and staff from various backgrounds to foster innovation, creativity, and global perspectives.</p>
+                <a href="#request" class="btn btn-primary btn-lg">Read More</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div class="container" id="contact">
+        <section class="contact-section">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="contact-form">
+                        <h2 class="mb-4">Get in Touch</h2>
+                        <form id="contact-form" aria-label="Contact form">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" required aria-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required aria-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" required aria-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label for="program" class="form-label">Program of Interest</label>
+                                <select class="form-select" id="program" required aria-required="true">
+                                    <option value="">Select a program</option>
+                                    <option value="masters">Masters</option>
+                                    <option value="bachelors">Bachelors</option>
+                                    <option value="others">Others</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="source" class="form-label">How did you hear about us?</label>
+                                <select class="form-select" id="source" required aria-required="true">
+                                    <option value="">Select an option</option>
+                                    <option value="facebook">Facebook</option>
+                                    <option value="instagram">Instagram</option>
+                                    <option value="linkedin">LinkedIn</option>
+                                    <option value="television">Television</option>
+                                    <option value="highschool">High School Visit</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="contact-info">
+                        <h2 class="mb-4">Contact Information</h2>
+                        <p><strong>Address:</strong> 111, Block B1 Dubai Commerce City, 11 17th St - Umm Ramool, Dubai, UAE P.O. Box: 491</p>
+                        <p><strong>Phone:</strong> <a href="tel:+971542523922">+971 542523922</a></p>
+                        <p><strong>Email:</strong> <a href="mailto:Info@wellingtoncampus.co">Info@wellingtoncampus.co</a></p>
+                        <p><strong>Operating Hours:</strong> Monday - Saturday: 09:00 - 18:00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.988887774392!2d55.36358931501032!3d25.238057983873606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f5c6a6e8e9d7b%3A0x6f6e8c8f8e9d7b6e!2sUmm%20Ramool%20-%20Dubai%20-%20United%20Arab%20Emirates!5e0!3m2!1sen!2sus!4v1634567890123" allowfullscreen="" loading="lazy" aria-label="Campus location map"></iframe>
+            </div>
+        </section>
+    </div>
+
+    <!-- Other Sections -->
+    <div class="container">
+        <section id="bachelors">Bachelors Content</section>
+        <section id="masters">Masters Content</section>
+        <section id="admissions">Admissions Content</section>
+        <section id="events">Events Content</section>
+        <section id="request">Request Info Content</section>
+        <section id="blog">Blog Content</section>
+    </div>
+
+    <!-- Game and Leaderboard -->
+    <div class="game-section" id="game">
+        <h2>Campus Quiz Game</h2>
+        <div id="game-container">
+            <p id="question">What is the capital of New Zealand?</p>
+            <button class="btn btn-primary m-1 game-btn" onclick="checkAnswer('Wellington')">Wellington</button>
+            <button class="btn btn-primary m-1 game-btn" onclick="checkAnswer('Auckland')">Auckland</button>
+            <p id="score">Score: <span id="player-score">0</span></p>
+        </div>
+    </div>
+    <div class="leaderboard" id="leaderboard">
+        <h2>Leaderboard</h2>
+        <table class="table">
+            <thead><tr><th>Rank</th><th>Player</th><th>Score</th></tr></thead>
+            <tbody id="leaderboard-body">
+                <tr><td>1</td><td>Player1</td><td>100</td></tr>
+                <tr><td>2</td><td>Player2</td><td>85</td></tr>
+                <tr><td>3</td><td>Player3</td><td>70</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bottom Navigation for Telegram Mini App -->
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+        <div class="d-flex justify-content-around w-100">
+            <a href="#home" class="btn btn-link">Home</a>
+            <a href="#courses" class="btn btn-link">Courses</a>
+            <a href="#game" class="btn btn-link">Game</a>
+            <a href="#leaderboard" class="btn btn-link">Leaderboard</a>
+            <a href="#contact" class="btn btn-link">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let score = 0;
+        
+        function checkAnswer(answer) {
+            if (answer === 'Wellington') {
+                score += 10;
+                document.getElementById('player-score').textContent = score;
+                alert('Correct! +10 points');
+            } else {
+                alert('Wrong answer! Try again.');
+            }
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        document.querySelector('.subscription-form form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for subscribing!');
+            this.reset();
+        });
+
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your inquiry! We will get back to you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
