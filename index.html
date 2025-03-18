@@ -184,11 +184,11 @@
         /* Mascot styling */
         .mascot {
             position: fixed;
-            bottom: 60px; /* Above bottom-nav (approx 50px height + padding) */
+            bottom: 60px; /* Above bottom-nav */
             right: 20px;
             width: 50px; /* Small size */
             height: 50px;
-            z-index: 1100; /* Above bottom-nav (z-index 1000) */
+            z-index: 1100; /* Above bottom-nav */
             animation: breathe 2s infinite ease-in-out;
             cursor: pointer; /* Indicate it's clickable */
         }
@@ -219,12 +219,13 @@
             bottom: 120px;
             right: 20px;
             width: 300px;
-            background-color: var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.8); /* Transparent white */
             border-radius: 15px;
             box-shadow: var(--shadow);
             z-index: 1200;
             padding: 1rem;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px); /* Optional: adds a frosted glass effect */
         }
 
         .chat-window.active {
@@ -235,6 +236,22 @@
             font-weight: bold;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-close-btn {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .chat-close-btn:hover {
+            color: var(--primary-color);
         }
 
         .chat-description {
@@ -272,6 +289,20 @@
 
         .chat-input button:hover {
             background-color: #b8860b;
+        }
+
+        /* Bottom Nav Buttons */
+        .bottom-nav .btn-back, .bottom-nav .btn-close {
+            color: var(--secondary-color);
+            transition: color 0.3s ease;
+        }
+
+        .bottom-nav .btn-back:hover {
+            color: #007bff; /* Blue for back */
+        }
+
+        .bottom-nav .btn-close:hover {
+            color: #dc3545; /* Red for close */
         }
 
         a:focus, button:focus {
@@ -399,12 +430,17 @@
             <a href="courses.html" class="btn"><i class="fas fa-book"></i>Courses</a>
             <a href="game.html" class="btn"><i class="fas fa-gamepad"></i>Game</a>
             <a href="contact.html" class="btn"><i class="fas fa-envelope"></i>Contact</a>
+            <button class="btn btn-back" onclick="goBack()"><i class="fas fa-arrow-left"></i>Back</button>
+            <button class="btn btn-close" onclick="closeApp()"><i class="fas fa-times"></i>Close</button>
         </div>
     </nav>
 
     <!-- Chat Window -->
     <div class="chat-window" id="chatWindow">
-        <div class="chat-header">Welcome to Wellington!</div>
+        <div class="chat-header">
+            Welcome to Wellington!
+            <button class="chat-close-btn" onclick="toggleChat()" aria-label="Close chat"><i class="fas fa-times"></i></button>
+        </div>
         <div class="chat-description">
             I'm your friendly campus assistant here to help you explore courses, admissions, and more!
         </div>
@@ -446,7 +482,7 @@
             if (message) {
                 alert(`Message sent: ${message}`);
                 textarea.value = ''; // Clear input
-                // Here you could integrate with @wellingtonedu_bot via an API
+                // Integrate with @wellingtonedu_bot via API here
             }
         }
 
@@ -456,7 +492,24 @@
             mascot.classList.add('speaking');
             alert('Voice recording not fully implemented in this demo. Send a voice message to @wellingtonedu_bot on Telegram!');
             setTimeout(() => mascot.classList.remove('speaking'), 2000); // Simulate recording
-            // For real voice recording, use Web Audio API or MediaRecorder
+        }
+
+        // Back button for Telegram Mini App
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                alert('No previous page to go back to!');
+            }
+        }
+
+        // Close button for Telegram Mini App
+        function closeApp() {
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.close(); // Telegram WebApp API
+            } else {
+                alert('This is a demo outside Telegram. Closing not fully supported.');
+            }
         }
     </script>
 </body>
