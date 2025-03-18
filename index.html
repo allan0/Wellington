@@ -57,6 +57,7 @@
             border-radius: 0 0 20px 20px;
             box-shadow: var(--shadow);
             overflow: hidden;
+            min-height: 400px; /* Ensure enough height for content */
         }
 
         .banner::before {
@@ -70,8 +71,16 @@
             z-index: 1;
         }
 
-        .banner h1, .banner p, .banner a {
+        .banner h1, .banner p {
             position: relative;
+            z-index: 2;
+        }
+
+        .banner .btn-custom {
+            position: absolute;
+            bottom: 2rem; /* Approx 2cm from bottom, adjust as needed */
+            left: 50%;
+            transform: translateX(-50%); /* Center horizontally */
             z-index: 2;
         }
 
@@ -175,7 +184,7 @@
         @media (max-width: 576px) {
             .navbar-custom { display: none; }
             .bottom-nav { display: flex; }
-            .banner { padding: 3rem 1rem; }
+            .banner { padding: 3rem 1rem; min-height: 300px; }
             .highlight-section { padding: 2rem 1rem; }
             h1 { font-size: 2rem; }
             .btn-custom { padding: 0.6rem 1.5rem; }
@@ -186,6 +195,9 @@
             }
             .highlight-card {
                 padding: 1.5rem;
+            }
+            .banner .btn-custom {
+                bottom: 1.5rem; /* Slightly less on mobile */
             }
         }
     </style>
@@ -229,7 +241,7 @@
         <div class="banner">
             <h1 class="display-4 fw-bold">Discover, Learn, and Thrive</h1>
             <p class="lead">Spring 2025 Applications are Now Open at Wellington Campus</p>
-            <a href="admissions.html" class="btn btn-custom mt-3">Apply Now</a>
+            <a href="admissions.html" class="btn btn-custom">Apply Now</a>
         </div>
         <section class="highlight-section">
             <div class="row g-4">
