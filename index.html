@@ -252,6 +252,24 @@
             margin-bottom: 1rem;
         }
 
+        .chat-messages {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+
+        .user-message {
+            text-align: right;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+        }
+
+        .bot-message {
+            text-align: left;
+            color: var(--text-color);
+            margin: 0.5rem 0;
+        }
+
         .chat-input {
             display: flex;
             gap: 10px;
@@ -427,6 +445,7 @@
         <div class="chat-description">
             I'm your friendly campus assistant here to help you explore courses, admissions, and more!
         </div>
+        <div class="chat-messages" id="chatMessages"></div>
         <div class="chat-input">
             <textarea placeholder="Type a message..."></textarea>
             <button onclick="sendTextMessage()" aria-label="Send text message"><i class="fas fa-paper-plane"></i></button>
@@ -484,22 +503,94 @@
             }
         }
 
-        // Send text message (placeholder)
+        // WebSocket connection
+        const socket = new WebSocket('ws://localhost:8765');
+
+        // Handle connection open
+        socket.onopen = () => {
+            console.log('WebSocket connection established');
+        };
+
+        // Handle messages from server
+        socket.onmessage = (event) => {
+            const message = event.data;
+            displayMessage(message, 'bot');
+        };
+
+        // Handle errors
+        socket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+
+        // Function to send message
+        function sendMessage(text) {
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(text);
+            } else {
+                console.error('WebSocket is not open');
+            }
+        }
+
+        // Function to display message in chat window
+        function displayMessage(text, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageElem = document.createElement('div');
+            messageElem.className = sender === 'user' ? 'user-message' : 'bot-message';
+            messageElem.textContent = text;
+            chatMessages.appendChild(messageElem);
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Send text message
         function sendTextMessage() {
             const textarea = document.querySelector('.chat-input textarea');
             const message = textarea.value.trim();
             if (message) {
-                alert(`Message sent: ${message}`);
-                textarea.value = ''; // Clear input
+                sendMessage(message);
+                displayMessage(message, 'user');
+                textarea.value = '';
             }
         }
 
-        // Start voice recording (placeholder)
-        function startVoiceRecording() {
-            const mascot = document.querySelector('.mascot');
-            mascot.classList.add('speaking');
-            alert('Voice recording not fully implemented in this demo.');
-            setTimeout(() => mascot.classList.remove('speaking'), 2000); // Simulate recording
+        // Voice recognition
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            function startVoiceRecording() {
+                const mascot = document.querySelector('.mascot');
+                mascot.classList.add('speaking');
+                recognition.start();
+                console.log('Voice recognition started');
+            }
+
+            recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript;
+                console.log('Speech result:', speechResult);
+                sendMessage(speechResult);
+                displayMessage(speechResult, 'user');
+                const mascot = document.querySelector('.mascot');
+                mascot.classList.remove('speaking');
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error', event.error);
+                alert('Error with voice recognition: ' + event.error);
+                const mascot = document.querySelector('.mascot');
+                mascot.classList.remove('speaking');
+            };
+
+            recognition.onend = () => {
+                console.log('Voice recognition ended');
+            };
+        } else {
+            // Disable voice input if not supported
+            document.querySelector('.chat-input button[aria-label="Record voice message"]').disabled = true;
+            alert('Voice recognition is not supported in this browser.');
         }
     </script>
 </body>
