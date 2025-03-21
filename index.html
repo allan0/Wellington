@@ -319,6 +319,30 @@
             outline-offset: 2px;
         }
 
+        /* Status Indicator Styles */
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .status-offline {
+            background-color: red;
+        }
+
+        .status-online {
+            background-color: green;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
         @media (max-width: 576px) {
             .navbar-custom { display: none; }
             .bottom-nav { display: flex; }
@@ -436,10 +460,13 @@
         </div>
     </nav>
 
-    <!-- Chat Window -->
+    <!-- Chat Window with Status Indicator -->
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
-            Welcome to Wellington!
+            <div>
+                Welcome to Wellington!
+                <span id="statusIndicator" class="status-indicator status-offline"></span>
+            </div>
             <button class="chat-close-btn" onclick="toggleChat()" aria-label="Close chat"><i class="fas fa-times"></i></button>
         </div>
         <div class="chat-description">
@@ -495,31 +522,47 @@
         // Toggle chat window
         function toggleChat() {
             const chatWindow = document.getElementById('chatWindow');
-            const mascot = document.querySelector('.mascot');
             chatWindow.classList.toggle('active');
-            if (chatWindow.classList.contains('active')) {
-                mascot.classList.add('speaking');
-                setTimeout(() => mascot.classList.remove('speaking'), 2000); // Welcome animation
+        }
+
+        // Function to update status indicator
+        function updateStatusIndicator(isOnline) {
+            const indicator = document.getElementById('statusIndicator');
+            if (isOnline) {
+                indicator.classList.remove('status-offline');
+                indicator.classList.add('status-online');
+            } else {
+                indicator.classList.remove('status-online');
+                indicator.classList.add('status-offline');
             }
         }
 
         // WebSocket connection
         const socket = new WebSocket('ws://localhost:8765');
+        updateStatusIndicator(false); // Initially offline
 
         // Handle connection open
         socket.onopen = () => {
             console.log('WebSocket connection established');
+            updateStatusIndicator(true);
+        };
+
+        // Handle connection close
+        socket.onclose = () => {
+            console.log('WebSocket connection closed');
+            updateStatusIndicator(false);
+        };
+
+        // Handle errors
+        socket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            updateStatusIndicator(false);
         };
 
         // Handle messages from server
         socket.onmessage = (event) => {
             const message = event.data;
             displayMessage(message, 'bot');
-        };
-
-        // Handle errors
-        socket.onerror = (error) => {
-            console.error('WebSocket error:', error);
         };
 
         // Function to send message
@@ -538,7 +581,6 @@
             messageElem.className = sender === 'user' ? 'user-message' : 'bot-message';
             messageElem.textContent = text;
             chatMessages.appendChild(messageElem);
-            // Scroll to bottom
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
@@ -553,7 +595,7 @@
             }
         }
 
-        // Voice recognition
+        // Voice recognition (if supported)
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (SpeechRecognition) {
             const recognition = new SpeechRecognition();
@@ -562,33 +604,21 @@
             recognition.maxAlternatives = 1;
 
             function startVoiceRecording() {
-                const mascot = document.querySelector('.mascot');
-                mascot.classList.add('speaking');
                 recognition.start();
                 console.log('Voice recognition started');
             }
 
             recognition.onresult = (event) => {
                 const speechResult = event.results[0][0].transcript;
-                console.log('Speech result:', speechResult);
                 sendMessage(speechResult);
                 displayMessage(speechResult, 'user');
-                const mascot = document.querySelector('.mascot');
-                mascot.classList.remove('speaking');
             };
 
             recognition.onerror = (event) => {
                 console.error('Speech recognition error', event.error);
                 alert('Error with voice recognition: ' + event.error);
-                const mascot = document.querySelector('.mascot');
-                mascot.classList.remove('speaking');
-            };
-
-            recognition.onend = () => {
-                console.log('Voice recognition ended');
             };
         } else {
-            // Disable voice input if not supported
             document.querySelector('.chat-input button[aria-label="Record voice message"]').disabled = true;
             alert('Voice recognition is not supported in this browser.');
         }
