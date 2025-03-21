@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Wellington Campus</title>
+    <meta name="description" content="Explore our upcoming mini-courses in Python, AI, ML, and Data Science at Wellington Campus.">
+    <meta name="keywords" content="Wellington Campus, LMS, courses, Python, AI, ML, Data Science">
+    <meta name="author" content="Wellington Campus">
+    <meta property="og:title" content="LMS - Wellington Campus">
+    <meta property="og:description" content="Discover our upcoming courses in Python, AI, ML, and Data Science.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wellingtoncampus.co/lms.html">
+    <meta property="og:image" content="./wellingtoncampus.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #d4af37; /* Gold */
+            --secondary-color: #6c757d;
+            --text-color: #212529;
+            --bg-color: #cce5ff; /* Soft blue */
+            --accent-color: #ffffff;
+            --shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
+                              linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
+            background-size: 20px 20px;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .navbar-custom {
+            background-color: var(--accent-color);
+            box-shadow: var(--shadow);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand, .nav-link {
+            color: var(--text-color) !important;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+
+        .content-wrapper {
+            position: relative;
+        }
+
+        .coming-soon-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .coming-soon-overlay h2 {
+            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .coming-soon-overlay p {
+            font-size: 1.5rem;
+        }
+
+        .courses-section {
+            padding: 4rem 1rem;
+        }
+
+        .course-card {
+            padding: 2.5rem;
+            text-align: center;
+            background-color: var(--accent-color);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .course-card i {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .course-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        .course-card p {
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212,175,55,0.3);
+        }
+
+        .btn-custom:hover {
+            background-color: #b8860b;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+            color: #fff;
+        }
+
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--accent-color);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 0.5rem 0;
+            z-index: 1000;
+        }
+
+        .bottom-nav .btn {
+            color: var(--secondary-color);
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .bottom-nav .btn:hover, .bottom-nav .btn.active {
+            color: var(--primary-color);
+        }
+
+        .bottom-nav i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .mascot {
+            position: fixed;
+            bottom: 60px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            z-index: 1100;
+            animation: breathe 2s infinite ease-in-out;
+            cursor: pointer;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-custom { display: none; }
+            .bottom-nav { display: flex; }
+            .courses-section { padding: 2rem 1rem; }
+            .course-card { padding: 1.5rem; }
+            .mascot { bottom: 70px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Desktop Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom" aria-label="Main navigation">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Wellington Campus</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Courses</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="bachelors.html">Bachelors</a></li>
+                            <li><a class="dropdown-item" href="masters.html">Masters</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="admissions.html">Admissions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="about.html">About</a></li>
+                            <li><a class="dropdown-item" href="events.html">Campus Events</a></li>
+                            <li><a class="dropdown-item" href="request.html">Request Info</a></li>
+                            <li><a class="dropdown-item" href="blog.html">Blog</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- LMS Content -->
+    <div class="container" id="lms">
+        <div class="content-wrapper">
+            <!-- Coming Soon Overlay -->
+            <div class="coming-soon-overlay">
+                <h2>Coming Soon</h2>
+                <p>Stay tuned for our exciting courses!</p>
+            </div>
+            <!-- Courses Section -->
+            <section class="courses-section">
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="course-card">
+                            <i class="fas fa-code fa-3x"></i>
+                            <h3>Python Programming</h3>
+                            <p>Learn the basics of Python programming.</p>
+                            <a href="#" class="btn btn-custom">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="course-card">
+                            <i class="fas fa-robot fa-3x"></i>
+                            <h3>Introduction to AI</h3>
+                            <p>Explore the fundamentals of Artificial Intelligence.</p>
+                            <a href="#" class="btn btn-custom">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="course-card">
+                            <i class="fas fa-brain fa-3x"></i>
+                            <h3>Machine Learning Basics</h3>
+                            <p>Understand the core concepts of Machine Learning.</p>
+                            <a href="#" class="btn btn-custom">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="course-card">
+                            <i class="fas fa-chart-bar fa-3x"></i>
+                            <h3>Data Science with Python</h3>
+                            <p>Analyze and visualize data using Python libraries.</p>
+                            <a href="#" class="btn btn-custom">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+        <div class="d-flex justify-content-around w-100">
+            <a href="index.html" class="btn"><i class="fas fa-home"></i>Home</a>
+            <a href="lms.html" class="btn active"><i class="fas fa-book"></i>LMS</a>
+            <a href="game.html" class="btn"><i class="fas fa-gamepad"></i>Game</a>
+            <a href="hackathons.html" class="btn"><i class="fas fa-laptop-code"></i>Hackathons</a>
+        </div>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        if (window.Telegram && window.Telegram.WebApp) {
+            Telegram.WebApp.ready();
+            Telegram.WebApp.expand();
+        }
+    </script>
+</body>
+</html>
