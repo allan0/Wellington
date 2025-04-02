@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python for AI Hackathon - Wellington Campus</title>
     <meta name="description" content="Join the Wellington Campus Python for AI Hackathon! Form teams, tackle real-world challenges in various tracks, develop innovative AI solutions, and compete for exciting prizes including cash and vouchers. Register now!">
-    <meta name="keywords" content="Wellington Campus, hackathon, Python, AI, Artificial Intelligence, coding, competition, Dubai, UAE, teams, tech challenge, sustainability, medicine, project management, real estate, government, Cursor, Hugging Face, GitHub, Vercel">
+    <meta name="keywords" content="Wellington Campus, hackathon, Python, AI, Artificial Intelligence, coding, competition, Dubai, UAE, teams, tech challenge, sustainability, medicine, project management, real estate, government, Cursor, Hugging Face, GitHub, Vercel, DAFZ, Binciya Salim">
     <meta name="author" content="Wellington Campus">
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Python for AI Hackathon - Wellington Campus">
@@ -56,6 +56,9 @@
             box-shadow: var(--shadow);
             padding: 1rem 0;
             border-bottom: 3px solid var(--primary-color);
+            position: sticky; /* Make navbar sticky */
+            top: 0;
+            z-index: 1030; /* Ensure it's above other content */
         }
 
         .navbar-brand {
@@ -81,21 +84,27 @@
         }
         .nav-link.active {
              border-bottom: 2px solid var(--primary-color);
+             padding-bottom: 2px; /* Adjust padding for underline */
         }
 
         h1, h2, h3 {
              font-family: 'Poppins', sans-serif;
              color: var(--secondary-color);
+             margin-top: 1rem; /* Add some top margin to headings */
         }
 
          h1 {
             color: var(--secondary-color);
+         }
+         h1 .fa-brain {
+             color: var(--primary-color);
          }
 
         .hackathon-subtitle {
              color: var(--secondary-color);
              font-size: 1.5rem;
              font-weight: 400;
+             margin-bottom: 1.5rem;
          }
 
 
@@ -105,6 +114,7 @@
             margin-bottom: 2.5rem;
             border: none;
             overflow: hidden; /* Ensures child elements respect border-radius */
+            background-color: var(--accent-color); /* White card background */
         }
 
         .card-header {
@@ -112,14 +122,29 @@
             color: var(--accent-color);
             font-weight: 600;
             border-bottom: 3px solid var(--primary-color);
-             padding: 1rem 1.5rem;
+            padding: 1rem 1.5rem;
+            display: flex; /* Align icon and text */
+            align-items: center;
         }
+        .card-header h2 {
+            color: var(--accent-color); /* Make header text white */
+            margin: 0; /* Reset margin */
+            font-size: 1.5rem;
+        }
+         .card-header i {
+            margin-right: 0.75rem;
+             font-size: 1.3rem; /* Slightly larger icon in header */
+         }
         .card-title {
              color: var(--secondary-color);
              margin-bottom: 1rem;
+             font-size: 1.4rem; /* Standardize card titles a bit */
         }
         .card-body {
              padding: 2rem;
+        }
+        .card-body h3 {
+            margin-top: 0.5rem; /* Reduce top margin for h3 inside card body */
         }
 
         .btn-custom {
@@ -131,31 +156,43 @@
             transition: all 0.3s ease;
             font-weight: 600;
             letter-spacing: 0.5px;
+            display: inline-block; /* Ensure proper rendering */
         }
 
         .btn-custom:hover {
             background-color: #b8860b; /* Darker gold */
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+            color: #fff; /* Keep text white on hover */
         }
 
         .list-unstyled li, .list-group-item {
             margin-bottom: 1rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* Align items top for potentially wrapping text */
+            line-height: 1.6; /* Adjust line height for lists */
         }
         .list-unstyled i.fas, .list-unstyled i.fab, .list-group-item i.fas {
             color: var(--primary-color);
             margin-right: 1rem;
             width: 25px; /* Align icons */
             text-align: center;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+            margin-top: 0.2em; /* Align icon better with first line of text */
         }
+         /* Ensure specific list icons are correct color */
+        #preparation .fa-check-circle { color: var(--success-color); }
+        #preparation .fa-check { color: var(--primary-color); }
+         #prizes .fa-trophy { color: #ffd700; } /* Actual gold color for trophy */
+         #prizes .fa-medal { color: #c0c0c0; } /* Silver for 2nd place */
+         #prizes .fa-award { color: #cd7f32; } /* Bronze for 3rd/special */
 
         /* Track Card Styling */
         .track-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: default; /* Or pointer if interactive */
             height: 100%; /* Make cards in a row equal height */
+             border: 1px solid #eee;
         }
         .track-card:hover {
             transform: translateY(-5px);
@@ -183,33 +220,41 @@
             border-radius: 8px;
             margin-bottom: 0.75rem;
             transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex; /* Align items in checklist */
+             align-items: center;
+             line-height: 1.5;
         }
         .checklist-item i.fa-circle { /* Default state */
             color: var(--secondary-color);
+            margin-right: 0.75rem; /* Spacing */
+             font-size: 1.1em; /* Slightly larger icon */
         }
+        .checklist-item i.fa-check-circle { /* Completion state */
+             color: var(--success-color);
+             display: none; /* Hide checkmark by default */
+             margin-right: 0.75rem;
+              font-size: 1.1em;
+         }
          /* Add .completed class to simulate completion (Needs JS for real interaction) */
         .checklist-item.completed {
             background-color: #d4edda; /* Light green */
             color: #155724; /* Dark green text */
-            text-decoration: line-through;
+            /* text-decoration: line-through; */ /* Optional: line through text */
         }
          .checklist-item.completed i.fa-circle {
             display: none; /* Hide default circle */
-         }
-         .checklist-item i.fa-check-circle { /* Completion state */
-             color: var(--success-color);
-             display: none; /* Hide checkmark by default */
          }
          .checklist-item.completed i.fa-check-circle {
             display: inline-block; /* Show checkmark when completed */
          }
          .checklist-item strong {
-             margin-left: 0.5rem;
+            /* margin-left: 0.5rem; Removed, icon has margin */
          }
         /* File Input Styling */
          .form-control[type="file"] {
             border: 1px dashed var(--primary-color);
              background-color: #fdf8e7; /* Light gold background */
+             cursor: pointer;
          }
          .form-control[type="file"]::file-selector-button {
              background-color: var(--primary-color);
@@ -219,6 +264,7 @@
              border-radius: 5px;
              cursor: pointer;
              transition: background-color 0.3s ease;
+             margin-right: 1rem;
          }
          .form-control[type="file"]::file-selector-button:hover {
             background-color: #b8860b;
@@ -229,38 +275,198 @@
         .progress {
             height: 25px;
             font-size: 0.9rem;
-             border-radius: 50px;
+            border-radius: 50px;
+            background-color: #e9ecef; /* Light grey background for track */
         }
         .progress-bar {
             background-color: var(--primary-color);
             font-weight: bold;
+            color: var(--accent-color); /* White text on progress bar */
+             display: flex;
+            align-items: center;
+             justify-content: center;
+             text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* Add shadow to text */
         }
 
         /* Onboarding Form Accordion */
+         .accordion-button {
+            font-weight: 600;
+         }
         .accordion-button:not(.collapsed) {
             color: var(--accent-color);
             background-color: var(--secondary-color);
         }
-         .accordion-button:focus {
+        .accordion-button:focus {
             box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.3); /* Gold focus ring */
+        }
+         .accordion-body {
+             background-color: #f8f9fa; /* Light grey background inside accordion */
          }
 
-        /* Ensure icons are vertically aligned in lists */
-         .list-unstyled i {
-            vertical-align: middle;
+        /* Agenda Styling */
+        .agenda-list {
+             list-style: none; /* Remove default list style */
+             padding-left: 0;
+        }
+        .agenda-list li {
+            padding: 1.2rem 0; /* Increased padding */
+            border-bottom: 1px solid #ddebf8; /* Lighter border */
+            display: flex; /* Use flexbox for better alignment */
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+            align-items: flex-start; /* Align items to the top */
+             transition: background-color 0.2s ease;
+        }
+         .agenda-list li:hover {
+            background-color: #f8f9fa; /* Slight hover effect */
+         }
+        .agenda-list li:last-child {
+            border-bottom: none;
+        }
+        .agenda-time {
+            font-weight: 700; /* Bolder time */
+            color: var(--primary-color);
+            flex: 0 0 140px; /* Slightly wider for time */
+            margin-bottom: 0.5rem; /* Spacing below time on wrap */
+            padding-right: 1rem;
+            display: flex;
+            align-items: center; /* Center icon and time vertically */
+            font-size: 1rem; /* Slightly smaller time */
+        }
+         .agenda-time i {
+            margin-right: 0.6rem;
+            color: var(--secondary-color); /* Use secondary color for icons */
+             width: 20px; /* Fixed icon width */
+            text-align: center;
+         }
+
+        .agenda-details {
+             flex: 1 1 auto; /* Allow details to take remaining space */
+             padding-right: 1.5rem; /* More space */
+             margin-bottom: 0.5rem; /* Spacing below details on wrap */
+        }
+        .agenda-details strong {
+             display: block; /* Make title block */
+             font-size: 1.15em; /* Larger title */
+             color: var(--secondary-color);
+             margin-bottom: 0.3rem;
+             font-weight: 600;
+        }
+         .agenda-details p {
+             margin-bottom: 0; /* Reduce margin if description is short */
+             font-size: 1rem; /* Adjust description font size */
+             color: #555;
+         }
+
+        .agenda-speaker {
+            font-style: italic;
+            color: var(--text-color);
+            flex: 0 0 220px; /* Wider speaker area */
+            text-align: right; /* Align speaker to the right */
+            padding-left: 1rem; /* Add space from details */
+            font-size: 0.95rem; /* Slightly smaller speaker text */
+        }
+        .agenda-speaker small {
+             display: block; /* Ensure subtitle is below name */
+             font-size: 0.9em;
+             color: #6c757d;
+             font-style: normal;
+         }
+          .agenda-speaker.- { /* Style the placeholder dash */
+              font-style: normal;
+              color: #aaa;
+          }
+
+
+        /* Specific Agenda Item Types */
+        .agenda-break {
+             background-color: #f1f5f8; /* Light background for breaks */
+             border-radius: 8px;
+             margin: 0.5rem 0; /* Add vertical margin to breaks */
+             padding-left: 1rem; /* Add left padding */
+             padding-right: 1rem; /* Add right padding */
+         }
+          .agenda-break .agenda-time, .agenda-break .agenda-details {
+             color: #6c757d; /* Greyer text for breaks */
+         }
+          .agenda-break strong {
+             color: #6c757d !important;
+          }
+
+
+        /* Responsive adjustments for agenda */
+        @media (max-width: 991px) { /* Adjust breakpoint for speaker wrap */
+            .agenda-speaker {
+                flex-basis: 180px; /* Shrink speaker column a bit */
+            }
+        }
+        @media (max-width: 767px) {
+             .agenda-speaker {
+                 text-align: left; /* Left align speaker on small screens */
+                 flex-basis: 100%; /* Make speaker take full width below details */
+                 margin-top: 0.5rem;
+                 padding-left: 0; /* Remove left padding */
+                 font-style: normal;
+                 font-weight: 500; /* Slightly bolder speaker name */
+                 border-top: 1px dashed #eee; /* Add separator */
+                 padding-top: 0.5rem;
+             }
+              .agenda-speaker::before {
+                 /* Optional: Add Speaker label - can be cluttered */
+                /* content: "Speaker/Info: ";
+                 font-style: italic;
+                 font-weight: normal;
+                 color: #6c757d; */
+             }
+              .agenda-list li {
+                flex-direction: column; /* Stack everything vertically */
+                 padding-left: 0.5rem; /* Indent slightly on mobile */
+                  padding-right: 0.5rem;
+              }
+               .agenda-time, .agenda-details, .agenda-speaker {
+                   flex-basis: auto; /* Reset flex basis */
+                   padding-right: 0; /* Remove right padding */
+                   width: 100%; /* Ensure full width */
+               }
+                .agenda-time {
+                   margin-bottom: 0.25rem;
+               }
+               .agenda-details {
+                   margin-bottom: 0.5rem;
+               }
+               .agenda-break {
+                   margin-left: -0.5rem; /* Adjust for parent padding */
+                   margin-right: -0.5rem;
+               }
+         }
+
+         /* Ensure icons are vertically aligned in lists */
+         .list-unstyled i, .list-group-item i {
+            vertical-align: middle; /* Try vertical align */
          }
           .card ul {
-            padding-left: 0; /* Remove default padding */
+             list-style: none; /* Ensure no bullets appear */
+             padding-left: 0; /* Remove default padding */
          }
-         .card li {
-             list-style-type: none; /* Remove default bullets */
+
+          /* AI Grading Card Specific Style */
+        #ai-grading.card {
+             background-color: #e1f5fe; /* Light Blue Background */
+             border: 1px solid #0277bd; /* Blue Border */
+        }
+        #ai-grading .card-header {
+            background-color: #0277bd; /* Matching Blue Header */
+            border-bottom-color: var(--primary-color); /* Keep gold accent */
+        }
+         #ai-grading .card-header h2, #ai-grading .card-header i {
+             color: var(--accent-color);
          }
+
 
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-custom sticky-top" aria-label="Main navigation">
+    <nav class="navbar navbar-expand-lg navbar-custom" aria-label="Main navigation">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <img src="./wellingtoncampus.png" alt="Wellington Campus Logo" width="50" class="img-fluid">
@@ -284,13 +490,13 @@
     <!-- Main Content -->
     <div class="container mt-5" id="hackathon">
         <header class="text-center mb-5">
-            <h1><i class="fas fa-brain text-primary-color me-2"></i>Python for AI Hackathon</h1>
+            <h1><i class="fas fa-brain me-2"></i>Python for AI Hackathon</h1>
             <p class="hackathon-subtitle">Innovate, Collaborate, Code, and Win!</p>
         </header>
 
          <!-- Progress Bar -->
          <section id="progress" class="mb-5">
-             <h2 class="text-center mb-3">Hackathon Progress</h2>
+             <h2 class="text-center mb-3">Hackathon Status</h2>
              <div class="progress" role="progressbar" aria-label="Hackathon Progress" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
                  <!-- Note: The 'aria-valuenow' and style="width: ..." should be updated dynamically with JavaScript -->
                  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 10%">10% - Registration Open</div>
@@ -300,7 +506,7 @@
         <!-- Event Description -->
         <section id="about" class="card">
             <div class="card-header">
-               <h2><i class="fas fa-info-circle me-2"></i>About the Hackathon</h2>
+               <h2><i class="fas fa-info-circle"></i>About the Hackathon</h2>
             </div>
             <div class="card-body">
                 <p>Join us for the flagship <strong>Python for AI Hackathon</strong> at Wellington Campus! This event is your platform to dive deep into the world of Artificial Intelligence using Python. Form teams, tackle real-world challenges across various tracks, and push the boundaries of innovation. Whether you're refining your skills or stepping into AI for the first time, this hackathon offers an unparalleled experience to learn, compete, network, and win exciting prizes.</p>
@@ -310,14 +516,15 @@
         <!-- Event Details -->
         <section id="details" class="card">
              <div class="card-header">
-               <h2><i class="fas fa-calendar-check me-2"></i>Event Details</h2>
+               <h2><i class="fas fa-calendar-check"></i>Event Details</h2>
             </div>
             <div class="card-body">
                 <ul class="list-unstyled">
-                    <li><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> April, 2025 (Final Date TBC)</li>
-                    <li><i class="fas fa-clock"></i> <strong>Time:</strong> 10:00 AM - 6:00 PM (Full Day Event)</li>
+                    <li><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> 21st - 22nd April 2025</li>
+                    <li><i class="fas fa-clock"></i> <strong>Time:</strong> See Detailed Agenda Below</li>
                     <li><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> Wellington Campus, Dubai Knowledge Park, Dubai, UAE</li>
-                     <li><i class="fas fa-users"></i> <strong>Format:</strong> Team-based (Teams of 2-4 recommended)</li>
+                    <li><i class="fas fa-users"></i> <strong>Format:</strong> Team-based (Teams of 2-4 recommended)</li>
+                    <li><i class="fab fa-python"></i> <strong>Theme:</strong> Python for AI Development</li>
                 </ul>
             </div>
         </section>
@@ -325,38 +532,38 @@
         <!-- How to Get Ready -->
         <section id="preparation" class="card">
             <div class="card-header">
-                 <h2><i class="fas fa-laptop-code me-2"></i>How to Get Ready</h2>
+                 <h2><i class="fas fa-laptop-code"></i>How to Get Ready</h2>
              </div>
             <div class="card-body">
                 <p>Ensure you and your team are prepared for success:</p>
                 <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <h5><i class="fas fa-laptop me-2"></i>Hardware & Base Setup</h5>
-                        <ul class="list-unstyled">
-                            <li><i class="fas fa-check-circle text-success"></i> Your own Laptop (Windows, macOS, or Linux)</li>
-                            <li><i class="fas fa-check-circle text-success"></i> Stable Internet Connection</li>
-                            <li><i class="fas fa-check-circle text-success"></i> Charger & Power Adapter</li>
+                    <div class="col-lg-6 mb-4">
+                        <h5 class="card-title"><i class="fas fa-laptop me-2"></i>Hardware & Base Setup</h5>
+                        <ul class="list-unstyled ps-2">
+                            <li><i class="fas fa-check-circle"></i> Your own Laptop (Windows, macOS, or Linux)</li>
+                            <li><i class="fas fa-check-circle"></i> Stable Internet Connection (Venue Wi-Fi available)</li>
+                            <li><i class="fas fa-check-circle"></i> Charger & Power Adapter</li>
                         </ul>
                     </div>
-                    <div class="col-md-6 mb-3">
-                         <h5><i class="fas fa-tools me-2"></i>Software & Tools</h5>
-                         <ul class="list-unstyled">
-                            <li><i class="fab fa-python"></i> Python (3.8+ recommended) & Pip</li>
+                    <div class="col-lg-6 mb-4">
+                         <h5 class="card-title"><i class="fas fa-tools me-2"></i>Software & Tools</h5>
+                         <ul class="list-unstyled ps-2">
+                            <li><i class="fab fa-python"></i> Python (3.8+ recommended) & Pip/Conda</li>
                             <li><i class="fas fa-book"></i> Jupyter Notebook / JupyterLab</li>
                             <li><i class="fas fa-terminal"></i> Code Editor (e.g., VS Code, PyCharm)</li>
                             <li><i class="fas fa-code-branch"></i> Git & GitHub Account (Essential for submission)</li>
                             <li><i class="fas fa-magic"></i> AI Dev Tools: Familiarity with <a href="https://cursor.sh/" target="_blank" rel="noopener noreferrer">Cursor (AI Code Editor)</a> is a plus!</li>
-                             <li><i class="fas fa-brain"></i> AI/ML Libraries: Experience with libraries via <a href="https://huggingface.co/" target="_blank" rel="noopener noreferrer">Hugging Face</a> (Transformers, Datasets) or similar (e.g., Scikit-learn, TensorFlow/Keras, PyTorch)</li>
-                             <li><i class="fas fa-cloud-upload-alt"></i> Deployment: Account on <a href="https://vercel.com/" target="_blank" rel="noopener noreferrer">Vercel</a>, GitHub Pages, or similar platform for hosting demos.</li>
+                            <li><i class="fas fa-brain"></i> AI/ML Libraries: Experience via <a href="https://huggingface.co/" target="_blank" rel="noopener noreferrer">Hugging Face</a> (Transformers, Datasets) or similar (Scikit-learn, TensorFlow/Keras, PyTorch)</li>
+                            <li><i class="fas fa-cloud-upload-alt"></i> Deployment: Account on <a href="https://vercel.com/" target="_blank" rel="noopener noreferrer">Vercel</a>, GitHub Pages, Streamlit Cloud, or similar platform.</li>
                         </ul>
                     </div>
                 </div>
-                 <h5><i class="fas fa-lightbulb me-2"></i>Knowledge</h5>
-                 <ul class="list-unstyled">
-                    <li><i class="fas fa-check"></i> Solid understanding of Python fundamentals.</li>
-                    <li><i class="fas fa-check"></i> Basic knowledge of AI/Machine Learning concepts (what is supervised/unsupervised learning, model training basics, APIs).</li>
-                     <li><i class="fas fa-check"></i> Version control basics using Git (commit, push, pull, branches).</li>
-                     <li><i class="fas fa-check"></i> Ability to work collaboratively in a team environment.</li>
+                 <h5 class="card-title"><i class="fas fa-lightbulb me-2"></i>Knowledge Prerequisites</h5>
+                 <ul class="list-unstyled ps-2">
+                    <li><i class="fas fa-check"></i> Solid understanding of Python fundamentals (data types, functions, classes, modules).</li>
+                    <li><i class="fas fa-check"></i> Basic knowledge of AI/Machine Learning concepts (supervised/unsupervised learning, model training, APIs, core libraries).</li>
+                     <li><i class="fas fa-check"></i> Version control basics using Git (clone, add, commit, push, pull, branches).</li>
+                     <li><i class="fas fa-check"></i> Ability to work collaboratively in a fast-paced team environment.</li>
                 </ul>
             </div>
         </section>
@@ -364,59 +571,59 @@
         <!-- Hackathon Tracks -->
         <section id="tracks" class="mb-5">
              <h2 class="text-center mb-4"><i class="fas fa-stream me-2"></i>Choose Your Challenge Track</h2>
-             <p class="text-center mb-4">Select one of these exciting themes to focus your AI project. Choose wisely during onboarding!</p>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card track-card h-100">
+             <p class="text-center text-muted mb-4">Select one of these exciting themes to focus your AI project. Choose wisely during onboarding!</p>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card track-card w-100">
                         <div class="card-body">
                              <i class="fas fa-leaf"></i>
                             <h3 class="card-title">Sustainability & Environment</h3>
-                            <p class="card-text">Develop AI solutions for climate monitoring, resource optimization, or promoting sustainable practices.</p>
+                            <p class="card-text small text-muted">Develop AI solutions for climate monitoring, resource optimization, or promoting sustainable practices.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                     <div class="card track-card h-100">
+                <div class="col-md-6 col-lg-4 d-flex">
+                     <div class="card track-card w-100">
                         <div class="card-body">
                             <i class="fas fa-briefcase-medical"></i>
                             <h3 class="card-title">Medicine & Healthcare</h3>
-                            <p class="card-text">Innovate with AI in areas like diagnostic assistance, patient data analysis, or healthcare accessibility.</p>
+                            <p class="card-text small text-muted">Innovate with AI in areas like diagnostic assistance, patient data analysis, or healthcare accessibility.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                     <div class="card track-card h-100">
+                <div class="col-md-6 col-lg-4 d-flex">
+                     <div class="card track-card w-100">
                         <div class="card-body">
                              <i class="fas fa-tasks"></i>
                             <h3 class="card-title">Project Management</h3>
-                            <p class="card-text">Create AI tools for task automation, risk prediction, resource allocation, or team productivity.</p>
+                            <p class="card-text small text-muted">Create AI tools for task automation, risk prediction, resource allocation, or team productivity.</p>
                         </div>
                     </div>
                 </div>
-                 <div class="col-md-4">
-                     <div class="card track-card h-100">
+                 <div class="col-md-6 col-lg-4 d-flex">
+                     <div class="card track-card w-100">
                         <div class="card-body">
                              <i class="fas fa-city"></i>
                             <h3 class="card-title">Real Estate & Urban Planning</h3>
-                            <p class="card-text">Build AI applications for property valuation, market trend analysis, or optimizing urban infrastructure.</p>
+                            <p class="card-text small text-muted">Build AI applications for property valuation, market trend analysis, or optimizing urban infrastructure.</p>
                         </div>
                     </div>
                 </div>
-                 <div class="col-md-4">
-                     <div class="card track-card h-100">
+                 <div class="col-md-6 col-lg-4 d-flex">
+                     <div class="card track-card w-100">
                         <div class="card-body">
                             <i class="fas fa-landmark"></i>
                             <h3 class="card-title">Government & Public Sector</h3>
-                            <p class="card-text">Apply AI to enhance public services, data analysis for policy making, or citizen engagement platforms.</p>
+                            <p class="card-text small text-muted">Apply AI to enhance public services, data analysis for policy making, or citizen engagement platforms.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card track-card h-100">
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card track-card w-100">
                        <div class="card-body">
                             <i class="fas fa-lightbulb"></i>
                            <h3 class="card-title">Open Innovation</h3>
-                           <p class="card-text">Have a brilliant AI idea outside these tracks? Pitch it! We welcome creative and impactful projects.</p>
+                           <p class="card-text small text-muted">Have a brilliant AI idea outside these tracks? Pitch it! We welcome creative and impactful projects.</p>
                        </div>
                    </div>
                </div>
@@ -425,17 +632,18 @@
 
 
         <!-- Registration & Onboarding -->
-        <section id="registration" class="card">
-             <div class="card-header">
-                 <h2><i class="fas fa-user-plus me-2"></i>Register & Onboard Your Team</h2>
+        <section id="registration" class="card text-center">
+             <div class="card-header justify-content-center"> <!-- Center header content -->
+                 <h2><i class="fas fa-user-plus"></i>Register & Onboard Your Team</h2>
             </div>
-            <div class="card-body text-center">
-                <p>Ready to take on the challenge? Register your team (or sign up solo and we can help you find teammates!). After registration, you'll complete an onboarding form to help us understand your team's skills and preferred track.</p>
-                <p class="lead">Spaces are limited! Secure your spot today.</p>
-                <a href="registration-form-link.html" class="btn btn-custom btn-lg mt-3 mb-4">Register Your Team Now!</a>
+            <div class="card-body">
+                <p>Ready to take on the challenge? Register your team (or sign up solo and we can help you find teammates!). After registration, you'll receive a link to complete a comprehensive onboarding form to gauge experience, tool familiarity, and preferred track.</p>
+                <p class="lead fw-bold text-primary-color">Spaces are limited - Register Early!</p>
+                 <!-- IMPORTANT: Replace # with your actual registration link -->
+                <a href="#" class="btn btn-custom btn-lg my-3">Register Your Team Now!</a>
 
                  <!-- Onboarding Form Mockup inside Accordion -->
-                 <div class="accordion" id="onboardingFormAccordion">
+                 <div class="accordion mt-4" id="onboardingFormAccordion">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
@@ -444,80 +652,90 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#onboardingFormAccordion">
                             <div class="accordion-body text-start">
-                                <p><em>This form helps us tailor the experience and judging. Please fill it out accurately after registration. (This is a visual example)</em></p>
+                                <p><em>This detailed form (sent after registration) helps us tailor the event and ensures fair evaluation. Please fill it out accurately. (This is a visual example of the types of questions asked).</em></p>
                                 <form>
-                                    <div class="mb-3">
-                                        <label for="teamName" class="form-label">Team Name</label>
-                                        <input type="text" class="form-control" id="teamName" placeholder="e.g., The AI Mavericks" required>
-                                    </div>
-                                    <div class="mb-3">
-                                         <label class="form-label">Team Members (Enter Name & Email, one per line)</label>
-                                        <textarea class="form-control" id="teamMembers" rows="3" placeholder="John Doe - john.doe@email.com
-Jane Smith - jane.smith@email.com" required></textarea>
-                                     </div>
-
-                                     <label class="form-label">Average Team Experience Level:</label>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-4">
-                                            <label for="expPython" class="form-label"><i class="fab fa-python"></i> Python</label>
-                                            <select class="form-select" id="expPython">
-                                                <option selected>Select...</option>
-                                                <option value="1">Beginner</option>
-                                                <option value="2">Intermediate</option>
-                                                <option value="3">Advanced</option>
-                                            </select>
+                                    <fieldset class="mb-4 border p-3 rounded">
+                                        <legend class="fs-6 fw-bold p-2">Team Information</legend>
+                                        <div class="mb-3">
+                                            <label for="teamName" class="form-label">Team Name<span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="teamName" placeholder="e.g., The AI Mavericks" required>
                                         </div>
-                                         <div class="col-sm-4">
-                                             <label for="expAI" class="form-label"><i class="fas fa-brain"></i> AI/ML Concepts</label>
-                                            <select class="form-select" id="expAI">
-                                                <option selected>Select...</option>
-                                                <option value="1">Beginner</option>
-                                                <option value="2">Intermediate</option>
-                                                <option value="3">Advanced</option>
-                                             </select>
-                                         </div>
-                                        <div class="col-sm-4">
-                                            <label for="expDeploy" class="form-label"><i class="fas fa-cloud-upload-alt"></i> Deployment</label>
-                                            <select class="form-select" id="expDeploy">
-                                                <option selected>Select...</option>
-                                                <option value="1">Beginner</option>
-                                                <option value="2">Intermediate</option>
-                                                <option value="3">Advanced</option>
-                                             </select>
-                                         </div>
-                                     </div>
-
-                                     <div class="mb-3">
-                                        <label class="form-label"><i class="fas fa-stream"></i> Preferred Hackathon Track</label>
-                                        <select class="form-select" required>
-                                             <option selected disabled value="">Choose Track...</option>
-                                            <option>Sustainability & Environment</option>
-                                             <option>Medicine & Healthcare</option>
-                                             <option>Project Management</option>
-                                             <option>Real Estate & Urban Planning</option>
-                                             <option>Government & Public Sector</option>
-                                             <option>Open Innovation</option>
-                                         </select>
-                                    </div>
-
-                                    <label class="form-label">Familiarity with Specific Tools (Optional):</label>
-                                     <div class="mb-3">
-                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="toolCursor">
-                                             <label class="form-check-label" for="toolCursor">Cursor</label>
-                                         </div>
-                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="toolHF">
-                                             <label class="form-check-label" for="toolHF">Hugging Face</label>
+                                        <div class="mb-3">
+                                            <label class="form-label">Team Members<span class="text-danger">*</span> (Enter Name & Email, one per line)</label>
+                                            <textarea class="form-control" id="teamMembers" rows="4" placeholder="John Doe - john.doe@email.com
+Jane Smith - jane.smith@email.com
+Alex Lee - alex.lee@email.com" required></textarea>
+                                            <small class="form-text text-muted">List all members (2-4 recommended).</small>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id="toolVercel">
-                                            <label class="form-check-label" for="toolVercel">Vercel</label>
+                                        <div class="mb-3">
+                                            <label for="trackChoice" class="form-label"><i class="fas fa-stream"></i> Preferred Hackathon Track<span class="text-danger">*</span></label>
+                                            <select class="form-select" id="trackChoice" required>
+                                                 <option selected disabled value="">Choose primary track...</option>
+                                                <option>Sustainability & Environment</option>
+                                                 <option>Medicine & Healthcare</option>
+                                                 <option>Project Management</option>
+                                                 <option>Real Estate & Urban Planning</option>
+                                                 <option>Government & Public Sector</option>
+                                                 <option>Open Innovation</option>
+                                             </select>
+                                        </div>
+                                    </fieldset>
+
+                                     <fieldset class="mb-4 border p-3 rounded">
+                                         <legend class="fs-6 fw-bold p-2">Team Experience Levels (Average)</legend>
+                                         <p class="small text-muted">Rate your team's average comfort level (1=Beginner, 5=Expert).</p>
+                                         <div class="row mb-3 g-3">
+                                            <div class="col-md-4">
+                                                <label for="expPython" class="form-label"><i class="fab fa-python"></i> Python Programming</label>
+                                                <input type="range" class="form-range" min="1" max="5" step="1" id="expPython">
+                                             </div>
+                                             <div class="col-md-4">
+                                                 <label for="expAI" class="form-label"><i class="fas fa-brain"></i> AI/ML Concepts</label>
+                                                 <input type="range" class="form-range" min="1" max="5" step="1" id="expAI">
+                                             </div>
+                                            <div class="col-md-4">
+                                                <label for="expGit" class="form-label"><i class="fas fa-code-branch"></i> Git/GitHub</label>
+                                                <input type="range" class="form-range" min="1" max="5" step="1" id="expGit">
+                                             </div>
+                                              <div class="col-md-4">
+                                                  <label for="expCloud" class="form-label"><i class="fas fa-cloud-upload-alt"></i> Deployment/Cloud</label>
+                                                  <input type="range" class="form-range" min="1" max="5" step="1" id="expCloud">
+                                              </div>
+                                              <div class="col-md-4">
+                                                <label for="expAPI" class="form-label"><i class="fas fa-cogs"></i> APIs/Integration</label>
+                                                <input type="range" class="form-range" min="1" max="5" step="1" id="expAPI">
+                                             </div>
+                                              <div class="col-md-4">
+                                                  <label for="expPresentation" class="form-label"><i class="fas fa-person-chalkboard"></i> Presentation Skills</label>
+                                                  <input type="range" class="form-range" min="1" max="5" step="1" id="expPresentation">
+                                              </div>
                                          </div>
-                                          <!-- Add more tools if needed -->
-                                     </div>
+                                      </fieldset>
+
+                                      <fieldset class="mb-4 border p-3 rounded">
+                                            <legend class="fs-6 fw-bold p-2">Specific Tool Familiarity (Optional)</legend>
+                                            <p class="small text-muted">Check tools your team has prior experience with.</p>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-check mb-2"> <input class="form-check-input" type="checkbox" id="toolCursor"> <label class="form-check-label" for="toolCursor">Cursor AI Editor</label> </div>
+                                                    <div class="form-check mb-2"> <input class="form-check-input" type="checkbox" id="toolHF"> <label class="form-check-label" for="toolHF">Hugging Face Hub/Libs</label> </div>
+                                                    <div class="form-check mb-2"> <input class="form-check-input" type="checkbox" id="toolVercel"> <label class="form-check-label" for="toolVercel">Vercel</label> </div>
+                                                    <div class="form-check mb-2"> <input class="form-check-input" type="checkbox" id="toolStreamlit"> <label class="form-check-label" for="toolStreamlit">Streamlit</label> </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                     <div class="form-check mb-2"> <input class="form-check-input" type="checkbox" id="toolFlask"> <label class="form-check-label" for="toolFlask">Flask/Django</label> </div>
+                                                     <div class="form-check mb-2"> <input class="form-check-input" type="checkbox" id="toolDocker"> <label class="form-check-label" for="toolDocker">Docker</label> </div>
+                                                     <div class="form-check mb-2"> <input class="form-check-input" type="checkbox" id="toolGCP"> <label class="form-check-label" for="toolGCP">GCP/AWS/Azure AI</label> </div>
+                                                      <div class="form-check mb-2"> <input class="form-check-input" type="checkbox" id="toolOther"> <label class="form-check-label" for="toolOther">Other (Specify Below)</label> </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2">
+                                                <label for="otherTools" class="form-label visually-hidden">Other Tools</label>
+                                                <input type="text" class="form-control form-control-sm" id="otherTools" placeholder="List other relevant tools/platforms...">
+                                            </div>
+                                       </fieldset>
                                       <!-- Submit button would normally be here -->
-                                      <!-- <button type="submit" class="btn btn-secondary">Submit Onboarding Info</button> -->
+                                      <!-- <button type="submit" class="btn btn-secondary disabled">Submit Onboarding Info (Example)</button> -->
                                 </form>
                             </div>
                         </div>
@@ -526,48 +744,181 @@ Jane Smith - jane.smith@email.com" required></textarea>
              </div>
         </section>
 
-         <!-- Hackathon Process & Checklist -->
+         <!-- Detailed Hackathon Agenda -->
+        <section id="agenda" class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-calendar-alt"></i>Detailed Hackathon Agenda</h2>
+            </div>
+            <div class="card-body">
+                <!-- Day 1 -->
+                <h3 class="mb-3 mt-2 text-primary-color"><i class="fas fa-calendar-day me-2"></i>Day 1: Monday, 21st April 2025 - Hackathon Day</h3>
+                <ul class="agenda-list">
+                    <li>
+                        <div class="agenda-time"><i class="fas fa-door-open fa-fw"></i>8:15 AM - 9:00 AM</div>
+                        <div class="agenda-details">
+                            <strong>Welcome & Registration</strong>
+                            <p>Participant check-in, badge collection, welcome coffee & light refreshments, initial networking.</p>
+                        </div>
+                        <div class="agenda-speaker">
+                             Arif AlKhoory <br><small>SVP, DAFZ Customer Service</small>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="agenda-time"><i class="fas fa-microphone fa-fw"></i>9:00 AM - 9:05 AM</div>
+                        <div class="agenda-details">
+                            <strong>Keynote Speech</strong>
+                            <p>Setting the stage for innovation and the importance of AI.</p>
+                        </div>
+                        <div class="agenda-speaker">
+                            Binciya Salim <br><small>Founder, Wellington Campus</small>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="agenda-time"><i class="fas fa-users fa-fw"></i>9:05 AM - 9:15 AM</div>
+                        <div class="agenda-details">
+                            <strong>Team Formation & Hackathon Briefing</strong>
+                            <p>Finalizing teams (if needed), rules overview, judging criteria explanation, challenge details clarified.</p>
+                        </div>
+                        <div class="agenda-speaker">-</div>
+                    </li>
+                    <li>
+                        <div class="agenda-time"><i class="fas fa-laptop-code fa-fw"></i>9:15 AM - 2:15 PM</div>
+                        <div class="agenda-details">
+                            <strong>Hackathon Competition (5 Hours)</strong>
+                            <p>Intensive coding, development, and problem-solving within chosen tracks. Mentor support available throughout.</p>
+                        </div>
+                        <div class="agenda-speaker">(Mentors On-site)</div>
+                    </li>
+                     <li>
+                        <div class="agenda-time"><i class="fas fa-upload fa-fw"></i>2:15 PM - 2:30 PM</div>
+                        <div class="agenda-details">
+                             <strong>Solution Submission Deadline & Closing (Day 1)</strong>
+                             <p>Teams finalize and submit their projects via the designated portal (GitHub links, Demo URLs, Pitch Deck PDF). Brief closing remarks for the day.</p>
+                         </div>
+                         <div class="agenda-speaker">-</div>
+                     </li>
+                </ul>
+
+                <!-- Day 2 -->
+                <h3 class="mb-3 mt-4 text-primary-color"><i class="fas fa-calendar-day me-2"></i>Day 2: Tuesday, 22nd April 2025 - Panels, Pitch & Awards</h3>
+                 <ul class="agenda-list">
+                     <li>
+                         <div class="agenda-time"><i class="fas fa-concierge-bell fa-fw"></i>8:15 AM - 9:00 AM</div>
+                         <div class="agenda-details">
+                            <strong>Welcome & Registration (Day 2)</strong>
+                             <p>Morning coffee, networking for participants, judges, speakers, and guests.</p>
+                         </div>
+                         <div class="agenda-speaker">-</div>
+                     </li>
+                    <li>
+                         <div class="agenda-time"><i class="fas fa-microphone fa-fw"></i>9:00 AM - 9:05 AM</div>
+                        <div class="agenda-details">
+                             <strong>Opening Remarks (Day 2)</strong>
+                             <p>Brief welcome to Day 2 events.</p>
+                         </div>
+                         <div class="agenda-speaker">(TBC Speaker)</div>
+                    </li>
+                    <li>
+                         <div class="agenda-time"><i class="fas fa-comments fa-fw"></i>9:05 AM - 9:30 AM</div>
+                         <div class="agenda-details">
+                            <strong>Panel Discussion 01</strong>
+                            <p>Emerging Trends in AI Technology.</p>
+                         </div>
+                         <div class="agenda-speaker">(Panelists TBC)</div>
+                     </li>
+                    <li>
+                        <div class="agenda-time"><i class="fas fa-comments fa-fw"></i>9:30 AM - 10:00 AM</div>
+                        <div class="agenda-details">
+                            <strong>Panel Discussion 02</strong>
+                            <p>AI in Talent Acquisition and Employee Experience.</p>
+                        </div>
+                        <div class="agenda-speaker">(Panelists TBC)</div>
+                     </li>
+                    <li class="agenda-break">
+                        <div class="agenda-time"><i class="fas fa-coffee fa-fw"></i>10:00 AM - 10:15 AM</div>
+                        <div class="agenda-details">
+                             <strong>Coffee Break</strong>
+                             <p>Networking opportunity.</p>
+                         </div>
+                         <div class="agenda-speaker">-</div>
+                    </li>
+                    <li>
+                         <div class="agenda-time"><i class="fas fa-comments fa-fw"></i>10:15 AM - 10:45 AM</div>
+                        <div class="agenda-details">
+                            <strong>Panel Discussion 03</strong>
+                            <p>Future of AI in Aviation.</p>
+                         </div>
+                         <div class="agenda-speaker">(Panelists TBC)</div>
+                    </li>
+                     <li>
+                        <div class="agenda-time"><i class="fas fa-comments fa-fw"></i>10:45 AM - 11:15 AM</div>
+                        <div class="agenda-details">
+                            <strong>Panel Discussion 04</strong>
+                            <p>Resilient Supply Chains with AI.</p>
+                         </div>
+                        <div class="agenda-speaker">(Panelists TBC)</div>
+                    </li>
+                     <li class="agenda-break">
+                        <div class="agenda-time"><i class="fas fa-coffee fa-fw"></i>11:15 AM - 11:30 AM</div>
+                         <div class="agenda-details">
+                             <strong>Coffee Break</strong>
+                              <p>Short break before pitches.</p>
+                         </div>
+                        <div class="agenda-speaker">-</div>
+                     </li>
+                    <li>
+                        <div class="agenda-time"><i class="fas fa-person-chalkboard fa-fw"></i>11:30 AM - 12:45 PM</div> <!-- Adjusted end time -->
+                        <div class="agenda-details">
+                            <strong>Hackathon Pitch Presentations</strong>
+                             <p>Teams present their solutions and demos to the judging panel (approx. 5-7 min per team including Q&A).</p>
+                        </div>
+                        <div class="agenda-speaker">(Judging Panel)</div>
+                     </li>
+                     <li>
+                         <div class="agenda-time"><i class="fas fa-trophy fa-fw"></i>12:45 PM - 12:55 PM</div>
+                        <div class="agenda-details">
+                            <strong>Winner Announcement and Award Ceremony</strong>
+                             <p>Recognizing the top teams and achievements based on judging criteria.</p>
+                         </div>
+                         <div class="agenda-speaker">(VIP Guests & Judges)</div>
+                    </li>
+                     <li>
+                        <div class="agenda-time"><i class="fas fa-flag-checkered fa-fw"></i>12:55 PM - 01:00 PM</div>
+                         <div class="agenda-details">
+                             <strong>Closing Remarks</strong>
+                             <p>Final words, thank you notes, and event wrap-up.</p>
+                         </div>
+                         <div class="agenda-speaker">(Wellington Campus Lead)</div>
+                    </li>
+                 </ul>
+            </div>
+        </section>
+
+
+        <!-- Hackathon Process & Checklist -->
         <section id="process" class="card">
             <div class="card-header">
-                <h2><i class="fas fa-tasks me-2"></i>Hackathon Process & Submission Checklist</h2>
+                <h2><i class="fas fa-tasks"></i>Hackathon Process & Submission Checklist</h2>
              </div>
              <div class="card-body">
-                <p>Follow these steps to successfully complete the hackathon:</p>
-                 <!-- Note: Add class 'completed' to a div.checklist-item and swap fa-circle for fa-check-circle to show completion visually. Needs JS for dynamic interaction. -->
+                <p>Key steps and deliverables expected from each team:</p>
+                 <!-- Note: Add class 'completed' to a div.checklist-item to show completion visually. Needs JS for dynamic interaction. -->
                 <div class="checklist">
-                    <div class="checklist-item d-flex align-items-center">
-                         <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>10:00 AM: Registration & Welcome:</strong> Check-in, get your welcome kit.</div>
-                     <div class="checklist-item d-flex align-items-center">
-                         <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>10:30 AM: Intro & Track Selection:</strong> Briefing, tech overview, finalize your track.</div>
-                     <div class="checklist-item d-flex align-items-center">
-                         <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>11:00 AM: Hacking Begins:</strong> Ideate, plan, and start coding!</div>
-                    <div class="checklist-item d-flex align-items-center">
-                         <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>GitHub Repository:</strong> Create a public GitHub repo for your project.</div>
-                    <div class="checklist-item d-flex align-items-center">
-                         <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>Develop Backend:</strong> Build your core Python AI logic (Jupyter Notebook for exploration is fine, but structure your code).</div>
-                     <div class="checklist-item d-flex align-items-center">
-                         <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>Develop Frontend (Optional but Recommended):</strong> Create a simple UI (e.g., Streamlit, Flask, basic HTML/JS) to showcase your AI.</div>
-                     <div class="checklist-item d-flex align-items-center">
-                         <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>1:00 PM: Lunch Break:</strong> Refuel and network.</div>
-                    <div class="checklist-item d-flex align-items-center">
-                         <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>2:00 PM: Hacking Continues:</strong> Refine, debug, integrate.</div>
-                    <div class="checklist-item d-flex align-items-center">
-                        <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>Deploy Application:</strong> Host your demo (e.g., on Vercel, GitHub Pages). Provide the live URL.</div>
-                     <div class="checklist-item d-flex align-items-center">
-                         <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>Prepare Pitch Deck (PDF):</strong> Create a short presentation (max 5 slides) explaining your project, tech, and impact.</div>
-                     <div class="checklist-item d-flex align-items-center">
-                        <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>4:30 PM: Code Freeze & Submit Project:</strong> Final commit to GitHub. Submit links and Pitch Deck PDF.
+                     <div class="checklist-item"> <i class="fas fa-circle fa-fw"></i><i class="fas fa-check-circle fa-fw"></i> <strong>Attend Briefing:</strong> Understand rules, tracks, and submission process (Day 1, 9:05 AM).</div>
+                    <div class="checklist-item"> <i class="fas fa-circle fa-fw"></i><i class="fas fa-check-circle fa-fw"></i> <strong>GitHub Repository:</strong> Create a public GitHub repo for your project code. Include a clear README.md.</div>
+                    <div class="checklist-item"> <i class="fas fa-circle fa-fw"></i><i class="fas fa-check-circle fa-fw"></i> <strong>Develop AI Solution:</strong> Build your core Python AI logic, following best practices.</div>
+                    <div class="checklist-item"> <i class="fas fa-circle fa-fw"></i><i class="fas fa-check-circle fa-fw"></i> <strong>Demo/Frontend (Recommended):</strong> Create a way to demonstrate your AI (e.g., Streamlit, Flask App, interactive notebook).</div>
+                    <div class="checklist-item"> <i class="fas fa-circle fa-fw"></i><i class="fas fa-check-circle fa-fw"></i> <strong>Deploy Demo (Recommended):</strong> Host your demo online (e.g., Vercel, GitHub Pages, Streamlit Cloud). Provide the live URL.</div>
+                    <div class="checklist-item"> <i class="fas fa-circle fa-fw"></i><i class="fas fa-check-circle fa-fw"></i> <strong>Prepare Pitch Deck:</strong> Create a short, compelling presentation (PDF format, max 5 slides: Problem, Solution, Tech, Impact, Team).</div>
+                    <div class="checklist-item"> <i class="fas fa-circle fa-fw"></i><i class="fas fa-check-circle fa-fw"></i> <strong>Submit Project (Day 1, by 2:30 PM):</strong> Submit through the official portal: <strong>GitHub repo link</strong>, <strong>live demo URL</strong> (if applicable), and <strong>pitch deck PDF</strong>.
                         <div class="mt-3 w-100">
-                            <label for="pitchDeckUpload" class="form-label"><i class="fas fa-file-pdf me-1"></i>Upload Pitch Deck (PDF only):</label>
-                            <!-- Note: Actual upload requires server-side handling -->
-                             <input class="form-control" type="file" id="pitchDeckUpload" accept=".pdf" disabled>
-                             <small class="d-block mt-1 text-muted">Submit GitHub repo link, deployed app URL, and PDF pitch via the submission portal (link will be provided).</small>
+                            <label for="pitchDeckUpload" class="form-label"><i class="fas fa-file-pdf me-1"></i>Pitch Deck Upload Example (Submission via Portal)</label>
+                            <!-- Note: Actual upload handled by submission portal/backend -->
+                             <input class="form-control" type="file" id="pitchDeckUpload" accept=".pdf" disabled title="Upload functionality will be available on the submission portal">
+                             <small class="d-block mt-1 text-muted"> Ensure all links and files are submitted before the deadline.</small>
                         </div>
                      </div>
-                    <div class="checklist-item d-flex align-items-center">
-                        <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>5:00 PM: Project Presentations & Judging:</strong> Short demos from each team.</div>
-                    <div class="checklist-item d-flex align-items-center">
-                         <i class="fas fa-circle fa-fw me-2"></i><i class="fas fa-check-circle fa-fw me-2"></i><strong>6:00 PM: Awards Ceremony & Closing:</strong> Announce winners and celebrate!</div>
+                    <div class="checklist-item"> <i class="fas fa-circle fa-fw"></i><i class="fas fa-check-circle fa-fw"></i> <strong>Deliver Pitch (Day 2):</strong> Present your project clearly and concisely during the allocated time slot.</div>
                  </div>
             </div>
          </section>
@@ -576,18 +927,18 @@ Jane Smith - jane.smith@email.com" required></textarea>
         <!-- Prizes and Benefits -->
         <section id="prizes" class="card">
              <div class="card-header">
-                <h2><i class="fas fa-trophy me-2"></i>Prizes and Benefits</h2>
+                <h2><i class="fas fa-trophy"></i>Prizes and Benefits</h2>
             </div>
             <div class="card-body">
                 <ul class="list-unstyled">
-                     <li><i class="fas fa-trophy text-warning"></i> <strong>1st Place:</strong> $1,000 Cash Prize + Potential Internship Opportunity + Team Trophy</li>
-                    <li><i class="fas fa-medal text-secondary"></i> <strong>2nd Place:</strong> $500 Cash Prize + Free Course Enrollment Vouchers</li>
-                     <li><i class="fas fa-award"></i> <strong>3rd Place:</strong> Premium Tech Gadgets</li>
-                     <li><i class="fas fa-gifts"></i> <strong>Special Recognition Awards</strong> (e.g., Most Innovative, Best Technical Implementation)</li>
-                     <li><i class="fas fa-receipt"></i> <strong>AED 2000 Voucher:</strong> Per winning team member for use in the WellingtonCampus LMS Dashboard (Applicable to 1st, 2nd, 3rd place teams).</li>
-                     <li><i class="fas fa-certificate"></i> <strong>Certificates:</strong> Digitally verifiable certificates for all active participants.</li>
-                    <li><i class="fas fa-network-wired"></i> <strong>Networking:</strong> Connect with peers, mentors, and industry professionals.</li>
-                     <li><i class="fas fa-brain"></i> <strong>Skill Enhancement:</strong> Hands-on experience with Python, AI, and modern development tools.</li>
+                     <li><i class="fas fa-trophy"></i> <strong>1st Place:</strong> $1,000 Cash Prize + Team Trophy + Potential Internship/Project Opportunity.</li>
+                    <li><i class="fas fa-medal"></i> <strong>2nd Place:</strong> $500 Cash Prize + Free Course Enrollment Vouchers.</li>
+                     <li><i class="fas fa-award"></i> <strong>3rd Place:</strong> Premium Tech Gadgets Hamper.</li>
+                     <li><i class="fas fa-gifts"></i> <strong>Special Recognition Awards:</strong> Possible awards for Most Innovative Solution, Best Technical Implementation, etc.</li>
+                     <li><i class="fas fa-receipt"></i> <strong>AED 2000 LMS Voucher:</strong> Awarded <strong>per winning team member</strong> (1st, 2nd, 3rd place teams) for use in the WellingtonCampus LMS Dashboard on future courses/services.</li>
+                     <li><i class="fas fa-certificate"></i> <strong>Certificates of Participation:</strong> Digitally verifiable certificates for all active participants who complete the hackathon.</li>
+                    <li><i class="fas fa-network-wired"></i> <strong>Networking Opportunities:</strong> Connect with peers, mentors, speakers, and industry professionals.</li>
+                     <li><i class="fas fa-brain"></i> <strong>Skill Enhancement & Portfolio Building:</strong> Gain hands-on experience with Python, AI tools, and collaborative development; build a project for your portfolio.</li>
                 </ul>
             </div>
         </section>
@@ -595,68 +946,108 @@ Jane Smith - jane.smith@email.com" required></textarea>
         <!-- Judging Criteria -->
         <section id="judging" class="card">
             <div class="card-header">
-                <h2><i class="fas fa-gavel me-2"></i>Judging Criteria</h2>
+                <h2><i class="fas fa-gavel"></i>Judging Criteria</h2>
             </div>
              <div class="card-body">
-                 <p>Projects will be evaluated based on the following criteria:</p>
-                <ul class="list-unstyled">
-                    <li><i class="fas fa-lightbulb"></i> <strong>Innovation & Creativity:</strong> Originality of the idea and approach within the chosen track.</li>
-                    <li><i class="fab fa-python"></i> <strong>Technical Implementation:</strong> Effective use of Python, AI/ML techniques, code quality, and functionality.</li>
-                     <li><i class="fas fa-chart-line"></i> <strong>Impact & Potential:</strong> Significance of the problem addressed and the solution's potential real-world value.</li>
-                     <li><i class="fas fa-desktop"></i> <strong>User Experience & Design (if applicable):</strong> Clarity and usability of the demo/frontend.</li>
-                     <li><i class="fas fa-cloud"></i> <strong>Deployment & Completeness:</strong> Working demo, code hosted on GitHub, project completion level.</li>
-                    <li><i class="fas fa-microphone-alt"></i> <strong>Presentation & Pitch:</strong> Clarity, enthusiasm, and effectiveness of the team's presentation.</li>
-                </ul>
+                 <p>Projects will be evaluated holistically by a panel of judges based on the following key criteria (weights may vary):</p>
+                <ol class="ps-4"> <!-- Ordered list for criteria -->
+                    <li class="mb-2"> <strong>Innovation & Creativity (25%):</strong> Originality of the idea, novelty of the approach within the chosen track, and creative use of AI.</li>
+                    <li class="mb-2"> <strong>Technical Implementation (30%):</strong> Effective use of Python and relevant AI/ML libraries/tools, code quality, functionality, scalability potential, and technical difficulty overcome.</li>
+                    <li class="mb-2"> <strong>Impact & Feasibility (20%):</strong> Significance of the problem addressed, potential real-world value/impact of the solution, and practicality of implementation.</li>
+                    <li class="mb-2"> <strong>Execution & Demo (15%):</strong> Working demo quality (if applicable), completeness of the project within the timeframe, clear documentation (README).</li>
+                    <li class="mb-2"> <strong>Presentation & Pitch (10%):</strong> Clarity, enthusiasm, structure of the presentation, ability to articulate the project's value, and Q&A responses.</li>
+                </ol>
+                 <p class="mt-3"><i class="fas fa-info-circle text-info me-1"></i> <strong>Note:</strong> Compliance with rules (e.g., submission deadline, public GitHub repo) is mandatory.</p>
              </div>
         </section>
 
          <!-- AI Grading/Test Score Feature -->
-        <section id="ai-grading" class="card bg-light border-info">
-             <div class="card-header bg-info text-white">
-                <h2><i class="fas fa-robot me-2"></i>AI-Assisted Evaluation</h2>
+        <section id="ai-grading" class="card"> <!-- Removed bg-light and border-info, relying on default card style with custom #ai-grading css -->
+             <div class="card-header"> <!-- Removed bg-info text-white, uses custom #ai-grading css -->
+                <h2><i class="fas fa-robot"></i>AI-Assisted Evaluation</h2>
              </div>
             <div class="card-body">
-                 <p>To provide objective feedback, we utilize AI tools to assist in the initial evaluation process. This may include automated checks for:</p>
-                <ul>
-                    <li><i class="fas fa-code"></i> Code quality & best practices (via linting/static analysis).</li>
-                    <li><i class="fas fa-link"></i> Functionality checks on the deployed application link.</li>
-                    <li><i class="fas fa-check-double"></i> Dependency checks and reproducibility from GitHub.</li>
+                 <p>To complement the human judging process and provide objective insights, we may utilize AI tools to assist in the initial screening and evaluation. This helps ensure consistency and can include checks for:</p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-code"></i> <strong>Code Analysis:</strong> Basic checks for code quality, style consistency, and potential issues using static analysis tools.</li>
+                    <li><i class="fas fa-link"></i> <strong>Demo Accessibility:</strong> Verifying that the provided demo link is live and accessible.</li>
+                    <li><i class="fas fa-check-double"></i> <strong>Repository Checks:</strong> Basic verification of repository structure, README presence, and dependency file consistency.</li>
                  </ul>
-                <p class="mb-0">While human judges make the final decisions based on the full criteria, these AI insights help ensure a thorough and fair review. You might see an "AI Test Score Summary" as part of your feedback.</p>
-                 <!-- Mock Button - Does nothing without JS/backend -->
-                <!-- <button class="btn btn-outline-info mt-3" disabled><i class="fas fa-chart-bar me-2"></i>View Example AI Score Report</button> -->
+                <p class="mb-0 small text-muted">Final scores and rankings are determined by the human judges based on the full criteria, integrating these AI-assisted insights where applicable. This is primarily for efficiency and preliminary feedback.</p>
             </div>
         </section>
 
         <!-- Contact Information -->
         <section id="contact" class="card">
             <div class="card-header">
-                <h2><i class="fas fa-envelope me-2"></i>Contact Us</h2>
+                <h2><i class="fas fa-envelope"></i>Contact Us</h2>
             </div>
             <div class="card-body">
-                <p class="card-text">Have questions about the hackathon? Don't hesitate to reach out:</p>
+                <p class="card-text">Have questions about registration, preparation, or the hackathon details? Reach out to the Wellington Campus Events Team:</p>
                  <ul class="list-unstyled">
                      <li><i class="fas fa-envelope-open-text"></i> Email: <a href="mailto:events@wellingtoncampus.co">events@wellingtoncampus.co</a></li>
                      <li><i class="fas fa-phone"></i> Phone: <a href="tel:+971542523922">+971 54 252 3922</a></li>
-                     <li><i class="fas fa-map-marker-alt"></i> Visit Us: Wellington Campus, Dubai Commercity</li>
+                     <li><i class="fas fa-map-marker-alt"></i> Campus Location: Wellington Campus, Dubai Knowledge Park, Dubai, UAE</li>
                  </ul>
+                 <!-- Optional: Add social media links -->
+                  <!-- <p class="mt-3">
+                     <a href="#" class="me-2 text-secondary"><i class="fab fa-linkedin fa-2x"></i></a>
+                     <a href="#" class="me-2 text-secondary"><i class="fab fa-twitter fa-2x"></i></a>
+                     <a href="#" class="text-secondary"><i class="fab fa-instagram fa-2x"></i></a>
+                  </p> -->
             </div>
         </section>
-    </div>
+
+         <!-- Footer Placeholder -->
+         <footer class="text-center mt-5 mb-4 text-muted">
+             <small>© 2024-2025 Wellington Campus. All Rights Reserved.</small>
+         </footer>
+
+    </div> <!-- End Main Container -->
+
 
     <!-- Bootstrap Bundle JS (Includes Popper) -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-    <!-- Optional: Custom JS for dynamic features (Progress Bar, Checklist, etc.) -->
+    <!-- Optional: Custom JS for dynamic features (Progress Bar, Checklist interaction, etc.) -->
     <!-- <script>
-        // Example: Add JS later to handle dynamic updates
-        // const progressBar = document.querySelector('.progress-bar');
-        // progressBar.style.width = '50%';
-        // progressBar.textContent = '50% - Hacking in Progress';
-        // progressBar.setAttribute('aria-valuenow', '50');
+        // Example: You could add JavaScript here to:
+        // - Dynamically update the progress bar based on date/time
+        // - Add 'completed' class to checklist items on click
+        // - Perform client-side form validation (though server-side is crucial)
 
-        // const checklistItems = document.querySelectorAll('.checklist-item');
-        // // Add event listeners to mark items as complete, etc.
+        // Simple example for progress bar (adjust logic as needed)
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBar = document.querySelector('#progress .progress-bar');
+            const currentDate = new Date();
+            const eventStartDate = new Date('2025-04-21T09:00:00'); // Day 1 Start
+            const eventEndDate = new Date('2025-04-22T13:00:00'); // Day 2 End
+
+            let progressPercent = 10; // Default: Registration Open
+            let progressText = '10% - Registration Open';
+
+            if (currentDate >= eventStartDate && currentDate < new Date('2025-04-21T14:30:00')) { // During Hackathon Day 1
+                 progressPercent = 50;
+                 progressText = '50% - Hackathon Day 1 In Progress';
+            } else if (currentDate >= new Date('2025-04-22T09:00:00') && currentDate < eventEndDate) { // During Day 2 Panels/Pitching
+                 progressPercent = 80;
+                 progressText = '80% - Day 2: Panels & Pitching';
+            } else if (currentDate >= eventEndDate) { // Event Over
+                progressPercent = 100;
+                progressText = '100% - Hackathon Completed!';
+                 progressBar.classList.remove('progress-bar-animated');
+                 progressBar.classList.remove('progress-bar-striped');
+             }
+
+            // You might want more granular steps if needed
+
+             if (progressBar) {
+                 progressBar.style.width = progressPercent + '%';
+                 progressBar.textContent = progressText;
+                progressBar.setAttribute('aria-valuenow', progressPercent);
+            }
+         });
+
     </script> -->
 </body>
 </html>
