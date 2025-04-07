@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python for AI Hackathon - Wellington Campus</title>
-    <meta name="description" content="Join the Wellington Campus Python for AI Hackathon! Easily navigate key info, explore tracks in detail via modals, track progress, and compete for prizes. Register now for the ultimate AI challenge!">
-    <meta name="keywords" content="Wellington Campus, hackathon, Python, AI, Artificial Intelligence, user experience, information flow, modal, navigation, coding, competition, Dubai, UAE, teams, tech challenge, supply chain, logistics, sustainability, medicine, project management, real estate, government, task tracker, datasets, Jupyter, AI judging, Cursor, Hugging Face, GitHub, Vercel, DAFZ, Binciya Salim, Huawei, Oppo">
+    <meta name="description" content="Join the Wellington Campus Python for AI Hackathon! Choose a track, track progress, see AI-assisted evaluation examples, and compete for prizes. Register now!">
+    <meta name="keywords" content="Wellington Campus, hackathon, Python, AI, Artificial Intelligence, coding, competition, Dubai, UAE, teams, tech challenge, supply chain, logistics, sustainability, medicine, project management, real estate, government, track details, SaaS example, task tracker, datasets, Jupyter, AI judging, Cursor, Hugging Face, GitHub, Vercel, DAFZ, Binciya Salim, Huawei, Oppo">
     <meta name="author" content="Wellington Campus">
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Python for AI Hackathon - Wellington Campus">
-    <meta property="og:description" content="Improved UX! Navigate easily, explore tracks in modals, track tasks, and build cutting-edge AI solutions using Python. Register for the Wellington Campus Hackathon!">
+    <meta property="og:description" content="Form a team, choose a track, track tasks, simulate AI evaluation, and build cutting-edge AI solutions using Python. Register for the Wellington Campus Hackathon!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wellingtoncampus.co/hackathon.html"> <!-- Update with your final URL -->
     <meta property="og:image" content="./wellingtoncampus.png"> <!-- Ensure this path is correct -->
     <meta property="og:image:alt" content="Wellington Campus Logo">
     <!-- Favicon -->
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon"> <!-- Optional: Add a favicon -->
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- Font Awesome -->
@@ -26,6 +26,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
 
     <style>
+        /* --- Keep all previous styles --- */
         :root {
             --primary-color: #d4af37; /* Gold */
             --secondary-color: #003366; /* Dark Blue */
@@ -39,10 +40,6 @@
             --bottom-nav-bg: var(--accent-color);
             --bottom-nav-icon: #6c757d;
             --bottom-nav-active: var(--primary-color);
-        }
-
-        html {
-             scroll-behavior: smooth; /* Enable smooth scrolling for jump links */
         }
 
         body {
@@ -67,81 +64,15 @@
          h1 .fa-brain { color: var(--primary-color); }
         .hackathon-subtitle { color: var(--secondary-color); font-size: 1.5rem; font-weight: 400; margin-bottom: 1.5rem; }
 
-        /* --- NEW: Hero Section Enhancements --- */
-        .hero-details {
-            font-size: 1.1rem;
-            color: var(--secondary-color);
-            margin-bottom: 1.5rem;
-        }
-        .hero-details i {
-            color: var(--primary-color);
-            margin-right: 0.5rem;
-            width: 20px; /* Align icons */
-        }
-        .hero-cta {
-            margin-top: 1.5rem;
-        }
-
-        /* --- NEW: Jump Links Navigation --- */
-        .jump-nav {
-             background-color: rgba(255, 255, 255, 0.8);
-             backdrop-filter: blur(5px);
-             padding: 0.5rem 0;
-             border-radius: 50px;
-             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-             margin-bottom: 2.5rem;
-             text-align: center;
-             position: sticky; /* Make it sticky below header */
-             top: 10px; /* Adjust spacing from top */
-             z-index: 1025; /* Below navbar if one existed, above content */
-         }
-         .jump-nav a {
-             color: var(--secondary-color);
-             text-decoration: none;
-             padding: 0.4rem 1rem;
-             margin: 0 0.3rem;
-             border-radius: 50px;
-             font-size: 0.9rem;
-             font-weight: 500;
-             transition: background-color 0.3s ease, color 0.3s ease;
-         }
-         .jump-nav a:hover, .jump-nav a:focus {
-             background-color: var(--primary-color);
-             color: white;
-         }
-        @media (max-width: 767px) {
-            .jump-nav {
-                display: none; /* Hide jump links on small screens where scrolling is less tedious */
-            }
-        }
-
-
         .card { border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom: 1rem; border: none; overflow: visible; background-color: var(--accent-color); }
-        /* --- Modified: Card Header Clickable --- */
-        .card-header.clickable { cursor: pointer; }
+        .card-header { background-color: var(--secondary-color); color: var(--accent-color); font-weight: 600; border-bottom: 3px solid var(--primary-color); padding: 1rem 1.5rem; display: flex; align-items: center; }
         .card-header h2 { color: var(--accent-color); margin: 0; font-size: 1.5rem; }
-        .card-header i { margin-right: 0.75rem; font-size: 1.3rem; pointer-events: none; /* Prevent icon click interfering */ }
-        .card-header .btn-collapse-details {
-            font-size: 0.8rem; padding: 0.2rem 0.6rem;
-            margin-left: auto; /* Push button to the right */
-            pointer-events: none; /* Let header handle click */
-            display: inline-flex; /* Align icon */
-            align-items: center;
-        }
-         .card-header .btn-collapse-details .toggle-icon { transition: transform 0.3s ease; margin-left: 0.3rem;}
-         .card-header[aria-expanded="true"] .toggle-icon { transform: rotate(180deg); } /* Rotate icon */
-
+        .card-header i { margin-right: 0.75rem; font-size: 1.3rem; }
+        .card-header .btn-collapse-details { font-size: 0.8rem; padding: 0.2rem 0.6rem; margin-left: auto; }
         .card-title { color: var(--secondary-color); margin-bottom: 1rem; font-size: 1.4rem; }
         .card-body { padding: 2rem; }
         .card-body h3 { margin-top: 0.5rem; }
         .card > .collapse > .card-body, .card > .collapsing > .card-body { padding-top: 1rem; }
-
-         /* --- NEW: Key Info Card --- */
-        .key-info-card .card-body { padding: 1.5rem; }
-        .key-info-card ul { list-style: none; padding-left: 0; margin-bottom: 0; }
-        .key-info-card li { margin-bottom: 0.8rem; display: flex; align-items: center; font-size: 1.05rem; }
-        .key-info-card i { color: var(--primary-color); margin-right: 1rem; width: 25px; text-align: center; font-size: 1.2em; }
-        .key-info-card .btn-custom { margin-top: 1rem; }
 
         .btn-custom { background-color: var(--primary-color); color: #fff; border: none; padding: 0.8rem 2.5rem; border-radius: 50px; transition: all 0.3s ease; font-weight: 600; letter-spacing: 0.5px; display: inline-block; text-decoration: none; }
         .btn-custom:hover { background-color: #b8860b; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(212,175,55,0.4); color: #fff; }
@@ -155,31 +86,20 @@
         #prizes .fa-award { color: #cd7f32; }
         #prizes .fa-gifts { color: #f06292; }
 
-        /* Track Card Styling - Adjusted for Modal Trigger */
-        .track-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer; /* Indicate clickable */
-            height: 100%;
-            border: 1px solid #eee;
-            margin-bottom: 1rem; /* Add margin back as collapse is removed */
-        }
+        /* Track Card & Expansion Styling */
+        .track-trigger { display: block; text-decoration: none; color: inherit; }
+        .track-card { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; height: 100%; border: 1px solid #eee; margin-bottom: 0; }
         .track-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,51,102,0.2); }
         .track-card .card-body { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.5rem; }
         .track-card i { font-size: 3rem; margin-bottom: 1rem; color: var(--primary-color); }
         .track-card .card-title { font-size: 1.4rem; }
-        /* Removed .track-expansion styles */
-
-        /* --- NEW: Track Detail Modal --- */
-        #trackDetailModal .modal-header { background-color: var(--secondary-color); color: var(--accent-color); border-bottom: 2px solid var(--primary-color); }
-        #trackDetailModal .modal-header .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
-        #trackDetailModal .modal-title { font-family: 'Poppins', sans-serif; display: flex; align-items: center; }
-        #trackDetailModal .modal-title i { font-size: 1.5rem; margin-right: 1rem; color: var(--primary-color); }
-        #trackDetailModal .modal-body h4 { color: var(--secondary-color); font-weight: 600; margin-top: 0.5rem; margin-bottom: 0.75rem; font-size: 1.2rem; }
-        #trackDetailModal .modal-body p { font-size: 1rem; line-height: 1.6; margin-bottom: 1rem; }
-        #trackDetailModal .modal-body strong { color: var(--secondary-color); }
-        #trackDetailModal .btn-choose-track-modal { background-color: var(--secondary-color); color: var(--accent-color); border: none; padding: 0.6rem 1.8rem; border-radius: 50px; transition: all 0.3s ease; font-weight: 500; display: inline-flex; align-items: center; text-decoration: none; margin-top: 1rem; }
-        #trackDetailModal .btn-choose-track-modal i { margin-left: 0.5rem; }
-        #trackDetailModal .btn-choose-track-modal:hover { background-color: #004a8d; color: var(--accent-color); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 51, 102, 0.3); }
+        .track-expansion { background-color: #f0f5fa; border: 1px solid #ddebf8; border-top: none; border-radius: 0 0 var(--border-radius) var(--border-radius); padding: 1.5rem 2rem; margin-top: -1px; margin-bottom: 1.5rem; }
+        .track-expansion h4 { color: var(--secondary-color); font-weight: 600; margin-top: 0.5rem; margin-bottom: 0.75rem; font-size: 1.2rem; }
+        .track-expansion p { font-size: 1rem; line-height: 1.6; margin-bottom: 1rem; }
+        .track-expansion strong { color: var(--secondary-color); }
+        .btn-choose-track { background-color: var(--secondary-color); color: var(--accent-color); border: none; padding: 0.6rem 1.8rem; border-radius: 50px; transition: all 0.3s ease; font-weight: 500; display: inline-flex; align-items: center; text-decoration: none; margin-top: 1rem; }
+        .btn-choose-track i { margin-left: 0.5rem; }
+        .btn-choose-track:hover { background-color: #004a8d; color: var(--accent-color); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 51, 102, 0.3); }
 
         /* Checklist Styling */
         .checklist { padding-left: 0; list-style: none; }
@@ -199,7 +119,7 @@
 
         /* Progress Bar */
         .progress { height: 25px; font-size: 0.9rem; border-radius: 50px; background-color: #e9ecef; }
-        .progress-bar { background-color: var(--primary-color); font-weight: bold; color: var(--accent-color); display: flex; align-items: center; justify-content: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); transition: width 0.6s ease; }
+        .progress-bar { background-color: var(--primary-color); font-weight: bold; color: var(--accent-color); display: flex; align-items: center; justify-content: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); transition: width 0.6s ease; } /* Added transition */
 
         /* Onboarding Accordion */
         .accordion-button { font-weight: 600; }
@@ -230,20 +150,60 @@
          .list-unstyled i, .list-group-item i { vertical-align: middle; }
          .card ul { list-style: none; padding-left: 0; }
 
-         /* AI Grading Card Specific Style & Simulation */
+         /* --- AI Grading Card Specific Style --- */
         #ai-grading.card { background-color: #e1f5fe; border: 1px solid #0277bd; }
         #ai-grading > .card-header { background-color: #0277bd; border-bottom-color: var(--primary-color); }
         #ai-grading .card-header h2, #ai-grading .card-header i { color: var(--accent-color); }
-        #judgingLoader { text-align: center; padding: 2rem 0; display: none; }
-        #judgingResults { margin-top: 1.5rem; padding: 1.5rem; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #dee2e6; display: none; }
-        #judgingResults h5 { color: var(--secondary-color); margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem; }
-        #resultTaskProgress ul { list-style: none; padding-left: 0; font-size: 0.95rem; }
-        #resultTaskProgress li { margin-bottom: 0.5rem; display: flex; align-items: center; }
-        #resultTaskProgress i { width: 20px; text-align: center; margin-right: 0.75rem; }
+        /* --- NEW Styles for AI Judging Simulation --- */
+        #judgingLoader {
+            text-align: center;
+            padding: 2rem 0;
+            display: none; /* Hidden by default */
+        }
+        #judgingResults {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            display: none; /* Hidden by default */
+        }
+        #judgingResults h5 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.5rem;
+        }
+        #resultTaskProgress ul {
+            list-style: none;
+            padding-left: 0;
+            font-size: 0.95rem;
+        }
+        #resultTaskProgress li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        #resultTaskProgress i {
+            width: 20px;
+            text-align: center;
+            margin-right: 0.75rem;
+        }
         .task-complete i { color: var(--success-color); }
         .task-incomplete i { color: var(--error-color); }
-        #resultTechSummary h6 { color: var(--secondary-color); margin-top: 1.5rem; margin-bottom: 0.5rem; }
-        #resultTechSummary p { font-size: 0.95rem; background-color: #ffffff; padding: 0.8rem; border-radius: 5px; border-left: 4px solid var(--primary-color); }
+        #resultTechSummary h6 {
+             color: var(--secondary-color);
+             margin-top: 1.5rem;
+             margin-bottom: 0.5rem;
+        }
+        #resultTechSummary p {
+            font-size: 0.95rem;
+            background-color: #ffffff;
+            padding: 0.8rem;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+        }
+
 
         /* Task Tracker Floating Button */
          .task-tracker-button { position: fixed; bottom: 75px; right: 20px; width: 60px; height: 60px; background-color: var(--secondary-color); color: var(--accent-color); border: 2px solid var(--primary-color); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0, 51, 102, 0.4); cursor: pointer; z-index: 1050; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; }
@@ -261,21 +221,13 @@
         .bottom-nav .btn:hover, .bottom-nav .btn.active { color: var(--bottom-nav-active); }
         .bottom-nav i { font-size: 1.2rem; margin-bottom: 0.2rem; }
 
-        /* Media query to show bottom nav */
+        /* Media query to show bottom nav on small screens */
         @media (max-width: 576px) {
              .bottom-nav { display: flex; }
              body { padding-bottom: 60px; }
              .task-tracker-button { bottom: 75px; }
-             /* Ensure 2-col track layout persists on mobile/tablet */
-             #tracks .col-lg-4 { flex-basis: 50%; max-width: 50%; }
-        }
-
-        /* Simple HR separator */
-        hr.section-divider {
-            border: 0;
-            height: 1px;
-            background-image: linear-gradient(to right, rgba(0, 51, 102, 0), rgba(0, 51, 102, 0.3), rgba(0, 51, 102, 0));
-            margin: 3rem 0; /* Add vertical spacing */
+             /* Update track grid for mobile */
+             #tracks .col-lg-4 { flex-basis: 50%; max-width: 50%; } /* Force 2 columns */
         }
 
     </style>
@@ -285,185 +237,138 @@
 
     <!-- Main Content -->
     <div class="container mt-4" id="hackathon">
-
-        <!-- --- HERO SECTION --- -->
-        <header class="text-center mb-4"> <!-- Reduced bottom margin -->
+        <header class="text-center mb-5">
             <h1><i class="fas fa-brain me-2"></i>Python for AI Hackathon</h1>
             <p class="hackathon-subtitle">Innovate, Collaborate, Code, and Win!</p>
-            <!-- NEW: Key Details in Header -->
-            <div class="hero-details">
-                 <span><i class="fas fa-calendar-alt"></i> 21st - 22nd April 2025</span> |
-                 <span class="ms-2"><i class="fas fa-map-marker-alt"></i> DAFZ, Dubai, UAE</span>
-            </div>
-            <div class="hero-cta">
-                 <a href="#registration" class="btn btn-custom btn-lg">Register Your Team Now!</a>
-            </div>
         </header>
 
-         <!-- --- JUMP LINKS (Desktop) --- -->
-         <nav class="jump-nav d-none d-md-block"> <!-- Hide on small screens -->
-            <a href="#about">About</a>
-            <a href="#key-info">Key Info</a>
-            <a href="#tracks">Tracks</a>
-            <a href="#preparation">Prepare</a>
-            <a href="#agenda">Agenda</a>
-            <a href="#prizes">Prizes</a>
-            <a href="#registration">Register</a>
-        </nav>
-
-        <!-- Progress Bar -->
-        <section id="progress" class="mb-5">
-             <h2 class="text-center mb-3 visually-hidden">Hackathon Status</h2> <!-- Hide heading, progress bar is intuitive -->
-             <div class="progress" role="progressbar" aria-label="Hackathon Task Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                 <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%">0% Tasks Complete</div> <!-- Updated by JS -->
+         <!-- Progress Bar -->
+         <section id="progress" class="mb-5">
+             <h2 class="text-center mb-3">Hackathon Status</h2>
+             <div class="progress" role="progressbar" aria-label="Hackathon Progress" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                 <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 10%">10% Tasks Complete</div> <!-- Updated by JS -->
              </div>
-        </section>
+         </section>
 
-        <!-- About Section -->
-        <section id="about" class="card">
-            <div class="card-header"> <h2><i class="fas fa-info-circle"></i>About the Hackathon</h2> </div>
-            <div class="card-body"> <p>Join us for the flagship <strong>Python for AI Hackathon</strong> at Wellington Campus! This event is your platform to dive deep into the world of Artificial Intelligence using Python. Form teams, tackle real-world challenges across various tracks, and push the boundaries of innovation. Whether you're refining your skills or stepping into AI for the first time, this hackathon offers an unparalleled experience to learn, compete, network, and win exciting prizes.</p> </div>
-        </section>
+        <!-- Event Description (Keep as is) -->
+        <section id="about" class="card"> <div class="card-header"> <h2><i class="fas fa-info-circle"></i>About the Hackathon</h2> </div> <div class="card-body"> <p>Join us for the flagship <strong>Python for AI Hackathon</strong> at Wellington Campus! This event is your platform to dive deep into the world of Artificial Intelligence using Python. Form teams, tackle real-world challenges across various tracks, and push the boundaries of innovation. Whether you're refining your skills or stepping into AI for the first time, this hackathon offers an unparalleled experience to learn, compete, network, and win exciting prizes.</p> </div> </section>
 
-        <!-- --- NEW: Key Info Card --- -->
-        <section id="key-info" class="card key-info-card bg-light border-secondary mb-4"> <!-- Added styles -->
-             <div class="card-body">
-                <h3 class="card-title text-center mb-4"><i class="fas fa-star me-2 text-primary"></i>Key Information</h3>
-                <ul>
-                    <li><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> 21st - 22nd April 2025</li>
-                    <li><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> DAFZ, Dubai, UAE</li>
-                    <li><i class="fas fa-users"></i> <strong>Format:</strong> Teams of 2-4 Recommended</li>
-                    <li><i class="fas fa-clock"></i> <strong>Submission Deadline:</strong> Day 1, 2:30 PM</li>
-                 </ul>
-                 <div class="text-center">
-                     <a href="#registration" class="btn btn-custom">Jump to Registration</a>
-                 </div>
-             </div>
-        </section>
+        <!-- Event Details (Keep as is) -->
+        <section id="details" class="card"> <div class="card-header"> <h2><i class="fas fa-calendar-check"></i>Event Details</h2> </div> <div class="card-body"> <ul class="list-unstyled"> <li><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> 21st - 22nd April 2025</li> <li><i class="fas fa-clock"></i> <strong>Time:</strong> See Detailed Agenda Below</li> <li><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> Dubai Duty free zone, Dubai, UAE</li> <li><i class="fas fa-users"></i> <strong>Format:</strong> Team-based (Teams of 2-4 recommended)</li> <li><i class="fab fa-python"></i> <strong>Theme:</strong> Python for AI Development</li> </ul> </div> </section>
 
-         <!-- --- SECTION DIVIDER --- -->
-         <hr class="section-divider">
+        <!-- How to Get Ready (Not Collapsed) -->
+        <section id="preparation" class="card"> <div class="card-header"> <h2><i class="fas fa-laptop-code"></i>How to Get Ready</h2> </div> <div class="card-body"> <p>Ensure you and your team are prepared for success:</p> <div class="row"> <div class="col-lg-6 mb-4"> <h5 class="card-title"><i class="fas fa-laptop me-2"></i>Hardware & Base Setup</h5> <ul class="list-unstyled ps-2"> <li><i class="fas fa-check-circle"></i> Your own Laptop (Windows, macOS, or Linux)</li> <li><i class="fas fa-check-circle"></i> Stable Internet Connection (Venue Wi-Fi available)</li> <li><i class="fas fa-check-circle"></i> Charger & Power Adapter</li> </ul> </div> <div class="col-lg-6 mb-4"> <h5 class="card-title"><i class="fas fa-tools me-2"></i>Software & Tools</h5> <ul class="list-unstyled ps-2"> <li><i class="fab fa-python"></i> Python (3.8+ recommended) & Pip/Conda</li> <li><i class="fas fa-book"></i> Jupyter Notebook / JupyterLab <span class="badge bg-secondary">Key Tool</span></li> <li><i class="fas fa-terminal"></i> Code Editor (e.g., VS Code, PyCharm)</li> <li><i class="fas fa-code-branch"></i> Git & GitHub Account (Essential for submission)</li> <li><i class="fas fa-magic"></i> AI Dev Tools: Familiarity with <a href="https://cursor.sh/" target="_blank" rel="noopener noreferrer">Cursor (AI Code Editor)</a> is a plus!</li> <li><i class="fas fa-brain"></i> AI/ML Libraries: Experience via <a href="https://huggingface.co/" target="_blank" rel="noopener noreferrer">Hugging Face</a> (Transformers, Datasets) or similar (Scikit-learn, TensorFlow/Keras, PyTorch)</li> <li><i class="fas fa-cloud-upload-alt"></i> Deployment: Account on <a href="https://vercel.com/" target="_blank" rel="noopener noreferrer">Vercel</a>, GitHub Pages, Streamlit Cloud, or similar platform.</li> </ul> </div> </div> <h5 class="card-title"><i class="fas fa-lightbulb me-2"></i>Knowledge Prerequisites</h5> <ul class="list-unstyled ps-2"> <li><i class="fas fa-check"></i> Solid understanding of Python fundamentals (data types, functions, classes, modules).</li> <li><i class="fas fa-check"></i> Basic knowledge of AI/Machine Learning concepts (supervised/unsupervised learning, model training, APIs, core libraries).</li> <li><i class="fas fa-check"></i> Understanding how to find, load, and prepare datasets for AI models.</li> <li><i class="fas fa-check"></i> Version control basics using Git (clone, add, commit, push, pull, branches).</li> <li><i class="fas fa-check"></i> Ability to work collaboratively in a fast-paced team environment.</li> </ul> </div> </section>
 
-        <!-- Hackathon Tracks (Modal Trigger) -->
+        <!-- Hackathon Tracks (Grid updated: col-6 col-lg-4) -->
         <section id="tracks" class="mb-5">
              <h2 class="text-center mb-4"><i class="fas fa-stream me-2"></i>Choose Your Challenge Track</h2>
-             <p class="text-center text-muted mb-4">Click a track card to view details, examples, and register for that theme!</p>
+             <p class="text-center text-muted mb-4">Click on a track to see details and examples, then choose one for registration!</p>
             <div class="row g-4 justify-content-center">
                 <!-- Track 1: Supply Chain -->
-                <div class="col-6 col-lg-4 d-flex flex-column">
-                    <!-- Removed href="#...", added data attributes -->
-                    <div class="card track-card w-100 flex-grow-1" data-bs-toggle="modal" data-bs-target="#trackDetailModal" data-track-id="supplyChain">
-                         <div class="card-body"> <i class="fas fa-truck-loading"></i> <h3 class="card-title">Supply Chain & Logistics</h3> <p class="card-text small text-muted">Optimize logistics, predict demand, manage inventory...</p> </div>
-                     </div>
-                     <!-- Removed inline collapse div -->
-                </div>
+                <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseSupplyChain" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSupplyChain"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-truck-loading"></i> <h3 class="card-title">Supply Chain & Logistics</h3> <p class="card-text small text-muted">Apply AI to optimize logistics, predict demand, manage inventory, enhance routing, or improve supply chain resilience.</p> </div> </div> </a> <div class="collapse" id="collapseSupplyChain"> <div class="track-expansion"> <h4>Track Details: Supply Chain & Logistics</h4> <p>Focus on leveraging AI/ML to address complex challenges in modern supply chains...</p> <h4>SaaS Innovation Example:</h4> <p><strong>AI-Powered Predictive Logistics Platform:</strong> A subscription-based service that integrates real-time data...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
                 <!-- Track 2: Sustainability -->
-                 <div class="col-6 col-lg-4 d-flex flex-column">
-                     <div class="card track-card w-100 flex-grow-1" data-bs-toggle="modal" data-bs-target="#trackDetailModal" data-track-id="sustainability">
-                         <div class="card-body"> <i class="fas fa-leaf"></i> <h3 class="card-title">Sustainability & Environment</h3> <p class="card-text small text-muted">AI for climate monitoring, resource optimization...</p> </div>
-                     </div>
-                 </div>
+                 <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseSustainability" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSustainability"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-leaf"></i> <h3 class="card-title">Sustainability & Environment</h3> <p class="card-text small text-muted">Develop AI solutions for climate monitoring, resource optimization, or promoting sustainable practices.</p> </div> </div> </a> <div class="collapse" id="collapseSustainability"> <div class="track-expansion"> <h4>Track Details: Sustainability & Environment</h4> <p>Utilize AI to tackle environmental challenges...</p> <h4>SaaS Innovation Example:</h4> <p><strong>Smart Waste Management Optimization Service:</strong> A SaaS platform for municipalities...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
                  <!-- Track 3: Medicine & Healthcare -->
-                 <div class="col-6 col-lg-4 d-flex flex-column">
-                     <div class="card track-card w-100 flex-grow-1" data-bs-toggle="modal" data-bs-target="#trackDetailModal" data-track-id="medicine">
-                        <div class="card-body"> <i class="fas fa-briefcase-medical"></i> <h3 class="card-title">Medicine & Healthcare</h3> <p class="card-text small text-muted">Diagnostic assistance, patient data analysis...</p> </div>
-                    </div>
-                 </div>
+                 <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseMedicine" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseMedicine"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-briefcase-medical"></i> <h3 class="card-title">Medicine & Healthcare</h3> <p class="card-text small text-muted">Innovate with AI in areas like diagnostic assistance, patient data analysis, or healthcare accessibility.</p> </div> </div> </a> <div class="collapse" id="collapseMedicine"> <div class="track-expansion"> <h4>Track Details: Medicine & Healthcare</h4> <p>Explore AI's potential to transform healthcare...</p> <h4>SaaS Innovation Example:</h4> <p><strong>AI-Assisted Radiology Report Generator:</strong> A cloud-based service for radiologists...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
                  <!-- Track 4: Project Management -->
-                 <div class="col-6 col-lg-4 d-flex flex-column">
-                     <div class="card track-card w-100 flex-grow-1" data-bs-toggle="modal" data-bs-target="#trackDetailModal" data-track-id="projectManagement">
-                         <div class="card-body"> <i class="fas fa-tasks"></i> <h3 class="card-title">Project Management</h3> <p class="card-text small text-muted">Task automation, risk prediction, productivity...</p> </div>
-                     </div>
-                 </div>
+                 <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapsePM" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsePM"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-tasks"></i> <h3 class="card-title">Project Management</h3> <p class="card-text small text-muted">Create AI tools for task automation, risk prediction, resource allocation, or team productivity.</p> </div> </div> </a> <div class="collapse" id="collapsePM"> <div class="track-expansion"> <h4>Track Details: Project Management</h4> <p>Apply AI to improve how projects are planned...</p> <h4>SaaS Innovation Example:</h4> <p><strong>AI-Powered Project Risk Assessment Platform:</strong> A SaaS tool that integrates with popular PM software...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
                  <!-- Track 5: Real Estate -->
-                  <div class="col-6 col-lg-4 d-flex flex-column">
-                      <div class="card track-card w-100 flex-grow-1" data-bs-toggle="modal" data-bs-target="#trackDetailModal" data-track-id="realEstate">
-                         <div class="card-body"> <i class="fas fa-city"></i> <h3 class="card-title">Real Estate & Urban Planning</h3> <p class="card-text small text-muted">Property valuation, market trends, urban infra...</p> </div>
-                     </div>
-                 </div>
+                  <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseRealEstate" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseRealEstate"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-city"></i> <h3 class="card-title">Real Estate & Urban Planning</h3> <p class="card-text small text-muted">Build AI applications for property valuation, market trend analysis, or optimizing urban infrastructure.</p> </div> </div> </a> <div class="collapse" id="collapseRealEstate"> <div class="track-expansion"> <h4>Track Details: Real Estate & Urban Planning</h4> <p>Use AI to gain insights into the property market...</p> <h4>SaaS Innovation Example:</h4> <p><strong>Hyperlocal Real Estate Investment Analyzer:</strong> A subscription service for real estate investors...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
                  <!-- Track 6: Government -->
-                  <div class="col-6 col-lg-4 d-flex flex-column">
-                      <div class="card track-card w-100 flex-grow-1" data-bs-toggle="modal" data-bs-target="#trackDetailModal" data-track-id="government">
-                         <div class="card-body"> <i class="fas fa-landmark"></i> <h3 class="card-title">Government & Public Sector</h3> <p class="card-text small text-muted">Enhance public services, policy analysis...</p> </div>
-                     </div>
-                 </div>
+                  <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseGov" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseGov"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-landmark"></i> <h3 class="card-title">Government & Public Sector</h3> <p class="card-text small text-muted">Apply AI to enhance public services, data analysis for policy making, or citizen engagement platforms.</p> </div> </div> </a> <div class="collapse" id="collapseGov"> <div class="track-expansion"> <h4>Track Details: Government & Public Sector</h4> <p>Focus on how AI can improve government operations...</p> <h4>SaaS Innovation Example:</h4> <p><strong>AI-Powered Public Sentiment Analysis Dashboard:</strong> A service for government agencies...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
                <!-- Track 7: Open Innovation -->
-                <div class="col-6 col-lg-4 d-flex flex-column">
-                    <div class="card track-card w-100 flex-grow-1" data-bs-toggle="modal" data-bs-target="#trackDetailModal" data-track-id="openInnovation">
-                         <div class="card-body"> <i class="fas fa-lightbulb"></i> <h3 class="card-title">Open Innovation</h3> <p class="card-text small text-muted">Have a brilliant idea outside these tracks? Pitch it!</p> </div>
-                     </div>
-               </div>
+                <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseOpen" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOpen"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-lightbulb"></i> <h3 class="card-title">Open Innovation</h3> <p class="card-text small text-muted">Have a brilliant AI idea outside these tracks? Pitch it! We welcome creative and impactful projects.</p> </div> </div> </a> <div class="collapse" id="collapseOpen"> <div class="track-expansion"> <h4>Track Details: Open Innovation</h4> <p>This track is for groundbreaking AI ideas...</p> <h4>SaaS Innovation Example:</h4> <p><strong>AI Co-pilot for Creative Writing:</strong> A subscription-based web application...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
             </div>
         </section>
 
-         <!-- --- SECTION DIVIDER --- -->
-         <hr class="section-divider">
 
-        <!-- How to Get Ready (Not Collapsed) -->
-        <section id="preparation" class="card">
-             <div class="card-header"> <h2><i class="fas fa-laptop-code"></i>How to Get Ready</h2> </div>
-             <div class="card-body"> <!-- Content remains --> <p>Ensure you and your team are prepared for success:</p> <!-- Hardware/Software/Knowledge sections --> </div>
-        </section>
+        <!-- Registration & Onboarding (Keep as is) -->
+        <section id="registration" class="card text-center pt-5"> <div class="card-header justify-content-center"> <h2><i class="fas fa-user-plus"></i>Register & Onboard Your Team</h2> </div> <div class="card-body"> <p>Ready to take on the challenge? Register your team (or sign up solo and we can help you find teammates!). After registration, you'll receive a link to complete a comprehensive onboarding form to gauge experience, tool familiarity, and preferred track.</p> <p class="lead fw-bold text-primary-color">Spaces are limited - Register Early!</p> <a href="#" class="btn btn-custom btn-lg my-3">Register Your Team Now!</a> <!-- Onboarding Form Accordion remains unchanged --> <div class="accordion mt-4" id="onboardingFormAccordion"> <div class="accordion-item"> <h2 class="accordion-header" id="headingOne"> <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> <i class="fas fa-clipboard-list me-2"></i>Click to See Example Onboarding Form Fields </button> </h2> <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#onboardingFormAccordion"> <div class="accordion-body text-start"> <!-- Form Content Here --> <p><em>This detailed form (sent after registration)...</em></p> <form> <!-- Fieldsets --> <fieldset class="mb-4 border p-3 rounded"> <!-- Team Info --> </fieldset> <fieldset class="mb-4 border p-3 rounded"> <!-- Experience Levels --> </fieldset> <fieldset class="mb-4 border p-3 rounded"> <!-- Tool Familiarity --> </fieldset> </form> </div> </div> </div> </div> </div> </section>
+
+         <!-- Detailed Hackathon Agenda (Not Collapsed) -->
+        <section id="agenda" class="card"> <div class="card-header"> <h2><i class="fas fa-calendar-alt"></i>Detailed Hackathon Agenda</h2> </div> <div class="card-body"> <!-- Agenda Content Here --> <h3 class="mb-3 mt-2 text-primary-color"><i class="fas fa-calendar-day me-2"></i>Day 1: Monday, 21st April 2025 - Hackathon Day</h3> <ul class="agenda-list"> <!-- Day 1 Items --> </ul> <h3 class="mb-3 mt-4 text-primary-color"><i class="fas fa-calendar-day me-2"></i>Day 2: Tuesday, 22nd April 2025 - Panels, Pitch & Awards</h3> <ul class="agenda-list"> <!-- Day 2 Items --> </ul> </div> </section>
 
         <!-- Hackathon Process & Submission Checklist (Not collapsed) -->
-        <section id="process" class="card">
-            <div class="card-header"> <h2><i class="fas fa-tasks"></i>Hackathon Process & Submission Checklist</h2> </div>
-            <div class="card-body"> <p>Key steps and deliverables expected from each team. Track your progress using the <i class="fas fa-tasks"></i> button!</p> <div class="checklist" id="main-checklist"> <!-- Checklist Items --> </div> </div>
-        </section>
-
-        <!-- Detailed Hackathon Agenda (Not Collapsed) -->
-        <section id="agenda" class="card">
-            <div class="card-header"> <h2><i class="fas fa-calendar-alt"></i>Detailed Hackathon Agenda</h2> </div>
-            <div class="card-body"> <!-- Agenda Content --> </div>
-        </section>
+        <section id="process" class="card"> <div class="card-header"> <h2><i class="fas fa-tasks"></i>Hackathon Process & Submission Checklist</h2> </div> <div class="card-body"> <p>Key steps and deliverables expected from each team. Track your progress using the <i class="fas fa-tasks"></i> button at the bottom right!</p> <div class="checklist" id="main-checklist"> <!-- Checklist Items --> </div> </div> </section>
 
         <!-- Prizes and Benefits (Not Collapsed) -->
-        <section id="prizes" class="card">
-            <div class="card-header"> <h2><i class="fas fa-trophy"></i>Prizes and Benefits</h2> </div>
-            <div class="card-body"> <ul class="list-unstyled"> <!-- Prize Items --> </ul> </div>
-        </section>
+        <section id="prizes" class="card"> <div class="card-header"> <h2><i class="fas fa-trophy"></i>Prizes and Benefits</h2> </div> <div class="card-body"> <ul class="list-unstyled"> <!-- Prize Items --> </ul> </div> </section>
 
         <!-- Judging Criteria (COLLAPSED BY DEFAULT) -->
         <section id="judging" class="card">
-             <!-- Modified Header: added clickable class, button moved inside, aria-controls added -->
-            <div class="card-header clickable" data-bs-toggle="collapse" data-bs-target="#collapseJudging" aria-expanded="false" aria-controls="collapseJudging">
+            <div class="card-header">
                 <h2><i class="fas fa-gavel"></i>Judging Criteria</h2>
-                 <!-- Modified Button: now just holds icon -->
-                 <button class="btn btn-sm btn-outline-light btn-collapse-details ms-auto" type="button">
-                     Details <i class="fas fa-chevron-down toggle-icon"></i>
-                 </button>
-             </div>
+                <button class="btn btn-sm btn-outline-light btn-collapse-details ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJudging" aria-expanded="false" aria-controls="collapseJudging">
+                    Show/Hide Details
+                </button>
+            </div>
              <div class="collapse" id="collapseJudging">
-                 <div class="card-body"> <!-- Content --> </div>
+                 <div class="card-body">
+                     <p>Projects will be evaluated holistically...</p>
+                     <ol class="ps-4"> <!-- Criteria List --> </ol>
+                     <p class="mt-3"><i class="fas fa-info-circle text-info me-1"></i> <strong>Note:</strong> Compliance with rules...</p>
+                 </div>
              </div>
         </section>
 
          <!-- AI Grading/Test Score Feature (COLLAPSED BY DEFAULT, Interactive) -->
         <section id="ai-grading" class="card">
-             <!-- Modified Header: added clickable class, button moved inside, aria-controls added -->
-             <div class="card-header clickable" data-bs-toggle="collapse" data-bs-target="#collapseAIGrading" aria-expanded="false" aria-controls="collapseAIGrading">
+             <div class="card-header">
                 <h2><i class="fas fa-robot"></i>AI-Assisted Evaluation</h2>
-                <!-- Modified Button: now just holds icon -->
-                <button class="btn btn-sm btn-outline-light btn-collapse-details ms-auto" type="button">
-                     Details <i class="fas fa-chevron-down toggle-icon"></i>
+                 <button class="btn btn-sm btn-outline-light btn-collapse-details ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAIGrading" aria-expanded="false" aria-controls="collapseAIGrading">
+                     Show/Hide Details
                  </button>
              </div>
             <div class="collapse" id="collapseAIGrading">
-                 <div class="card-body"> <!-- Judging simulation content --> </div>
+                 <div class="card-body">
+                     <p>Select a team to view their current task progress and a simulated AI technical summary.</p>
+                     <!-- Team Selection -->
+                     <div class="row g-3 align-items-end mb-3">
+                         <div class="col-md-8">
+                             <label for="teamSelect" class="form-label">Select Team:</label>
+                             <select class="form-select" id="teamSelect">
+                                 <option selected disabled value="">-- Choose a Team --</option>
+                                 <option value="Team Alpha">Team Alpha (Placeholder)</option>
+                                 <option value="Team Beta">Team Beta (Placeholder)</option>
+                                 <option value="The AI Mavericks">The AI Mavericks (Placeholder)</option>
+                             </select>
+                         </div>
+                         <div class="col-md-4">
+                             <button class="btn btn-primary w-100" type="button" id="judgeTeamBtn">
+                                 <i class="fas fa-play me-1"></i> Judge Team
+                             </button>
+                         </div>
+                     </div>
+
+                     <!-- Loader -->
+                      <div id="judgingLoader">
+                         <div class="spinner-border text-primary" role="status">
+                             <span class="visually-hidden">Loading...</span>
+                         </div>
+                         <p class="mt-2 mb-0 text-muted">Simulating AI analysis...</p>
+                      </div>
+
+                     <!-- Results Area -->
+                     <div id="judgingResults">
+                         <h5 id="resultTeamName"></h5>
+                         <div id="resultTaskProgress">
+                             <!-- Task progress will be inserted here by JS -->
+                         </div>
+                         <div id="resultTechSummary">
+                             <!-- Technical summary will be inserted here by JS -->
+                         </div>
+                     </div>
+
+                    <hr class="my-4"> <!-- Separator -->
+                     <p class="mb-0 small text-muted fst-italic">
+                         <i class="fas fa-info-circle me-1"></i> This is a simulation. Actual evaluation uses more comprehensive metrics and human oversight. Task progress shown reflects the overall checklist status.
+                     </p>
+                </div>
             </div>
         </section>
 
         <!-- Contact Information (Not collapsed) -->
-        <section id="contact" class="card">
-            <div class="card-header"> <h2><i class="fas fa-envelope"></i>Contact Us</h2> </div>
-            <div class="card-body"> <!-- Contact Content --> </div>
-        </section>
-
-        <!-- Registration & Onboarding -->
-        <section id="registration" class="card text-center pt-5"> <!-- Kept near end, acts as final CTA -->
-             <div class="card-header justify-content-center"> <h2><i class="fas fa-user-plus"></i>Register & Onboard Your Team</h2> </div>
-             <div class="card-body"> <!-- Registration Content --> </div>
-        </section>
+        <section id="contact" class="card"> <div class="card-header"> <h2><i class="fas fa-envelope"></i>Contact Us</h2> </div> <div class="card-body"> <p class="card-text">Have questions about registration, preparation, or the hackathon details? Reach out to the Wellington Campus Events Team:</p> <ul class="list-unstyled"> <li><i class="fas fa-envelope-open-text"></i> Email: <a href="mailto:events@wellingtoncampus.co">info@wellingtoncampus.co</a></li> <li><i class="fas fa-phone"></i> Phone: <a href="tel:+971542523922">+971 54 252 3922</a></li> <li><i class="fas fa-map-marker-alt"></i> Campus Location: Wellington Campus, Dubai commercity, Dubai, UAE</li> </ul> </div> </section>
 
          <!-- Footer Placeholder -->
          <footer class="text-center mt-5 mb-4 text-muted"> <small>© 2024-2025 Wellington Campus. All Rights Reserved.</small> </footer>
@@ -471,76 +376,64 @@
     </div> <!-- End Main Container -->
 
     <!-- Task Tracker Floating Button -->
-     <button class="task-tracker-button" id="task-tracker-btn" title="Open Task Tracker (0% Complete)" data-bs-toggle="modal" data-bs-target="#taskTrackerModal"> <i class="fas fa-tasks"></i> </button>
+    <button class="task-tracker-button" id="task-tracker-btn" title="Open Task Tracker" data-bs-toggle="modal" data-bs-target="#taskTrackerModal"> <i class="fas fa-tasks"></i> </button>
 
     <!-- Task Tracker Modal -->
-    <div class="modal fade" id="taskTrackerModal" tabindex="-1" aria-labelledby="taskTrackerModalLabel" aria-hidden="true"> <!-- Content Unchanged --> </div>
+    <div class="modal fade" id="taskTrackerModal" tabindex="-1" aria-labelledby="taskTrackerModalLabel" aria-hidden="true"> <div class="modal-dialog modal-lg modal-dialog-scrollable"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="taskTrackerModalLabel"><i class="fas fa-tasks me-2"></i>Hackathon Task Tracker</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <p class="text-muted">Click on a task to mark it as complete. Your progress is saved locally in your browser.</p> <div id="task-message-area" class="mb-3"></div> <div class="checklist" id="modal-checklist"> <!-- Checklist items here --> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> </div> </div> </div> </div>
 
-     <!-- --- NEW: Single Track Detail Modal --- -->
-    <div class="modal fade" id="trackDetailModal" tabindex="-1" aria-labelledby="trackDetailModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="trackDetailModalLabel">
-                        <i class="fas fa-stream me-2"></i> <!-- Placeholder Icon -->
-                        <span id="trackModalTitle">Track Details</span>
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="trackModalContent">
-                        <!-- Content will be injected by JavaScript -->
-                        <h4>Track Details:</h4>
-                        <p id="trackModalDescription">Loading details...</p>
-                        <h4>SaaS Innovation Example:</h4>
-                        <p id="trackModalExample">Loading example...</p>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-center"> <!-- Center button -->
-                     <a href="#registration" id="trackModalRegisterBtn" class="btn btn-choose-track-modal" data-bs-dismiss="modal"> <!-- Added data-bs-dismiss -->
-                        Choose This Track & Register <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bottom Navigation for Mobile -->
-     <nav class="bottom-nav" aria-label="Mobile navigation"> <!-- Content Unchanged --> </nav>
+     <!-- Bottom Navigation for Mobile -->
+     <nav class="bottom-nav" aria-label="Mobile navigation">
+         <div class="d-flex justify-content-around w-100">
+             <a href="index.html" class="btn"><i class="fas fa-home"></i>Home</a>
+             <a href="courses.html" class="btn"><i class="fas fa-book"></i>LMS</a>
+             <a href="game.html" class="btn"><i class="fas fa-gamepad"></i>Game</a>
+             <a href="hackathon.html" class="btn active"><i class="fas fa-laptop-code"></i>Hackathons</a>
+         </div>
+     </nav>
 
 
     <!-- Bootstrap Bundle JS -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-    <!-- Custom JS for Task Tracker, AI Judging, Modals, Collapse -->
-    <script id="page-logic-script">
+    <!-- Custom JS for Task Tracker AND AI Judging Simulation -->
+    <script id="task-tracker-script">
         document.addEventListener('DOMContentLoaded', function() {
             // --- Common Elements & State ---
+            const modalChecklist = document.getElementById('modal-checklist');
+            const mainChecklist = document.getElementById('main-checklist'); // Assumed still exists for sync
+            const messageArea = document.getElementById('task-message-area');
             const storageKey = 'hackathonTaskStatus';
             const progressBar = document.querySelector('#progress .progress-bar');
-            const taskTrackerBtn = document.getElementById('task-tracker-btn');
             let taskState = loadTaskState(); // Load initial state
 
             // --- Task Tracker Elements & Logic ---
-            const modalChecklist = document.getElementById('modal-checklist');
-            const mainChecklist = document.getElementById('main-checklist');
-            const messageArea = document.getElementById('task-message-area');
             const taskModalElement = document.getElementById('taskTrackerModal');
 
-            function loadTaskState() { /* ... (same as before) ... */ }
-            function saveTaskState(state) { /* ... (same as before) ... */ }
-            function updateTaskUI(taskId, isCompleted) { /* ... (same as before) ... */ }
-            function showMessage(message, type = 'success') { /* ... (same as before) ... */ }
-            function clearMessages() { /* ... (same as before) ... */ }
+            function loadTaskState() {
+                const storedState = localStorage.getItem(storageKey);
+                return storedState ? JSON.parse(storedState) : {};
+            }
+            function saveTaskState(state) {
+                localStorage.setItem(storageKey, JSON.stringify(state));
+            }
+
+            function updateTaskUI(taskId, isCompleted) {
+                // Update Modal Item
+                const modalItem = modalChecklist.querySelector(`.checklist-item[data-task-id="${taskId}"]`);
+                if (modalItem) { modalItem.classList.toggle('completed', isCompleted); }
+                // Update Main Page Item (if it exists and needs sync)
+                const mainItem = mainChecklist?.querySelector(`.checklist-item[data-task-id="${taskId}"]`); // Optional chaining
+                if (mainItem) { mainItem.classList.toggle('completed', isCompleted); }
+            }
+
+            function showMessage(message, type = 'success') { messageArea.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`; }
+            function clearMessages() { messageArea.innerHTML = ''; }
 
             function updateProgressBar() {
                  const state = loadTaskState();
-                 const taskItems = modalChecklist?.querySelectorAll('.checklist-item[data-task-id]') ?? []; // Use optional chaining and default empty array
+                 const taskItems = modalChecklist.querySelectorAll('.checklist-item[data-task-id]'); // Get only items with task IDs
                  const totalTasks = taskItems.length;
-                 if (totalTasks === 0 && mainChecklist) { // Fallback if modal not ready
-                    totalTasks = mainChecklist.querySelectorAll('.checklist-item[data-task-id]').length;
-                 }
-                 if (totalTasks === 0) return;
+                 if (totalTasks === 0) return; // Avoid division by zero if checklist isn't populated yet
 
                  const completedTasks = Object.values(state).filter(status => status === true).length;
                  const progressPercent = Math.round((completedTasks / totalTasks) * 100);
@@ -552,13 +445,9 @@
                      progressBar.classList.toggle('bg-success', progressPercent === 100);
                      progressBar.classList.toggle('progress-bar-animated', progressPercent < 100);
                  }
-                 // --- NEW: Update Task Button Title ---
-                 if(taskTrackerBtn) {
-                    taskTrackerBtn.setAttribute('title', `Open Task Tracker (${progressPercent}% Complete)`);
-                 }
             }
 
-             // Populate modal checklist from main checklist if empty
+            // Populate modal checklist from main checklist if empty (robustness)
              if (modalChecklist && mainChecklist && modalChecklist.children.length === 0) {
                 modalChecklist.innerHTML = mainChecklist.innerHTML;
              }
@@ -569,108 +458,140 @@
                     const taskId = item.dataset.taskId;
                     if (taskId && taskState[taskId]) { updateTaskUI(taskId, true); }
                 });
-             } else if(mainChecklist) { // Ensure initial UI sync even if modal isn't used first
-                 mainChecklist.querySelectorAll('.checklist-item[data-task-id]').forEach(item => {
-                     const taskId = item.dataset.taskId;
-                     if (taskId && taskState[taskId]) { updateTaskUI(taskId, true); } // This will update the main list item
-                 });
              }
              updateProgressBar(); // Initial progress bar update
 
+
             // Event Listener for Modal Task Clicks
-             if (modalChecklist) { /* ... (same event listener as before) ... */ }
+             if (modalChecklist) {
+                modalChecklist.addEventListener('click', function(event) {
+                    const taskItem = event.target.closest('.checklist-item[data-task-id]');
+                    if (taskItem) {
+                        const taskId = taskItem.dataset.taskId;
+                        const isNowCompleted = !taskState[taskId];
+                        taskState[taskId] = isNowCompleted; // Update local state variable
+                        saveTaskState(taskState); // Save updated state
+                        updateTaskUI(taskId, isNowCompleted);
+                        clearMessages();
+                        if (isNowCompleted) { showMessage(`Task "${taskItem.querySelector('strong').textContent.trim()}" marked complete! Great job!`, 'success'); }
+                        else { showMessage(`Task "${taskItem.querySelector('strong').textContent.trim()}" marked as incomplete.`, 'warning'); }
+                        updateProgressBar(); // Update progress bar on click
+                    }
+                });
+             }
 
              // Optional: Clear messages when modal is closed
-             if (taskModalElement) { /* ... (same listener as before) ... */ }
-
-
-             // --- AI Judging Simulation Elements & Logic ---
-             // --- (Keep the JS logic for AI Judging exactly as before) ---
-             const teamSelect = document.getElementById('teamSelect');
-             const judgeTeamBtn = document.getElementById('judgeTeamBtn');
-             // ... rest of AI judging JS variables and the judgeTeamBtn event listener ...
-
-
-             // --- Smooth scroll for Registration & Track Choice Buttons ---
-             function handleSmoothScroll(event) {
-                 event.preventDefault();
-                 const targetId = event.currentTarget.getAttribute('href'); // Use currentTarget
-                 const targetElement = document.querySelector(targetId);
-                 if (targetElement) {
-                     targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                     // Optional highlight effect (keep if desired)
-                     targetElement.style.transition = 'background-color 0.5s ease-in-out';
-                     targetElement.style.backgroundColor = 'rgba(212, 175, 55, 0.1)';
-                     setTimeout(() => { targetElement.style.backgroundColor = ''; }, 1500);
-                 }
-             }
-             // Apply to track choice modal button
-             const trackModalRegisterBtn = document.getElementById('trackModalRegisterBtn');
-             if (trackModalRegisterBtn) {
-                 trackModalRegisterBtn.addEventListener('click', handleSmoothScroll);
-             }
-             // Apply to other direct registration buttons if needed
-             document.querySelectorAll('a[href="#registration"].btn-custom').forEach(button => {
-                 button.addEventListener('click', handleSmoothScroll);
-             });
-
-
-             // --- NEW: Track Detail Modal Logic ---
-            const trackDetailModal = document.getElementById('trackDetailModal');
-            const trackModalTitle = document.getElementById('trackModalTitle');
-            const trackModalIcon = trackDetailModal.querySelector('.modal-title i'); // Get icon element
-            const trackModalDescription = document.getElementById('trackModalDescription');
-            const trackModalExample = document.getElementById('trackModalExample');
-
-             // Data for tracks (replace with actual full descriptions/examples)
-             const trackData = {
-                 supplyChain: { title: "Supply Chain & Logistics", icon: "fas fa-truck-loading", description: "Focus on leveraging AI/ML to address complex challenges in modern supply chains. Projects could involve demand forecasting using time-series analysis, optimizing delivery routes with reinforcement learning or heuristics, automating warehouse operations through computer vision, predicting potential disruptions, or improving inventory management with predictive analytics.", example: "<strong>AI-Powered Predictive Logistics Platform:</strong> A subscription-based service integrating real-time data (weather, traffic, etc.) to predict delays and suggest optimal alternative routes, minimizing disruption and cost." },
-                 sustainability: { title: "Sustainability & Environment", icon: "fas fa-leaf", description: "Utilize AI to tackle environmental challenges. Ideas include building models to predict deforestation from satellite imagery, optimizing energy consumption in buildings, tracking carbon footprints, or developing AI tools for precision agriculture.", example: "<strong>Smart Waste Management Optimization Service:</strong> A SaaS platform using AI on smart bin data to optimize collection routes, predict fill levels, and provide analytics for waste reduction and recycling improvement." },
-                 medicine: { title: "Medicine & Healthcare", icon: "fas fa-briefcase-medical", description: "Explore AI's potential to transform healthcare. Projects might involve analyzing medical images, extracting insights from EHRs, predicting disease outbreaks, or designing AI chatbots for patient support.", example: "<strong>AI-Assisted Radiology Report Generator:</strong> A cloud service analyzing medical images, highlighting anomalies, and generating draft reports for radiologists, significantly speeding up the process." },
-                 projectManagement: { title: "Project Management", icon: "fas fa-tasks", description: "Apply AI to improve project planning, execution, and monitoring. Build tools for delay prediction, automated task assignment, meeting analysis, or intelligent risk assessment.", example: "<strong>AI-Powered Project Risk Assessment Platform:</strong> Integrates with PM software to analyze data, assess risks (schedule, budget, resource), highlight factors, and suggest mitigation strategies." },
-                 realEstate: { title: "Real Estate & Urban Planning", icon: "fas fa-city", description: "Use AI for insights into property markets and city development. Create automated valuation models, predict gentrification, optimize public transport, or analyze zoning regulations.", example: "<strong>Hyperlocal Real Estate Investment Analyzer:</strong> Subscription service analyzing diverse datasets to predict appreciation potential, rental yields, and identify undervalued properties via maps and reports." },
-                 government: { title: "Government & Public Sector", icon: "fas fa-landmark", description: "Focus on improving government operations and citizen services. Develop chatbots for queries, analyze public feedback, predict service demand, or create fraud detection tools.", example: "<strong>AI-Powered Public Sentiment Analysis Dashboard:</strong> Monitors public sentiment towards policies/services from social media/news, providing real-time dashboards to help policymakers." },
-                 openInnovation: { title: "Open Innovation", icon: "fas fa-lightbulb", description: "For groundbreaking AI ideas outside other categories (art, music, science, education, ethics, etc.). Focus on novelty and potential impact.", example: "<strong>AI Co-pilot for Creative Writing:</strong> A subscription web app using generative AI to help authors brainstorm, develop characters, overcome writer's block, and check consistency." }
-             };
-
-             if (trackDetailModal) {
-                 trackDetailModal.addEventListener('show.bs.modal', function (event) {
-                     const triggerCard = event.relatedTarget; // The card that triggered the modal
-                     const trackId = triggerCard.dataset.trackId;
-                     const data = trackData[trackId];
-
-                     if (data) {
-                         trackModalTitle.textContent = data.title;
-                         trackModalIcon.className = data.icon + " me-2"; // Update icon class
-                         trackModalDescription.textContent = data.description;
-                         trackModalExample.innerHTML = data.example; // Use innerHTML for bold tag
-                     } else {
-                         // Handle case where data is missing
-                         trackModalTitle.textContent = 'Track Details';
-                         trackModalIcon.className = 'fas fa-stream me-2'; // Default icon
-                         trackModalDescription.textContent = 'Details not available for this track.';
-                         trackModalExample.textContent = 'Example not available.';
-                     }
-                 });
+             if (taskModalElement) {
+                taskModalElement.addEventListener('hidden.bs.modal', clearMessages);
              }
 
-             // --- NEW: Make Card Headers Clickable for Collapse ---
-             document.querySelectorAll('.card-header.clickable[data-bs-toggle="collapse"]').forEach(header => {
-                 header.addEventListener('click', function (event) {
-                     // Prevent clicks on the button itself from triggering this twice
-                     if (event.target.closest('.btn-collapse-details')) {
-                         return;
-                     }
-                     const targetId = this.dataset.bsTarget;
-                     const collapseElement = document.querySelector(targetId);
-                     if (collapseElement) {
-                         const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseElement);
-                         bsCollapse.toggle();
-                     }
-                 });
-             });
+            // --- AI Judging Simulation Elements & Logic ---
+            const teamSelect = document.getElementById('teamSelect');
+            const judgeTeamBtn = document.getElementById('judgeTeamBtn');
+            const judgingLoader = document.getElementById('judgingLoader');
+            const judgingResults = document.getElementById('judgingResults');
+            const resultTeamName = document.getElementById('resultTeamName');
+            const resultTaskProgress = document.getElementById('resultTaskProgress');
+            const resultTechSummary = document.getElementById('resultTechSummary');
+            const taskDefinitions = { // Get task names for display
+                 'briefing': 'Attend Briefing', 'repo': 'GitHub Repository', 'data': 'Acquire & Prepare Data',
+                 'develop': 'Develop AI Solution', 'demo': 'Demo/Frontend', 'deploy': 'Deploy Demo',
+                 'deck': 'Prepare Pitch Deck', 'submit': 'Submit Project', 'pitch': 'Deliver Pitch'
+            };
 
-        });
+            // Map Task IDs to readable names
+            function getTaskName(taskId) {
+                return taskDefinitions[taskId] || taskId; // Fallback to ID if not found
+            }
+
+            function generateTechSummary(teamName) {
+                // Simple placeholder logic based on team name
+                let summary = "";
+                switch(teamName) {
+                    case "Team Alpha":
+                        summary = "Project utilizes TensorFlow for image classification. Deployed via a Flask web app on Vercel. Code shows good modularity but lacks comprehensive testing. Dataset appears well-preprocessed.";
+                        break;
+                    case "Team Beta":
+                        summary = "Focuses on NLP using Hugging Face Transformers for sentiment analysis. Interactive demo built with Streamlit. Strong use of Pandas for data manipulation. API integration needs refinement for error handling.";
+                        break;
+                    case "The AI Mavericks":
+                        summary = "Implemented a time-series forecasting model using Scikit-learn and Prophet. Data visualization is clear in the Jupyter Notebook submission. Core algorithm is sound, but UI/demo component is basic.";
+                        break;
+                    default:
+                        summary = "AI analysis indicates usage of standard Python libraries for data processing and modeling. Project structure is identifiable. Further details require manual code review.";
+                }
+                return `<h6 class="mt-3">Simulated Technical Summary:</h6><p>${summary}</p>`;
+            }
+
+            if (judgeTeamBtn) {
+                judgeTeamBtn.addEventListener('click', function() {
+                    const selectedTeam = teamSelect.value;
+
+                    if (!selectedTeam) {
+                        // Optionally show an alert or message to select a team
+                        judgingResults.innerHTML = `<div class="alert alert-warning">Please select a team first.</div>`;
+                        judgingResults.style.display = 'block';
+                        judgingLoader.style.display = 'none';
+                        return;
+                    }
+
+                    // Start Loading
+                    judgingResults.style.display = 'none';
+                    judgingLoader.style.display = 'block';
+                    judgeTeamBtn.disabled = true;
+                    teamSelect.disabled = true;
+
+                    // Simulate 3-second processing
+                    setTimeout(() => {
+                        // Fetch current task state again inside timeout
+                        const currentTaskState = loadTaskState();
+
+                        // Build Task Progress HTML
+                        let progressHtml = '<h6>Task Progress:</h6><ul>';
+                        Object.keys(taskDefinitions).forEach(taskId => {
+                             const taskName = getTaskName(taskId);
+                             const isCompleted = currentTaskState[taskId] === true;
+                             const iconClass = isCompleted ? 'fa-solid fa-check-circle' : 'fa-regular fa-circle-xmark';
+                             const itemClass = isCompleted ? 'task-complete' : 'task-incomplete';
+                             progressHtml += `<li class="${itemClass}"><i class="${iconClass}"></i> ${taskName}</li>`;
+                        });
+                         progressHtml += '</ul>';
+
+                        // Get Technical Summary
+                         const summaryHtml = generateTechSummary(selectedTeam);
+
+                        // Display Results
+                        resultTeamName.textContent = `Evaluation Results for: ${selectedTeam}`;
+                        resultTaskProgress.innerHTML = progressHtml;
+                        resultTechSummary.innerHTML = summaryHtml;
+
+                        // Finish Loading
+                         judgingLoader.style.display = 'none';
+                         judgingResults.style.display = 'block';
+                         judgeTeamBtn.disabled = false;
+                         teamSelect.disabled = false;
+
+                    }, 3000); // 3 seconds delay
+                });
+            }
+
+             // --- Smooth scroll for registration links ---
+             document.querySelectorAll('.btn-choose-track').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Optional highlight effect
+                        targetElement.style.transition = 'background-color 0.5s ease-in-out';
+                        targetElement.style.backgroundColor = 'rgba(212, 175, 55, 0.1)';
+                        setTimeout(() => { targetElement.style.backgroundColor = ''; }, 1500);
+                    }
+                });
+            });
+
+         });
     </script>
 
 </body>
