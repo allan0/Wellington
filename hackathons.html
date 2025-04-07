@@ -64,11 +64,19 @@
          h1 .fa-brain { color: var(--primary-color); }
         .hackathon-subtitle { color: var(--secondary-color); font-size: 1.5rem; font-weight: 400; margin-bottom: 1.5rem; }
 
-        .card { border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom: 1rem; border: none; overflow: visible; background-color: var(--accent-color); }
-        .card-header { background-color: var(--secondary-color); color: var(--accent-color); font-weight: 600; border-bottom: 3px solid var(--primary-color); padding: 1rem 1.5rem; display: flex; align-items: center; }
+        .card { border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom: 1.5rem; /* Increased margin slightly */ border: none; overflow: visible; background-color: var(--accent-color); }
+        .card-header { background-color: var(--secondary-color); color: var(--accent-color); font-weight: 600; border-bottom: 3px solid var(--primary-color); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; /* Ensure space between title and icon */ }
         .card-header h2 { color: var(--accent-color); margin: 0; font-size: 1.5rem; }
         .card-header i { margin-right: 0.75rem; font-size: 1.3rem; }
-        .card-header .btn-collapse-details { font-size: 0.8rem; padding: 0.2rem 0.6rem; margin-left: auto; }
+        /* Specific style for collapsible headers */
+        .card-header[data-bs-toggle="collapse"] { cursor: pointer; }
+        .card-header .chevron-icon { font-size: 1rem; transition: transform 0.3s ease; }
+        .card-header .chevron-down { display: inline-block; }
+        .card-header .chevron-up { display: none; }
+        /* Show up chevron and hide down when not collapsed */
+        .card-header:not(.collapsed) .chevron-down { display: none; }
+        .card-header:not(.collapsed) .chevron-up { display: inline-block; }
+
         .card-title { color: var(--secondary-color); margin-bottom: 1rem; font-size: 1.4rem; }
         .card-body { padding: 2rem; }
         .card-body h3 { margin-top: 0.5rem; }
@@ -86,17 +94,13 @@
         #prizes .fa-award { color: #cd7f32; }
         #prizes .fa-gifts { color: #f06292; }
 
-        /* Track Card & Expansion Styling */
-        .track-trigger { display: block; text-decoration: none; color: inherit; }
-        .track-card { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; height: 100%; border: 1px solid #eee; margin-bottom: 0; }
+        /* Track Card Styling (for Modal trigger) */
+        .track-card { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; height: 100%; border: 1px solid #eee; }
         .track-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,51,102,0.2); }
         .track-card .card-body { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.5rem; }
         .track-card i { font-size: 3rem; margin-bottom: 1rem; color: var(--primary-color); }
         .track-card .card-title { font-size: 1.4rem; }
-        .track-expansion { background-color: #f0f5fa; border: 1px solid #ddebf8; border-top: none; border-radius: 0 0 var(--border-radius) var(--border-radius); padding: 1.5rem 2rem; margin-top: -1px; margin-bottom: 1.5rem; }
-        .track-expansion h4 { color: var(--secondary-color); font-weight: 600; margin-top: 0.5rem; margin-bottom: 0.75rem; font-size: 1.2rem; }
-        .track-expansion p { font-size: 1rem; line-height: 1.6; margin-bottom: 1rem; }
-        .track-expansion strong { color: var(--secondary-color); }
+        /* Remove track-expansion styles as they are not used anymore */
         .btn-choose-track { background-color: var(--secondary-color); color: var(--accent-color); border: none; padding: 0.6rem 1.8rem; border-radius: 50px; transition: all 0.3s ease; font-weight: 500; display: inline-flex; align-items: center; text-decoration: none; margin-top: 1rem; }
         .btn-choose-track i { margin-left: 0.5rem; }
         .btn-choose-track:hover { background-color: #004a8d; color: var(--accent-color); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 51, 102, 0.3); }
@@ -213,6 +217,11 @@
         .modal-header { background-color: var(--secondary-color); color: var(--accent-color); border-bottom: 2px solid var(--primary-color); }
         .modal-header .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
         .modal-title { font-family: 'Poppins', sans-serif; }
+        /* Specific for Track Modal */
+        #trackModal .modal-body h4 { color: var(--secondary-color); font-weight: 600; margin-top: 0.5rem; margin-bottom: 0.75rem; font-size: 1.2rem; }
+        #trackModal .modal-body p { font-size: 1rem; line-height: 1.6; margin-bottom: 1rem; }
+        #trackModal .modal-body strong { color: var(--secondary-color); }
+        #trackModal .modal-footer .btn-choose-track { margin-top: 0; } /* Adjust margin in modal */
         #task-message-area .alert { margin-top: 1rem; padding: 0.8rem 1.2rem; font-size: 0.95rem; }
 
         /* Bottom Navigation Styles */
@@ -228,6 +237,22 @@
              .task-tracker-button { bottom: 75px; }
              /* Update track grid for mobile */
              #tracks .col-lg-4 { flex-basis: 50%; max-width: 50%; } /* Force 2 columns */
+        }
+
+        /* NEW: Quick Info Card Styling */
+        #quick-info {
+            background-color: #eef2f3; /* Light background */
+            border-left: 5px solid var(--primary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+        }
+        #quick-info .card-body { padding: 1.5rem 2rem; }
+        #quick-info h3 { color: var(--secondary-color); margin-top: 0; margin-bottom: 1rem; font-size: 1.4rem; }
+        #quick-info ul li { margin-bottom: 0.8rem; font-size: 1.05rem; }
+        #quick-info ul li i { margin-top: 0.1em; }
+        #quick-info .btn-quick-reg {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.6rem 2rem;
         }
 
     </style>
@@ -251,77 +276,355 @@
          </section>
 
         <!-- Event Description (Keep as is) -->
-        <section id="about" class="card"> <div class="card-header"> <h2><i class="fas fa-info-circle"></i>About the Hackathon</h2> </div> <div class="card-body"> <p>Join us for the flagship <strong>Python for AI Hackathon</strong> at Wellington Campus! This event is your platform to dive deep into the world of Artificial Intelligence using Python. Form teams, tackle real-world challenges across various tracks, and push the boundaries of innovation. Whether you're refining your skills or stepping into AI for the first time, this hackathon offers an unparalleled experience to learn, compete, network, and win exciting prizes.</p> </div> </section>
+        <section id="about" class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-info-circle"></i>About the Hackathon</h2>
+            </div>
+            <div class="card-body">
+                <p>Join us for the flagship <strong>Python for AI Hackathon</strong> at Wellington Campus! This event is your platform to dive deep into the world of Artificial Intelligence using Python. Form teams, tackle real-world challenges across various tracks, and push the boundaries of innovation. Whether you're refining your skills or stepping into AI for the first time, this hackathon offers an unparalleled experience to learn, compete, network, and win exciting prizes.</p>
+            </div>
+        </section>
 
-        <!-- Event Details (Keep as is) -->
-        <section id="details" class="card"> <div class="card-header"> <h2><i class="fas fa-calendar-check"></i>Event Details</h2> </div> <div class="card-body"> <ul class="list-unstyled"> <li><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> 21st - 22nd April 2025</li> <li><i class="fas fa-clock"></i> <strong>Time:</strong> See Detailed Agenda Below</li> <li><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> Dubai Duty free zone, Dubai, UAE</li> <li><i class="fas fa-users"></i> <strong>Format:</strong> Team-based (Teams of 2-4 recommended)</li> <li><i class="fab fa-python"></i> <strong>Theme:</strong> Python for AI Development</li> </ul> </div> </section>
+        <!-- NEW: Quick Info Summary Card -->
+        <section id="quick-info" class="card">
+            <div class="card-body">
+                <h3><i class="fas fa-bolt me-2"></i>Quick Info</h3>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> 21st - 22nd April 2025</li>
+                    <li><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> Dubai Duty free zone, Dubai, UAE</li>
+                    <li><i class="fas fa-users"></i> <strong>Format:</strong> Team-based (Teams of 2-4 recommended)</li>
+                    <li><i class="fas fa-link"></i> <strong>Register:</strong> <a href="#registration" class="btn btn-sm btn-custom btn-quick-reg scroll-link">Register Now!</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Event Details (Keep as is - content duplicated in Quick Info, but maybe keep for redundancy/layout) -->
+        <section id="details" class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-calendar-check"></i>Event Details</h2>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> 21st - 22nd April 2025</li>
+                    <li><i class="fas fa-clock"></i> <strong>Time:</strong> See Detailed Agenda Below</li>
+                    <li><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> Dubai Duty free zone, Dubai, UAE</li>
+                    <li><i class="fas fa-users"></i> <strong>Format:</strong> Team-based (Teams of 2-4 recommended)</li>
+                    <li><i class="fab fa-python"></i> <strong>Theme:</strong> Python for AI Development</li>
+                </ul>
+            </div>
+        </section>
 
         <!-- How to Get Ready (Not Collapsed) -->
-        <section id="preparation" class="card"> <div class="card-header"> <h2><i class="fas fa-laptop-code"></i>How to Get Ready</h2> </div> <div class="card-body"> <p>Ensure you and your team are prepared for success:</p> <div class="row"> <div class="col-lg-6 mb-4"> <h5 class="card-title"><i class="fas fa-laptop me-2"></i>Hardware & Base Setup</h5> <ul class="list-unstyled ps-2"> <li><i class="fas fa-check-circle"></i> Your own Laptop (Windows, macOS, or Linux)</li> <li><i class="fas fa-check-circle"></i> Stable Internet Connection (Venue Wi-Fi available)</li> <li><i class="fas fa-check-circle"></i> Charger & Power Adapter</li> </ul> </div> <div class="col-lg-6 mb-4"> <h5 class="card-title"><i class="fas fa-tools me-2"></i>Software & Tools</h5> <ul class="list-unstyled ps-2"> <li><i class="fab fa-python"></i> Python (3.8+ recommended) & Pip/Conda</li> <li><i class="fas fa-book"></i> Jupyter Notebook / JupyterLab <span class="badge bg-secondary">Key Tool</span></li> <li><i class="fas fa-terminal"></i> Code Editor (e.g., VS Code, PyCharm)</li> <li><i class="fas fa-code-branch"></i> Git & GitHub Account (Essential for submission)</li> <li><i class="fas fa-magic"></i> AI Dev Tools: Familiarity with <a href="https://cursor.sh/" target="_blank" rel="noopener noreferrer">Cursor (AI Code Editor)</a> is a plus!</li> <li><i class="fas fa-brain"></i> AI/ML Libraries: Experience via <a href="https://huggingface.co/" target="_blank" rel="noopener noreferrer">Hugging Face</a> (Transformers, Datasets) or similar (Scikit-learn, TensorFlow/Keras, PyTorch)</li> <li><i class="fas fa-cloud-upload-alt"></i> Deployment: Account on <a href="https://vercel.com/" target="_blank" rel="noopener noreferrer">Vercel</a>, GitHub Pages, Streamlit Cloud, or similar platform.</li> </ul> </div> </div> <h5 class="card-title"><i class="fas fa-lightbulb me-2"></i>Knowledge Prerequisites</h5> <ul class="list-unstyled ps-2"> <li><i class="fas fa-check"></i> Solid understanding of Python fundamentals (data types, functions, classes, modules).</li> <li><i class="fas fa-check"></i> Basic knowledge of AI/Machine Learning concepts (supervised/unsupervised learning, model training, APIs, core libraries).</li> <li><i class="fas fa-check"></i> Understanding how to find, load, and prepare datasets for AI models.</li> <li><i class="fas fa-check"></i> Version control basics using Git (clone, add, commit, push, pull, branches).</li> <li><i class="fas fa-check"></i> Ability to work collaboratively in a fast-paced team environment.</li> </ul> </div> </section>
+        <section id="preparation" class="card">
+             <div class="card-header">
+                <h2><i class="fas fa-laptop-code"></i>How to Get Ready</h2>
+             </div>
+             <div class="card-body">
+                 <p>Ensure you and your team are prepared for success:</p>
+                 <div class="row">
+                     <div class="col-lg-6 mb-4">
+                         <h5 class="card-title"><i class="fas fa-laptop me-2"></i>Hardware & Base Setup</h5>
+                         <ul class="list-unstyled ps-2">
+                             <li><i class="fas fa-check-circle"></i> Your own Laptop (Windows, macOS, or Linux)</li>
+                             <li><i class="fas fa-check-circle"></i> Stable Internet Connection (Venue Wi-Fi available)</li>
+                             <li><i class="fas fa-check-circle"></i> Charger & Power Adapter</li>
+                         </ul>
+                     </div>
+                     <div class="col-lg-6 mb-4">
+                         <h5 class="card-title"><i class="fas fa-tools me-2"></i>Software & Tools</h5>
+                         <ul class="list-unstyled ps-2">
+                             <li><i class="fab fa-python"></i> Python (3.8+ recommended) & Pip/Conda</li>
+                             <li><i class="fas fa-book"></i> Jupyter Notebook / JupyterLab <span class="badge bg-secondary">Key Tool</span></li>
+                             <li><i class="fas fa-terminal"></i> Code Editor (e.g., VS Code, PyCharm)</li>
+                             <li><i class="fas fa-code-branch"></i> Git & GitHub Account (Essential for submission)</li>
+                             <li><i class="fas fa-magic"></i> AI Dev Tools: Familiarity with <a href="https://cursor.sh/" target="_blank" rel="noopener noreferrer">Cursor (AI Code Editor)</a> is a plus!</li>
+                             <li><i class="fas fa-brain"></i> AI/ML Libraries: Experience via <a href="https://huggingface.co/" target="_blank" rel="noopener noreferrer">Hugging Face</a> (Transformers, Datasets) or similar (Scikit-learn, TensorFlow/Keras, PyTorch)</li>
+                             <li><i class="fas fa-cloud-upload-alt"></i> Deployment: Account on <a href="https://vercel.com/" target="_blank" rel="noopener noreferrer">Vercel</a>, GitHub Pages, Streamlit Cloud, or similar platform.</li>
+                         </ul>
+                     </div>
+                 </div>
+                 <h5 class="card-title"><i class="fas fa-lightbulb me-2"></i>Knowledge Prerequisites</h5>
+                 <ul class="list-unstyled ps-2">
+                     <li><i class="fas fa-check"></i> Solid understanding of Python fundamentals (data types, functions, classes, modules).</li>
+                     <li><i class="fas fa-check"></i> Basic knowledge of AI/Machine Learning concepts (supervised/unsupervised learning, model training, APIs, core libraries).</li>
+                     <li><i class="fas fa-check"></i> Understanding how to find, load, and prepare datasets for AI models.</li>
+                     <li><i class="fas fa-check"></i> Version control basics using Git (clone, add, commit, push, pull, branches).</li>
+                     <li><i class="fas fa-check"></i> Ability to work collaboratively in a fast-paced team environment.</li>
+                 </ul>
+             </div>
+        </section>
 
-        <!-- Hackathon Tracks (Grid updated: col-6 col-lg-4) -->
+        <!-- Hackathon Tracks (Updated for Modal Trigger) -->
         <section id="tracks" class="mb-5">
              <h2 class="text-center mb-4"><i class="fas fa-stream me-2"></i>Choose Your Challenge Track</h2>
-             <p class="text-center text-muted mb-4">Click on a track to see details and examples, then choose one for registration!</p>
+             <p class="text-center text-muted mb-4">Click on a track to view details and examples in a popup, then choose one for registration!</p>
             <div class="row g-4 justify-content-center">
                 <!-- Track 1: Supply Chain -->
-                <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseSupplyChain" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSupplyChain"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-truck-loading"></i> <h3 class="card-title">Supply Chain & Logistics</h3> <p class="card-text small text-muted">Apply AI to optimize logistics, predict demand, manage inventory, enhance routing, or improve supply chain resilience.</p> </div> </div> </a> <div class="collapse" id="collapseSupplyChain"> <div class="track-expansion"> <h4>Track Details: Supply Chain & Logistics</h4> <p>Focus on leveraging AI/ML to address complex challenges in modern supply chains...</p> <h4>SaaS Innovation Example:</h4> <p><strong>AI-Powered Predictive Logistics Platform:</strong> A subscription-based service that integrates real-time data...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
+                <div class="col-6 col-lg-4 d-flex">
+                    <div class="card track-card w-100"
+                         data-bs-toggle="modal"
+                         data-bs-target="#trackModal"
+                         data-track-title="Supply Chain & Logistics"
+                         data-track-icon="fas fa-truck-loading"
+                         data-track-details="Focus on leveraging AI/ML to address complex challenges in modern supply chains, such as demand forecasting, inventory optimization, predictive maintenance for fleet vehicles, route optimization considering real-time traffic and constraints, or enhancing transparency and traceability."
+                         data-track-example="<strong>AI-Powered Predictive Logistics Platform:</strong> A subscription-based service that integrates real-time data (weather, traffic, shipment status) with historical trends to predict delivery times with higher accuracy, identify potential disruptions proactively, and suggest optimal routing or carrier changes.">
+                        <div class="card-body">
+                            <i class="fas fa-truck-loading"></i>
+                            <h3 class="card-title">Supply Chain & Logistics</h3>
+                            <p class="card-text small text-muted">Apply AI to optimize logistics, predict demand, manage inventory, enhance routing, or improve supply chain resilience.</p>
+                        </div>
+                    </div>
+                </div>
                 <!-- Track 2: Sustainability -->
-                 <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseSustainability" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSustainability"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-leaf"></i> <h3 class="card-title">Sustainability & Environment</h3> <p class="card-text small text-muted">Develop AI solutions for climate monitoring, resource optimization, or promoting sustainable practices.</p> </div> </div> </a> <div class="collapse" id="collapseSustainability"> <div class="track-expansion"> <h4>Track Details: Sustainability & Environment</h4> <p>Utilize AI to tackle environmental challenges...</p> <h4>SaaS Innovation Example:</h4> <p><strong>Smart Waste Management Optimization Service:</strong> A SaaS platform for municipalities...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
+                 <div class="col-6 col-lg-4 d-flex">
+                    <div class="card track-card w-100"
+                         data-bs-toggle="modal"
+                         data-bs-target="#trackModal"
+                         data-track-title="Sustainability & Environment"
+                         data-track-icon="fas fa-leaf"
+                         data-track-details="Utilize AI to tackle environmental challenges. This could involve building models for climate change impact prediction, developing systems for optimizing energy consumption in buildings or industries, creating tools for precision agriculture to reduce resource usage, or analyzing satellite imagery for deforestation or pollution monitoring."
+                         data-track-example="<strong>Smart Waste Management Optimization Service:</strong> A SaaS platform for municipalities or private waste collectors that uses AI to analyze data from smart bins (fill levels, location) and historical collection patterns to optimize collection routes, predict bin overflow, and provide analytics on waste generation trends for better planning.">
+                         <div class="card-body">
+                             <i class="fas fa-leaf"></i>
+                             <h3 class="card-title">Sustainability & Environment</h3>
+                             <p class="card-text small text-muted">Develop AI solutions for climate monitoring, resource optimization, or promoting sustainable practices.</p>
+                         </div>
+                     </div>
+                 </div>
                  <!-- Track 3: Medicine & Healthcare -->
-                 <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseMedicine" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseMedicine"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-briefcase-medical"></i> <h3 class="card-title">Medicine & Healthcare</h3> <p class="card-text small text-muted">Innovate with AI in areas like diagnostic assistance, patient data analysis, or healthcare accessibility.</p> </div> </div> </a> <div class="collapse" id="collapseMedicine"> <div class="track-expansion"> <h4>Track Details: Medicine & Healthcare</h4> <p>Explore AI's potential to transform healthcare...</p> <h4>SaaS Innovation Example:</h4> <p><strong>AI-Assisted Radiology Report Generator:</strong> A cloud-based service for radiologists...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
+                 <div class="col-6 col-lg-4 d-flex">
+                     <div class="card track-card w-100"
+                         data-bs-toggle="modal"
+                         data-bs-target="#trackModal"
+                         data-track-title="Medicine & Healthcare"
+                         data-track-icon="fas fa-briefcase-medical"
+                         data-track-details="Explore AI's potential to transform healthcare. Projects could focus on developing AI tools for assisting in medical image analysis (e.g., identifying anomalies in X-rays), predicting patient risk based on electronic health records, optimizing hospital resource allocation, or creating personalized treatment plan recommendations (based on anonymized data)."
+                         data-track-example="<strong>AI-Assisted Radiology Report Generator:</strong> A cloud-based service for radiologists that uses NLP and computer vision models to analyze medical images (like CT scans or MRIs) and automatically generate preliminary report drafts, highlighting key findings and measurements, thus speeding up the reporting process.">
+                         <div class="card-body">
+                             <i class="fas fa-briefcase-medical"></i>
+                             <h3 class="card-title">Medicine & Healthcare</h3>
+                             <p class="card-text small text-muted">Innovate with AI in areas like diagnostic assistance, patient data analysis, or healthcare accessibility.</p>
+                         </div>
+                     </div>
+                 </div>
                  <!-- Track 4: Project Management -->
-                 <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapsePM" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsePM"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-tasks"></i> <h3 class="card-title">Project Management</h3> <p class="card-text small text-muted">Create AI tools for task automation, risk prediction, resource allocation, or team productivity.</p> </div> </div> </a> <div class="collapse" id="collapsePM"> <div class="track-expansion"> <h4>Track Details: Project Management</h4> <p>Apply AI to improve how projects are planned...</p> <h4>SaaS Innovation Example:</h4> <p><strong>AI-Powered Project Risk Assessment Platform:</strong> A SaaS tool that integrates with popular PM software...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
+                 <div class="col-6 col-lg-4 d-flex">
+                     <div class="card track-card w-100"
+                          data-bs-toggle="modal"
+                          data-bs-target="#trackModal"
+                          data-track-title="Project Management"
+                          data-track-icon="fas fa-tasks"
+                          data-track-details="Apply AI to improve how projects are planned, executed, and monitored. Ideas include AI-driven tools for predicting project delays or cost overruns, systems for automatically assigning tasks based on team member skills and availability, intelligent risk assessment tools, or NLP-based analysis of project communication to identify potential issues."
+                          data-track-example="<strong>AI-Powered Project Risk Assessment Platform:</strong> A SaaS tool that integrates with popular PM software (like Jira or Asana). It analyzes project data (task dependencies, deadlines, historical performance, team communication sentiment) to identify potential risks, estimate their impact, and suggest mitigation strategies to project managers.">
+                         <div class="card-body">
+                             <i class="fas fa-tasks"></i>
+                             <h3 class="card-title">Project Management</h3>
+                             <p class="card-text small text-muted">Create AI tools for task automation, risk prediction, resource allocation, or team productivity.</p>
+                         </div>
+                     </div>
+                 </div>
                  <!-- Track 5: Real Estate -->
-                  <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseRealEstate" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseRealEstate"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-city"></i> <h3 class="card-title">Real Estate & Urban Planning</h3> <p class="card-text small text-muted">Build AI applications for property valuation, market trend analysis, or optimizing urban infrastructure.</p> </div> </div> </a> <div class="collapse" id="collapseRealEstate"> <div class="track-expansion"> <h4>Track Details: Real Estate & Urban Planning</h4> <p>Use AI to gain insights into the property market...</p> <h4>SaaS Innovation Example:</h4> <p><strong>Hyperlocal Real Estate Investment Analyzer:</strong> A subscription service for real estate investors...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
+                  <div class="col-6 col-lg-4 d-flex">
+                     <div class="card track-card w-100"
+                          data-bs-toggle="modal"
+                          data-bs-target="#trackModal"
+                          data-track-title="Real Estate & Urban Planning"
+                          data-track-icon="fas fa-city"
+                          data-track-details="Use AI to gain insights into the property market or improve urban living. Examples: developing more accurate automated valuation models (AVMs) using diverse data sources, predicting real estate market trends, analyzing urban mobility patterns to suggest infrastructure improvements, or creating tools for optimizing building energy efficiency based on usage patterns."
+                          data-track-example="<strong>Hyperlocal Real Estate Investment Analyzer:</strong> A subscription service for real estate investors that uses AI to analyze vast datasets (property listings, historical sales, demographics, crime rates, school ratings, planned infrastructure projects) to identify neighborhoods with high growth potential and predict ROI for specific properties.">
+                         <div class="card-body">
+                             <i class="fas fa-city"></i>
+                             <h3 class="card-title">Real Estate & Urban Planning</h3>
+                             <p class="card-text small text-muted">Build AI applications for property valuation, market trend analysis, or optimizing urban infrastructure.</p>
+                         </div>
+                     </div>
+                  </div>
                  <!-- Track 6: Government -->
-                  <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseGov" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseGov"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-landmark"></i> <h3 class="card-title">Government & Public Sector</h3> <p class="card-text small text-muted">Apply AI to enhance public services, data analysis for policy making, or citizen engagement platforms.</p> </div> </div> </a> <div class="collapse" id="collapseGov"> <div class="track-expansion"> <h4>Track Details: Government & Public Sector</h4> <p>Focus on how AI can improve government operations...</p> <h4>SaaS Innovation Example:</h4> <p><strong>AI-Powered Public Sentiment Analysis Dashboard:</strong> A service for government agencies...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
+                  <div class="col-6 col-lg-4 d-flex">
+                      <div class="card track-card w-100"
+                          data-bs-toggle="modal"
+                          data-bs-target="#trackModal"
+                          data-track-title="Government & Public Sector"
+                          data-track-icon="fas fa-landmark"
+                          data-track-details="Focus on how AI can improve government operations and public services. Potential projects include AI systems for detecting fraud in benefit claims, NLP tools for analyzing public feedback or policy documents, chatbots for providing citizens with information and services, or predictive models for resource allocation in public safety or infrastructure maintenance."
+                          data-track-example="<strong>AI-Powered Public Sentiment Analysis Dashboard:</strong> A service for government agencies that monitors social media, news articles, and public forums, using NLP to analyze sentiment towards specific policies, services, or events. It provides real-time insights and trend analysis to help policymakers understand public opinion and respond effectively.">
+                          <div class="card-body">
+                              <i class="fas fa-landmark"></i>
+                              <h3 class="card-title">Government & Public Sector</h3>
+                              <p class="card-text small text-muted">Apply AI to enhance public services, data analysis for policy making, or citizen engagement platforms.</p>
+                          </div>
+                      </div>
+                  </div>
                <!-- Track 7: Open Innovation -->
-                <div class="col-6 col-lg-4 d-flex flex-column"> <a href="#collapseOpen" class="track-trigger" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseOpen"> <div class="card track-card w-100 flex-grow-1"> <div class="card-body"> <i class="fas fa-lightbulb"></i> <h3 class="card-title">Open Innovation</h3> <p class="card-text small text-muted">Have a brilliant AI idea outside these tracks? Pitch it! We welcome creative and impactful projects.</p> </div> </div> </a> <div class="collapse" id="collapseOpen"> <div class="track-expansion"> <h4>Track Details: Open Innovation</h4> <p>This track is for groundbreaking AI ideas...</p> <h4>SaaS Innovation Example:</h4> <p><strong>AI Co-pilot for Creative Writing:</strong> A subscription-based web application...</p> <a href="#registration" class="btn btn-choose-track">Choose This Track & Register <i class="fas fa-arrow-right"></i></a> </div> </div> </div>
+                <div class="col-6 col-lg-4 d-flex">
+                    <div class="card track-card w-100"
+                         data-bs-toggle="modal"
+                         data-bs-target="#trackModal"
+                         data-track-title="Open Innovation"
+                         data-track-icon="fas fa-lightbulb"
+                         data-track-details="This track is for groundbreaking AI ideas that don't neatly fit into the other categories. If you have a unique application for AI in finance, education, entertainment, accessibility, or any other field, pitch it here! Focus on demonstrating the novelty, potential impact, and feasibility of your concept using Python and AI."
+                         data-track-example="<strong>AI Co-pilot for Creative Writing:</strong> A subscription-based web application that assists writers by suggesting plot points, generating character descriptions based on traits, checking for consistency errors, or offering stylistic improvements using advanced generative AI models fine-tuned on literary data.">
+                        <div class="card-body">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3 class="card-title">Open Innovation</h3>
+                            <p class="card-text small text-muted">Have a brilliant AI idea outside these tracks? Pitch it! We welcome creative and impactful projects.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
 
         <!-- Registration & Onboarding (Keep as is) -->
-        <section id="registration" class="card text-center pt-5"> <div class="card-header justify-content-center"> <h2><i class="fas fa-user-plus"></i>Register & Onboard Your Team</h2> </div> <div class="card-body"> <p>Ready to take on the challenge? Register your team (or sign up solo and we can help you find teammates!). After registration, you'll receive a link to complete a comprehensive onboarding form to gauge experience, tool familiarity, and preferred track.</p> <p class="lead fw-bold text-primary-color">Spaces are limited - Register Early!</p> <a href="#" class="btn btn-custom btn-lg my-3">Register Your Team Now!</a> <!-- Onboarding Form Accordion remains unchanged --> <div class="accordion mt-4" id="onboardingFormAccordion"> <div class="accordion-item"> <h2 class="accordion-header" id="headingOne"> <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> <i class="fas fa-clipboard-list me-2"></i>Click to See Example Onboarding Form Fields </button> </h2> <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#onboardingFormAccordion"> <div class="accordion-body text-start"> <!-- Form Content Here --> <p><em>This detailed form (sent after registration)...</em></p> <form> <!-- Fieldsets --> <fieldset class="mb-4 border p-3 rounded"> <!-- Team Info --> </fieldset> <fieldset class="mb-4 border p-3 rounded"> <!-- Experience Levels --> </fieldset> <fieldset class="mb-4 border p-3 rounded"> <!-- Tool Familiarity --> </fieldset> </form> </div> </div> </div> </div> </div> </section>
-
-         <!-- Detailed Hackathon Agenda (Not Collapsed) -->
-        <section id="agenda" class="card"> <div class="card-header"> <h2><i class="fas fa-calendar-alt"></i>Detailed Hackathon Agenda</h2> </div> <div class="card-body"> <!-- Agenda Content Here --> <h3 class="mb-3 mt-2 text-primary-color"><i class="fas fa-calendar-day me-2"></i>Day 1: Monday, 21st April 2025 - Hackathon Day</h3> <ul class="agenda-list"> <!-- Day 1 Items --> </ul> <h3 class="mb-3 mt-4 text-primary-color"><i class="fas fa-calendar-day me-2"></i>Day 2: Tuesday, 22nd April 2025 - Panels, Pitch & Awards</h3> <ul class="agenda-list"> <!-- Day 2 Items --> </ul> </div> </section>
-
-        <!-- Hackathon Process & Submission Checklist (Not collapsed) -->
-        <section id="process" class="card"> <div class="card-header"> <h2><i class="fas fa-tasks"></i>Hackathon Process & Submission Checklist</h2> </div> <div class="card-body"> <p>Key steps and deliverables expected from each team. Track your progress using the <i class="fas fa-tasks"></i> button at the bottom right!</p> <div class="checklist" id="main-checklist"> <!-- Checklist Items --> </div> </div> </section>
-
-        <!-- Prizes and Benefits (Not Collapsed) -->
-        <section id="prizes" class="card"> <div class="card-header"> <h2><i class="fas fa-trophy"></i>Prizes and Benefits</h2> </div> <div class="card-body"> <ul class="list-unstyled"> <!-- Prize Items --> </ul> </div> </section>
-
-        <!-- Judging Criteria (COLLAPSED BY DEFAULT) -->
-        <section id="judging" class="card">
-            <div class="card-header">
-                <h2><i class="fas fa-gavel"></i>Judging Criteria</h2>
-                <button class="btn btn-sm btn-outline-light btn-collapse-details ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJudging" aria-expanded="false" aria-controls="collapseJudging">
-                    Show/Hide Details
-                </button>
-            </div>
-             <div class="collapse" id="collapseJudging">
-                 <div class="card-body">
-                     <p>Projects will be evaluated holistically...</p>
-                     <ol class="ps-4"> <!-- Criteria List --> </ol>
-                     <p class="mt-3"><i class="fas fa-info-circle text-info me-1"></i> <strong>Note:</strong> Compliance with rules...</p>
+        <section id="registration" class="card text-center pt-5">
+             <div class="card-header justify-content-center">
+                 <h2><i class="fas fa-user-plus"></i>Register & Onboard Your Team</h2>
+             </div>
+             <div class="card-body">
+                 <p>Ready to take on the challenge? Register your team (or sign up solo and we can help you find teammates!). After registration, you'll receive a link to complete a comprehensive onboarding form to gauge experience, tool familiarity, and preferred track.</p>
+                 <p class="lead fw-bold text-primary-color">Spaces are limited - Register Early!</p>
+                 <a href="#" class="btn btn-custom btn-lg my-3">Register Your Team Now!</a> <!-- This link needs to be updated -->
+                 <!-- Onboarding Form Accordion remains unchanged -->
+                 <div class="accordion mt-4" id="onboardingFormAccordion">
+                     <div class="accordion-item">
+                         <h2 class="accordion-header" id="headingOne">
+                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                 <i class="fas fa-clipboard-list me-2"></i>Click to See Example Onboarding Form Fields
+                             </button>
+                         </h2>
+                         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#onboardingFormAccordion">
+                             <div class="accordion-body text-start">
+                                 <p><em>This detailed form (sent after registration) helps us understand your team's profile and ensures you're ready for the hackathon. It covers areas like:</em></p>
+                                 <form>
+                                     <fieldset class="mb-4 border p-3 rounded">
+                                         <legend class="w-auto px-2 fs-6">Team Information</legend>
+                                         <div>Team Name, Member Names & Emails, Contact Person, Preferred Track (Top 3 Choices).</div>
+                                     </fieldset>
+                                     <fieldset class="mb-4 border p-3 rounded">
+                                         <legend class="w-auto px-2 fs-6">Experience Levels (per member)</legend>
+                                         <div>Python Proficiency (Beginner/Intermediate/Advanced), AI/ML Concepts Familiarity, Data Handling Experience, Previous Hackathon Participation.</div>
+                                     </fieldset>
+                                     <fieldset class="mb-4 border p-3 rounded">
+                                         <legend class="w-auto px-2 fs-6">Tool Familiarity</legend>
+                                         <div>Experience with Jupyter, Git/GitHub, Cloud Platforms (Vercel, AWS, etc.), Specific AI Libraries (Hugging Face, Scikit-learn, TensorFlow/PyTorch), Cursor.sh.</div>
+                                     </fieldset>
+                                     <p><em>...and potentially a few more specific questions based on the tracks.</em></p>
+                                 </form>
+                             </div>
+                         </div>
+                     </div>
                  </div>
              </div>
         </section>
 
-         <!-- AI Grading/Test Score Feature (COLLAPSED BY DEFAULT, Interactive) -->
-        <section id="ai-grading" class="card">
+         <!-- Detailed Hackathon Agenda (Not Collapsed) -->
+        <section id="agenda" class="card">
              <div class="card-header">
-                <h2><i class="fas fa-robot"></i>AI-Assisted Evaluation</h2>
-                 <button class="btn btn-sm btn-outline-light btn-collapse-details ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAIGrading" aria-expanded="false" aria-controls="collapseAIGrading">
-                     Show/Hide Details
-                 </button>
+                 <h2><i class="fas fa-calendar-alt"></i>Detailed Hackathon Agenda</h2>
+             </div>
+             <div class="card-body">
+                 <!-- Placeholder Content - Needs actual agenda -->
+                 <h3 class="mb-3 mt-2" style="color: var(--primary-color);"><i class="fas fa-calendar-day me-2"></i>Day 1: Monday, 21st April 2025 - Hackathon Day</h3>
+                 <ul class="agenda-list">
+                     <li> <span class="agenda-time"><i class="fas fa-sign-in-alt"></i>08:30 - 09:00</span> <span class="agenda-details"><strong>Registration & Breakfast</strong><p>Check-in, grab some coffee and pastries.</p></span> <span class="agenda-speaker">-</span> </li>
+                     <li> <span class="agenda-time"><i class="fas fa-bullhorn"></i>09:00 - 09:45</span> <span class="agenda-details"><strong>Opening Ceremony & Briefing</strong><p>Welcome address, rules overview, track details revisited, introduction of mentors and judges.</p></span> <span class="agenda-speaker">Wellington Campus Dean & Lead Mentor</span> </li>
+                     <li> <span class="agenda-time"><i class="fas fa-users"></i>09:45 - 10:15</span> <span class="agenda-details"><strong>Team Formation & Finalization</strong><p>Finalize teams, find members if needed, confirm track selection.</p></span> <span class="agenda-speaker">Mentors Assisting</span> </li>
+                     <li> <span class="agenda-time"><i class="fas fa-laptop-code"></i>10:15</span> <span class="agenda-details"><strong>Hackathon Kick-off!</strong><p>Coding begins! Start working on your projects.</p></span> <span class="agenda-speaker">-</span> </li>
+                     <li> <span class="agenda-time"><i class="fas fa-headset"></i>10:30 - 17:00</span> <span class="agenda-details"><strong>Mentoring Sessions Available</strong><p>Mentors available for technical guidance, brainstorming, and feedback.</p></span> <span class="agenda-speaker">Various Mentors (Rotating)</span> </li>
+                     <li class="agenda-break"> <span class="agenda-time"><i class="fas fa-utensils"></i>13:00 - 14:00</span> <span class="agenda-details"><strong>Lunch Break</strong><p>Refuel and network.</p></span> <span class="agenda-speaker">-</span> </li>
+                     <li> <span class="agenda-time"><i class="fas fa-sync"></i>16:00 - 16:30</span> <span class="agenda-details"><strong>Mid-Point Check-in (Optional)</strong><p>Quick progress check with mentors.</p></span> <span class="agenda-speaker">Mentors</span> </li>
+                     <li> <span class="agenda-time"><i class="fas fa-moon"></i>18:00 onwards</span> <span class="agenda-details"><strong>Venue Open for Overnight Hacking</strong><p>Continue working through the night (Dinner provided around 19:30).</p></span> <span class="agenda-speaker">-</span> </li>
+                 </ul>
+                 <h3 class="mb-3 mt-4" style="color: var(--primary-color);"><i class="fas fa-calendar-day me-2"></i>Day 2: Tuesday, 22nd April 2025 - Panels, Pitch & Awards</h3>
+                 <ul class="agenda-list">
+                     <li> <span class="agenda-time"><i class="fas fa-mug-saucer"></i>08:30 - 09:00</span> <span class="agenda-details"><strong>Morning Coffee & Final Touches</strong><p>Last chance for coding tweaks and presentation prep.</p></span> <span class="agenda-speaker">-</span> </li>
+                     <li> <span class="agenda-time"><i class="fas fa-stopwatch"></i>10:00</span> <span class="agenda-details"><strong>CODE FREEZE - Submission Deadline</strong><p>Submit your GitHub repository link and pitch deck via the provided form.</p></span> <span class="agenda-speaker">Organizers</span> </li>
+                     <li> <span class="agenda-time"><i class="fas fa-comments"></i>10:00 - 11:00</span> <span class="agenda-details"><strong>Industry Panel: AI Trends & Careers</strong><p>Insights from AI professionals on current trends and future opportunities.</p></span> <span class="agenda-speaker">Invited Industry Experts (TBA)</span> </li>
+                     <li class="agenda-break"> <span class="agenda-time"><i class="fas fa-coffee"></i>11:00 - 11:30</span> <span class="agenda-details"><strong>Networking Break</strong><p>Connect with panelists, judges, mentors, and fellow participants.</p></span> <span class="agenda-speaker">-</span> </li>
+                     <li> <span class="agenda-time"><i class="fas fa-chalkboard-teacher"></i>11:30 - 13:30</span> <span class="agenda-details"><strong>Project Pitching Session</strong><p>Teams present their projects to the judges (Approx. 5 min pitch + 3 min Q&A per team).</p></span> <span class="agenda-speaker">Judging Panel & Teams</span> </li>
+                     <li class="agenda-break"> <span class="agenda-time"><i class="fas fa-gavel"></i>13:30 - 14:30</span> <span class="agenda-details"><strong>Judges Deliberation & Lunch</strong><p>Judges evaluate projects while participants have lunch.</p></span> <span class="agenda-speaker">-</span> </li>
+                     <li> <span class="agenda-time"><i class="fas fa-trophy"></i>14:30 - 15:30</span> <span class="agenda-details"><strong>Awards Ceremony & Closing Remarks</strong><p>Announcement of winners, prize distribution, final thanks, and photos.</p></span> <span class="agenda-speaker">Wellington Campus & Sponsors</span> </li>
+                     <li> <span class="agenda-time"><i class="fas fa-users"></i>15:30 onwards</span> <span class="agenda-details"><strong>Final Networking & Departure</strong><p>Opportunity for final connections before the event concludes.</p></span> <span class="agenda-speaker">-</span> </li>
+                 </ul>
+             </div>
+        </section>
+
+        <!-- Hackathon Process & Submission Checklist (Not collapsed) -->
+        <section id="process" class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-tasks"></i>Hackathon Process & Submission Checklist</h2>
+            </div>
+            <div class="card-body">
+                <p>Key steps and deliverables expected from each team. Track your progress using the <i class="fas fa-tasks"></i> button at the bottom right!</p>
+                <!-- NOTE: Ensure each checklist item has a unique data-task-id -->
+                <div class="checklist" id="main-checklist">
+                    <div class="checklist-item" data-task-id="briefing"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Attend Briefing:</strong> Understand rules, timeline, and judging criteria.</div> </div>
+                    <div class="checklist-item" data-task-id="repo"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Setup GitHub Repository:</strong> Create a public repo for your project code & documentation. Add all team members as collaborators.</div> </div>
+                    <div class="checklist-item" data-task-id="data"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Acquire & Prepare Data:</strong> Find relevant datasets (cite sources!), clean, and preprocess them for your AI model (Jupyter notebook preferred for exploration).</div> </div>
+                    <div class="checklist-item" data-task-id="develop"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Develop AI Solution:</strong> Implement the core AI/ML model(s) using Python. Use libraries like Hugging Face, Scikit-learn, TensorFlow/Keras, or PyTorch. Commit frequently!</div> </div>
+                    <div class="checklist-item" data-task-id="demo"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Build Demo/Frontend (Optional but Recommended):</strong> Create a simple way to showcase your AI's functionality (e.g., using Streamlit, Flask/Django, or a well-documented Jupyter Notebook).</div> </div>
+                    <div class="checklist-item" data-task-id="deploy"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Deploy Demo (Recommended):</strong> Deploy your demo application to a platform like Vercel, Streamlit Cloud, or GitHub Pages for easy access by judges.</div> </div>
+                    <div class="checklist-item" data-task-id="deck"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Prepare Pitch Deck:</strong> Create a concise presentation (max 5-7 slides) covering problem, solution, AI approach, demo, team, and next steps.</div> </div>
+                    <div class="checklist-item" data-task-id="submit"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Submit Project:</strong> Submit the GitHub repository link, deployed demo link (if any), and pitch deck via the official submission form before the deadline. Ensure repo includes a README.md.</div> </div>
+                    <div class="checklist-item" data-task-id="pitch"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Deliver Pitch:</strong> Present your project clearly and concisely during the allocated time slot. Be ready for Q&A.</div> </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prizes and Benefits (Not Collapsed) -->
+        <section id="prizes" class="card">
+             <div class="card-header">
+                 <h2><i class="fas fa-trophy"></i>Prizes and Benefits</h2>
+             </div>
+             <div class="card-body">
+                 <ul class="list-unstyled">
+                     <li><i class="fas fa-trophy"></i> <strong>1st Place:</strong> AED 10,000 Cash Prize + Premium Sponsor Swag + Internship Opportunities Interview + Wellington Campus Course Vouchers</li>
+                     <li><i class="fas fa-medal"></i> <strong>2nd Place:</strong> AED 5,000 Cash Prize + Sponsor Swag + Wellington Campus Course Vouchers</li>
+                     <li><i class="fas fa-award"></i> <strong>3rd Place:</strong> AED 2,500 Cash Prize + Sponsor Swag + Wellington Campus Course Vouchers</li>
+                     <li><i class="fas fa-lightbulb"></i> <strong>Best Innovation Award:</strong> Special recognition and prize for the most creative / unique AI solution.</li>
+                     <li><i class="fas fa-gifts"></i> <strong>All Participants:</strong> Certificate of Participation, Networking Opportunities, Access to Mentor Feedback, Potential Recruitment Opportunities, Hackathon T-shirt & Swag Bag.</li>
+                     <li><i class="fas fa-handshake"></i> <strong>Networking:</strong> Connect with industry professionals, mentors, judges, and potential employers/collaborators from companies like Huawei, Oppo, and DAFZ.</li>
+                     <li><i class="fas fa-graduation-cap"></i> <strong>Learning:</strong> Gain hands-on experience with Python, AI libraries, collaboration tools, and rapid prototyping.</li>
+                 </ul>
+             </div>
+        </section>
+
+        <!-- Judging Criteria (COLLAPSED BY DEFAULT, Header Clickable) -->
+        <section id="judging" class="card">
+            <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseJudging" aria-expanded="false" aria-controls="collapseJudging">
+                <h2><i class="fas fa-gavel"></i>Judging Criteria</h2>
+                <span class="chevron-icon ms-auto"> <!-- Chevron container -->
+                    <i class="fas fa-chevron-down chevron-down"></i>
+                    <i class="fas fa-chevron-up chevron-up"></i>
+                </span>
+            </div>
+             <div class="collapse" id="collapseJudging">
+                 <div class="card-body">
+                     <p>Projects will be evaluated holistically based on the following criteria (weights may vary slightly):</p>
+                     <ol class="ps-4">
+                         <li><strong>Technical Implementation (30%):</strong> Quality of code, effective use of Python and AI libraries, complexity handled, working demo/prototype functionality.</li>
+                         <li><strong>Innovation & Creativity (25%):</strong> Novelty of the idea or approach, originality in addressing the chosen track's problem.</li>
+                         <li><strong>Impact & Feasibility (20%):</strong> Potential real-world impact of the solution, clarity of the problem being solved, feasibility of the proposed solution.</li>
+                         <li><strong>Presentation & Pitch (15%):</strong> Clarity and conciseness of the presentation, effective demonstration of the project, quality of the pitch deck, Q&A handling.</li>
+                         <li><strong>Completion & Polish (10%):</strong> How complete the project is within the hackathon timeframe, overall user experience/polish of the demo, documentation (README).</li>
+                     </ol>
+                     <p class="mt-3"><i class="fas fa-info-circle text-info me-1"></i> <strong>Note:</strong> Compliance with rules, effective use of Git/GitHub, and team collaboration (observed during mentoring) will also be considered implicitly.</p>
+                 </div>
+             </div>
+        </section>
+
+         <!-- AI Grading/Test Score Feature (COLLAPSED BY DEFAULT, Header Clickable, Interactive) -->
+        <section id="ai-grading" class="card">
+             <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseAIGrading" aria-expanded="false" aria-controls="collapseAIGrading">
+                 <h2><i class="fas fa-robot"></i>AI-Assisted Evaluation</h2>
+                 <span class="chevron-icon ms-auto"> <!-- Chevron container -->
+                     <i class="fas fa-chevron-down chevron-down"></i>
+                     <i class="fas fa-chevron-up chevron-up"></i>
+                 </span>
              </div>
             <div class="collapse" id="collapseAIGrading">
                  <div class="card-body">
-                     <p>Select a team to view their current task progress and a simulated AI technical summary.</p>
+                     <p>Select a team to view their current task progress (based on the checklist) and a simulated AI technical summary based on common project patterns.</p>
                      <!-- Team Selection -->
                      <div class="row g-3 align-items-end mb-3">
                          <div class="col-md-8">
@@ -361,25 +664,84 @@
 
                     <hr class="my-4"> <!-- Separator -->
                      <p class="mb-0 small text-muted fst-italic">
-                         <i class="fas fa-info-circle me-1"></i> This is a simulation. Actual evaluation uses more comprehensive metrics and human oversight. Task progress shown reflects the overall checklist status.
+                         <i class="fas fa-info-circle me-1"></i> This is a simulation. Actual evaluation uses more comprehensive metrics and human oversight. Task progress shown reflects the overall checklist status based on your locally saved progress.
                      </p>
                 </div>
             </div>
         </section>
 
         <!-- Contact Information (Not collapsed) -->
-        <section id="contact" class="card"> <div class="card-header"> <h2><i class="fas fa-envelope"></i>Contact Us</h2> </div> <div class="card-body"> <p class="card-text">Have questions about registration, preparation, or the hackathon details? Reach out to the Wellington Campus Events Team:</p> <ul class="list-unstyled"> <li><i class="fas fa-envelope-open-text"></i> Email: <a href="mailto:events@wellingtoncampus.co">info@wellingtoncampus.co</a></li> <li><i class="fas fa-phone"></i> Phone: <a href="tel:+971542523922">+971 54 252 3922</a></li> <li><i class="fas fa-map-marker-alt"></i> Campus Location: Wellington Campus, Dubai commercity, Dubai, UAE</li> </ul> </div> </section>
+        <section id="contact" class="card">
+             <div class="card-header">
+                 <h2><i class="fas fa-envelope"></i>Contact Us</h2>
+             </div>
+             <div class="card-body">
+                 <p class="card-text">Have questions about registration, preparation, or the hackathon details? Reach out to the Wellington Campus Events Team:</p>
+                 <ul class="list-unstyled">
+                     <li><i class="fas fa-envelope-open-text"></i> Email: <a href="mailto:events@wellingtoncampus.co">info@wellingtoncampus.co</a></li>
+                     <li><i class="fas fa-phone"></i> Phone: <a href="tel:+971542523922">+971 54 252 3922</a></li>
+                     <li><i class="fas fa-map-marker-alt"></i> Campus Location: Wellington Campus, Dubai commercity, Dubai, UAE</li>
+                 </ul>
+             </div>
+        </section>
 
          <!-- Footer Placeholder -->
-         <footer class="text-center mt-5 mb-4 text-muted"> <small>© 2024-2025 Wellington Campus. All Rights Reserved.</small> </footer>
+         <footer class="text-center mt-5 mb-4 text-muted">
+            <small>© 2024-2025 Wellington Campus. All Rights Reserved.</small>
+         </footer>
 
     </div> <!-- End Main Container -->
 
     <!-- Task Tracker Floating Button -->
-    <button class="task-tracker-button" id="task-tracker-btn" title="Open Task Tracker" data-bs-toggle="modal" data-bs-target="#taskTrackerModal"> <i class="fas fa-tasks"></i> </button>
+    <button class="task-tracker-button" id="task-tracker-btn" title="Open Task Tracker" data-bs-toggle="modal" data-bs-target="#taskTrackerModal">
+        <i class="fas fa-tasks"></i>
+    </button>
 
     <!-- Task Tracker Modal -->
-    <div class="modal fade" id="taskTrackerModal" tabindex="-1" aria-labelledby="taskTrackerModalLabel" aria-hidden="true"> <div class="modal-dialog modal-lg modal-dialog-scrollable"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="taskTrackerModalLabel"><i class="fas fa-tasks me-2"></i>Hackathon Task Tracker</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <p class="text-muted">Click on a task to mark it as complete. Your progress is saved locally in your browser.</p> <div id="task-message-area" class="mb-3"></div> <div class="checklist" id="modal-checklist"> <!-- Checklist items here --> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> </div> </div> </div> </div>
+    <div class="modal fade" id="taskTrackerModal" tabindex="-1" aria-labelledby="taskTrackerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="taskTrackerModalLabel"><i class="fas fa-tasks me-2"></i>Hackathon Task Tracker</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted">Click on a task to mark it as complete. Your progress is saved locally in your browser.</p>
+                    <div id="task-message-area" class="mb-3"></div>
+                    <div class="checklist" id="modal-checklist">
+                        <!-- Checklist items will be populated/cloned here by JS if needed -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Track Details Modal -->
+    <div class="modal fade" id="trackModal" tabindex="-1" aria-labelledby="trackModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="trackModalLabel">
+                        <!-- Track Title and Icon will be inserted here by JS -->
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="trackModalBody">
+                    <!-- Track Details and Example will be inserted here by JS -->
+                </div>
+                <div class="modal-footer justify-content-between">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                     <a href="#registration" id="trackModalRegisterBtn" class="btn btn-choose-track scroll-link" data-bs-dismiss="modal">
+                         Choose This Track & Register <i class="fas fa-arrow-right"></i>
+                     </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
      <!-- Bottom Navigation for Mobile -->
      <nav class="bottom-nav" aria-label="Mobile navigation">
@@ -395,12 +757,12 @@
     <!-- Bootstrap Bundle JS -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-    <!-- Custom JS for Task Tracker AND AI Judging Simulation -->
-    <script id="task-tracker-script">
+    <!-- Custom JS for Task Tracker, AI Judging Sim, AND Track Modal -->
+    <script id="feature-script"> // Renamed script ID for clarity
         document.addEventListener('DOMContentLoaded', function() {
             // --- Common Elements & State ---
             const modalChecklist = document.getElementById('modal-checklist');
-            const mainChecklist = document.getElementById('main-checklist'); // Assumed still exists for sync
+            const mainChecklist = document.getElementById('main-checklist');
             const messageArea = document.getElementById('task-message-area');
             const storageKey = 'hackathonTaskStatus';
             const progressBar = document.querySelector('#progress .progress-bar');
@@ -426,37 +788,55 @@
                 if (mainItem) { mainItem.classList.toggle('completed', isCompleted); }
             }
 
-            function showMessage(message, type = 'success') { messageArea.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`; }
-            function clearMessages() { messageArea.innerHTML = ''; }
+            function showMessage(message, type = 'success') {
+                if (messageArea) {
+                   messageArea.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+                }
+            }
+            function clearMessages() {
+                 if (messageArea) { messageArea.innerHTML = ''; }
+            }
 
             function updateProgressBar() {
                  const state = loadTaskState();
-                 const taskItems = modalChecklist.querySelectorAll('.checklist-item[data-task-id]'); // Get only items with task IDs
+                 const taskItems = modalChecklist.querySelectorAll('.checklist-item[data-task-id]');
                  const totalTasks = taskItems.length;
-                 if (totalTasks === 0) return; // Avoid division by zero if checklist isn't populated yet
+                 if (totalTasks === 0 || !progressBar) return; // Avoid division by zero and check element exists
 
                  const completedTasks = Object.values(state).filter(status => status === true).length;
                  const progressPercent = Math.round((completedTasks / totalTasks) * 100);
 
-                 if (progressBar) {
-                     progressBar.style.width = progressPercent + '%';
-                     progressBar.textContent = `${progressPercent}% Tasks Complete`;
-                     progressBar.setAttribute('aria-valuenow', progressPercent);
-                     progressBar.classList.toggle('bg-success', progressPercent === 100);
-                     progressBar.classList.toggle('progress-bar-animated', progressPercent < 100);
-                 }
+                 progressBar.style.width = progressPercent + '%';
+                 progressBar.textContent = `${progressPercent}% Tasks Complete`;
+                 progressBar.setAttribute('aria-valuenow', progressPercent);
+                 progressBar.classList.toggle('bg-success', progressPercent === 100); // Use Bootstrap class for full green
+                 progressBar.classList.toggle('progress-bar-animated', progressPercent < 100);
+                 progressBar.classList.toggle('progress-bar-striped', progressPercent < 100); // Keep stripes until 100%
             }
 
-            // Populate modal checklist from main checklist if empty (robustness)
-             if (modalChecklist && mainChecklist && modalChecklist.children.length === 0) {
-                modalChecklist.innerHTML = mainChecklist.innerHTML;
+             // Populate modal checklist from main checklist if empty
+             if (modalChecklist && mainChecklist && modalChecklist.children.length === 0 && mainChecklist.children.length > 0) {
+                // Clone nodes to avoid moving them from the main page
+                Array.from(mainChecklist.children).forEach(item => {
+                    modalChecklist.appendChild(item.cloneNode(true));
+                });
+             } else if (!modalChecklist && mainChecklist) {
+                 console.warn("Modal checklist container not found, cannot populate.");
+             } else if (!mainChecklist) {
+                  console.warn("Main checklist container not found, cannot populate modal.");
              }
 
-            // Initial Load for Task Tracker
+
+            // Initial Load for Task Tracker UI state
              if (modalChecklist) {
                 modalChecklist.querySelectorAll('.checklist-item[data-task-id]').forEach(item => {
                     const taskId = item.dataset.taskId;
-                    if (taskId && taskState[taskId]) { updateTaskUI(taskId, true); }
+                    if (taskId && taskState[taskId]) {
+                         // Ensure the correct classes are set on load
+                         item.classList.add('completed');
+                    } else {
+                         item.classList.remove('completed');
+                    }
                 });
              }
              updateProgressBar(); // Initial progress bar update
@@ -468,13 +848,15 @@
                     const taskItem = event.target.closest('.checklist-item[data-task-id]');
                     if (taskItem) {
                         const taskId = taskItem.dataset.taskId;
-                        const isNowCompleted = !taskState[taskId];
+                        const isNowCompleted = !taskState[taskId]; // Toggle state
                         taskState[taskId] = isNowCompleted; // Update local state variable
                         saveTaskState(taskState); // Save updated state
-                        updateTaskUI(taskId, isNowCompleted);
+                        updateTaskUI(taskId, isNowCompleted); // Update both checklists visually
                         clearMessages();
-                        if (isNowCompleted) { showMessage(`Task "${taskItem.querySelector('strong').textContent.trim()}" marked complete! Great job!`, 'success'); }
-                        else { showMessage(`Task "${taskItem.querySelector('strong').textContent.trim()}" marked as incomplete.`, 'warning'); }
+                        const taskNameElement = taskItem.querySelector('strong');
+                        const taskName = taskNameElement ? taskNameElement.textContent.trim() : `Task ${taskId}`;
+                        if (isNowCompleted) { showMessage(`Task "${taskName}" marked complete! Great job!`, 'success'); }
+                        else { showMessage(`Task "${taskName}" marked as incomplete.`, 'warning'); }
                         updateProgressBar(); // Update progress bar on click
                     }
                 });
@@ -493,11 +875,19 @@
             const resultTeamName = document.getElementById('resultTeamName');
             const resultTaskProgress = document.getElementById('resultTaskProgress');
             const resultTechSummary = document.getElementById('resultTechSummary');
-            const taskDefinitions = { // Get task names for display
-                 'briefing': 'Attend Briefing', 'repo': 'GitHub Repository', 'data': 'Acquire & Prepare Data',
-                 'develop': 'Develop AI Solution', 'demo': 'Demo/Frontend', 'deploy': 'Deploy Demo',
-                 'deck': 'Prepare Pitch Deck', 'submit': 'Submit Project', 'pitch': 'Deliver Pitch'
-            };
+
+            // Define task names directly from the main checklist for consistency
+            const taskDefinitions = {};
+             if(mainChecklist){
+                 mainChecklist.querySelectorAll('.checklist-item[data-task-id]').forEach(item => {
+                     const taskId = item.dataset.taskId;
+                     const taskNameElement = item.querySelector('strong');
+                     taskDefinitions[taskId] = taskNameElement ? taskNameElement.textContent.trim() : taskId;
+                 });
+             } else {
+                console.warn("Main checklist not found for task definitions.");
+             }
+
 
             // Map Task IDs to readable names
             function getTaskName(taskId) {
@@ -523,12 +913,11 @@
                 return `<h6 class="mt-3">Simulated Technical Summary:</h6><p>${summary}</p>`;
             }
 
-            if (judgeTeamBtn) {
+            if (judgeTeamBtn && teamSelect && judgingLoader && judgingResults && resultTeamName && resultTaskProgress && resultTechSummary) {
                 judgeTeamBtn.addEventListener('click', function() {
                     const selectedTeam = teamSelect.value;
 
                     if (!selectedTeam) {
-                        // Optionally show an alert or message to select a team
                         judgingResults.innerHTML = `<div class="alert alert-warning">Please select a team first.</div>`;
                         judgingResults.style.display = 'block';
                         judgingLoader.style.display = 'none';
@@ -541,17 +930,17 @@
                     judgeTeamBtn.disabled = true;
                     teamSelect.disabled = true;
 
-                    // Simulate 3-second processing
+                    // Simulate 2-second processing
                     setTimeout(() => {
                         // Fetch current task state again inside timeout
                         const currentTaskState = loadTaskState();
 
                         // Build Task Progress HTML
-                        let progressHtml = '<h6>Task Progress:</h6><ul>';
+                        let progressHtml = '<h6>Task Progress (Based on Your Checklist):</h6><ul>';
                         Object.keys(taskDefinitions).forEach(taskId => {
                              const taskName = getTaskName(taskId);
                              const isCompleted = currentTaskState[taskId] === true;
-                             const iconClass = isCompleted ? 'fa-solid fa-check-circle' : 'fa-regular fa-circle-xmark';
+                             const iconClass = isCompleted ? 'fa-solid fa-check-circle' : 'fa-regular fa-circle-xmark'; // Corrected incomplete icon
                              const itemClass = isCompleted ? 'task-complete' : 'task-incomplete';
                              progressHtml += `<li class="${itemClass}"><i class="${iconClass}"></i> ${taskName}</li>`;
                         });
@@ -571,25 +960,92 @@
                          judgeTeamBtn.disabled = false;
                          teamSelect.disabled = false;
 
-                    }, 3000); // 3 seconds delay
+                    }, 2000); // 2 seconds delay
                 });
+            } else {
+                console.warn("One or more AI Judging elements not found. Feature disabled.");
             }
 
-             // --- Smooth scroll for registration links ---
-             document.querySelectorAll('.btn-choose-track').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
+            // --- Track Modal Population Logic ---
+            const trackModal = document.getElementById('trackModal');
+            if (trackModal) {
+                const modalTitleElement = trackModal.querySelector('.modal-title');
+                const modalBodyElement = trackModal.querySelector('.modal-body');
+                // const modalRegisterBtn = trackModal.querySelector('#trackModalRegisterBtn'); // Button exists, link is static
+
+                trackModal.addEventListener('show.bs.modal', function (event) {
+                    // Button that triggered the modal
+                    const triggerElement = event.relatedTarget;
+
+                    // Extract info from data-* attributes
+                    const trackTitle = triggerElement.getAttribute('data-track-title');
+                    const trackIcon = triggerElement.getAttribute('data-track-icon');
+                    const trackDetails = triggerElement.getAttribute('data-track-details');
+                    const trackExample = triggerElement.getAttribute('data-track-example');
+
+                    // Update the modal's content.
+                    if (modalTitleElement) {
+                        modalTitleElement.innerHTML = `<i class="${trackIcon} me-2"></i>${trackTitle}`;
+                    }
+                    if (modalBodyElement) {
+                        modalBodyElement.innerHTML = `
+                            <h4>Track Details</h4>
+                            <p>${trackDetails}</p>
+                            <hr>
+                            <h4>SaaS Innovation Example:</h4>
+                            <p>${trackExample}</p>
+                        `;
+                    }
+                    // Optional: If the register button needed dynamic target based on track
+                    // if (modalRegisterBtn) { modalRegisterBtn.href = '#some-dynamic-target'; }
+                });
+            } else {
+                console.warn("Track modal element not found. Track details popup disabled.");
+            }
+
+
+             // --- Smooth scroll for internal links ---
+             document.querySelectorAll('.scroll-link').forEach(link => {
+                link.addEventListener('click', function(e) {
                     const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        // Optional highlight effect
-                        targetElement.style.transition = 'background-color 0.5s ease-in-out';
-                        targetElement.style.backgroundColor = 'rgba(212, 175, 55, 0.1)';
-                        setTimeout(() => { targetElement.style.backgroundColor = ''; }, 1500);
+                    // Ensure it's an internal link starting with #
+                    if (targetId && targetId.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                             // If the link is inside a modal (like the track modal button), close modal first
+                             const modal = this.closest('.modal');
+                             if (modal) {
+                                 const modalInstance = bootstrap.Modal.getInstance(modal);
+                                 if (modalInstance) {
+                                    // Listen for the modal hidden event to scroll *after* it's closed
+                                    modal.addEventListener('hidden.bs.modal', () => {
+                                         targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                         // Optional highlight effect
+                                         highlightElement(targetElement);
+                                    }, { once: true }); // Remove listener after firing once
+                                    modalInstance.hide(); // Trigger hide
+                                    return; // Prevent scrolling immediately
+                                 }
+                             }
+                            // If not in a modal, scroll directly
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            highlightElement(targetElement);
+                        }
                     }
                 });
             });
+
+            function highlightElement(element) {
+                 // Optional highlight effect
+                 element.style.transition = 'background-color 0.1s ease-in-out';
+                 element.style.backgroundColor = 'rgba(212, 175, 55, 0.15)';
+                 setTimeout(() => {
+                     element.style.backgroundColor = '';
+                     // Remove transition style to prevent affecting other background changes
+                     setTimeout(() => { element.style.transition = ''; }, 100);
+                 }, 1500);
+            }
 
          });
     </script>
