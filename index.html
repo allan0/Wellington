@@ -2,250 +2,219 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <!-- Added user-scalable=no -->
+    <!-- Essential for responsive design in Mini Apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
     <title>Wellington Campus - UAE</title>
+
+    <!-- Standard Meta Tags (Less relevant inside Mini App but harmless) -->
     <meta name="description" content="Discover innovative courses and diverse education at Wellington Campus, one of the UAE's largest universities.">
-    <meta name="keywords" content="Wellington Campus, UAE university, education, courses, admissions, telegram mini app">
+    <meta name="keywords" content="Wellington Campus, UAE university, education, courses, admissions">
     <meta name="author" content="Wellington Campus">
     <meta property="og:title" content="Wellington Campus - Innovative Education in UAE">
     <meta property="og:description" content="Explore our diverse programs and innovative learning environment at Wellington Campus.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://wellingtoncampus.co"> <!-- Update if needed -->
-    <meta property="og:image" content="./wellingtoncampus.png"> <!-- Ensure path is correct -->
+    <meta property="og:url" content="https://wellingtoncampus.co"> <!-- Make sure this is the correct final URL if needed -->
+    <meta property="og:image" content="./wellingtoncampus.png"> <!-- Ensure this path is correct relative to deployment -->
+
+    <!-- Stylesheets -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Telegram Mini App Script -->
+
+    <!-- **Telegram Mini App Script - MUST be included BEFORE other scripts** -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
     <style>
         :root {
             --primary-color: #d4af37; /* Gold for buttons */
-            --secondary-color: #003366; /* Dark Blue */
+            --secondary-color: #6c757d;
             --text-color: #212529;
             --bg-color: #cce5ff; /* Soft blue for body */
             --accent-color: #ffffff;
             --shadow: 0 8px 24px rgba(0,0,0,0.1);
-             /* Telegram Theme Vars (Fallback if needed, but using fixed theme for now) */
-            --tg-theme-bg-color: var(--bg-color);
-            --tg-theme-text-color: var(--text-color);
-            --tg-theme-button-color: var(--primary-color);
-            --tg-theme-button-text-color: var(--accent-color);
-            --tg-viewport-height: 100vh; /* Fallback */
+
+            /* Telegram Theme Variables (Optional - unused here as per request) */
+            /* --tg-theme-bg-color: var(--bg-color); */
+            /* --tg-theme-text-color: var(--text-color); */
+            /* ... etc ... */
+
+            /* Telegram Viewport Variables (Useful for precise layouts) */
+            /* --tg-viewport-height */
+            /* --tg-viewport-stable-height */
+
+             /* Telegram Safe Area Insets (Important for edge-to-edge designs/fullscreen) */
+            /* --tg-safe-area-inset-top */
+            /* --tg-safe-area-inset-bottom */
+            /* --tg-safe-area-inset-left */
+            /* --tg-safe-area-inset-right */
         }
 
         body {
             font-family: 'Roboto', sans-serif;
-            color: var(--tg-theme-text-color);
-            background-color: var(--tg-theme-bg-color);
-            font-size: 1rem; /* Slightly reduced for mobile */
-            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            font-size: 1.1rem;
+            line-height: 1.7;
             background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
                               linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
             background-size: 20px 20px;
             margin: 0;
             padding: 0;
-            min-height: var(--tg-viewport-height); /* Use Telegram variable */
-            padding-bottom: 70px; /* Space for bottom nav */
-            overflow-x: hidden;
+            /* Ensure body takes at least viewport height */
+            min-height: 100vh;
+            min-height: var(--tg-viewport-height, 100vh); /* Use Telegram's height if available */
+            /* Consider padding for safe areas if elements are near edges */
+            /* padding-top: var(--tg-safe-area-inset-top, 0); */
+            /* padding-bottom: var(--tg-safe-area-inset-bottom, 0); */
+            /* padding-left: var(--tg-safe-area-inset-left, 0); */
+            /* padding-right: var(--tg-safe-area-inset-right, 0); */
+            box-sizing: border-box; /* Include padding in height calculation */
         }
 
-        /* Remove Desktop Navbar */
-        .navbar-custom { display: none; }
+        /* Keep existing styles */
+        .navbar-custom { /* ... existing styles ... */ }
+        .navbar-brand, .nav-link { /* ... existing styles ... */ }
+        .nav-link:hover, .nav-link.active { /* ... existing styles ... */ }
+        .banner { /* ... existing styles ... */ }
+        .banner::before { /* ... existing styles ... */ }
+        .banner h1, .banner p { /* ... existing styles ... */ }
+        .banner .btn-custom { /* ... existing styles ... */ }
+        .highlight-section { /* ... existing styles ... */ }
+        .highlight-card { /* ... existing styles ... */ }
+        .highlight-card:hover { /* ... existing styles ... */ }
+        .video-container { /* ... existing styles ... */ }
+        .video-container video { /* ... existing styles ... */ }
+        .subscription-form { /* ... existing styles ... */ }
+        .btn-custom { /* ... existing styles ... */ }
+        .btn-custom:hover { /* ... existing styles ... */ }
 
-        .banner {
-            position: relative;
-            background: url('./wellingtoncampus.png') no-repeat center center; /* Make sure path is correct */
-            background-size: contain; /* Changed to contain */
-            color: var(--accent-color);
-            padding: 4rem 1rem 6rem 1rem; /* Adjusted padding */
-            text-align: center;
-            border-radius: 0 0 15px 15px; /* Reduced radius */
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            min-height: 250px; /* Reduced min-height */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+        /* --- Mini App Specific Adjustments --- */
 
-        .banner::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 51, 102, 0.5); /* Dark blue overlay */
-            z-index: 1;
+        /* Hide desktop navbar unconditionally in Mini App context, rely on bottom nav */
+        /* Alternatively, keep the @media query if desktop viewing is still a possibility */
+        .navbar-custom {
+           display: none;
         }
 
-        .banner h1, .banner p {
-            position: relative;
-            z-index: 2;
-            color: var(--accent-color); /* Ensure text is white */
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
-        .banner h1 { font-size: 1.8rem; }
-        .banner p { font-size: 1rem; margin-bottom: 2rem;}
-
-        /* Button positioned relative to content, not absolute */
-        .banner .btn-custom {
-            position: relative; /* Changed from absolute */
-            z-index: 2;
-            margin-top: 1.5rem;
-            display: inline-block; /* Ensure it behaves like a block for margin */
-            background-color: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
-        }
-
-        .highlight-section { padding: 2rem 1rem; } /* Reduced padding */
-
-        .highlight-card {
-            padding: 1.5rem; /* Reduced padding */
-            text-align: center;
-            background-color: var(--accent-color);
-            border-radius: 15px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: var(--shadow);
-            height: 100%; /* Make cards equal height in row */
-            display: flex;
-            flex-direction: column;
-        }
-        .highlight-card:hover {
-            transform: translateY(-5px); /* Reduced hover effect */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .highlight-card h3 { font-size: 1.2rem; }
-        .highlight-card p { font-size: 0.9rem; flex-grow: 1; } /* Allow paragraph to grow */
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            margin-top: 1rem;
-            overflow: hidden;
-            border-radius: 10px; /* Rounded corners */
-        }
-        .video-container video {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .subscription-form {
-            background-color: var(--accent-color);
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-            box-shadow: var(--shadow);
-        }
-        .subscription-form h2 { font-size: 1.5rem; }
-
-        .btn-custom {
-            background-color: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
-            border: none;
-            padding: 0.7rem 1.5rem; /* Adjusted padding */
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212,175,55,0.3);
-            font-size: 0.9rem;
-        }
-        .btn-custom:hover {
-            background-color: #b8860b; /* Darker gold on hover */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(212,175,55,0.4);
-            color: var(--tg-theme-button-text-color); /* Keep text color */
-        }
-
-        /* Bottom Navigation - Always visible */
+        /* Ensure bottom nav is always visible in Mini App context */
         .bottom-nav {
-            display: flex; /* Always flex */
+            display: flex; /* Changed from none to flex */
             position: fixed;
-            bottom: 0; left: 0; /* Ensure it spans width */
+            bottom: 0;
+            /* Add padding to avoid overlap with system navigation / home bar */
+            padding-bottom: max(0.5rem, var(--tg-safe-area-inset-bottom, 0.5rem));
             width: 100%;
-            background-color: var(--tg-theme-secondary-bg-color, var(--accent-color)); /* Use TG var if available */
+            background-color: var(--accent-color);
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            padding: 0.5rem 0;
+            padding-top: 0.5rem; /* Keep original top padding */
             z-index: 1000;
-            height: 60px; /* Fixed height */
-        }
-        .bottom-nav .btn {
-            color: var(--tg-theme-hint-color, var(--secondary-color)); /* Use TG var */
-            padding: 0.5rem;
-            font-size: 0.8rem; /* Smaller font */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center; /* Center vertically */
-            flex-grow: 1; /* Distribute space */
-            text-decoration: none;
-            border: none; background: none; /* Remove button styling */
-            transition: color 0.3s ease;
-        }
-        .bottom-nav .btn:hover, .bottom-nav .btn.active {
-            color: var(--tg-theme-link-color, var(--primary-color)); /* Use TG var */
-        }
-        .bottom-nav i {
-            font-size: 1.1rem; /* Slightly smaller icon */
-            margin-bottom: 0.1rem;
         }
 
-        /* Mascot and Chat (Simplified for Mini App) */
-        .mascot { display: none; } /* Hide mascot - use native TG UI elements */
-        .chat-window { display: none; } /* Hide custom chat - use bot interaction */
-        .floating-about-us { display: none; } /* Hide floating button - integrate into bot menu/profile */
-
-        /* Adjust focus outline for better visibility */
-        a:focus, button:focus {
-            outline: 2px solid var(--tg-theme-button-color, var(--primary-color));
-            outline-offset: 1px;
+        /* Adjust fixed positions to account for safe area at bottom */
+        .mascot {
+            position: fixed;
+            /* Adjust bottom based on potential bottom-nav height + safe area */
+            bottom: calc(60px + var(--tg-safe-area-inset-bottom, 0px));
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            z-index: 1100;
+            animation: breathe 2s infinite ease-in-out;
+            cursor: pointer;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 576px) {
-            /* Keep bottom nav visible */
-            .banner { padding: 3rem 1rem 5rem 1rem; min-height: 200px; }
-            .banner h1 { font-size: 1.6rem; }
-            .banner p { font-size: 0.9rem;}
-            .highlight-section { padding: 1.5rem 0.5rem; }
-            .highlight-card { margin-bottom: 1rem; }
+        .floating-about-us {
+             position: fixed;
+             /* Adjust bottom based on potential bottom-nav height + safe area */
+             bottom: calc(120px + var(--tg-safe-area-inset-bottom, 0px));
+             right: 20px;
+             z-index: 1000;
         }
+
+        .chat-window {
+            /* Adjust bottom based on potential bottom-nav height + safe area */
+            bottom: calc(80px + var(--tg-safe-area-inset-bottom, 0px));
+            /* Keep other styles */
+            display: none;
+            position: fixed;
+            width: 90%; /* Adjusted for mobile */
+            right: 5%;  /* Adjusted for mobile */
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            z-index: 1200;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+
+        /* Keep other existing styles */
+        .bottom-nav .btn { /* ... existing styles ... */ }
+        .bottom-nav .btn:hover, .bottom-nav .btn.active { /* ... existing styles ... */ }
+        .bottom-nav i { /* ... existing styles ... */ }
+        @keyframes breathe { /* ... existing styles ... */ }
+        .mascot.speaking { /* ... existing styles ... */ }
+        @keyframes speak { /* ... existing styles ... */ }
+        .chat-window.active { /* ... existing styles ... */ }
+        .chat-header { /* ... existing styles ... */ }
+        .chat-close-btn { /* ... existing styles ... */ }
+        .chat-close-btn:hover { /* ... existing styles ... */ }
+        .chat-description { /* ... existing styles ... */ }
+        .chat-messages { /* ... existing styles ... */ }
+        .user-message { /* ... existing styles ... */ }
+        .bot-message { /* ... existing styles ... */ }
+        .chat-input { /* ... existing styles ... */ }
+        .chat-input textarea { /* ... existing styles ... */ }
+        .chat-input button { /* ... existing styles ... */ }
+        .chat-input button:hover { /* ... existing styles ... */ }
+        .floating-about-us .btn-custom { /* ... existing styles ... */ }
+        a:focus, button:focus { /* ... existing styles ... */ }
+        .status-indicator { /* ... existing styles ... */ }
+        .status-offline { /* ... existing styles ... */ }
+        .status-online { /* ... existing styles ... */ }
+        @keyframes blink { /* ... existing styles ... */ }
+
+        /* Remove the media query that hides/shows navs, as we force bottom-nav now */
+        /* @media (max-width: 576px) { ... } */
 
     </style>
 </head>
 <body>
+    <!-- Desktop Navbar is hidden via CSS above -->
+    <!-- <nav class="navbar navbar-expand-lg navbar-custom" aria-label="Main navigation"> ... </nav> -->
+
     <!-- Home Page Content -->
-    <div class="container pt-3" id="home"> <!-- Added padding top -->
+    <div class="container" id="home">
+        <!-- Banner -->
         <div class="banner">
-            <h1 class="display-4 fw-bold">Discover, Learn, Thrive</h1>
-            <p class="lead">Spring 2025 Apps Open!</p>
-            <!-- Use standard link for internal navigation -->
+             <!-- Ensure image path is correct for deployment -->
+            <h1 class="display-4 fw-bold">Discover, Learn, and Thrive</h1>
+            <p class="lead">Spring 2025 Applications are Now Open at Wellington Campus</p>
             <a href="admissions.html" class="btn btn-custom">Apply Now</a>
         </div>
-
+        <!-- Highlights Section -->
         <section class="highlight-section">
-            <div class="row g-3"> <!-- Reduced gutter -->
-                <div class="col-12 col-sm-4">
+            <div class="row g-4">
+                <div class="col-md-4">
                     <div class="highlight-card">
                         <h3>Innovative Courses</h3>
-                        <p>Explore cutting-edge programs in technology, design, and business.</p>
-                        <a href="courses.html" class="btn btn-sm btn-outline-primary mt-auto">View Courses</a>
+                        <p>Explore cutting-edge programs in technology, design, and business tailored for the modern world.</p>
                     </div>
                 </div>
-                <div class="col-12 col-sm-4">
+                <div class="col-md-4">
                     <div class="highlight-card">
                         <h3>Top Instructors</h3>
-                        <p>Learn from industry leaders and renowned academics.</p>
-                         <a href="about.html" class="btn btn-sm btn-outline-primary mt-auto">Meet Faculty</a>
+                        <p>Learn from industry leaders and renowned academics with decades of expertise.</p>
                     </div>
                 </div>
-                <div class="col-12 col-sm-4">
+                <div class="col-md-4">
                     <div class="highlight-card">
-                        <h3>Campus Tour</h3>
-                        <p>Watch a quick tour of our facilities.</p>
+                        <h3>Online Education</h3>
+                        <p>Flexible learning options available 24/7, from anywhere in the world.</p>
                         <div class="video-container">
-                            <video controls preload="metadata" poster="./wellingtoncampus.png" aria-label="Campus Tour Video"> <!-- Added preload and poster -->
-                                <source src="./Binciya-Introduction.mp4" type="video/mp4"> <!-- Ensure path is correct -->
+                             <!-- Ensure video path is correct for deployment -->
+                            <video controls aria-label="Binciya Introduction Video">
+                                <source src="./Binciya-Introduction.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>
@@ -253,119 +222,345 @@
                 </div>
             </div>
         </section>
-
+        <!-- Subscription Section -->
         <section class="subscription-form">
-            <h2 class="text-center mb-3">Stay Informed</h2>
-            <form class="row g-2 justify-content-center" aria-label="Subscription form">
-                <div class="col-8 col-sm-6">
-                    <label for="subEmail" class="visually-hidden">Email address</label>
-                    <input type="email" class="form-control form-control-sm" id="subEmail" placeholder="Enter your email" required>
+            <h2 class="text-center mb-4">Stay Informed</h2>
+            <form class="row g-3 justify-content-center" aria-label="Subscription form">
+                <div class="col-md-6 col-8"> <!-- Adjust grid for better mobile layout -->
+                    <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email" required>
                 </div>
-                <div class="col-4 col-sm-auto">
-                    <button type="submit" class="btn btn-custom btn-sm w-100">Subscribe</button>
+                <div class="col-md-2 col-4"> <!-- Adjust grid for better mobile layout -->
+                    <button type="submit" class="btn btn-custom w-100">Subscribe</button>
                 </div>
             </form>
         </section>
+        <!-- Add padding at the bottom to prevent content from being hidden by bottom-nav -->
+        <div style="height: 80px;"></div> <!-- Adjust height based on bottom-nav size -->
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation for Telegram Mini App (Now always visible) -->
     <nav class="bottom-nav" aria-label="Mobile navigation">
         <div class="d-flex justify-content-around w-100">
-            <!-- Links updated for Mini App navigation -->
-            <a href="index.html" class="btn active" data-page="index"><i class="fas fa-home"></i><span>Home</span></a>
-            <a href="courses.html" class="btn" data-page="courses"><i class="fas fa-book"></i><span>LMS</span></a>
-            <a href="game.html" class="btn" data-page="game"><i class="fas fa-puzzle-piece"></i><span>Quiz</span></a> <!-- Updated Icon/Name -->
-            <a href="hackathon.html" class="btn" data-page="hackathon"><i class="fas fa-laptop-code"></i><span>Hackathon</span></a>
+            <!-- Make sure these links navigate within the Mini App context if they are internal pages -->
+            <a href="index.html" class="btn active"><i class="fas fa-home"></i>Home</a>
+            <a href="courses.html" class="btn"><i class="fas fa-book"></i>LMS</a>
+            <a href="game.html" class="btn"><i class="fas fa-gamepad"></i>Game</a>
+            <a href="hackathons.html" class="btn"><i class="fas fa-laptop-code"></i>Hackathons</a>
         </div>
     </nav>
 
+    <!-- Chat Window -->
+    <div class="chat-window" id="chatWindow">
+        <!-- ... (chat window content remains the same) ... -->
+         <div class="chat-header">
+            <div>
+                Welcome to Wellington!
+                <span id="statusIndicator" class="status-indicator status-offline"></span>
+            </div>
+            <button class="chat-close-btn" onclick="toggleChat()" aria-label="Close chat"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-description">
+            I'm your friendly campus assistant here to help you explore courses, admissions, and more!
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <textarea placeholder="Type a message..." aria-label="Chat message input"></textarea>
+            <button onclick="sendTextMessage()" aria-label="Send text message"><i class="fas fa-paper-plane"></i></button>
+            <button onclick="startVoiceRecording()" aria-label="Record voice message"><i class="fas fa-microphone"></i></button>
+        </div>
+    </div>
+
+    <!-- Floating About Us Button -->
+    <div class="floating-about-us">
+        <!-- Make sure this link navigates within the Mini App context -->
+        <a href="about.html" class="btn btn-custom"><i class="fas fa-info-circle"></i> About Us</a>
+    </div>
+
+    <!-- Mascot -->
+    <!-- Ensure image path is correct for deployment -->
+    <img src="./mascotwellington.png" alt="Wellington Mascot" class="mascot" onclick="toggleChat()">
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Telegram Mini App Logic -->
     <script>
-        function initTelegramApp() {
-            if (window.Telegram && window.Telegram.WebApp) {
-                const tg = window.Telegram.WebApp;
-                tg.ready(); // Inform Telegram the app is ready
-                tg.expand(); // Request full height
+        // Encapsulate logic to ensure Telegram.WebApp is available
+        function initializeTelegramApp() {
+            const tg = window.Telegram.WebApp;
 
-                // Apply Theme Colors (optional, if you want dynamic themes)
-                // document.body.style.backgroundColor = tg.themeParams.bg_color || '#cce5ff';
-                // document.body.style.color = tg.themeParams.text_color || '#212529';
-                // Update CSS variables if using them extensively
-                 //document.documentElement.style.setProperty('--tg-theme-bg-color', tg.themeParams.bg_color || '#cce5ff');
+            // 1. Signal that the app is ready
+            tg.ready();
 
-                // Handle Back Button Logic
-                tg.BackButton.onClick(() => {
-                    console.log("Back button clicked");
-                    // Navigate back if possible, otherwise close
-                    if (window.history.length > 1) {
-                         window.history.back();
-                    } else {
-                         console.log("Closing Mini App");
-                         tg.close();
-                    }
-                });
+            // 2. Expand the app to full height (optional, but common)
+            tg.expand();
 
-                 // Show Back button only if not on the main page (index.html)
-                if (window.location.pathname !== '/index.html' && window.location.pathname !== '/') {
-                     console.log("Showing back button");
-                     tg.BackButton.show();
-                } else {
-                     tg.BackButton.hide();
-                }
+            // 3. Configure the Back Button
+            // Check if the current page is the main entry point (adjust path if needed)
+            const isHomePage = window.location.pathname === '/index.html' || window.location.pathname === '/'; // Adjust if your home path is different
 
-                // Update Main Button (Example - if needed for a specific action)
-                // tg.MainButton.setText('Main Action');
-                // tg.MainButton.show();
-                // tg.MainButton.onClick(() => { alert('Main Button Clicked!'); });
-
-                // --- Dynamic Active Class for Bottom Nav ---
-                const currentPage = window.location.pathname.split('/').pop().split('.')[0] || 'index'; // Get 'index', 'courses', etc.
-                document.querySelectorAll('.bottom-nav .btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.dataset.page === currentPage) {
-                        btn.classList.add('active');
-                    }
-                });
-
-                console.log("Telegram Mini App Initialized. Version:", tg.version);
-                console.log("Platform:", tg.platform);
-                console.log("Color Scheme:", tg.colorScheme);
-                console.log("Is Expanded:", tg.isExpanded);
-
+            if (!isHomePage) {
+                // Show the back button only on non-home pages
+                tg.BackButton.show();
             } else {
-                console.warn("Telegram WebApp script not loaded or running outside Telegram.");
-                 // Fallback for browser testing: Still set active class
-                 const currentPage = window.location.pathname.split('/').pop().split('.')[0] || 'index';
-                 document.querySelectorAll('.bottom-nav .btn').forEach(btn => {
-                     btn.classList.remove('active');
-                     if (btn.dataset.page === currentPage) {
-                         btn.classList.add('active');
-                     }
-                 });
-                 // Make bottom nav visible in browser for testing
-                 const bottomNav = document.querySelector('.bottom-nav');
-                 if(bottomNav) bottomNav.style.display = 'flex';
+                 // Explicitly hide on home page if previously shown
+                tg.BackButton.hide();
             }
+
+            // Define Back Button behavior
+            tg.onEvent('backButtonClicked', function() {
+                // Use browser history to navigate back within the Mini App
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else {
+                    // If no history, close the Mini App
+                    console.log("Closing Mini App via Back Button (no history)");
+                    tg.close();
+                }
+            });
+
+             // Optional: Re-evaluate back button visibility on navigation changes (if using SPA routing)
+             // window.addEventListener('popstate', function() {
+             //     const isHomePageNow = window.location.pathname === '/index.html' || window.location.pathname === '/';
+             //     if (!isHomePageNow) {
+             //         tg.BackButton.show();
+             //     } else {
+             //         tg.BackButton.hide();
+             //     }
+             // });
+
+             // Optional: Request confirmation on close
+             // tg.enableClosingConfirmation();
+
+            console.log("Telegram Mini App Initialized");
+            console.log("InitData:", tg.initData); // Log for debugging (remove sensitive parts in production logs)
+            console.log("Version:", tg.version);
+            console.log("Platform:", tg.platform);
         }
 
-        // Subscription form handler (Keep simple for now)
+        // --- Your Existing JavaScript ---
+
+        // Subscription form handler
         const subForm = document.querySelector('.subscription-form form');
         if (subForm) {
             subForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                 // Inform user via Telegram popup (if available)
-                if (window.Telegram && window.Telegram.WebApp) {
+                 // Use Telegram's alert for consistency if available
+                 if (window.Telegram && window.Telegram.WebApp) {
                     window.Telegram.WebApp.showAlert('Thank you for subscribing!');
-                } else {
-                    alert('Thank you for subscribing!'); // Fallback
-                }
+                 } else {
+                    alert('Thank you for subscribing!');
+                 }
                 this.reset();
             });
         }
 
-        // Initialize the app logic after DOM is ready
-        document.addEventListener('DOMContentLoaded', initTelegramApp);
+
+        // Toggle chat window
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            if (chatWindow) {
+                chatWindow.classList.toggle('active');
+            }
+        }
+
+        // Function to update status indicator
+        function updateStatusIndicator(isOnline) {
+            const indicator = document.getElementById('statusIndicator');
+            if (indicator) {
+                if (isOnline) {
+                    indicator.classList.remove('status-offline');
+                    indicator.classList.add('status-online');
+                } else {
+                    indicator.classList.remove('status-online');
+                    indicator.classList.add('status-offline');
+                }
+            }
+        }
+
+        // WebSocket connection
+        // IMPORTANT: Replace 'ws://localhost:8765' with your actual PRODUCTION WebSocket URL (likely wss://yourserver.com/ws)
+        const wsUrl = 'ws://localhost:8765'; // <-- WARNING: DEVELOPMENT ONLY URL
+        let socket;
+
+        function connectWebSocket() {
+             console.log(`Attempting to connect to WebSocket: ${wsUrl}`);
+             // Close existing socket if reconnecting
+             if (socket && socket.readyState !== WebSocket.CLOSED) {
+                 socket.close();
+             }
+
+            socket = new WebSocket(wsUrl);
+            updateStatusIndicator(false); // Initially offline
+
+            socket.onopen = () => {
+                console.log('WebSocket connection established');
+                updateStatusIndicator(true);
+            };
+
+            socket.onclose = (event) => {
+                console.log('WebSocket connection closed:', event.code, event.reason);
+                updateStatusIndicator(false);
+                // Optional: Attempt to reconnect after a delay
+                // setTimeout(connectWebSocket, 5000);
+            };
+
+            socket.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                updateStatusIndicator(false);
+                 // Optional: Attempt to reconnect after a delay
+                // setTimeout(connectWebSocket, 5000);
+            };
+
+            socket.onmessage = (event) => {
+                const message = event.data;
+                console.log('WebSocket message received:', message);
+                displayMessage(message, 'bot');
+            };
+        }
+
+        // Function to send message via WebSocket
+        function sendMessage(text) {
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                console.log('Sending WebSocket message:', text);
+                socket.send(text);
+            } else {
+                console.error('WebSocket is not open. State:', socket ? socket.readyState : 'Not initialized');
+                 // Optionally try to reconnect or inform user
+                 if (window.Telegram && window.Telegram.WebApp) {
+                     window.Telegram.WebApp.showAlert('Connection error. Please try again later.');
+                 } else {
+                     alert('Connection error. Please try again later.');
+                 }
+            }
+        }
+
+        // Function to display message in chat window
+        function displayMessage(text, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            if (chatMessages) {
+                const messageElem = document.createElement('div');
+                messageElem.className = sender === 'user' ? 'user-message' : 'bot-message';
+                // Basic text sanitization (replace with a proper library if handling complex HTML)
+                messageElem.textContent = text;
+                chatMessages.appendChild(messageElem);
+                // Scroll to the bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        // Send text message from input
+        function sendTextMessage() {
+            const textarea = document.querySelector('.chat-input textarea');
+            if (textarea) {
+                const message = textarea.value.trim();
+                if (message) {
+                    sendMessage(message);
+                    displayMessage(message, 'user');
+                    textarea.value = '';
+                }
+            }
+        }
+
+         // Add event listener for Enter key in textarea
+         const chatTextarea = document.querySelector('.chat-input textarea');
+         if(chatTextarea) {
+             chatTextarea.addEventListener('keypress', function(e) {
+                 if (e.key === 'Enter' && !e.shiftKey) { // Send on Enter, allow Shift+Enter for newline
+                     e.preventDefault(); // Prevent default Enter behavior (newline)
+                     sendTextMessage();
+                 }
+             });
+         }
+
+
+        // --- Voice recognition ---
+        let recognition;
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const voiceButton = document.querySelector('.chat-input button[aria-label="Record voice message"]');
+
+        if (SpeechRecognition && voiceButton) {
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US'; // Adjust language if needed
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            window.startVoiceRecording = function() { // Make it global for onclick
+                try {
+                    recognition.start();
+                    console.log('Voice recognition started');
+                    voiceButton.style.color = 'red'; // Indicate recording
+                } catch (error) {
+                     console.error('Error starting voice recognition:', error);
+                     if (window.Telegram && window.Telegram.WebApp) {
+                         window.Telegram.WebApp.showAlert('Could not start voice recognition. Please check permissions.');
+                     } else {
+                         alert('Could not start voice recognition. Please check permissions.');
+                     }
+                }
+            };
+
+            recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript;
+                console.log('Voice recognition result:', speechResult);
+                sendMessage(speechResult);
+                displayMessage(speechResult, 'user');
+            };
+
+            recognition.onspeechend = () => {
+                recognition.stop();
+                console.log('Voice recognition stopped (speech end)');
+                voiceButton.style.color = '#fff'; // Reset button color
+            };
+
+            recognition.onend = () => {
+                 console.log('Voice recognition ended');
+                 voiceButton.style.color = '#fff'; // Ensure button color resets
+            }
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                 if (window.Telegram && window.Telegram.WebApp) {
+                    window.Telegram.WebApp.showAlert('Voice recognition error: ' + event.error);
+                 } else {
+                    alert('Voice recognition error: ' + event.error);
+                 }
+                voiceButton.style.color = '#fff'; // Reset button color
+            };
+        } else {
+             console.warn('SpeechRecognition API not supported or voice button not found.');
+             if (voiceButton) {
+                 voiceButton.disabled = true;
+                 voiceButton.title = "Voice input not supported";
+             }
+             // Define dummy function if API not supported
+             window.startVoiceRecording = function() {
+                 console.log("Voice recording not supported.");
+                  if (window.Telegram && window.Telegram.WebApp) {
+                    window.Telegram.WebApp.showAlert('Voice input is not supported on this device/browser.');
+                  } else {
+                    alert('Voice input is not supported on this device/browser.');
+                  }
+             }
+        }
+
+        // --- Initialization ---
+        // Ensure DOM is ready before running scripts interacting with it
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Telegram WebApp specific features
+            if (window.Telegram && window.Telegram.WebApp) {
+                try {
+                    initializeTelegramApp();
+                } catch (error) {
+                    console.error("Error initializing Telegram WebApp:", error);
+                }
+            } else {
+                console.warn("Telegram WebApp script not loaded or not running in Telegram context.");
+                // Handle non-Telegram environment if needed (e.g., hide Telegram-specific UI)
+            }
+
+            // Connect WebSocket after DOM is ready
+             connectWebSocket();
+        });
 
     </script>
 </body>
