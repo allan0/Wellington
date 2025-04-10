@@ -11,7 +11,7 @@
     <meta property="og:title" content="Dubai CommerCity x Wellington AI Hackathon - Day 1">
     <meta property="og:description" content="Detailed Day 1 Agenda and Support Info for the 'Shaping Tomorrow’s Solution' AI Hackathon, featuring an AI Judge Simulation.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://wellingtoncampus.co/hackathon.html"> <!-- Update with your final URL -->
+    <meta property="og:url" content="https://wellingtoncampus.co/hackathon.html"> <!-- Update with final URL -->
     <meta property="og:image" content="./wellingtoncampus.png"> <!-- Ensure this path is correct -->
     <meta property="og:image:alt" content="Wellington Campus Logo">
     <!-- Favicon -->
@@ -191,8 +191,9 @@
         #judgeLoader p { margin-top: 1rem; color: var(--secondary-color); font-style: italic; }
         #judgeResultsArea { display: none; /* Hidden initially */ }
         #judgeResultTeamName { font-weight: bold; margin-bottom: 1rem; font-size: 1.2rem; }
-        #judgeResultAnalysis ul { list-style: none; padding-left: 0; margin-top: 1rem; }
-        #judgeResultAnalysis li {
+        /* Corrected selector target */
+        #judgeResultAnalysisList { list-style: none; padding-left: 0; margin-top: 1rem; }
+        #judgeResultAnalysisList li {
             font-size: 1rem;
             padding: 0.6rem 0.8rem;
             background-color: rgba(0, 51, 102, 0.05);
@@ -203,7 +204,7 @@
             transform: translateX(-20px);
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
-         #judgeResultAnalysis li.visible {
+         #judgeResultAnalysisList li.visible {
              opacity: 1;
              transform: translateX(0);
          }
@@ -236,8 +237,11 @@
         @media (max-width: 576px) {
              .bottom-nav { display: flex; }
              body { padding-bottom: 60px; } /* Reset body padding if bottom nav is shown */
-             #task-tracker-btn { bottom: 150px; }
-             #ai-judge-btn { bottom: 75px; }
+             /* Adjust floating button size/position on small screens */
+             .floating-button { width: 50px; height: 50px; font-size: 1.5rem; right: 15px;}
+             #task-tracker-btn { bottom: 130px; }
+             #ai-judge-btn { bottom: 65px; }
+
              h1 { font-size: 1.8rem; }
              .hackathon-subtitle { font-size: 1.1rem;}
              .card-header h2 { font-size: 1.1rem; }
@@ -247,10 +251,6 @@
              .agenda-time { font-size: 0.9rem;}
              .agenda-details p { font-size: 0.9rem; }
              .agenda-speaker { font-size: 0.85rem; }
-             /* Adjust floating button size on small screens */
-             .floating-button { width: 50px; height: 50px; font-size: 1.5rem; right: 15px;}
-             #task-tracker-btn { bottom: 130px; }
-             #ai-judge-btn { bottom: 65px; }
         }
 
         /* Quick Info Card Styling */
@@ -269,7 +269,7 @@
             background-color: rgba(230, 240, 255, 0.7);
             border-left: 5px solid var(--secondary-color);
         }
-         #logistics-info .card-body h3 { font-size: 1.2rem; }
+         #logistics-info .card-body h2 { font-size: 1.2rem; } /* Adjusted H3 to H2 */
          #logistics-info .card-body ul li i { color: var(--secondary-color); }
 
     </style>
@@ -320,7 +320,7 @@
              </div>
              <div class="collapse show" id="collapseAgenda">
                  <div class="card-body">
-                     <h3 class="mb-3 mt-0" style="color: var(--primary-color);"><i class="fas fa-flag-checkered me-2"></i>Monday, 21st April 2025</h3> <!-- Example Date -->
+                     <h3 class="mb-3 mt-0" style="color: var(--primary-color);"><i class="fas fa-flag-checkered me-2"></i>Monday, 21st April 2025</h3>
                      <ul class="agenda-list">
                           <li>
                             <span class="agenda-time"><i class="fas fa-sign-in-alt"></i>08:30 - 09:00</span>
@@ -358,7 +358,7 @@
                              <span class="agenda-speaker"><small>Wellington Campus</small></span>
                         </li>
                          <li class="agenda-break">
-                            <span class="agenda-time"><i class="fas fa-utensils"></i>~12:30 PM</span> <!-- Example Time -->
+                            <span class="agenda-time"><i class="fas fa-utensils"></i>~12:30 PM</span>
                             <span class="agenda-details"><strong>Lunch/Refreshment Break</strong><p>Refuel and network.</p></span>
                             <span class="agenda-speaker">-</span>
                          </li>
@@ -523,7 +523,7 @@
          <!-- DAFZ/CommerCity Logistics Request (Collapsed) -->
         <section id="logistics-info" class="card mb-4">
              <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLogistics" aria-expanded="false" aria-controls="collapseLogistics">
-                <h2><i class="fas fa-building me-2"></i>Venue Logistics Notes</h2> <!-- Changed H3 to H2 -->
+                <h2><i class="fas fa-building me-2"></i>Venue Logistics Notes</h2>
                  <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
              </div>
             <div class="collapse" id="collapseLogistics">
@@ -573,7 +573,7 @@
                              <strong>Dubai CommerCity (Venue & Logistics):</strong>
                              <ul class="list-unstyled mt-2">
                                   <li><i class="fas fa-envelope-open-text"></i> DCC-Logistics@example.com</li> <!-- Example Email -->
-                                  <li><i class="fas fa-phone"></i> +971 X XXX XXXX</li> <!-- Example Phone -->
+                                  <li><i class="fas fa-phone"></i> +971 4 123 4567</li> <!-- Example Phone -->
                                   <li><i class="fas fa-info-circle"></i> DAFZ team manages check-in.</li>
                              </ul>
                          </div>
@@ -670,9 +670,9 @@
                     <!-- Results Area -->
                      <div id="judgeResultsArea">
                          <h5 id="judgeResultTeamName"></h5>
-                         <div id="judgeResultAnalysis">
+                         <div id="judgeResultAnalysis"> <!-- Container DIV -->
                             <h6>Analysis:</h6>
-                            <ul>
+                            <ul id="judgeResultAnalysisList"> <!-- Specific UL with ID -->
                                 <!-- Analysis points will appear here -->
                             </ul>
                          </div>
@@ -711,7 +711,7 @@
     <script id="feature-script">
         document.addEventListener('DOMContentLoaded', function() {
 
-            // --- Task Tracker Logic (Keep as is) ---
+            // --- Task Tracker Logic ---
             const modalChecklist = document.getElementById('modal-checklist');
             const messageArea = document.getElementById('task-message-area');
             const storageKey = 'hackathonDay1TaskStatus';
@@ -778,8 +778,7 @@
             } else { console.warn("Modal checklist container (#modal-checklist) not found."); }
 
             if (taskModalElement) { taskModalElement.addEventListener('hidden.bs.modal', clearMessages); }
-            updateProgressBar(); // Initial progress bar update
-
+            updateProgressBar();
             // --- END Task Tracker Logic ---
 
 
@@ -790,10 +789,10 @@
             const judgeLoader = document.getElementById('judgeLoader');
             const judgeResultsArea = document.getElementById('judgeResultsArea');
             const judgeResultTeamName = document.getElementById('judgeResultTeamName');
-            const judgeResultAnalysis = document.getElementById('judgeResultAnalysis ul'); // Target the UL directly
+            // FIX: Select the UL element correctly using its ID
+            const judgeResultAnalysisList = document.getElementById('judgeResultAnalysisList');
             const judgeResultScore = document.getElementById('judgeResultScore');
 
-            // Placeholder analysis data based on team/track
             const teamAnalysisData = {
                 "Team Alpha": [
                     "Strong technical implementation using predictive models for route optimization.",
@@ -817,7 +816,7 @@
                      "Innovation score solid; practical application of AI in healthcare.",
                  ],
                   "Team Delta": [
-                      "Novelty factor is very high, combining AI with [Specific Open Innovation Field].",
+                      "Novelty factor is very high, combining AI with Open Innovation field.",
                       "Technical execution shows promise but requires further development.",
                       "Feasibility assessment is optimistic; market validation needed.",
                       "Pitch effectively conveys the unique vision and potential disruption.",
@@ -832,101 +831,93 @@
                   ]
             };
 
-            // Function to simulate typing/sequential display
             function displayAnalysisSequentially(analysisPoints) {
-                 judgeResultAnalysis.innerHTML = ''; // Clear previous results
+                 // Ensure the list element is selected correctly
+                 if (!judgeResultAnalysisList) {
+                     console.error("judgeResultAnalysisList element not found!");
+                     return 0; // Return 0 delay if element is missing
+                 }
+                 judgeResultAnalysisList.innerHTML = ''; // Clear previous results
                  let delay = 0;
-                 const interval = 800; // Milliseconds between each point appearing
+                 const interval = 800;
 
                  analysisPoints.forEach(point => {
                      setTimeout(() => {
                          const li = document.createElement('li');
                          li.textContent = point;
-                         judgeResultAnalysis.appendChild(li);
-                         // Force reflow to apply transition
+                         judgeResultAnalysisList.appendChild(li);
+                         // Force reflow before adding class for transition
                          void li.offsetWidth;
                          li.classList.add('visible');
                      }, delay);
                      delay += interval;
                  });
-
-                 // Return the total delay for showing the score afterwards
-                 return delay;
+                 return delay; // Total time until last point starts appearing
             }
 
-             // Function to generate a score (simple simulation)
             function generateScore(teamName) {
-                 // Base score + some randomness + small bonus for certain teams
                  let baseScore = 6.0;
-                 let randomness = Math.random() * 2.0; // 0.0 to 2.0
+                 let randomness = Math.random() * 2.0;
                  let bonus = 0;
-
-                 if (teamName === "Team Beta" || teamName === "The AI Mavericks") bonus = 0.5 + Math.random(); // Slightly higher potential
-                 if (teamName === "Team Delta") bonus = Math.random() * 1.5; // Higher variance
-
+                 if (teamName === "Team Beta" || teamName === "The AI Mavericks") bonus = 0.5 + Math.random();
+                 if (teamName === "Team Delta") bonus = Math.random() * 1.5;
                  let finalScore = baseScore + randomness + bonus;
-                 finalScore = Math.min(Math.max(finalScore, 4.0), 9.8); // Clamp score between 4.0 and 9.8
-                 return finalScore.toFixed(1); // Return score rounded to one decimal place
+                 finalScore = Math.min(Math.max(finalScore, 4.0), 9.8);
+                 return finalScore.toFixed(1);
              }
 
-
-            if (judgeProjectBtn && judgeTeamSelect && judgeLoader && judgeResultsArea && judgeResultAnalysis && judgeResultScore) {
+            if (judgeProjectBtn && judgeTeamSelect && judgeLoader && judgeResultsArea && judgeResultAnalysisList && judgeResultScore) {
                 judgeProjectBtn.addEventListener('click', function() {
                     const selectedTeam = judgeTeamSelect.value;
 
                     if (!selectedTeam) {
-                        // Simple alert or feedback if no team is selected
                          judgeResultsArea.style.display = 'block';
                          judgeLoader.style.display = 'none';
                          judgeResultTeamName.textContent = "Error";
-                         judgeResultAnalysis.innerHTML = '<li>Please select a team first.</li>';
+                         judgeResultAnalysisList.innerHTML = '<li class="visible" style="border-color: var(--error-color);">Please select a team first.</li>'; // Show error visibly
                          judgeResultScore.innerHTML = '';
-                         // Make the error list item visible
-                         const errorLi = judgeResultAnalysis.querySelector('li');
-                         if (errorLi) {
-                            void errorLi.offsetWidth; // Trigger reflow
-                            errorLi.classList.add('visible');
-                         }
                         return;
                     }
 
-                    // Start Simulation
-                    judgeResultsArea.style.display = 'none'; // Hide previous results
-                    judgeResultAnalysis.innerHTML = ''; // Clear analysis points
-                    judgeResultScore.innerHTML = ''; // Clear score
-                    judgeLoader.style.display = 'block'; // Show loader
+                    judgeResultsArea.style.display = 'none';
+                    judgeResultAnalysisList.innerHTML = '';
+                    judgeResultScore.innerHTML = '';
+                    judgeLoader.style.display = 'block';
                     judgeProjectBtn.disabled = true;
                     judgeTeamSelect.disabled = true;
 
-                    // Simulate 5-second processing + sequential display time
-                    const processingTime = 5000;
-                    const analysisPoints = teamAnalysisData[selectedTeam] || ["Standard analysis indicates project meets baseline criteria.", "Further review required for detailed assessment."]; // Default analysis
+                    const processingTime = 5000; // 5 seconds processing
+                    const analysisPoints = teamAnalysisData[selectedTeam] || ["Standard analysis conducted.", "Further details pending."];
+
+                    console.log("Starting AI Judge Simulation for:", selectedTeam); // Debugging
 
                     setTimeout(() => {
-                        judgeLoader.style.display = 'none'; // Hide loader
-                        judgeResultsArea.style.display = 'block'; // Show results container
+                        console.log("Processing complete. Starting display."); // Debugging
+                        judgeLoader.style.display = 'none';
+                        judgeResultsArea.style.display = 'block';
                         judgeResultTeamName.textContent = `AI Evaluation: ${selectedTeam}`;
 
-                        // Display analysis points one by one
                         const totalDisplayTime = displayAnalysisSequentially(analysisPoints);
+                        console.log("Total analysis display time:", totalDisplayTime); // Debugging
 
-                         // Display score after the last analysis point has appeared
                         setTimeout(() => {
                              const score = generateScore(selectedTeam);
+                             console.log("Generated score:", score); // Debugging
                              judgeResultScore.innerHTML = `Simulated Score: <span>${score}/10</span>`;
-                             judgeProjectBtn.disabled = false; // Re-enable button
+                             judgeProjectBtn.disabled = false;
                              judgeTeamSelect.disabled = false;
-                         }, totalDisplayTime); // Wait for analysis points to finish displaying
+                             console.log("Simulation finished."); // Debugging
+                         }, totalDisplayTime); // Display score after last point appears
 
-                    }, processingTime); // Initial 5 seconds processing delay
+                    }, processingTime);
                 });
             } else {
-                console.warn("One or more AI Judging modal elements not found. Feature disabled.");
+                console.error("Crucial AI Judging modal elements not found. Check IDs: judgeProjectBtn, judgeTeamSelect, judgeLoader, judgeResultsArea, judgeResultAnalysisList, judgeResultScore. Feature disabled.");
             }
             // --- END AI Judge Simulation Logic ---
 
 
-            // --- Smooth Scroll Logic (Keep as is) ---
+            // --- Smooth Scroll Logic ---
              document.querySelectorAll('.scroll-link').forEach(link => {
                  link.addEventListener('click', function(e) {
                      const targetId = this.getAttribute('href');
