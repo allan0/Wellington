@@ -2,275 +2,636 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <!-- Added user-scalable=no -->
-    <title>LMS - Wellington Campus</title>
-    <meta name="description" content="Explore our upcoming mini-courses in Python, AI, ML, and Data Science at Wellington Campus.">
-    <meta name="keywords" content="Wellington Campus, LMS, courses, Python, AI, ML, Data Science, telegram mini app">
-    <meta name="author" content="Wellington Campus">
-    <!-- Favicon -->
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Telegram Mini App Script -->
+    <!-- Essential Mini App Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+    <title>AI Hackathon Day 1 - Wellington</title> <!-- Simplified Title -->
+
+    <!-- Standard Meta -->
+    <meta name="description" content="Day 1 Agenda and details for the Dubai CommerCity x Wellington Campus AI Hackathon. Includes AI Judge Simulation & Live Leaderboard.">
+    <meta name="keywords" content="Wellington Campus, Dubai CommerCity, hackathon, AI, Day 1, agenda, judge, leaderboard, Telegram Mini App">
+    <meta name="author" content="Wellington Campus & Dubai CommerCity">
+    <meta property="og:title" content="Dubai CommerCity x Wellington AI Hackathon - Day 1">
+    <meta property="og:description" content="Detailed Day 1 Agenda and Support Info, featuring an AI Judge Simulation and Live Leaderboard within the Telegram Mini App.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wellingtoncampus.co/hackathon.html"> <!-- Update -->
+    <meta property="og:image" content="./wellingtoncampus.png"> <!-- Update Path -->
+    <meta property="og:image:alt" content="Wellington Campus Logo">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon"> <!-- Update Path -->
+
+    <!-- **Telegram Mini App Script - MUST be first script** -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <!-- Stylesheets -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --primary-color: #d4af37; /* Gold */
-            --secondary-color: #6c757d;
+            --secondary-color: #003366; /* Dark Blue */
             --text-color: #212529;
-            --bg-color: #cce5ff; /* Soft blue */
-            --accent-color: #ffffff;
+            --bg-color: #cce5ff; /* Light Blueish */
+            --accent-color: #ffffff; /* White */
+            --card-bg-color: rgba(255, 255, 255, 0.9);
+            --success-color: #28a745;
+            --error-color: #dc3545;
             --shadow: 0 8px 24px rgba(0,0,0,0.1);
-             /* Telegram Vars Fallback */
-            --tg-theme-bg-color: var(--bg-color);
-            --tg-theme-text-color: var(--text-color);
-            --tg-theme-button-color: var(--primary-color);
-            --tg-theme-button-text-color: var(--accent-color);
-            --tg-theme-secondary-bg-color: var(--accent-color);
-            --tg-theme-hint-color: var(--secondary-color);
-            --tg-theme-link-color: var(--primary-color);
-            --tg-viewport-height: 100vh;
+            --border-radius: 15px;
+            --bottom-nav-bg: var(--accent-color);
+            --bottom-nav-icon: #6c757d;
+            --bottom-nav-active: var(--primary-color);
+        }
+
+        html {
+            scroll-behavior: smooth; /* Enable smooth scrolling for internal links */
         }
 
         body {
             font-family: 'Roboto', sans-serif;
-            color: var(--tg-theme-text-color);
-            background-color: var(--tg-theme-bg-color);
-            font-size: 1rem; /* Adjusted */
-            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
             background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
                               linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
             background-size: 20px 20px;
-            margin: 0; padding: 0;
-            min-height: var(--tg-viewport-height);
-            padding-bottom: 70px; /* Space for bottom nav */
+            font-size: 1.0rem; /* Slightly smaller base for mobile */
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            min-height: var(--tg-viewport-height, 100vh); /* Use Telegram viewport height */
+            box-sizing: border-box;
+            overflow-x: hidden;
+             /* Add padding at the bottom to avoid content being obscured by fixed elements */
+            /* Height should be approx height of bottom-nav + floating buttons */
+            padding-bottom: calc(150px + var(--tg-safe-area-inset-bottom, 0px));
         }
 
-        /* Remove Desktop Navbar */
-        .navbar-custom { display: none; }
-
-        .content-wrapper {
-            position: relative; /* Needed for overlay */
-            padding-top: 1rem;
-        }
-
-        .coming-soon-overlay {
-            position: absolute; /* Changed to absolute */
-            top: 0; left: 0; right: 0; bottom: 0; /* Cover content wrapper */
-            background-color: rgba(255, 255, 255, 0.9); /* More opaque */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            text-align: center;
-            padding: 1rem;
-        }
-        .coming-soon-overlay h2 {
-            color: var(--secondary-color); /* Dark blue */
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            font-family: 'Poppins', sans-serif;
-        }
-        .coming-soon-overlay p {
-            font-size: 1.1rem;
-            color: var(--tg-theme-hint-color, var(--secondary-color));
-        }
-
-        .courses-section { padding: 2rem 1rem; }
-        .courses-section h1 { text-align: center; font-size: 1.8rem; margin-bottom: 1.5rem;}
-
-        .course-card {
-            padding: 1.5rem;
-            text-align: center;
-            background-color: var(--accent-color);
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 1rem; /* Add space between cards on mobile */
-        }
-        .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .course-card i {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 2.5rem; /* Slightly smaller icon */
-        }
-        .course-card h3 { font-size: 1.2rem; margin-bottom: 0.8rem; }
-        .course-card p { font-size: 0.9rem; margin-bottom: 1rem; flex-grow: 1;}
-        .course-card .btn-custom {
-            background-color: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
-            border: none;
-            padding: 0.6rem 1.2rem;
-            font-size: 0.8rem;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            margin-top: auto; /* Push button to bottom */
-        }
-        .course-card .btn-custom:hover {
-             background-color: #b8860b;
-             transform: translateY(-2px);
-             color: var(--tg-theme-button-text-color);
-        }
-
-        /* Bottom Navigation */
+        /* --- Mini App Specific Adjustments --- */
+        .navbar-custom { display: none; } /* Hide desktop nav */
         .bottom-nav {
-            display: flex; /* Always show */
+            display: flex; /* Always show bottom nav */
             position: fixed;
-            bottom: 0; left: 0;
+            bottom: 0;
+            left: 0; /* Ensure it spans full width */
+            right: 0; /* Ensure it spans full width */
             width: 100%;
-            background-color: var(--tg-theme-secondary-bg-color, var(--accent-color));
+            background-color: var(--bottom-nav-bg);
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            padding: 0.5rem 0;
-            z-index: 1000;
-             height: 60px; /* Fixed height */
-        }
-        .bottom-nav .btn {
-            color: var(--tg-theme-hint-color, var(--secondary-color));
-            padding: 0.5rem;
-            font-size: 0.8rem; /* Smaller font */
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            flex-grow: 1;
-            text-decoration: none;
-            border: none; background: none;
-            transition: color 0.3s ease;
-        }
-         .bottom-nav .btn span { margin-top: 2px;} /* Add span for text */
-        .bottom-nav .btn:hover, .bottom-nav .btn.active {
-            color: var(--tg-theme-link-color, var(--primary-color));
-        }
-        .bottom-nav i {
-            font-size: 1.1rem; /* Slightly smaller icon */
-            margin-bottom: 0;
+            /* Account for safe area */
+            padding: 0.5rem 0 max(0.5rem, var(--tg-safe-area-inset-bottom, 0px));
+            z-index: 1040; /* Below modals (1050+), above content */
         }
 
-         /* Focus styles */
-         a:focus, button:focus {
-            outline: 2px solid var(--tg-theme-button-color, var(--primary-color));
-            outline-offset: 1px;
+        /* Adjust floating buttons for safe area */
+        .floating-button {
+             position: fixed;
+             right: 15px; /* Closer to edge on mobile */
+             width: 55px; /* Slightly smaller */
+             height: 55px;
+             font-size: 1.6rem;
+             /* Calculate bottom position based on safe area */
+             z-index: 1050;
+             /* Other styles remain */
+             background-color: var(--secondary-color);
+             color: var(--accent-color);
+             border: 2px solid var(--primary-color);
+             border-radius: 50%;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             box-shadow: 0 4px 15px rgba(0, 51, 102, 0.4);
+             cursor: pointer;
+             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+         }
+         .floating-button:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0, 51, 102, 0.6); }
+        #task-tracker-btn {
+            /* Adjust bottom based on AI Judge button height + spacing + safe area */
+            bottom: calc(75px + 15px + var(--tg-safe-area-inset-bottom, 0px));
         }
+         #ai-judge-btn {
+            bottom: calc(75px + var(--tg-safe-area-inset-bottom, 0px)); /* Base position above nav + safe area */
+            background-color: var(--primary-color); color: var(--secondary-color); border-color: var(--secondary-color);
+         }
+         #task-tracker-btn:hover { background-color: #004a8d; }
+         #ai-judge-btn:hover { background-color: #b8860b; color: var(--secondary-color); }
+
+
+        /* Keep all other existing styles the same... */
+         h1, h2, h3, h4, h5 { font-family: 'Poppins', sans-serif; color: var(--secondary-color); margin-top: 1rem; }
+         h1 { color: var(--secondary-color); font-size: 1.8rem; } /* Mobile friendly H1 */
+         h1 .fa-cogs { color: var(--primary-color); }
+         .hackathon-subtitle { color: var(--secondary-color); font-size: 1.1rem; font-weight: 400; margin-bottom: 1.2rem; }
+         .card { border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom: 1rem; border: none; background-color: var(--card-bg-color); overflow: hidden; }
+         .card-header { background-color: var(--secondary-color); color: var(--accent-color); font-weight: 600; border-bottom: 3px solid var(--primary-color); padding: 0.8rem 1.2rem; display: flex; align-items: center; justify-content: space-between; transition: background-color 0.2s ease; }
+         .card-header h2 { color: var(--accent-color); margin: 0; font-size: 1.1rem; }
+         .card-header i { margin-right: 0.6rem; font-size: 1rem; }
+         .card-header[data-bs-toggle="collapse"] { cursor: pointer; }
+         .card-header[data-bs-toggle="collapse"]:hover { background-color: #004a8d; }
+         .card-header .chevron-icon { font-size: 0.9rem; transition: transform 0.3s ease; margin-left: auto; padding-left: 1rem; }
+         .card-header .chevron-down { display: inline-block; }
+         .card-header .chevron-up { display: none; }
+         .card-header.collapsed .chevron-down { display: inline-block; }
+         .card-header.collapsed .chevron-up { display: none; }
+         .card-header:not(.collapsed) .chevron-down { display: none; }
+         .card-header:not(.collapsed) .chevron-up { display: inline-block; transform: rotate(180deg); }
+         .card-title { color: var(--secondary-color); margin-bottom: 1rem; font-size: 1.1rem; }
+         .card-body { padding: 1.2rem; }
+         .card-body h3 { margin-top: 0.5rem; font-size: 1.2rem; }
+         .list-unstyled li, .list-group-item { margin-bottom: 0.7rem; display: flex; align-items: flex-start; line-height: 1.5; font-size: 0.95rem; }
+         .list-unstyled i.fas, .list-unstyled i.fab, .list-group-item i.fas { color: var(--primary-color); margin-right: 0.8rem; width: 18px; text-align: center; flex-shrink: 0; margin-top: 0.15em; }
+         #preparation .fa-check-circle { color: var(--success-color); }
+         #preparation .fa-check { color: var(--primary-color); }
+         #prizes .fa-trophy { color: #ffd700; }
+         #prizes .fa-medal { color: #c0c0c0; }
+         #prizes .fa-award { color: #cd7f32; }
+         #prizes .fa-gifts { color: #f06292; }
+         .checklist { padding-left: 0; list-style: none; margin-top: 1rem; }
+         .checklist-item { background-color: #e9ecef; padding: 0.8rem 1rem; border-radius: 8px; margin-bottom: 0.6rem; transition: background-color 0.3s ease, color 0.3s ease, border-left 0.3s ease; display: flex; align-items: center; line-height: 1.4; border-left: 4px solid var(--secondary-color); cursor: default; font-size: 0.9rem; }
+         .modal .checklist-item { cursor: pointer; }
+         .modal .checklist-item:hover { background-color: #dfe6ec; }
+         .checklist-item i.fa-circle { color: var(--secondary-color); margin-right: 0.75rem; font-size: 1em; transition: transform 0.2s ease; }
+         .checklist-item i.fa-check-circle { color: var(--success-color); display: none; margin-right: 0.75rem; font-size: 1em; transition: transform 0.2s ease; }
+         .checklist-item.completed { background-color: #dff0d8; color: #3c763d; border-left: 4px solid var(--success-color); }
+         .checklist-item.completed i.fa-circle { display: none; }
+         .checklist-item.completed i.fa-check-circle { display: inline-block; transform: scale(1.1); }
+         .progress { height: 18px; font-size: 0.75rem; border-radius: 50px; background-color: #e9ecef; }
+         .progress-bar { background-color: var(--primary-color); font-weight: bold; color: var(--accent-color); display: flex; align-items: center; justify-content: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); transition: width 0.6s ease; }
+         .agenda-list { list-style: none; padding-left: 0; }
+         .agenda-list li { padding: 0.8rem 0; border-bottom: 1px solid rgba(0, 51, 102, 0.1); display: flex; flex-wrap: wrap; align-items: flex-start; transition: background-color 0.2s ease; }
+         .agenda-list li:hover { background-color: rgba(255, 255, 255, 0.4); }
+         .agenda-list li:last-child { border-bottom: none; }
+         .agenda-time { font-weight: 700; color: var(--primary-color); flex: 0 0 110px; margin-bottom: 0.4rem; padding-right: 0.8rem; display: flex; align-items: center; font-size: 0.9rem; }
+         .agenda-time i { margin-right: 0.5rem; color: var(--secondary-color); width: 16px; text-align: center; }
+         .agenda-details { flex: 1 1 auto; padding-right: 0.8rem; margin-bottom: 0.4rem; }
+         .agenda-details strong { display: block; font-size: 1em; color: var(--secondary-color); margin-bottom: 0.2rem; font-weight: 600; }
+         .agenda-details p { margin-bottom: 0; font-size: 0.9rem; color: #444; }
+         .agenda-speaker { font-style: italic; color: var(--text-color); flex: 0 0 160px; text-align: right; padding-left: 0.8rem; font-size: 0.85rem; }
+         .agenda-speaker small { display: block; font-size: 0.9em; color: #6c757d; font-style: normal; }
+         .agenda-speaker.- { font-style: normal; color: #aaa; }
+         .agenda-break { background-color: rgba(0, 51, 102, 0.05); border-radius: 8px; margin: 0.5rem 0; padding-left: 0.8rem; padding-right: 0.8rem; }
+         .agenda-break .agenda-time, .agenda-break .agenda-details { color: #5a6f82; }
+         .agenda-break strong { color: #5a6f82 !important; }
+         .list-unstyled i, .list-group-item i { vertical-align: middle; }
+         .card ul { list-style: none; padding-left: 0; }
+         .modal-header { background-color: var(--secondary-color); color: var(--accent-color); border-bottom: 2px solid var(--primary-color); }
+         .modal-header .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+         .modal-title { font-family: 'Poppins', sans-serif; font-size: 1.1rem; }
+         #task-message-area .alert { margin-top: 1rem; padding: 0.7rem 1rem; font-size: 0.9rem; }
+         #aiJudgeModal .modal-body { min-height: 300px; }
+         #judgeLoader { text-align: center; padding: 2rem 0; display: none; }
+         #judgeLoader p { margin-top: 0.8rem; color: var(--secondary-color); font-style: italic; font-size: 0.9rem;}
+         #judgeResultsArea { display: none; }
+         #judgeResultTeamName { font-weight: bold; margin-bottom: 0.8rem; font-size: 1.1rem; }
+         #judgeResultAnalysisList { list-style: none; padding-left: 0; margin-top: 0.8rem; }
+         #judgeResultAnalysisList li { font-size: 0.95rem; padding: 0.5rem 0.7rem; background-color: rgba(0, 51, 102, 0.05); border-left: 4px solid var(--primary-color); margin-bottom: 0.6rem; border-radius: 5px; opacity: 0; transform: translateX(-15px); transition: opacity 0.4s ease, transform 0.4s ease; }
+         #judgeResultAnalysisList li.visible { opacity: 1; transform: translateX(0); }
+         #judgeResultScore { margin-top: 1rem; font-size: 1.5rem; font-weight: bold; text-align: center; color: var(--secondary-color); padding: 0.8rem; background-color: rgba(212, 175, 55, 0.15); border-radius: var(--border-radius); position: relative; }
+         #judgeResultScore span { font-size: 2rem; color: var(--primary-color); display: block; margin-top: 0.4rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+         #leaderboardSection { margin-top: 2rem; opacity: 0; transition: opacity 0.5s ease-in-out 0.5s; border-top: 1px solid rgba(0, 51, 102, 0.2); padding-top: 1.2rem; }
+         #leaderboardSection.visible { opacity: 1; }
+         #leaderboard-body tr { transition: background-color 0.3s ease; }
+         #leaderboard-body tr.highlight-new { background-color: rgba(212, 175, 55, 0.2); }
+         #leaderboard-body .rank-badge { font-weight: bold; font-size: 1em; color: var(--secondary-color); display: inline-block; width: 28px; height: 28px; line-height: 28px; text-align: center; border-radius: 50%; background-color: rgba(212, 175, 55, 0.8); color: var(--secondary-color); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+         #leaderboard-body tr:nth-child(1) .rank-badge { background-color: #ffd700; color: #333; }
+         #leaderboard-body tr:nth-child(2) .rank-badge { background-color: #c0c0c0; color: #333; }
+         #leaderboard-body tr:nth-child(3) .rank-badge { background-color: #cd7f32; color: #fff; }
+         #leaderboard-body .score-display { font-weight: bold; font-size: 1em; color: var(--secondary-color); }
+         #leaderboard-body .team-name-cell span { opacity: 0; display: inline-block; transition: opacity 0.3s ease; margin-right: 0.1em; }
+         #leaderboard-body .team-name-cell span.visible { opacity: 1; }
+         #flying-score-element { position: fixed; font-size: 1.3rem; font-weight: bold; color: var(--accent-color); background-color: var(--secondary-color); padding: 0.4rem 0.8rem; border-radius: 8px; border: 2px solid var(--primary-color); z-index: 1100; opacity: 0; pointer-events: none; transition: top 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), left 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.5s ease-out 0.3s, transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); white-space: nowrap; transform: scale(1); }
+         .bottom-nav .btn { color: var(--bottom-nav-icon); background-color: transparent; border: none; padding: 0.5rem; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; transition: color 0.3s ease; text-decoration: none; }
+         .bottom-nav i { font-size: 1.1rem; margin-bottom: 0.15rem; }
+         #quick-info { background-color: rgba(255, 255, 255, 0.7); border-left: 5px solid var(--primary-color); box-shadow: 0 5px 15px rgba(0,0,0,0.07); }
+         #quick-info .card-body { padding: 1rem 1.2rem; }
+         #quick-info h3 { color: var(--secondary-color); margin-top: 0; margin-bottom: 0.8rem; font-size: 1.1rem; }
+         #quick-info ul li { margin-bottom: 0.5rem; font-size: 0.95rem; }
+         #quick-info ul li i { margin-top: 0.1em; }
+         #logistics-info { background-color: rgba(230, 240, 255, 0.7); border-left: 5px solid var(--secondary-color); }
+         #logistics-info .card-body h2 { font-size: 1.1rem; } /* Adjusted H3 to H2 */
+         #logistics-info .card-body ul li i { color: var(--secondary-color); }
+
+        /* Remove media query that shows bottom nav, as it's always shown now */
+        /* @media (max-width: 576px) { ... } */
 
     </style>
 </head>
 <body>
-    <!-- LMS Content -->
-    <div class="container" id="lms">
-        <div class="content-wrapper">
-            <!-- Coming Soon Overlay -->
-            <div class="coming-soon-overlay">
-                <h2>Courses Coming Soon!</h2>
-                <p>Stay tuned for exciting mini-courses launching here.</p>
-            </div>
+    <!-- Main Content Container -->
+    <div class="container mt-3" id="hackathon"> <!-- Reduced top margin for mobile -->
+        <header class="text-center mb-3">
+            <!-- Ensure path is correct -->
+            <img src="./wellingtoncampus.png" alt="Wellington Campus Logo" style="max-width: 100px; margin-bottom: 0.5rem;">
+            <h1><i class="fas fa-cogs me-2"></i>AI Hackathon</h1>
+            <p class="hackathon-subtitle">Day 1 @ Dubai CommerCity</p>
+        </header>
 
-            <!-- Courses Section (Content remains, but hidden by overlay) -->
-            <section class="courses-section">
-                 <h1>Our Courses</h1>
-                <div class="row g-3"> <!-- Reduced gutter -->
-                    <div class="col-6 col-md-3"> <!-- 2 columns on small screens -->
-                        <div class="course-card">
-                            <i class="fab fa-python fa-3x"></i> <!-- Corrected icon -->
-                            <h3>Python Basics</h3>
-                            <p>Learn the fundamentals.</p>
-                            <button class="btn btn-custom" disabled>Soon</button> <!-- Disabled button -->
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="course-card">
-                            <i class="fas fa-robot fa-3x"></i>
-                            <h3>Intro to AI</h3>
-                            <p>Explore AI concepts.</p>
-                            <button class="btn btn-custom" disabled>Soon</button>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="course-card">
-                            <i class="fas fa-brain fa-3x"></i>
-                            <h3>ML Basics</h3>
-                            <p>Core ML principles.</p>
-                            <button class="btn btn-custom" disabled>Soon</button>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="course-card">
-                            <i class="fas fa-chart-bar fa-3x"></i>
-                            <h3>Data Science</h3>
-                            <p>Analyze data with Python.</p>
-                            <button class="btn btn-custom" disabled>Soon</button>
-                        </div>
+        <!-- Progress Bar Section -->
+        <section id="progress" class="mb-3 card">
+            <div class="card-header">
+                <h2><i class="fas fa-tasks"></i>Progress</h2>
+            </div>
+            <div class="card-body">
+                <p class="small mb-2">Track Day 1 tasks via <i class="fas fa-tasks"></i> button.</p>
+                <div class="progress" role="progressbar" aria-label="Hackathon Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%">0%</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Info Section -->
+        <section id="quick-info" class="card mb-3">
+             <div class="card-body">
+                 <h3><i class="fas fa-bolt me-2"></i>Quick Info - Day 1</h3>
+                 <ul class="list-unstyled">
+                    <!-- Content as before -->
+                     <li><i class="fas fa-calendar-alt"></i> <strong>Event:</strong> Shaping Tomorrow’s Solution</li>
+                     <li><i class="fas fa-calendar-day"></i> <strong>Date:</strong> Mon, Apr 21, 2025</li>
+                     <li><i class="fas fa-clock"></i> <strong>Time:</strong> 08:30 - 14:00</li>
+                     <li><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> Dubai CommerCity</li>
+                 </ul>
+             </div>
+        </section>
+
+        <!-- Collapsible Sections (Keep structure as before) -->
+        <div id="accordionHackathon">
+            <!-- Agenda -->
+            <section id="agenda" class="card mb-3">
+                <div class="card-header" data-bs-toggle="collapse" data-bs-target="#collapseAgenda" aria-expanded="true" aria-controls="collapseAgenda">
+                    <h2><i class="fas fa-calendar-alt"></i>Agenda</h2>
+                    <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
+                </div>
+                <div class="collapse show" id="collapseAgenda" data-bs-parent="#accordionHackathon">
+                    <div class="card-body">
+                         <h3 class="mb-3 mt-0 small" style="color: var(--primary-color);"><i class="fas fa-flag-checkered me-2"></i>Monday, 21st April 2025</h3>
+                        <ul class="agenda-list">
+                            <!-- Agenda items as before -->
+                             <li> <span class="agenda-time"><i class="fas fa-sign-in-alt"></i>08:30</span> <span class="agenda-details"><strong>Registrations & Check-in</strong><p>Arrival, kits, refreshments.</p></span> <span class="agenda-speaker"><small>DAFZ & Wellington</small></span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-bullhorn"></i>09:00</span> <span class="agenda-details"><strong>Opening Speech</strong><p>Kick-off.</p></span> <span class="agenda-speaker"><small>Wellington</small></span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-scroll"></i>09:05</span> <span class="agenda-details"><strong>Code of Conduct</strong><p>Rules & IP.</p></span> <span class="agenda-speaker"><small>Coordinator</small></span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-users"></i>09:10</span> <span class="agenda-details"><strong>Team Intros</strong><p>Ice-breaker.</p></span> <span class="agenda-speaker"><small>All Teams</small></span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-dice"></i>09:20</span> <span class="agenda-details"><strong>Challenge Assignment</strong><p>Spin Wheel. <a href="game.html" target="_self" class="link-secondary small">(Go to Wheel)</a></p></span> <span class="agenda-speaker"><small>Facilitated</small></span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-laptop-code"></i>09:30</span> <span class="agenda-details"><strong>Hacking Begins!</strong></span> <span class="agenda-speaker">-</span> </li>
+                             <li class="agenda-break"> <span class="agenda-time"><i class="fas fa-headset"></i>Ongoing</span> <span class="agenda-details"><strong>Support Active</strong><p>Mentors, Help Desk, Pitch Coach.</p></span> <span class="agenda-speaker"><small>Wellington</small></span> </li>
+                             <li class="agenda-break"> <span class="agenda-time"><i class="fas fa-utensils"></i>~12:30</span> <span class="agenda-details"><strong>Lunch Break</strong></span> <span class="agenda-speaker">-</span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-flag-checkered"></i>14:00</span> <span class="agenda-details"><strong>Day 1 Wrap-Up & Submit</strong><p>Submit rough model & deck draft.</p></span> <span class="agenda-speaker"><small>Via Link</small></span> </li>
+                        </ul>
                     </div>
                 </div>
             </section>
+
+            <!-- Support -->
+            <section id="support" class="card mb-3">
+                 <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseSupport" aria-expanded="false" aria-controls="collapseSupport">
+                     <h2><i class="fas fa-hands-helping"></i>Support</h2>
+                     <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
+                 </div>
+                 <div class="collapse" id="collapseSupport" data-bs-parent="#accordionHackathon">
+                    <div class="card-body">
+                        <!-- Support content as before -->
+                         <ul class="list-unstyled"> <li><i class="fas fa-chalkboard-teacher"></i> Briefing & Q&A</li> <li><i class="fas fa-user-friends"></i> Mentor Assignment</li> <li><i class="fas fa-headset"></i> Help Desk (Tech/Structure)</li> <li><i class="fas fa-microphone-alt"></i> Pitch Coaching (Mid-day)</li> <li><i class="fas fa-folder-open"></i> Resource Access (Digital)</li> </ul>
+                    </div>
+                 </div>
+            </section>
+
+            <!-- Outcomes -->
+            <section id="outcomes" class="card mb-3">
+                <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOutcomes" aria-expanded="false" aria-controls="collapseOutcomes">
+                    <h2><i class="fas fa-check-double"></i>Day 1 Outcomes</h2>
+                    <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
+                </div>
+                <div class="collapse" id="collapseOutcomes" data-bs-parent="#accordionHackathon">
+                    <div class="card-body">
+                         <p class="small">By end of Day 1:</p>
+                        <!-- Outcomes content as before -->
+                        <ul class="list-unstyled"> <li><i class="fas fa-cogs text-success"></i> Rough model/logic</li> <li><i class="fas fa-file-powerpoint text-success"></i> Draft pitch deck (3-5 slides)</li> <li><i class="fas fa-upload text-success"></i> Submitted materials</li> </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tracks -->
+            <section id="tracks" class="card mb-3">
+                 <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTracks" aria-expanded="false" aria-controls="collapseTracks">
+                     <h2><i class="fas fa-stream"></i>Themes</h2>
+                     <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
+                 </div>
+                 <div class="collapse" id="collapseTracks" data-bs-parent="#accordionHackathon">
+                     <div class="card-body">
+                        <!-- Tracks content as before -->
+                         <ul class="list-unstyled"> <li><i class="fas fa-truck-loading"></i> Supply Chain</li> <li><i class="fas fa-leaf"></i> Sustainability</li> <li><i class="fas fa-briefcase-medical"></i> Healthcare</li> <li><i class="fas fa-tasks"></i> Project Mgmt</li> <li><i class="fas fa-city"></i> Real Estate</li> <li><i class="fas fa-landmark"></i> Government</li> <li><i class="fas fa-lightbulb"></i> Open Innovation</li> </ul>
+                         <p class="small text-muted mt-2">Assigned via <a href="game.html" target="_self">Spin the Wheel</a>.</p>
+                     </div>
+                </div>
+            </section>
+
+            <!-- Preparation -->
+            <section id="preparation" class="card mb-3">
+                 <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapsePrep" aria-expanded="false" aria-controls="collapsePrep">
+                    <h2><i class="fas fa-laptop-code"></i>Preparation</h2>
+                    <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
+                 </div>
+                 <div class="collapse" id="collapsePrep" data-bs-parent="#accordionHackathon">
+                     <div class="card-body">
+                        <!-- Prep content as before -->
+                          <h5 class="card-title small"><i class="fas fa-laptop me-2"></i>Hardware</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fas fa-check-circle"></i> Laptop</li> <li><i class="fas fa-check-circle"></i> Charger</li> <li><i class="fas fa-check-circle"></i> Wi-Fi @ Venue</li> </ul>
+                          <h5 class="card-title small mt-2"><i class="fas fa-tools me-2"></i>Software/Tools</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fab fa-python"></i> Python 3.8+</li> <li><i class="fas fa-book"></i> Jupyter/Editor</li> <li><i class="fas fa-code-branch"></i> Git/GitHub</li> <li><i class="fas fa-brain"></i> AI Libs (Optional)</li> <li><i class="fas fa-cloud-upload-alt"></i> Cloud Acct (Optional)</li> </ul>
+                          <h5 class="card-title small mt-2"><i class="fas fa-lightbulb me-2"></i>Knowledge</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fas fa-check"></i> Python Basics</li> <li><i class="fas fa-check"></i> Basic AI/ML Ideas</li> <li><i class="fas fa-check"></i> Teamwork!</li> </ul>
+                     </div>
+                </div>
+            </section>
+
+            <!-- Prizes -->
+            <section id="prizes" class="card mb-3">
+                 <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapsePrizes" aria-expanded="false" aria-controls="collapsePrizes">
+                     <h2><i class="fas fa-trophy"></i>Prizes</h2>
+                      <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
+                 </div>
+                 <div class="collapse" id="collapsePrizes" data-bs-parent="#accordionHackathon">
+                     <div class="card-body">
+                        <!-- Prizes content as before -->
+                          <ul class="list-unstyled small"> <li><i class="fas fa-trophy"></i> 1st: AED 10k, Swag, Ops</li> <li><i class="fas fa-medal"></i> 2nd: AED 5k, Swag</li> <li><i class="fas fa-award"></i> 3rd: AED 2.5k, Swag</li> <li><i class="fas fa-lightbulb"></i> Innovation Award</li> <li><i class="fas fa-gifts"></i> All: Certificate, Swag</li> <li><i class="fas fa-handshake"></i> Networking</li> </ul>
+                     </div>
+                </div>
+            </section>
+
+             <!-- Judging -->
+             <section id="judging" class="card mb-3">
+                 <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseJudging" aria-expanded="false" aria-controls="collapseJudging">
+                     <h2><i class="fas fa-gavel"></i>Judging Criteria</h2>
+                      <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
+                 </div>
+                  <div class="collapse" id="collapseJudging" data-bs-parent="#accordionHackathon">
+                      <div class="card-body">
+                         <!-- Judging content as before -->
+                          <p class="small">Final judging (Day 2) considers:</p>
+                          <ul class="list-unstyled small"> <li><i class="fas fa-cogs"></i> Technical Work</li> <li><i class="fas fa-lightbulb"></i> Innovation</li> <li><i class="fas fa-bullseye"></i> Impact/Feasibility</li> <li><i class="fas fa-presentation"></i> Pitch/Demo</li> <li><i class="fas fa-check-circle"></i> Completion</li> </ul>
+                      </div>
+                  </div>
+             </section>
+
+             <!-- Logistics -->
+             <section id="logistics-info" class="card mb-3">
+                 <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLogistics" aria-expanded="false" aria-controls="collapseLogistics">
+                    <h2><i class="fas fa-building me-2"></i>Logistics</h2>
+                     <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
+                 </div>
+                <div class="collapse" id="collapseLogistics" data-bs-parent="#accordionHackathon">
+                    <div class="card-body">
+                         <!-- Logistics content as before -->
+                         <p class="small">Venue requests:</p>
+                         <ul class="list-unstyled small"> <li><i class="fas fa-users"></i> Breakout spaces</li> <li><i class="fas fa-desktop"></i> Screen/Projector</li> <li><i class="fas fa-video"></i> Basic Recording?</li> </ul>
+                    </div>
+                </div>
+             </section>
+
+             <!-- Registration -->
+             <section id="registration-note" class="card mb-3">
+                 <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseRegNote" aria-expanded="false" aria-controls="collapseRegNote">
+                      <h2><i class="fas fa-user-check"></i>Registration</h2>
+                      <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
+                 </div>
+                  <div class="collapse" id="collapseRegNote" data-bs-parent="#accordionHackathon">
+                      <div class="card-body">
+                          <!-- Reg content as before -->
+                          <p class="small">Managed via prior official communication. Ensure team details are confirmed.</p>
+                      </div>
+                  </div>
+              </section>
+
+             <!-- Contact -->
+             <section id="contact" class="card mb-3">
+                 <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseContact" aria-expanded="false" aria-controls="collapseContact">
+                     <h2><i class="fas fa-envelope"></i>Contact</h2>
+                     <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
+                 </div>
+                  <div class="collapse" id="collapseContact" data-bs-parent="#accordionHackathon">
+                      <div class="card-body">
+                         <!-- Contact content as before -->
+                          <div class="row small">
+                             <div class="col-6 mb-2"> <strong>Wellington Campus:</strong> <ul class="list-unstyled mt-1"> <li><i class="fas fa-envelope-open-text"></i> <a href="mailto:info@wellingtoncampus.co">Email</a></li> <li><i class="fas fa-phone"></i> <a href="tel:+971542523922">Call</a></li> </ul> </div>
+                             <div class="col-6 mb-2"> <strong>Dubai CommerCity:</strong> <ul class="list-unstyled mt-1"> <li><i class="fas fa-envelope-open-text"></i> Email DCC</li> <li><i class="fas fa-phone"></i> Call DCC</li> </ul> </div>
+                         </div>
+                      </div>
+                 </div>
+             </section>
+        </div> <!-- End Accordion -->
+
+
+        <!-- Footer -->
+        <footer class="text-center mt-3 mb-3 text-muted">
+            <small>© 2024-25 DCC & Wellington Campus</small>
+        </footer>
+
+    </div> <!-- End Main Container -->
+
+    <!-- Floating Buttons (Keep structure) -->
+    <button class="floating-button" id="task-tracker-btn" title="Task Tracker" data-bs-toggle="modal" data-bs-target="#taskTrackerModal">
+        <i class="fas fa-tasks"></i>
+    </button>
+    <button class="floating-button" id="ai-judge-btn" title="AI Judge Sim" data-bs-toggle="modal" data-bs-target="#aiJudgeModal">
+        <i class="fas fa-gavel"></i>
+    </button>
+
+    <!-- Task Tracker Modal (Keep structure) -->
+    <div class="modal fade" id="taskTrackerModal" tabindex="-1" aria-labelledby="taskTrackerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="taskTrackerModalLabel"><i class="fas fa-tasks me-2"></i>Day 1 Tasks</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small">Tap to mark complete.</p>
+                    <div id="task-message-area" class="mb-3"></div>
+                    <div class="checklist" id="modal-checklist">
+                        <!-- Checklist items as before -->
+                         <div class="checklist-item" data-task-id="register"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Check-in</strong></div> </div>
+                         <div class="checklist-item" data-task-id="briefing"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Briefing</strong></div> </div>
+                         <div class="checklist-item" data-task-id="challenge"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Get Challenge</strong></div> </div>
+                         <div class="checklist-item" data-task-id="brainstorm"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Plan Approach</strong></div> </div>
+                         <div class="checklist-item" data-task-id="mentor-meet"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Meet Mentor</strong></div> </div>
+                         <div class="checklist-item" data-task-id="logic-dev"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Develop Logic/Model</strong></div> </div>
+                         <div class="checklist-item" data-task-id="deck-start"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Start Deck</strong></div> </div>
+                         <div class="checklist-item" data-task-id="pitch-coach"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Pitch Coach (Opt.)</strong></div> </div>
+                         <div class="checklist-item" data-task-id="day1-submit"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Submit Drafts</strong></div> </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- AI Judge Modal (Keep structure) -->
+    <div class="modal fade" id="aiJudgeModal" tabindex="-1" aria-labelledby="aiJudgeModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-lg modal-dialog-scrollable">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="aiJudgeModalLabel"><i class="fas fa-brain me-2"></i>AI Judge Sim</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                    <p class="text-muted small">Select team, click Judge.</p>
+                     <!-- Team Selection -->
+                      <div class="row g-2 align-items-end mb-3">
+                          <div class="col-8">
+                              <label for="judgeTeamSelect" class="form-label visually-hidden">Select Team:</label>
+                              <select class="form-select form-select-sm" id="judgeTeamSelect">
+                                  <option selected disabled value="">-- Choose Team --</option>
+                                  <!-- Options as before -->
+                                   <option value="Team Alpha">Team Alpha (Logistics)</option>
+                                   <option value="Team Beta">Team Beta (Sustainability)</option>
+                                   <option value="Team Gamma">Team Gamma (Healthcare)</option>
+                                   <option value="Team Delta">Team Delta (Open Innovation)</option>
+                                   <option value="The AI Mavericks">The AI Mavericks (Proj Mgmt)</option>
+                              </select>
+                          </div>
+                          <div class="col-4">
+                              <button class="btn btn-primary w-100 btn-sm" type="button" id="judgeProjectBtn">
+                                  <i class="fas fa-play me-1"></i> Judge
+                              </button>
+                          </div>
+                      </div>
+                     <!-- Loader -->
+                       <div id="judgeLoader">
+                           <div class="spinner-border spinner-border-sm text-primary" role="status"> <span class="visually-hidden">Loading...</span> </div>
+                           <p class="small">AI analyzing...</p>
+                       </div>
+                     <!-- Results Area -->
+                      <div id="judgeResultsArea">
+                          <h5 id="judgeResultTeamName" class="small"></h5>
+                          <div id="judgeResultAnalysis">
+                             <h6 class="small">Analysis:</h6>
+                             <ul id="judgeResultAnalysisList" class="small"></ul>
+                          </div>
+                          <div id="judgeResultScore"></div>
+                      </div>
+                      <p class="mb-0 small text-muted fst-italic mt-3"> <i class="fas fa-info-circle me-1"></i> Simulation only. </p>
+                      <!-- Leaderboard Section -->
+                      <hr class="my-3">
+                      <div id="leaderboardSection">
+                          <h5 class="text-center mb-2 small"><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>Leaderboard</h5>
+                          <div class="table-responsive">
+                              <table class="table table-striped table-hover table-sm align-middle small">
+                                  <thead class="table-dark small"> <tr> <th scope="col" style="width: 15%; text-align: center;">Rank</th> <th scope="col">Team</th> <th scope="col" style="width: 25%; text-align: center;">Score</th> </tr> </thead>
+                                  <tbody id="leaderboard-body"> <tr id="leaderboard-placeholder"> <td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td> </tr> </tbody>
+                              </table>
+                          </div>
+                      </div>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                 </div>
+             </div>
+         </div>
+    </div>
+
+    <!-- Flying Score Element (Keep structure) -->
+    <div id="flying-score-element"></div>
+
+    <!-- Bottom Navigation (Keep structure) -->
     <nav class="bottom-nav" aria-label="Mobile navigation">
-        <div class="d-flex justify-content-around w-100">
-            <a href="index.html" class="btn" data-page="index"><i class="fas fa-home"></i><span>Home</span></a>
-            <a href="courses.html" class="btn active" data-page="courses"><i class="fas fa-book"></i><span>LMS</span></a> <!-- Active class -->
-            <a href="game.html" class="btn" data-page="game"><i class="fas fa-puzzle-piece"></i><span>Quiz</span></a>
-            <a href="hackathon.html" class="btn" data-page="hackathon"><i class="fas fa-laptop-code"></i><span>Hackathon</span></a>
-        </div>
-    </nav>
+         <div class="d-flex justify-content-around w-100">
+             <!-- Ensure paths are correct for Mini App navigation -->
+             <a href="index.html" target="_self" class="btn"><i class="fas fa-home"></i>Home</a>
+             <a href="courses.html" target="_self" class="btn"><i class="fas fa-book"></i>LMS</a>
+             <a href="game.html" target="_self" class="btn"><i class="fas fa-puzzle-piece"></i>Quest</a>
+             <a href="hackathon.html" target="_self" class="btn active"><i class="fas fa-laptop-code"></i>Hackathon</a>
+         </div>
+     </nav>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- Mini App & Feature Script -->
     <script>
-        function initTelegramApp() {
-            if (window.Telegram && window.Telegram.WebApp) {
-                const tg = window.Telegram.WebApp;
-                 try {
-                    tg.ready();
-                    tg.expand();
-                     document.documentElement.style.setProperty('--tg-viewport-height', tg.viewportStableHeight + 'px');
+        document.addEventListener('DOMContentLoaded', function() {
+            const tg = window.Telegram.WebApp;
 
-                    tg.BackButton.onClick(() => {
-                        if (window.history.length > 1) { window.history.back(); }
-                        else { tg.close(); }
+            // --- Initialize Telegram Mini App ---
+            function initializeTelegramApp() {
+                if (tg && tg.initData) {
+                    tg.ready(); // Signal readiness
+                     // tg.expand(); // Optional: Expand viewport
+
+                    // Configure Back Button
+                    tg.BackButton.show(); // This page is likely not the root
+                    tg.onEvent('backButtonClicked', function() {
+                        // Basic back/close logic
+                        if (window.history.length > 1) {
+                            window.history.back();
+                        } else {
+                            tg.close();
+                        }
                     });
-                    if (window.location.pathname !== '/index.html' && window.location.pathname !== '/') {
-                        tg.BackButton.show();
-                    } else {
-                         tg.BackButton.hide();
-                    }
 
-                    // Update Bottom Nav Active State
-                    const currentPage = window.location.pathname.split('/').pop().split('.')[0] || 'index'; // courses
-                    document.querySelectorAll('.bottom-nav .btn').forEach(btn => {
-                        btn.classList.remove('active');
-                        if (btn.dataset.page === currentPage) { btn.classList.add('active'); }
-                    });
-                     console.log("TG Mini App Initialized.");
-
-                } catch (e) {
-                     console.error("Error initializing Telegram Mini App:", e);
-                     setActiveNavFallback();
-                     const bottomNav = document.querySelector('.bottom-nav');
-                     if(bottomNav) bottomNav.style.display = 'flex';
+                     console.log("Telegram Mini App Initialized on Hackathon Page.");
+                } else {
+                    console.warn("Not running in Telegram context or initData unavailable.");
                 }
-            } else {
-                console.warn("Telegram WebApp script not loaded. Running in browser mode.");
-                setActiveNavFallback();
-                const bottomNav = document.querySelector('.bottom-nav');
-                if(bottomNav) bottomNav.style.display = 'flex'; // Show nav for browser testing
             }
-        }
 
-         function setActiveNavFallback() {
-             const currentPage = window.location.pathname.split('/').pop().split('.')[0] || 'index'; // courses
-             document.querySelectorAll('.bottom-nav .btn').forEach(btn => {
-                 btn.classList.remove('active');
-                 if (btn.dataset.page === currentPage) { btn.classList.add('active'); }
-             });
-        }
+            initializeTelegramApp(); // Run Telegram setup
 
-        document.addEventListener('DOMContentLoaded', initTelegramApp);
+            // --- Existing Feature Script (Task Tracker, AI Judge, Leaderboard) ---
+            // Paste the entire script content from the <script id="feature-script"> block
+            // of your *previous* working version here. It should work without modification
+            // as it primarily interacts with the DOM elements which haven't changed structure.
+             // --- Task Tracker Logic ---
+            const modalChecklist = document.getElementById('modal-checklist');
+            const messageArea = document.getElementById('task-message-area');
+            const storageKey = 'hackathonDay1TaskStatus';
+            const progressBar = document.querySelector('#progress .progress-bar');
+            let taskState = loadTaskState();
+            const taskModalElement = document.getElementById('taskTrackerModal');
+
+            function loadTaskState() { const storedState = localStorage.getItem(storageKey); return storedState ? JSON.parse(storedState) : {}; }
+            function saveTaskState(state) { localStorage.setItem(storageKey, JSON.stringify(state)); }
+            function updateTaskUI(taskId, isCompleted) { const modalItem = modalChecklist?.querySelector(`.checklist-item[data-task-id="${taskId}"]`); if (modalItem) { modalItem.classList.toggle('completed', isCompleted); } }
+            function showMessage(message, type = 'success') { if (messageArea) { messageArea.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show small p-2" role="alert">${message}<button type="button" class="btn-close btn-sm p-2" data-bs-dismiss="alert" aria-label="Close"></button></div>`; } }
+            function clearMessages() { if (messageArea) { messageArea.innerHTML = ''; } }
+            function updateProgressBar() { const state = loadTaskState(); const taskItems = modalChecklist?.querySelectorAll('.checklist-item[data-task-id]'); if (!taskItems || taskItems.length === 0 || !progressBar) return; const totalTasks = taskItems.length; const completedTasks = Object.values(state).filter(status => status === true).length; const progressPercent = Math.round((completedTasks / totalTasks) * 100); progressBar.style.width = progressPercent + '%'; progressBar.textContent = `${progressPercent}%`; progressBar.setAttribute('aria-valuenow', progressPercent); progressBar.classList.toggle('bg-success', progressPercent === 100); progressBar.classList.toggle('progress-bar-animated', progressPercent < 100); progressBar.classList.toggle('progress-bar-striped', progressPercent < 100); }
+            if (modalChecklist) { modalChecklist.querySelectorAll('.checklist-item[data-task-id]').forEach(item => { const taskId = item.dataset.taskId; if (taskId && taskState[taskId]) { item.classList.add('completed'); } else { item.classList.remove('completed'); } }); modalChecklist.addEventListener('click', function(event) { const taskItem = event.target.closest('.checklist-item[data-task-id]'); if (taskItem) { const taskId = taskItem.dataset.taskId; const isNowCompleted = !taskState[taskId]; taskState[taskId] = isNowCompleted; saveTaskState(taskState); updateTaskUI(taskId, isNowCompleted); clearMessages(); const taskNameElement = taskItem.querySelector('strong'); const taskName = taskNameElement ? taskNameElement.textContent.trim() : `Task ${taskId}`; if (isNowCompleted) { showMessage(`Task "${taskName}" complete!`, 'success'); } else { showMessage(`Task "${taskName}" marked incomplete.`, 'warning'); } updateProgressBar(); } }); } else { console.warn("Modal checklist container (#modal-checklist) not found."); }
+            if (taskModalElement) { taskModalElement.addEventListener('hidden.bs.modal', clearMessages); }
+            updateProgressBar(); // Initial update
+            // --- END Task Tracker Logic ---
+
+            // --- AI Judge & Leaderboard Logic ---
+            const judgeModalElement = document.getElementById('aiJudgeModal');
+            const judgeTeamSelect = document.getElementById('judgeTeamSelect');
+            const judgeProjectBtn = document.getElementById('judgeProjectBtn');
+            const judgeLoader = document.getElementById('judgeLoader');
+            const judgeResultsArea = document.getElementById('judgeResultsArea');
+            const judgeResultTeamName = document.getElementById('judgeResultTeamName');
+            const judgeResultAnalysisList = document.getElementById('judgeResultAnalysisList');
+            const judgeResultScore = document.getElementById('judgeResultScore');
+            const leaderboardSection = document.getElementById('leaderboardSection');
+            const leaderboardBody = document.getElementById('leaderboard-body');
+            const flyingScoreElement = document.getElementById('flying-score-element');
+            const leaderboardPlaceholder = document.getElementById('leaderboard-placeholder');
+            let leaderboardData = [];
+             const teamAnalysisData = { "Team Alpha": ["Strong logistics model.", "Good data processing.", "Innovation moderate.", "High feasibility.", "Presentation needs polish."], "Team Beta": ["Creative environment monitoring.", "Well-organized code.", "High innovation potential.", "Needs validation.", "Compelling impact analysis."], "Team Gamma": ["Sound NLP for feedback.", "Relevant healthcare problem.", "Demo lacks user-friendliness.", "Significant potential impact.", "Solid innovation."], "Team Delta": ["Very high novelty factor.", "Promising tech execution.", "Optimistic feasibility.", "Pitch conveys vision.", "Adequate completion."], "The AI Mavericks": ["Well-implemented risk prediction.", "Good data integration.", "Practical solution.", "Good technical depth.", "Clear presentation & demo."] };
+
+            function displayAnalysisSequentially(analysisPoints) { if (!judgeResultAnalysisList) return 0; judgeResultAnalysisList.innerHTML = ''; let delay = 0; const interval = 400; analysisPoints.forEach(point => { setTimeout(() => { const li = document.createElement('li'); li.textContent = point; judgeResultAnalysisList.appendChild(li); void li.offsetWidth; li.classList.add('visible'); }, delay); delay += interval; }); return delay; }
+             function generateScore(teamName) { let baseScore = 6.0; let randomness = Math.random() * 2.0; let bonus = 0; if (teamName === "Team Beta" || teamName === "The AI Mavericks") bonus = 0.5 + Math.random(); if (teamName === "Team Delta") bonus = Math.random() * 1.5; let finalScore = baseScore + randomness + bonus; finalScore = Math.min(Math.max(finalScore, 4.0), 9.8); return parseFloat(finalScore.toFixed(1)); }
+            function updateLeaderboardData(teamName, score) { const existingIndex = leaderboardData.findIndex(item => item.teamName === teamName); if (existingIndex > -1) { leaderboardData[existingIndex].score = score; } else { leaderboardData.push({ teamName: teamName, score: score }); } leaderboardData.sort((a, b) => b.score - a.score); }
+            function animateTextWordByWord(element, text, speed = 50) { element.innerHTML = ''; const words = text.split(' '); let currentWordIndex = 0; let intervalId = setInterval(() => { if (currentWordIndex < words.length) { const span = document.createElement('span'); span.textContent = words[currentWordIndex] + ' '; element.appendChild(span); span.classList.add('visible'); currentWordIndex++; } else { clearInterval(intervalId); } }, speed); }
+            function renderLeaderboard(highlightTeam = null) { if (!leaderboardBody) return; leaderboardBody.innerHTML = ''; if (leaderboardData.length === 0) { leaderboardBody.innerHTML = `<tr id="leaderboard-placeholder"><td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td></tr>`; leaderboardSection.classList.remove('visible'); return; } leaderboardPlaceholder?.remove(); leaderboardSection.classList.add('visible'); leaderboardData.forEach((item, index) => { const rank = index + 1; const row = document.createElement('tr'); row.setAttribute('data-team', item.teamName); const rankCell = document.createElement('td'); rankCell.classList.add('text-center'); rankCell.innerHTML = `<span class="rank-badge">${rank}</span>`; const nameCell = document.createElement('td'); nameCell.classList.add('team-name-cell'); nameCell.textContent = item.teamName; const scoreCell = document.createElement('td'); scoreCell.classList.add('text-center', 'score-display'); scoreCell.textContent = item.score.toFixed(1); row.appendChild(rankCell); row.appendChild(nameCell); row.appendChild(scoreCell); leaderboardBody.appendChild(row); if (item.teamName === highlightTeam) { row.classList.add('highlight-new'); setTimeout(() => { row.classList.remove('highlight-new'); }, 1500); } }); }
+             function animateScoreToLeaderboard(teamName, score) { if (!flyingScoreElement || !judgeResultScore || !leaderboardBody) return; const rank = leaderboardData.findIndex(item => item.teamName === teamName) + 1; let targetRow = leaderboardBody.querySelector(`tr:nth-child(${rank})`); let targetY, targetX; const tableRect = leaderboardBody.getBoundingClientRect(); if (targetRow) { const rowRect = targetRow.getBoundingClientRect(); targetY = rowRect.top + (rowRect.height / 2); targetX = rowRect.left + (rowRect.width / 2); } else { targetY = tableRect.top + (rank * 25); targetX = tableRect.left + (tableRect.width / 2); } const startRect = judgeResultScore.getBoundingClientRect(); const startY = startRect.top + (startRect.height / 2); const startX = startRect.left + (startRect.width / 2); flyingScoreElement.textContent = `${score.toFixed(1)}`; flyingScoreElement.style.top = `${startY}px`; flyingScoreElement.style.left = `${startX}px`; flyingScoreElement.style.opacity = '1'; flyingScoreElement.style.transform = 'scale(1)'; requestAnimationFrame(() => { flyingScoreElement.style.top = `${targetY}px`; flyingScoreElement.style.left = `${targetX}px`; flyingScoreElement.style.opacity = '0'; flyingScoreElement.style.transform = 'scale(0.3)'; }); flyingScoreElement.addEventListener('transitionend', () => { flyingScoreElement.style.opacity = '0'; flyingScoreElement.style.transform = 'scale(1)'; renderLeaderboard(teamName); const newlyRenderedRow = leaderboardBody.querySelector(`tr[data-team="${teamName}"]`); if (newlyRenderedRow) { const nameCell = newlyRenderedRow.querySelector('.team-name-cell'); if (nameCell) animateTextWordByWord(nameCell, teamName, 75); } }, { once: true }); }
+            if (judgeProjectBtn && judgeTeamSelect && judgeLoader && judgeResultsArea && judgeResultAnalysisList && judgeResultScore) { judgeProjectBtn.addEventListener('click', function() { const selectedTeam = judgeTeamSelect.value; if (!selectedTeam) { judgeResultsArea.style.display = 'block'; judgeLoader.style.display = 'none'; judgeResultTeamName.textContent = "Error"; judgeResultAnalysisList.innerHTML = '<li class="visible" style="border-color: var(--error-color);">Please select a team.</li>'; judgeResultScore.innerHTML = ''; return; } judgeResultsArea.style.display = 'none'; judgeResultAnalysisList.innerHTML = ''; judgeResultScore.innerHTML = ''; judgeLoader.style.display = 'block'; judgeProjectBtn.disabled = true; judgeTeamSelect.disabled = true; leaderboardSection.classList.remove('visible'); const processingTime = 2500; const analysisPoints = teamAnalysisData[selectedTeam] || ["Standard analysis.", "Details pending."]; setTimeout(() => { judgeLoader.style.display = 'none'; judgeResultsArea.style.display = 'block'; judgeResultTeamName.textContent = `Eval: ${selectedTeam}`; const totalDisplayTime = displayAnalysisSequentially(analysisPoints); setTimeout(() => { const score = generateScore(selectedTeam); judgeResultScore.innerHTML = `Score: <span>${score.toFixed(1)}/10</span>`; updateLeaderboardData(selectedTeam, score); setTimeout(() => { animateScoreToLeaderboard(selectedTeam, score); }, 150); judgeProjectBtn.disabled = false; judgeTeamSelect.disabled = false; }, totalDisplayTime + 100); }, processingTime); }); judgeModalElement.addEventListener('shown.bs.modal', () => { renderLeaderboard(); }); } else { console.error("AI Judging elements not found."); }
+             // --- END AI Judge & Leaderboard Logic ---
+
+            // --- Smooth Scroll Logic (Keep for internal links if any, less critical in Mini App) ---
+             // (Consider removing if no internal # links are used)
+             document.querySelectorAll('a[href^="#"]').forEach(link => { /* ... existing scroll logic ... */ });
+             function highlightElement(element) { /* ... existing highlight logic ... */ }
+             // --- END Smooth Scroll Logic ---
+
+        });
     </script>
+
 </body>
 </html>
