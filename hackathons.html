@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dubai CommerCity x Wellington AI Hackathon - Day 1</title>
-    <meta name="description" content="Day 1 Agenda and details for the Dubai CommerCity x Wellington Campus AI Hackathon - 'Shaping Tomorrow’s Solution'. Includes AI Judge Simulation.">
-    <meta name="keywords" content="Wellington Campus, Dubai CommerCity, DAFZ, hackathon, AI, Artificial Intelligence, coding, competition, Dubai, UAE, teams, tech challenge, industry challenges, innovation, Python, Day 1, agenda, mentors, support, AI judge">
+    <meta name="description" content="Day 1 Agenda and details for the Dubai CommerCity x Wellington Campus AI Hackathon - 'Shaping Tomorrow’s Solution'. Includes AI Judge Simulation & Live Leaderboard.">
+    <meta name="keywords" content="Wellington Campus, Dubai CommerCity, DAFZ, hackathon, AI, Artificial Intelligence, coding, competition, Dubai, UAE, teams, tech challenge, industry challenges, innovation, Python, Day 1, agenda, mentors, support, AI judge, leaderboard, ranking">
     <meta name="author" content="Wellington Campus & Dubai CommerCity">
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Dubai CommerCity x Wellington AI Hackathon - Day 1">
-    <meta property="og:description" content="Detailed Day 1 Agenda and Support Info for the 'Shaping Tomorrow’s Solution' AI Hackathon, featuring an AI Judge Simulation.">
+    <meta property="og:description" content="Detailed Day 1 Agenda and Support Info for the 'Shaping Tomorrow’s Solution' AI Hackathon, featuring an AI Judge Simulation and Live Leaderboard.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wellingtoncampus.co/hackathon.html"> <!-- Update with final URL -->
     <meta property="og:image" content="./wellingtoncampus.png"> <!-- Ensure this path is correct -->
@@ -55,6 +55,8 @@
             padding: 0;
             min-height: 100vh;
             padding-bottom: 150px; /* Increased padding for two floating buttons */
+            /* Prevent scrollbars during animation */
+            overflow-x: hidden;
         }
 
         h1, h2, h3, h4, h5 {
@@ -170,14 +172,14 @@
              transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
          }
          .floating-button:hover {
-             background-color: #004a8d;
              transform: scale(1.1);
              box-shadow: 0 6px 20px rgba(0, 51, 102, 0.6);
          }
          /* Positioning */
          #task-tracker-btn { bottom: 150px; /* Position above the judge button */ }
+         #task-tracker-btn:hover { background-color: #004a8d; } /* Specific hover for task button */
          #ai-judge-btn { bottom: 75px; background-color: var(--primary-color); color: var(--secondary-color); border-color: var(--secondary-color); } /* Different color for judge btn */
-         #ai-judge-btn:hover { background-color: #b8860b; color: var(--secondary-color); }
+         #ai-judge-btn:hover { background-color: #b8860b; color: var(--secondary-color); } /* Specific hover for judge button */
 
         /* Modal Styling Enhancements */
         .modal-header { background-color: var(--secondary-color); color: var(--accent-color); border-bottom: 2px solid var(--primary-color); }
@@ -191,7 +193,6 @@
         #judgeLoader p { margin-top: 1rem; color: var(--secondary-color); font-style: italic; }
         #judgeResultsArea { display: none; /* Hidden initially */ }
         #judgeResultTeamName { font-weight: bold; margin-bottom: 1rem; font-size: 1.2rem; }
-        /* Corrected selector target */
         #judgeResultAnalysisList { list-style: none; padding-left: 0; margin-top: 1rem; }
         #judgeResultAnalysisList li {
             font-size: 1rem;
@@ -217,6 +218,7 @@
             padding: 1rem;
             background-color: rgba(212, 175, 55, 0.15);
             border-radius: var(--border-radius);
+            position: relative; /* Needed for positioning the flying element origin */
         }
         #judgeResultScore span {
             font-size: 2.5rem;
@@ -226,6 +228,79 @@
              text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
+        /* --- Leaderboard Styles --- */
+        #leaderboardSection {
+            margin-top: 2.5rem;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.5s ease-in-out 0.5s; /* Fade in after results */
+            border-top: 1px solid rgba(0, 51, 102, 0.2);
+            padding-top: 1.5rem;
+        }
+        #leaderboardSection.visible {
+            opacity: 1;
+        }
+        #leaderboard-body tr {
+            /* Rows will fade in via JS */
+            transition: background-color 0.3s ease;
+        }
+        #leaderboard-body tr.highlight-new {
+            background-color: rgba(212, 175, 55, 0.2); /* Highlight new/updated row */
+        }
+        #leaderboard-body .rank-badge {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color); /* Changed rank color for contrast */
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: rgba(212, 175, 55, 0.8); /* Gold background */
+            color: var(--secondary-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+         #leaderboard-body tr:nth-child(1) .rank-badge { background-color: #ffd700; color: #333; } /* Gold */
+         #leaderboard-body tr:nth-child(2) .rank-badge { background-color: #c0c0c0; color: #333; } /* Silver */
+         #leaderboard-body tr:nth-child(3) .rank-badge { background-color: #cd7f32; color: #fff; } /* Bronze */
+
+        #leaderboard-body .score-display {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+        }
+        #leaderboard-body .team-name-cell span { /* Target spans for word effect */
+            opacity: 0;
+            display: inline-block; /* Needed for potential transform */
+            transition: opacity 0.3s ease;
+            margin-right: 0.1em; /* Space between words */
+        }
+        #leaderboard-body .team-name-cell span.visible {
+             opacity: 1;
+         }
+
+        /* --- Flying Animation Element --- */
+        #flying-score-element {
+            position: fixed; /* Use fixed to overlay everything */
+            /* Style similar to score display */
+            font-size: 1.5rem; /* Make it smaller */
+            font-weight: bold;
+            color: var(--accent-color); /* White text */
+            background-color: var(--secondary-color); /* Dark blue background */
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+            z-index: 1100; /* Above modal content */
+            opacity: 0;
+            pointer-events: none; /* Don't capture clicks */
+            /* Start transition values */
+            transition: top 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+                        left 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+                        opacity 0.5s ease-out 0.3s, /* Fade out towards the end */
+                        transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1); /* Add scale */
+            white-space: nowrap; /* Prevent wrapping */
+            transform: scale(1);
+        }
 
         /* Bottom Navigation Styles */
         .bottom-nav { display: none; position: fixed; bottom: 0; width: 100%; background-color: var(--bottom-nav-bg); box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 0.5rem 0; z-index: 1040; }
@@ -251,6 +326,10 @@
              .agenda-time { font-size: 0.9rem;}
              .agenda-details p { font-size: 0.9rem; }
              .agenda-speaker { font-size: 0.85rem; }
+             /* Table font size on mobile */
+             #leaderboardSection .table td, #leaderboardSection .table th { font-size: 0.9rem; padding: 0.5rem; }
+             #leaderboard-body .rank-badge { font-size: 1em; width: 25px; height: 25px; line-height: 25px; }
+             #leaderboard-body .score-display { font-size: 1em; }
         }
 
         /* Quick Info Card Styling */
@@ -311,7 +390,7 @@
         </section>
 
         <!-- Collapsible Sections -->
-
+        <!-- [ Keep all collapsible sections: Agenda, Support, Outcomes, Tracks, Preparation, Prizes, Judging, Logistics, Registration, Contact AS THEY ARE IN THE PREVIOUS CODE ] -->
         <!-- Detailed Hackathon Agenda (Open by Default) -->
         <section id="agenda" class="card mb-4">
              <div class="card-header" data-bs-toggle="collapse" data-bs-target="#collapseAgenda" aria-expanded="true" aria-controls="collapseAgenda">
@@ -581,6 +660,7 @@
                  </div>
             </div>
         </section>
+        <!-- End Collapsible Sections -->
 
          <!-- Footer -->
          <footer class="text-center mt-4 mb-4 text-muted">
@@ -596,7 +676,6 @@
     <button class="floating-button" id="ai-judge-btn" title="AI Judge Simulation" data-bs-toggle="modal" data-bs-target="#aiJudgeModal">
         <i class="fas fa-gavel"></i> <!-- Judge icon -->
     </button>
-
 
     <!-- Task Tracker Modal -->
     <div class="modal fade" id="taskTrackerModal" tabindex="-1" aria-labelledby="taskTrackerModalLabel" aria-hidden="true">
@@ -685,13 +764,40 @@
                          <i class="fas fa-info-circle me-1"></i> This is a <strong>simulation</strong> for demonstration purposes. Actual judging involves comprehensive review by human judges based on the official criteria.
                      </p>
 
-                </div>
+                     <!-- Leaderboard Section -->
+                     <hr class="my-4">
+                     <div id="leaderboardSection">
+                         <h5 class="text-center mb-3"><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>Live Leaderboard</h5>
+                         <div class="table-responsive">
+                             <table class="table table-striped table-hover table-sm align-middle">
+                                 <thead class="table-dark">
+                                     <tr>
+                                         <th scope="col" style="width: 15%; text-align: center;">Rank</th>
+                                         <th scope="col">Team Name</th>
+                                         <th scope="col" style="width: 25%; text-align: center;">Score</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody id="leaderboard-body">
+                                     <!-- Placeholder row -->
+                                     <tr id="leaderboard-placeholder">
+                                         <td colspan="3" class="text-center text-muted fst-italic py-3">Judge teams to populate the leaderboard...</td>
+                                    </tr>
+                                     <!-- Leaderboard rows will be added here -->
+                                 </tbody>
+                             </table>
+                         </div>
+                     </div>
+
+                </div> <!-- End Modal Body -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Flying Score Element (For Animation) -->
+    <div id="flying-score-element"></div>
 
 
      <!-- Bottom Navigation for Mobile -->
@@ -707,11 +813,11 @@
     <!-- Bootstrap Bundle JS -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-    <!-- Custom JS for Task Tracker & AI Judge -->
+    <!-- Custom JS for Task Tracker & AI Judge & Leaderboard -->
     <script id="feature-script">
         document.addEventListener('DOMContentLoaded', function() {
 
-            // --- Task Tracker Logic ---
+            // --- Task Tracker Logic (Keep as is) ---
             const modalChecklist = document.getElementById('modal-checklist');
             const messageArea = document.getElementById('task-message-area');
             const storageKey = 'hackathonDay1TaskStatus';
@@ -782,18 +888,24 @@
             // --- END Task Tracker Logic ---
 
 
-            // --- AI Judge Simulation Logic ---
+            // --- AI Judge & Leaderboard Logic ---
             const judgeModalElement = document.getElementById('aiJudgeModal');
             const judgeTeamSelect = document.getElementById('judgeTeamSelect');
             const judgeProjectBtn = document.getElementById('judgeProjectBtn');
             const judgeLoader = document.getElementById('judgeLoader');
             const judgeResultsArea = document.getElementById('judgeResultsArea');
             const judgeResultTeamName = document.getElementById('judgeResultTeamName');
-            // FIX: Select the UL element correctly using its ID
             const judgeResultAnalysisList = document.getElementById('judgeResultAnalysisList');
             const judgeResultScore = document.getElementById('judgeResultScore');
+            // Leaderboard elements
+            const leaderboardSection = document.getElementById('leaderboardSection');
+            const leaderboardBody = document.getElementById('leaderboard-body');
+            const flyingScoreElement = document.getElementById('flying-score-element');
+            const leaderboardPlaceholder = document.getElementById('leaderboard-placeholder');
 
-            const teamAnalysisData = {
+            let leaderboardData = []; // Array to hold { teamName: '...', score: 0.0 }
+
+            const teamAnalysisData = { // Keep this data
                 "Team Alpha": [
                     "Strong technical implementation using predictive models for route optimization.",
                     "Good use of sample datasets, demonstrating clear data processing steps.",
@@ -831,31 +943,27 @@
                   ]
             };
 
+            // --- Helper Functions ---
             function displayAnalysisSequentially(analysisPoints) {
-                 // Ensure the list element is selected correctly
-                 if (!judgeResultAnalysisList) {
-                     console.error("judgeResultAnalysisList element not found!");
-                     return 0; // Return 0 delay if element is missing
-                 }
-                 judgeResultAnalysisList.innerHTML = ''; // Clear previous results
+                 if (!judgeResultAnalysisList) { console.error("judgeResultAnalysisList element not found!"); return 0; }
+                 judgeResultAnalysisList.innerHTML = '';
                  let delay = 0;
-                 const interval = 800;
+                 const interval = 600; // Slightly faster reveal
 
                  analysisPoints.forEach(point => {
                      setTimeout(() => {
                          const li = document.createElement('li');
                          li.textContent = point;
                          judgeResultAnalysisList.appendChild(li);
-                         // Force reflow before adding class for transition
                          void li.offsetWidth;
                          li.classList.add('visible');
                      }, delay);
                      delay += interval;
                  });
-                 return delay; // Total time until last point starts appearing
+                 return delay;
             }
 
-            function generateScore(teamName) {
+            function generateScore(teamName) { // Keep score generation simple
                  let baseScore = 6.0;
                  let randomness = Math.random() * 2.0;
                  let bonus = 0;
@@ -863,58 +971,226 @@
                  if (teamName === "Team Delta") bonus = Math.random() * 1.5;
                  let finalScore = baseScore + randomness + bonus;
                  finalScore = Math.min(Math.max(finalScore, 4.0), 9.8);
-                 return finalScore.toFixed(1);
+                 return parseFloat(finalScore.toFixed(1)); // Return as number
              }
 
+             // Function to add/update leaderboard data and sort
+             function updateLeaderboardData(teamName, score) {
+                 const existingIndex = leaderboardData.findIndex(item => item.teamName === teamName);
+                 if (existingIndex > -1) {
+                     leaderboardData[existingIndex].score = score; // Update score
+                 } else {
+                     leaderboardData.push({ teamName: teamName, score: score }); // Add new team
+                 }
+                 // Sort by score descending
+                 leaderboardData.sort((a, b) => b.score - a.score);
+             }
+
+             // Function to animate text appearing word by word
+             function animateTextWordByWord(element, text, speed = 50) { // speed in ms per word
+                 element.innerHTML = ''; // Clear existing content
+                 const words = text.split(' ');
+                 let currentWordIndex = 0;
+                 let intervalId = setInterval(() => {
+                     if (currentWordIndex < words.length) {
+                         const span = document.createElement('span');
+                         span.textContent = words[currentWordIndex] + ' ';
+                         element.appendChild(span);
+                         // Trigger fade-in (optional, simpler to just append)
+                         // void span.offsetWidth;
+                         // span.classList.add('visible');
+                         currentWordIndex++;
+                     } else {
+                         clearInterval(intervalId);
+                     }
+                 }, speed);
+             }
+
+            // --- Render Leaderboard Table ---
+            function renderLeaderboard(highlightTeam = null) {
+                 if (!leaderboardBody) { console.error("leaderboard-body not found!"); return; }
+                 leaderboardBody.innerHTML = ''; // Clear existing rows
+
+                 if (leaderboardData.length === 0) {
+                     leaderboardBody.innerHTML = `<tr id="leaderboard-placeholder"><td colspan="3" class="text-center text-muted fst-italic py-3">Judge teams to populate the leaderboard...</td></tr>`;
+                     leaderboardSection.classList.remove('visible'); // Hide if empty
+                     return;
+                 }
+
+                 leaderboardPlaceholder?.remove(); // Remove placeholder if it exists
+                 leaderboardSection.classList.add('visible'); // Make sure section is visible
+
+                 leaderboardData.forEach((item, index) => {
+                     const rank = index + 1;
+                     const row = document.createElement('tr');
+                     row.setAttribute('data-team', item.teamName); // Add data attribute for targeting
+
+                     const rankCell = document.createElement('td');
+                     rankCell.classList.add('text-center');
+                     rankCell.innerHTML = `<span class="rank-badge">${rank}</span>`;
+
+                     const nameCell = document.createElement('td');
+                     nameCell.classList.add('team-name-cell');
+                     // Initially set the full name for animation target calculation,
+                     // but clear it before word-by-word starts if animating
+                     nameCell.textContent = item.teamName;
+
+                     const scoreCell = document.createElement('td');
+                     scoreCell.classList.add('text-center', 'score-display');
+                     // Set score immediately for animation target calculation
+                     scoreCell.textContent = item.score.toFixed(1);
+
+                     row.appendChild(rankCell);
+                     row.appendChild(nameCell);
+                     row.appendChild(scoreCell);
+
+                     leaderboardBody.appendChild(row);
+
+                     // Highlight the newly added/updated row briefly
+                     if (item.teamName === highlightTeam) {
+                         row.classList.add('highlight-new');
+                         setTimeout(() => {
+                             row.classList.remove('highlight-new');
+                         }, 1500); // Highlight duration
+                     }
+                 });
+             }
+
+            // --- Animation Function ---
+            function animateScoreToLeaderboard(teamName, score) {
+                if (!flyingScoreElement || !judgeResultScore || !leaderboardBody) return;
+
+                // 1. Find the target row (it might not exist yet if rendering happens after)
+                //    We'll animate towards the *potential* position based on current rank.
+                const rank = leaderboardData.findIndex(item => item.teamName === teamName) + 1;
+                let targetRow = leaderboardBody.querySelector(`tr:nth-child(${rank})`);
+
+                // If the table hasn't been rendered yet with the new row, approximate position
+                let targetY, targetX;
+                const tableRect = leaderboardBody.getBoundingClientRect();
+
+                if (targetRow) {
+                     const rowRect = targetRow.getBoundingClientRect();
+                     targetY = rowRect.top + (rowRect.height / 2);
+                     targetX = rowRect.left + (rowRect.width / 2); // Animate to center of row
+                } else {
+                    // Approximate: animate towards the top of the table body + offset for rank
+                    targetY = tableRect.top + (rank * 30); // Estimate row height
+                    targetX = tableRect.left + (tableRect.width / 2);
+                }
+
+
+                // 2. Get starting position (center of the score display)
+                const startRect = judgeResultScore.getBoundingClientRect();
+                const startY = startRect.top + (startRect.height / 2);
+                const startX = startRect.left + (startRect.width / 2);
+
+                // 3. Setup the flying element
+                flyingScoreElement.textContent = `${score.toFixed(1)}`; // Show the score
+                flyingScoreElement.style.top = `${startY}px`;
+                flyingScoreElement.style.left = `${startX}px`;
+                flyingScoreElement.style.opacity = '1';
+                flyingScoreElement.style.transform = 'scale(1)'; // Start at normal scale
+
+                // 4. Trigger the animation (move to target, fade out, shrink)
+                requestAnimationFrame(() => { // Ensure initial styles are applied
+                    flyingScoreElement.style.top = `${targetY}px`;
+                    flyingScoreElement.style.left = `${targetX}px`;
+                    flyingScoreElement.style.opacity = '0'; // Fade out as it reaches target
+                     flyingScoreElement.style.transform = 'scale(0.3)'; // Shrink as it flies
+                });
+
+                // 5. After animation, render leaderboard and potentially trigger word effect
+                flyingScoreElement.addEventListener('transitionend', () => {
+                    flyingScoreElement.style.opacity = '0'; // Ensure it's hidden
+                    flyingScoreElement.style.transform = 'scale(1)'; // Reset scale
+
+                    renderLeaderboard(teamName); // Render the table with the new data
+
+                    // Trigger word-by-word effect on the newly rendered row
+                     const newlyRenderedRow = leaderboardBody.querySelector(`tr[data-team="${teamName}"]`);
+                     if (newlyRenderedRow) {
+                         const nameCell = newlyRenderedRow.querySelector('.team-name-cell');
+                         const scoreCell = newlyRenderedRow.querySelector('.score-display'); // Get score cell
+                         if (nameCell) animateTextWordByWord(nameCell, teamName, 75); // Animate Name
+                         // Maybe animate score too, or just let it be visible
+                         // if (scoreCell) animateTextWordByWord(scoreCell, score.toFixed(1), 100);
+                     }
+
+                }, { once: true }); // Only run once per animation
+            }
+
+
+            // --- Main Event Listener for Judging ---
             if (judgeProjectBtn && judgeTeamSelect && judgeLoader && judgeResultsArea && judgeResultAnalysisList && judgeResultScore) {
                 judgeProjectBtn.addEventListener('click', function() {
                     const selectedTeam = judgeTeamSelect.value;
 
-                    if (!selectedTeam) {
-                         judgeResultsArea.style.display = 'block';
-                         judgeLoader.style.display = 'none';
-                         judgeResultTeamName.textContent = "Error";
-                         judgeResultAnalysisList.innerHTML = '<li class="visible" style="border-color: var(--error-color);">Please select a team first.</li>'; // Show error visibly
-                         judgeResultScore.innerHTML = '';
+                    if (!selectedTeam) { // Handle no selection
+                        judgeResultsArea.style.display = 'block';
+                        judgeLoader.style.display = 'none';
+                        judgeResultTeamName.textContent = "Error";
+                        judgeResultAnalysisList.innerHTML = '<li class="visible" style="border-color: var(--error-color);">Please select a team first.</li>';
+                        judgeResultScore.innerHTML = '';
                         return;
                     }
 
+                    // Reset UI
                     judgeResultsArea.style.display = 'none';
                     judgeResultAnalysisList.innerHTML = '';
                     judgeResultScore.innerHTML = '';
                     judgeLoader.style.display = 'block';
                     judgeProjectBtn.disabled = true;
                     judgeTeamSelect.disabled = true;
+                    leaderboardSection.classList.remove('visible'); // Hide leaderboard during judging
 
-                    const processingTime = 5000; // 5 seconds processing
+
+                    const processingTime = 3000; // Reduced processing time
                     const analysisPoints = teamAnalysisData[selectedTeam] || ["Standard analysis conducted.", "Further details pending."];
 
-                    console.log("Starting AI Judge Simulation for:", selectedTeam); // Debugging
-
-                    setTimeout(() => {
-                        console.log("Processing complete. Starting display."); // Debugging
+                    setTimeout(() => { // Simulate processing
                         judgeLoader.style.display = 'none';
                         judgeResultsArea.style.display = 'block';
                         judgeResultTeamName.textContent = `AI Evaluation: ${selectedTeam}`;
 
                         const totalDisplayTime = displayAnalysisSequentially(analysisPoints);
-                        console.log("Total analysis display time:", totalDisplayTime); // Debugging
 
-                        setTimeout(() => {
+                        setTimeout(() => { // After analysis points shown
                              const score = generateScore(selectedTeam);
-                             console.log("Generated score:", score); // Debugging
-                             judgeResultScore.innerHTML = `Simulated Score: <span>${score}/10</span>`;
-                             judgeProjectBtn.disabled = false;
-                             judgeTeamSelect.disabled = false;
-                             console.log("Simulation finished."); // Debugging
-                         }, totalDisplayTime); // Display score after last point appears
+                             judgeResultScore.innerHTML = `Simulated Score: <span>${score.toFixed(1)}/10</span>`;
+
+                             // Update data structure *before* animation starts
+                             updateLeaderboardData(selectedTeam, score);
+
+                             // Trigger animation *after* score is displayed
+                              // Small delay to ensure score is visible before flying
+                             setTimeout(() => {
+                                 animateScoreToLeaderboard(selectedTeam, score);
+                             }, 200);
+
+
+                             // Re-enable buttons *after* animation is done (handled in animation end)
+                             // judgeProjectBtn.disabled = false;
+                             // judgeTeamSelect.disabled = false;
+                             // Enable buttons sooner if needed, but might look abrupt
+                              judgeProjectBtn.disabled = false;
+                              judgeTeamSelect.disabled = false;
+
+
+                         }, totalDisplayTime);
 
                     }, processingTime);
                 });
+
+                 // Initial render of the leaderboard when modal is shown (might be empty)
+                 judgeModalElement.addEventListener('shown.bs.modal', () => {
+                    renderLeaderboard();
+                 });
+
             } else {
-                console.error("Crucial AI Judging modal elements not found. Check IDs: judgeProjectBtn, judgeTeamSelect, judgeLoader, judgeResultsArea, judgeResultAnalysisList, judgeResultScore. Feature disabled.");
+                console.error("Crucial AI Judging modal elements not found. Check IDs. Feature disabled.");
             }
-            // --- END AI Judge Simulation Logic ---
+            // --- END AI Judge & Leaderboard Logic ---
 
 
             // --- Smooth Scroll Logic ---
