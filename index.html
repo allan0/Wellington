@@ -2,566 +2,495 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Essential for responsive design in Mini Apps -->
+    <!-- Essential Mini App Viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
-    <title>Wellington Campus - UAE</title>
+    <title>Wellington Campus - Innovative Education</title> <!-- Adjusted Title -->
 
-    <!-- Standard Meta Tags (Less relevant inside Mini App but harmless) -->
-    <meta name="description" content="Discover innovative courses and diverse education at Wellington Campus, one of the UAE's largest universities.">
-    <meta name="keywords" content="Wellington Campus, UAE university, education, courses, admissions">
+    <!-- Standard Meta -->
+    <meta name="description" content="Discover innovative courses, diverse education, and a thriving campus community at Wellington Campus, UAE.">
+    <meta name="keywords" content="Wellington Campus, UAE university, education, courses, admissions, Telegram Mini App">
     <meta name="author" content="Wellington Campus">
     <meta property="og:title" content="Wellington Campus - Innovative Education in UAE">
     <meta property="og:description" content="Explore our diverse programs and innovative learning environment at Wellington Campus.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://wellingtoncampus.co"> <!-- Make sure this is the correct final URL if needed -->
-    <meta property="og:image" content="./wellingtoncampus.png"> <!-- Ensure this path is correct relative to deployment -->
+    <meta property="og:url" content="https://wellingtoncampus.co/index.html"> <!-- Update -->
+    <meta property="og:image" content="./wellingtoncampus.png"> <!-- Update Path -->
+    <meta property="og:image:alt" content="Wellington Campus Logo">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon"> <!-- Update Path -->
+
+    <!-- **Telegram Mini App Script - MUST be first script** -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <!-- Stylesheets -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!-- **Telegram Mini App Script - MUST be included BEFORE other scripts** -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary-color: #d4af37; /* Gold for buttons */
-            --secondary-color: #6c757d;
+            --primary-color: #d4af37; /* Gold */
+            --secondary-color: #003366; /* Dark Blue */
             --text-color: #212529;
-            --bg-color: #cce5ff; /* Soft blue for body */
-            --accent-color: #ffffff;
+            --bg-color: #cce5ff; /* Light Blueish */
+            --accent-color: #ffffff; /* White */
+            --card-bg-color: rgba(255, 255, 255, 0.9);
             --shadow: 0 8px 24px rgba(0,0,0,0.1);
+            --border-radius: 15px;
+            --bottom-nav-bg: var(--accent-color);
+            --bottom-nav-icon: #6c757d;
+            --bottom-nav-active: var(--primary-color);
+        }
 
-            /* Telegram Theme Variables (Optional - unused here as per request) */
-            /* --tg-theme-bg-color: var(--bg-color); */
-            /* --tg-theme-text-color: var(--text-color); */
-            /* ... etc ... */
-
-            /* Telegram Viewport Variables (Useful for precise layouts) */
-            /* --tg-viewport-height */
-            /* --tg-viewport-stable-height */
-
-             /* Telegram Safe Area Insets (Important for edge-to-edge designs/fullscreen) */
-            /* --tg-safe-area-inset-top */
-            /* --tg-safe-area-inset-bottom */
-            /* --tg-safe-area-inset-left */
-            /* --tg-safe-area-inset-right */
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Roboto', sans-serif;
             color: var(--text-color);
             background-color: var(--bg-color);
-            font-size: 1.1rem;
-            line-height: 1.7;
             background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
                               linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
             background-size: 20px 20px;
+            font-size: 1.05rem;
+            line-height: 1.6;
             margin: 0;
             padding: 0;
-            /* Ensure body takes at least viewport height */
             min-height: 100vh;
-            min-height: var(--tg-viewport-height, 100vh); /* Use Telegram's height if available */
-            /* Consider padding for safe areas if elements are near edges */
-            /* padding-top: var(--tg-safe-area-inset-top, 0); */
-            /* padding-bottom: var(--tg-safe-area-inset-bottom, 0); */
-            /* padding-left: var(--tg-safe-area-inset-left, 0); */
-            /* padding-right: var(--tg-safe-area-inset-right, 0); */
-            box-sizing: border-box; /* Include padding in height calculation */
+            min-height: var(--tg-viewport-height, 100vh);
+            box-sizing: border-box;
+            /* Prevent horizontal scrollbar */
+            overflow-x: hidden;
+            /* Add padding at bottom to avoid overlap with fixed bottom nav */
+            padding-bottom: 80px; /* Adjust based on nav height */
         }
-
-        /* Keep existing styles */
-        .navbar-custom { /* ... existing styles ... */ }
-        .navbar-brand, .nav-link { /* ... existing styles ... */ }
-        .nav-link:hover, .nav-link.active { /* ... existing styles ... */ }
-        .banner { /* ... existing styles ... */ }
-        .banner::before { /* ... existing styles ... */ }
-        .banner h1, .banner p { /* ... existing styles ... */ }
-        .banner .btn-custom { /* ... existing styles ... */ }
-        .highlight-section { /* ... existing styles ... */ }
-        .highlight-card { /* ... existing styles ... */ }
-        .highlight-card:hover { /* ... existing styles ... */ }
-        .video-container { /* ... existing styles ... */ }
-        .video-container video { /* ... existing styles ... */ }
-        .subscription-form { /* ... existing styles ... */ }
-        .btn-custom { /* ... existing styles ... */ }
-        .btn-custom:hover { /* ... existing styles ... */ }
 
         /* --- Mini App Specific Adjustments --- */
-
-        /* Hide desktop navbar unconditionally in Mini App context, rely on bottom nav */
-        /* Alternatively, keep the @media query if desktop viewing is still a possibility */
-        .navbar-custom {
-           display: none;
-        }
-
-        /* Ensure bottom nav is always visible in Mini App context */
+        .navbar-custom { display: none; } /* Hide desktop nav */
         .bottom-nav {
-            display: flex; /* Changed from none to flex */
+            display: flex; /* Always show */
             position: fixed;
             bottom: 0;
-            /* Add padding to avoid overlap with system navigation / home bar */
-            padding-bottom: max(0.5rem, var(--tg-safe-area-inset-bottom, 0.5rem));
+            left: 0; right: 0; /* Ensure full width */
             width: 100%;
-            background-color: var(--accent-color);
+            background-color: var(--bottom-nav-bg);
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            padding-top: 0.5rem; /* Keep original top padding */
-            z-index: 1000;
+            padding: 0.5rem 0 max(0.5rem, var(--tg-safe-area-inset-bottom, 0.5rem)); /* Account for safe area */
+            z-index: 1040; /* Below modals */
         }
+         body { padding-bottom: calc(60px + var(--tg-safe-area-inset-bottom, 0px)); } /* Add padding matching nav height + safe area */
 
-        /* Adjust fixed positions to account for safe area at bottom */
-        .mascot {
-            position: fixed;
-            /* Adjust bottom based on potential bottom-nav height + safe area */
-            bottom: calc(60px + var(--tg-safe-area-inset-bottom, 0px));
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            z-index: 1100;
-            animation: breathe 2s infinite ease-in-out;
+
+        /* --- Header & Logo Styling --- */
+        #main-header {
+            text-align: center;
+            margin-bottom: 1rem;
+            position: relative;
+             padding-top: 1rem;
+        }
+        #header-logo {
+            display: block;
+            margin: 0 auto 0.5rem auto;
+            max-width: 100px; width: 100px; height: auto;
+            position: relative; top: 0; left: 0; z-index: 10;
             cursor: pointer;
+            transition: width 0.4s ease-in-out, max-width 0.4s ease-in-out, top 0.4s ease-in-out,
+                        left 0.4s ease-in-out, padding 0.4s ease-in-out, border-radius 0.4s ease-in-out,
+                        background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+        }
+        #header-logo.logo-scrolled {
+            position: fixed; top: 8px; left: 12px; width: 45px; max-width: 45px; height: auto;
+            z-index: 1045; margin: 0; background-color: rgba(255, 255, 255, 0.85);
+            padding: 4px; border-radius: 50%; box-shadow: 0 3px 8px rgba(0, 51, 102, 0.3);
+        }
+        body.logo-state-scrolled .container {
+            padding-top: 10px; /* Add space below fixed logo */
         }
 
-        .floating-about-us {
-             position: fixed;
-             /* Adjust bottom based on potential bottom-nav height + safe area */
-             bottom: calc(120px + var(--tg-safe-area-inset-bottom, 0px));
-             right: 20px;
-             z-index: 1000;
-        }
+        /* --- General & Page Specific Styles --- */
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--secondary-color); }
+        h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
+        h3 { font-size: 1.2rem; margin-bottom: 0.8rem;}
 
-        .chat-window {
-            /* Adjust bottom based on potential bottom-nav height + safe area */
-            bottom: calc(80px + var(--tg-safe-area-inset-bottom, 0px));
-            /* Keep other styles */
-            display: none;
-            position: fixed;
-            width: 90%; /* Adjusted for mobile */
-            right: 5%;  /* Adjusted for mobile */
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 15px;
+        .banner {
+            position: relative;
+            background: url('./wellingtoncampus.png') no-repeat center center; /* Ensure path is correct */
+            background-size: contain; /* Contain logo within banner bounds */
+            background-color: rgba(0, 51, 102, 0.1); /* Add slight bg color if image doesn't cover */
+            color: var(--text-color); /* Use text color for better contrast */
+            padding: 4rem 1rem 5rem 1rem; /* Adjust padding */
+            text-align: center;
+            border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            z-index: 1200;
-            padding: 1rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
+            overflow: hidden;
+            min-height: 300px; /* Adjust height as needed */
+            margin-bottom: 1.5rem; /* Add margin below banner */
+            display: flex; /* Use flexbox for centering text */
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
+        }
+        .banner::before { /* Darker overlay for text contrast */
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.25); z-index: 1; border-radius: inherit;
+        }
+        .banner h1, .banner p, .banner .btn-custom { position: relative; z-index: 2; color: var(--accent-color); /* White text on overlay */}
+        .banner h1 { text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
+        .banner p { font-size: 1.1rem; margin-bottom: 1.5rem; max-width: 600px; }
+        .banner .btn-custom { margin-top: 1rem; }
+
+        /* Card Structure */
+        .content-section {
+            margin-bottom: 1.5rem;
+            background-color: var(--card-bg-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: none;
+            overflow: hidden; /* Prevents content bleed */
+        }
+        .content-section-header {
+            background-color: var(--secondary-color);
+            color: var(--accent-color);
+            font-weight: 600;
+            border-bottom: 3px solid var(--primary-color);
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .content-section-header h2 {
+            color: var(--accent-color);
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        .content-section-header i {
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+            color: var(--primary-color); /* Icon color */
+        }
+        .content-section-body {
+            padding: 1.5rem;
         }
 
+        .feature-card { /* Style for individual cards within the features section */
+            padding: 1.5rem;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.7); /* Slightly transparent */
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%; /* Make cards in a row equal height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute space */
+             border: 1px solid rgba(0, 51, 102, 0.1);
+        }
+        .feature-card:hover {
+             transform: translateY(-5px);
+             box-shadow: 0 10px 20px rgba(0, 51, 102, 0.1);
+        }
 
-        /* Keep other existing styles */
-        .bottom-nav .btn { /* ... existing styles ... */ }
-        .bottom-nav .btn:hover, .bottom-nav .btn.active { /* ... existing styles ... */ }
-        .bottom-nav i { /* ... existing styles ... */ }
-        @keyframes breathe { /* ... existing styles ... */ }
-        .mascot.speaking { /* ... existing styles ... */ }
-        @keyframes speak { /* ... existing styles ... */ }
-        .chat-window.active { /* ... existing styles ... */ }
-        .chat-header { /* ... existing styles ... */ }
-        .chat-close-btn { /* ... existing styles ... */ }
-        .chat-close-btn:hover { /* ... existing styles ... */ }
-        .chat-description { /* ... existing styles ... */ }
-        .chat-messages { /* ... existing styles ... */ }
-        .user-message { /* ... existing styles ... */ }
-        .bot-message { /* ... existing styles ... */ }
-        .chat-input { /* ... existing styles ... */ }
-        .chat-input textarea { /* ... existing styles ... */ }
-        .chat-input button { /* ... existing styles ... */ }
-        .chat-input button:hover { /* ... existing styles ... */ }
-        .floating-about-us .btn-custom { /* ... existing styles ... */ }
-        a:focus, button:focus { /* ... existing styles ... */ }
-        .status-indicator { /* ... existing styles ... */ }
-        .status-offline { /* ... existing styles ... */ }
-        .status-online { /* ... existing styles ... */ }
-        @keyframes blink { /* ... existing styles ... */ }
+        /* Video Container */
+        #intro-video-container {
+             margin-top: 1rem; /* Space above video */
+             border-radius: 10px;
+             overflow: hidden; /* Clip corners */
+             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+             width: 100%; /* Ensure it fits */
+             line-height: 0; /* Remove extra space below video */
+        }
+        #introVideo {
+             width: 100%; /* Make video responsive */
+             height: auto; /* Maintain aspect ratio */
+             display: block; /* Remove extra space */
+             max-height: 40vh; /* Limit height */
+             object-fit: cover; /* Cover container */
+        }
 
-        /* Remove the media query that hides/shows navs, as we force bottom-nav now */
-        /* @media (max-width: 576px) { ... } */
+        /* Subscription Form */
+        .subscription-form form { margin-top: 1rem; }
+        .subscription-form .form-control { border-radius: 50px; padding: 0.7rem 1.2rem; }
+        .subscription-form .btn-custom { border-radius: 50px; padding: 0.7rem 1.5rem; width: 100%; }
+
+
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: var(--accent-color) !important; /* Ensure text is white */
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212,175,55,0.3);
+            font-weight: 600;
+            text-decoration: none; /* Remove underline from links styled as buttons */
+             display: inline-block; /* Correct display for links */
+        }
+        .btn-custom:hover {
+            background-color: #b8860b;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+            color: var(--accent-color) !important;
+        }
+
+        /* Bottom Nav Specific Styles */
+        .bottom-nav .btn { color: var(--bottom-nav-icon); background-color: transparent; border: none; padding: 0.5rem; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; transition: color 0.3s ease; text-decoration: none; }
+        .bottom-nav .btn:hover, .bottom-nav .btn.active { color: var(--bottom-nav-active); }
+        .bottom-nav i { font-size: 1.1rem; margin-bottom: 0.15rem; }
+
+
+        /* Scroll Animation Classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .fade-in {
+            opacity: 0;
+        }
+        .slide-up {
+             transform: translateY(40px);
+        }
+        .slide-left {
+            transform: translateX(-40px);
+        }
+        .slide-right {
+            transform: translateX(40px);
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0) translateX(0); /* Reset transforms */
+        }
+
+         /* Ensure containers don't get animation transforms themselves */
+         .container { transition: none; }
+
 
     </style>
 </head>
 <body>
-    <!-- Desktop Navbar is hidden via CSS above -->
-    <!-- <nav class="navbar navbar-expand-lg navbar-custom" aria-label="Main navigation"> ... </nav> -->
+    <!-- Main Content Container -->
+    <div class="container mt-2" id="home">
 
-    <!-- Home Page Content -->
-    <div class="container" id="home">
-        <!-- Banner -->
-        <div class="banner">
-             <!-- Ensure image path is correct for deployment -->
-            <h1 class="display-4 fw-bold">Discover, Learn, and Thrive</h1>
-            <p class="lead">Spring 2025 Applications are Now Open at Wellington Campus</p>
-            <a href="admissions.html" class="btn btn-custom">Apply Now</a>
-        </div>
-        <!-- Highlights Section -->
-        <section class="highlight-section">
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="highlight-card">
-                        <h3>Innovative Courses</h3>
-                        <p>Explore cutting-edge programs in technology, design, and business tailored for the modern world.</p>
+        <!-- Header Section -->
+        <header id="main-header">
+            <!-- Logo with ID for JS -->
+            <img src="./wellingtoncampus.png" alt="Wellington Campus Logo" id="header-logo">
+            <!-- Title/Subtitle remain relative -->
+            <h1>Wellington Campus</h1>
+            <p class="hackathon-subtitle small text-muted">Innovative Education in the UAE</p>
+        </header>
+
+        <!-- Banner Section -->
+        <section class="banner animate-on-scroll fade-in">
+            <h1>Discover, Learn, Thrive</h1>
+            <p>Spring 2025 Applications Now Open!</p>
+            <a href="admissions.html" target="_self" class="btn btn-custom">Apply Now</a>
+        </section>
+
+        <!-- Features Section (New Card Structure) -->
+        <section class="content-section animate-on-scroll slide-up">
+            <div class="content-section-header">
+                <h2><i class="fas fa-star"></i> Key Features</h2>
+            </div>
+            <div class="content-section-body">
+                <div class="row g-3">
+                    <!-- Card 1: Innovative Courses -->
+                    <div class="col-md-4 d-flex align-items-stretch">
+                        <div class="feature-card animate-on-scroll slide-left">
+                            <div> <!-- Content wrapper for flexbox -->
+                                <h3><i class="fas fa-lightbulb text-primary mb-2"></i><br>Innovative Courses</h3>
+                                <p class="small">Cutting-edge programs in tech, design, and business tailored for the modern world.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="highlight-card">
-                        <h3>Top Instructors</h3>
-                        <p>Learn from industry leaders and renowned academics with decades of expertise.</p>
+                    <!-- Card 2: Top Instructors -->
+                    <div class="col-md-4 d-flex align-items-stretch">
+                        <div class="feature-card animate-on-scroll slide-up">
+                             <div>
+                                <h3><i class="fas fa-chalkboard-teacher text-primary mb-2"></i><br>Top Instructors</h3>
+                                <p class="small">Learn from industry leaders and renowned academics with decades of expertise.</p>
+                             </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="highlight-card">
-                        <h3>Online Education</h3>
-                        <p>Flexible learning options available 24/7, from anywhere in the world.</p>
-                        <div class="video-container">
-                             <!-- Ensure video path is correct for deployment -->
-                            <video controls aria-label="Binciya Introduction Video">
-                                <source src="./Binciya-Introduction.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                    <!-- Card 3: Online Education & Video -->
+                    <div class="col-md-4 d-flex align-items-stretch">
+                        <div class="feature-card animate-on-scroll slide-right">
+                            <div>
+                                <h3><i class="fas fa-globe text-primary mb-2"></i><br>Online Education</h3>
+                                <p class="small">Flexible learning options available 24/7, from anywhere.</p>
+                            </div>
+                            <!-- Video - Placed within the card -->
+                            <div id="intro-video-container">
+                                <video id="introVideo" controls muted playsinline preload="metadata" aria-label="Binciya Introduction Video">
+                                    <!-- NOTE: Added #t=38 to attempt starting at 38s -->
+                                    <source src="./Binciya-Introduction.mp4#t=38" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- Subscription Section -->
-        <section class="subscription-form">
-            <h2 class="text-center mb-4">Stay Informed</h2>
-            <form class="row g-3 justify-content-center" aria-label="Subscription form">
-                <div class="col-md-6 col-8"> <!-- Adjust grid for better mobile layout -->
-                    <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email" required>
-                </div>
-                <div class="col-md-2 col-4"> <!-- Adjust grid for better mobile layout -->
-                    <button type="submit" class="btn btn-custom w-100">Subscribe</button>
-                </div>
-            </form>
-        </section>
-        <!-- Add padding at the bottom to prevent content from being hidden by bottom-nav -->
-        <div style="height: 80px;"></div> <!-- Adjust height based on bottom-nav size -->
-    </div>
 
-    <!-- Bottom Navigation for Telegram Mini App (Now always visible) -->
-    <nav class="bottom-nav" aria-label="Mobile navigation">
-        <div class="d-flex justify-content-around w-100">
-            <!-- Make sure these links navigate within the Mini App context if they are internal pages -->
-            <a href="index.html" class="btn active"><i class="fas fa-home"></i>Home</a>
-            <a href="courses.html" class="btn"><i class="fas fa-book"></i>LMS</a>
-            <a href="game.html" class="btn"><i class="fas fa-gamepad"></i>Game</a>
-            <a href="hackathons.html" class="btn"><i class="fas fa-laptop-code"></i>Hackathons</a>
-        </div>
-    </nav>
-
-    <!-- Chat Window -->
-    <div class="chat-window" id="chatWindow">
-        <!-- ... (chat window content remains the same) ... -->
-         <div class="chat-header">
-            <div>
-                Welcome to Wellington!
-                <span id="statusIndicator" class="status-indicator status-offline"></span>
+        <!-- Subscription Section (New Card Structure) -->
+        <section class="content-section subscription-form animate-on-scroll fade-in">
+            <div class="content-section-header">
+                <h2><i class="fas fa-envelope-open-text"></i> Stay Informed</h2>
             </div>
-            <button class="chat-close-btn" onclick="toggleChat()" aria-label="Close chat"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="chat-description">
-            I'm your friendly campus assistant here to help you explore courses, admissions, and more!
-        </div>
-        <div class="chat-messages" id="chatMessages"></div>
-        <div class="chat-input">
-            <textarea placeholder="Type a message..." aria-label="Chat message input"></textarea>
-            <button onclick="sendTextMessage()" aria-label="Send text message"><i class="fas fa-paper-plane"></i></button>
-            <button onclick="startVoiceRecording()" aria-label="Record voice message"><i class="fas fa-microphone"></i></button>
-        </div>
-    </div>
+            <div class="content-section-body">
+                <p class="text-center small">Subscribe for updates on courses, events, and admissions.</p>
+                <form class="row g-2 justify-content-center" aria-label="Subscription form">
+                    <div class="col-md-6 col-8">
+                        <input type="email" class="form-control form-control-sm" placeholder="Enter your email" aria-label="Email" required>
+                    </div>
+                    <div class="col-md-3 col-4">
+                        <button type="submit" class="btn btn-custom btn-sm">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </section>
 
-    <!-- Floating About Us Button -->
-    <div class="floating-about-us">
-        <!-- Make sure this link navigates within the Mini App context -->
-        <a href="about.html" class="btn btn-custom"><i class="fas fa-info-circle"></i> About Us</a>
-    </div>
+        <!-- Placeholder for potential future sections -->
+        <!-- <section class="content-section animate-on-scroll slide-up"> ... </section> -->
 
-    <!-- Mascot -->
-    <!-- Ensure image path is correct for deployment -->
-    <img src="./mascotwellington.png" alt="Wellington Mascot" class="mascot" onclick="toggleChat()">
+    </div> <!-- End Main Container -->
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Telegram Mini App Logic -->
+    <!-- Bottom Navigation (Copied from hackathon.html) -->
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+         <div class="d-flex justify-content-around w-100">
+             <!-- Ensure paths are correct -->
+             <a href="index.html" target="_self" class="btn active"><i class="fas fa-home"></i>Home</a>
+             <a href="courses.html" target="_self" class="btn"><i class="fas fa-book"></i>LMS</a>
+             <a href="game.html" target="_self" class="btn"><i class="fas fa-puzzle-piece"></i>Quest</a>
+             <a href="hackathons.html" target="_self" class="btn"><i class="fas fa-laptop-code"></i>Hackathon</a>
+         </div>
+     </nav>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- Mini App & Custom Script -->
     <script>
-        // Encapsulate logic to ensure Telegram.WebApp is available
-        function initializeTelegramApp() {
+        document.addEventListener('DOMContentLoaded', function() {
             const tg = window.Telegram.WebApp;
 
-            // 1. Signal that the app is ready
-            tg.ready();
+            // --- Initialize Telegram Mini App ---
+            function initializeTelegramApp() {
+                if (tg && tg.initData) {
+                    tg.ready(); // Signal readiness
 
-            // 2. Expand the app to full height (optional, but common)
-            tg.expand();
-
-            // 3. Configure the Back Button
-            // Check if the current page is the main entry point (adjust path if needed)
-            const isHomePage = window.location.pathname === '/index.html' || window.location.pathname === '/'; // Adjust if your home path is different
-
-            if (!isHomePage) {
-                // Show the back button only on non-home pages
-                tg.BackButton.show();
-            } else {
-                 // Explicitly hide on home page if previously shown
-                tg.BackButton.hide();
-            }
-
-            // Define Back Button behavior
-            tg.onEvent('backButtonClicked', function() {
-                // Use browser history to navigate back within the Mini App
-                if (window.history.length > 1) {
-                    window.history.back();
+                    // Configure Back Button for Home Page
+                    tg.BackButton.hide(); // Hide initially on home
+                    tg.onEvent('backButtonClicked', function() {
+                        // On home page, back button should close the Mini App
+                        tg.close();
+                    });
+                     console.log("Telegram Mini App Initialized on Home Page.");
                 } else {
-                    // If no history, close the Mini App
-                    console.log("Closing Mini App via Back Button (no history)");
-                    tg.close();
-                }
-            });
-
-             // Optional: Re-evaluate back button visibility on navigation changes (if using SPA routing)
-             // window.addEventListener('popstate', function() {
-             //     const isHomePageNow = window.location.pathname === '/index.html' || window.location.pathname === '/';
-             //     if (!isHomePageNow) {
-             //         tg.BackButton.show();
-             //     } else {
-             //         tg.BackButton.hide();
-             //     }
-             // });
-
-             // Optional: Request confirmation on close
-             // tg.enableClosingConfirmation();
-
-            console.log("Telegram Mini App Initialized");
-            console.log("InitData:", tg.initData); // Log for debugging (remove sensitive parts in production logs)
-            console.log("Version:", tg.version);
-            console.log("Platform:", tg.platform);
-        }
-
-        // --- Your Existing JavaScript ---
-
-        // Subscription form handler
-        const subForm = document.querySelector('.subscription-form form');
-        if (subForm) {
-            subForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                 // Use Telegram's alert for consistency if available
-                 if (window.Telegram && window.Telegram.WebApp) {
-                    window.Telegram.WebApp.showAlert('Thank you for subscribing!');
-                 } else {
-                    alert('Thank you for subscribing!');
-                 }
-                this.reset();
-            });
-        }
-
-
-        // Toggle chat window
-        function toggleChat() {
-            const chatWindow = document.getElementById('chatWindow');
-            if (chatWindow) {
-                chatWindow.classList.toggle('active');
-            }
-        }
-
-        // Function to update status indicator
-        function updateStatusIndicator(isOnline) {
-            const indicator = document.getElementById('statusIndicator');
-            if (indicator) {
-                if (isOnline) {
-                    indicator.classList.remove('status-offline');
-                    indicator.classList.add('status-online');
-                } else {
-                    indicator.classList.remove('status-online');
-                    indicator.classList.add('status-offline');
+                    console.warn("Not running in Telegram context or initData unavailable.");
                 }
             }
-        }
+            initializeTelegramApp(); // Run Telegram setup
 
-        // WebSocket connection
-        // IMPORTANT: Replace 'ws://localhost:8765' with your actual PRODUCTION WebSocket URL (likely wss://yourserver.com/ws)
-        const wsUrl = 'ws://localhost:8765'; // <-- WARNING: DEVELOPMENT ONLY URL
-        let socket;
+            // --- Shrinking Logo Logic ---
+            const logo = document.getElementById('header-logo');
+            const scrollThreshold = 30; // Pixels to scroll before effect triggers
+            const bodyElement = document.body; // Reference to body for class toggling
 
-        function connectWebSocket() {
-             console.log(`Attempting to connect to WebSocket: ${wsUrl}`);
-             // Close existing socket if reconnecting
-             if (socket && socket.readyState !== WebSocket.CLOSED) {
-                 socket.close();
-             }
+            if (logo) {
+                const handleScroll = () => {
+                    const isScrolled = window.scrollY > scrollThreshold;
+                    logo.classList.toggle('logo-scrolled', isScrolled);
+                    bodyElement.classList.toggle('logo-state-scrolled', isScrolled);
+                };
+                logo.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                handleScroll(); // Initial check
+            } else { console.warn("Header logo element (#header-logo) not found."); }
+            // --- END Shrinking Logo Logic ---
 
-            socket = new WebSocket(wsUrl);
-            updateStatusIndicator(false); // Initially offline
 
-            socket.onopen = () => {
-                console.log('WebSocket connection established');
-                updateStatusIndicator(true);
-            };
+            // --- Intersection Observer for Video Start Time ---
+            const videoElement = document.getElementById('introVideo');
+            let videoTimeSet = false; // Flag to set time only once
 
-            socket.onclose = (event) => {
-                console.log('WebSocket connection closed:', event.code, event.reason);
-                updateStatusIndicator(false);
-                // Optional: Attempt to reconnect after a delay
-                // setTimeout(connectWebSocket, 5000);
-            };
+            if (videoElement) {
+                const videoObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        // When the video is at least 50% visible
+                        if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !videoTimeSet) {
+                            console.log("Video intersecting, attempting to set time to 38s.");
+                            // Attempt to set currentTime. May fail if metadata not loaded.
+                            // The preload="metadata" and #t=38 help, but this is a fallback.
+                            try {
+                                videoElement.currentTime = 38;
+                                videoTimeSet = true; // Mark as set
+                                // Optional: Autoplay when visible (consider user experience)
+                                // videoElement.play().catch(e => console.warn("Autoplay prevented:", e));
+                                observer.unobserve(entry.target); // Stop observing once set
+                            } catch (e) {
+                                console.warn("Could not set video time yet:", e);
+                                // It might work later if metadata loads after intersection
+                            }
+                        }
+                    });
+                }, {
+                    threshold: 0.5 // Trigger when 50% of the video is visible
+                });
 
-            socket.onerror = (error) => {
-                console.error('WebSocket error:', error);
-                updateStatusIndicator(false);
-                 // Optional: Attempt to reconnect after a delay
-                // setTimeout(connectWebSocket, 5000);
-            };
+                videoObserver.observe(videoElement);
+            } else { console.warn("Video element (#introVideo) not found."); }
+            // --- END Video Start Time Logic ---
 
-            socket.onmessage = (event) => {
-                const message = event.data;
-                console.log('WebSocket message received:', message);
-                displayMessage(message, 'bot');
-            };
-        }
 
-        // Function to send message via WebSocket
-        function sendMessage(text) {
-            if (socket && socket.readyState === WebSocket.OPEN) {
-                console.log('Sending WebSocket message:', text);
-                socket.send(text);
+            // --- Intersection Observer for Scroll Animations ---
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+            if ("IntersectionObserver" in window && animatedElements.length > 0) {
+                const animationObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target); // Animate only once
+                        }
+                    });
+                }, {
+                    threshold: 0.1 // Trigger when 10% of the element is visible
+                });
+
+                animatedElements.forEach(el => {
+                    animationObserver.observe(el);
+                });
             } else {
-                console.error('WebSocket is not open. State:', socket ? socket.readyState : 'Not initialized');
-                 // Optionally try to reconnect or inform user
-                 if (window.Telegram && window.Telegram.WebApp) {
-                     window.Telegram.WebApp.showAlert('Connection error. Please try again later.');
-                 } else {
-                     alert('Connection error. Please try again later.');
-                 }
+                // Fallback for older browsers or if no elements found: make elements visible immediately
+                animatedElements.forEach(el => el.classList.add('visible'));
+                console.warn("IntersectionObserver not supported or no elements to animate.");
             }
-        }
-
-        // Function to display message in chat window
-        function displayMessage(text, sender) {
-            const chatMessages = document.getElementById('chatMessages');
-            if (chatMessages) {
-                const messageElem = document.createElement('div');
-                messageElem.className = sender === 'user' ? 'user-message' : 'bot-message';
-                // Basic text sanitization (replace with a proper library if handling complex HTML)
-                messageElem.textContent = text;
-                chatMessages.appendChild(messageElem);
-                // Scroll to the bottom
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-        }
-
-        // Send text message from input
-        function sendTextMessage() {
-            const textarea = document.querySelector('.chat-input textarea');
-            if (textarea) {
-                const message = textarea.value.trim();
-                if (message) {
-                    sendMessage(message);
-                    displayMessage(message, 'user');
-                    textarea.value = '';
-                }
-            }
-        }
-
-         // Add event listener for Enter key in textarea
-         const chatTextarea = document.querySelector('.chat-input textarea');
-         if(chatTextarea) {
-             chatTextarea.addEventListener('keypress', function(e) {
-                 if (e.key === 'Enter' && !e.shiftKey) { // Send on Enter, allow Shift+Enter for newline
-                     e.preventDefault(); // Prevent default Enter behavior (newline)
-                     sendTextMessage();
-                 }
-             });
-         }
+            // --- END Scroll Animation Logic ---
 
 
-        // --- Voice recognition ---
-        let recognition;
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const voiceButton = document.querySelector('.chat-input button[aria-label="Record voice message"]');
+            // --- Subscription Form Handler (Optional) ---
+            const subForm = document.querySelector('.subscription-form form');
+             if (subForm) {
+                 subForm.addEventListener('submit', function(e) {
+                     e.preventDefault();
+                     const emailInput = this.querySelector('input[type="email"]');
+                     const email = emailInput ? emailInput.value : 'N/A';
+                     console.log("Subscription attempt:", email); // Log or send to backend
 
-        if (SpeechRecognition && voiceButton) {
-            recognition = new SpeechRecognition();
-            recognition.lang = 'en-US'; // Adjust language if needed
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-
-            window.startVoiceRecording = function() { // Make it global for onclick
-                try {
-                    recognition.start();
-                    console.log('Voice recognition started');
-                    voiceButton.style.color = 'red'; // Indicate recording
-                } catch (error) {
-                     console.error('Error starting voice recognition:', error);
-                     if (window.Telegram && window.Telegram.WebApp) {
-                         window.Telegram.WebApp.showAlert('Could not start voice recognition. Please check permissions.');
-                     } else {
-                         alert('Could not start voice recognition. Please check permissions.');
-                     }
-                }
-            };
-
-            recognition.onresult = (event) => {
-                const speechResult = event.results[0][0].transcript;
-                console.log('Voice recognition result:', speechResult);
-                sendMessage(speechResult);
-                displayMessage(speechResult, 'user');
-            };
-
-            recognition.onspeechend = () => {
-                recognition.stop();
-                console.log('Voice recognition stopped (speech end)');
-                voiceButton.style.color = '#fff'; // Reset button color
-            };
-
-            recognition.onend = () => {
-                 console.log('Voice recognition ended');
-                 voiceButton.style.color = '#fff'; // Ensure button color resets
-            }
-
-            recognition.onerror = (event) => {
-                console.error('Speech recognition error:', event.error);
-                 if (window.Telegram && window.Telegram.WebApp) {
-                    window.Telegram.WebApp.showAlert('Voice recognition error: ' + event.error);
-                 } else {
-                    alert('Voice recognition error: ' + event.error);
-                 }
-                voiceButton.style.color = '#fff'; // Reset button color
-            };
-        } else {
-             console.warn('SpeechRecognition API not supported or voice button not found.');
-             if (voiceButton) {
-                 voiceButton.disabled = true;
-                 voiceButton.title = "Voice input not supported";
+                     // Use Telegram's alert for consistency
+                      if (tg) {
+                         tg.showAlert('Thank you for subscribing!');
+                      } else {
+                         alert('Thank you for subscribing!');
+                      }
+                     this.reset();
+                 });
              }
-             // Define dummy function if API not supported
-             window.startVoiceRecording = function() {
-                 console.log("Voice recording not supported.");
-                  if (window.Telegram && window.Telegram.WebApp) {
-                    window.Telegram.WebApp.showAlert('Voice input is not supported on this device/browser.');
-                  } else {
-                    alert('Voice input is not supported on this device/browser.');
-                  }
-             }
-        }
+            // --- END Subscription Form Handler ---
 
-        // --- Initialization ---
-        // Ensure DOM is ready before running scripts interacting with it
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Telegram WebApp specific features
-            if (window.Telegram && window.Telegram.WebApp) {
-                try {
-                    initializeTelegramApp();
-                } catch (error) {
-                    console.error("Error initializing Telegram WebApp:", error);
-                }
-            } else {
-                console.warn("Telegram WebApp script not loaded or not running in Telegram context.");
-                // Handle non-Telegram environment if needed (e.g., hide Telegram-specific UI)
-            }
-
-            // Connect WebSocket after DOM is ready
-             connectWebSocket();
         });
-
     </script>
+
 </body>
 </html>
