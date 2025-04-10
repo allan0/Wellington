@@ -1,6 +1,623 @@
 <!DOCTYPE html>
 <html lang="en">
+<head><!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dubai CommerCity x Wellington AI Hackathon - Day 1</title>
+    <meta name="description" content="Join the Dubai CommerCity x Wellington Campus AI Hackathon - 'Shaping Tomorrow’s Solution'. Detailed agenda, challenges, registration, and support structure.">
+    <meta name="keywords" content="Wellington Campus, Dubai CommerCity, DAFZ, hackathon, AI, Artificial Intelligence, coding, competition, Dubai, UAE, teams, tech challenge, industry challenges, innovation, logistics, sustainability, healthcare, project management, real estate, government, Python, agenda, mentors">
+    <meta name="author" content="Wellington Campus & Dubai CommerCity">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Dubai CommerCity x Wellington AI Hackathon - Day 1">
+    <meta property="og:description" content="Detailed Day 1 Agenda for the 'Shaping Tomorrow’s Solution' AI Hackathon. Innovate, collaborate, and build the future.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wellingtoncampus.co/hackathon.html"> <!-- Update with your final URL -->
+    <meta property="og:image" content="./wellingtoncampus.png"> <!-- Ensure this path is correct -->
+    <meta property="og:image:alt" content="Wellington Campus Logo">
+    <!-- Favicon -->
+    <link rel="icon" href="./favicon.ico" type="image/x-icon"> <!-- Optional: Add a favicon -->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #d4af37; /* Gold */
+            --secondary-color: #003366; /* Dark Blue */
+            --text-color: #212529; /* Darker Gray, good contrast on light bg */
+            --bg-color: #cce5ff; /* Light Blueish - inherited from game.html request */
+            --accent-color: #ffffff; /* White */
+            --card-bg-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white for cards */
+            --success-color: #28a745; /* Green for checks */
+            --error-color: #dc3545; /* Red for incomplete */
+            --shadow: 0 8px 24px rgba(0,0,0,0.1);
+            --border-radius: 15px;
+            --bottom-nav-bg: var(--accent-color);
+            --bottom-nav-icon: #6c757d;
+            --bottom-nav-active: var(--primary-color);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            /* Updated background to match game.html request */
+            background-color: var(--bg-color);
+             background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
+                              linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
+            background-size: 20px 20px;
+
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            padding-bottom: 80px; /* Space for bottom nav + floating button */
+        }
+
+        h1, h2, h3, h4, h5 {
+             font-family: 'Poppins', sans-serif;
+             color: var(--secondary-color);
+             margin-top: 1rem;
+        }
+         h1 { color: var(--secondary-color); }
+         h1 .fa-brain, h1 .fa-cogs { color: var(--primary-color); } /* Added fa-cogs for title */
+        .hackathon-subtitle { color: var(--secondary-color); font-size: 1.5rem; font-weight: 400; margin-bottom: 1.5rem; }
+
+        .card {
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            border: none;
+            overflow: visible;
+            background-color: var(--card-bg-color); /* Updated Card Background */
+        }
+        .card-header {
+            background-color: var(--secondary-color);
+            color: var(--accent-color);
+            font-weight: 600;
+            border-bottom: 3px solid var(--primary-color);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Ensure space between title and icon */
+        }
+        .card-header h2 { color: var(--accent-color); margin: 0; font-size: 1.5rem; }
+        .card-header i { margin-right: 0.75rem; font-size: 1.3rem; }
+        /* Specific style for collapsible headers */
+        .card-header[data-bs-toggle="collapse"] { cursor: pointer; }
+        .card-header .chevron-icon { font-size: 1rem; transition: transform 0.3s ease; }
+        .card-header .chevron-down { display: inline-block; }
+        .card-header .chevron-up { display: none; }
+        /* Show up chevron and hide down when not collapsed */
+        .card-header:not(.collapsed) .chevron-down { display: none; }
+        .card-header:not(.collapsed) .chevron-up { display: inline-block; }
+
+        .card-title { color: var(--secondary-color); margin-bottom: 1rem; font-size: 1.4rem; }
+        .card-body { padding: 2rem; }
+        .card-body h3 { margin-top: 0.5rem; }
+        .card > .collapse > .card-body, .card > .collapsing > .card-body { padding-top: 1rem; }
+
+        .btn-custom { background-color: var(--primary-color); color: #fff; border: none; padding: 0.8rem 2.5rem; border-radius: 50px; transition: all 0.3s ease; font-weight: 600; letter-spacing: 0.5px; display: inline-block; text-decoration: none; }
+        .btn-custom:hover { background-color: #b8860b; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(212,175,55,0.4); color: #fff; }
+
+        .list-unstyled li, .list-group-item { margin-bottom: 1rem; display: flex; align-items: flex-start; line-height: 1.6; }
+        .list-unstyled i.fas, .list-unstyled i.fab, .list-group-item i.fas { color: var(--primary-color); margin-right: 1rem; width: 25px; text-align: center; flex-shrink: 0; margin-top: 0.2em; }
+
+        /* Track Card Styling (for Modal trigger) */
+        .track-card { transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; height: 100%; border: 1px solid #eee; background-color: var(--accent-color); /* Ensure track cards are solid white */ }
+        .track-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,51,102,0.2); }
+        .track-card .card-body { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.5rem; }
+        .track-card i { font-size: 3rem; margin-bottom: 1rem; color: var(--primary-color); }
+        .track-card .card-title { font-size: 1.4rem; }
+        .btn-choose-track { background-color: var(--secondary-color); color: var(--accent-color); border: none; padding: 0.6rem 1.8rem; border-radius: 50px; transition: all 0.3s ease; font-weight: 500; display: inline-flex; align-items: center; text-decoration: none; margin-top: 1rem; }
+        .btn-choose-track i { margin-left: 0.5rem; }
+        .btn-choose-track:hover { background-color: #004a8d; color: var(--accent-color); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 51, 102, 0.3); }
+
+        /* Checklist Styling */
+        .checklist { padding-left: 0; list-style: none; }
+        .checklist-item { background-color: #e9ecef; padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 0.75rem; transition: background-color 0.3s ease, color 0.3s ease, border-left 0.3s ease; display: flex; align-items: center; line-height: 1.5; border-left: 5px solid var(--secondary-color); cursor: default; }
+        .modal .checklist-item { cursor: pointer; border-left: 5px solid var(--secondary-color); }
+        .modal .checklist-item:hover { background-color: #dfe6ec; }
+        .checklist-item i.fa-circle { color: var(--secondary-color); margin-right: 0.75rem; font-size: 1.1em; transition: transform 0.2s ease; }
+        .checklist-item i.fa-check-circle { color: var(--success-color); display: none; margin-right: 0.75rem; font-size: 1.1em; transition: transform 0.2s ease; }
+        .checklist-item.completed { background-color: #dff0d8; color: #3c763d; border-left: 5px solid var(--success-color); }
+        .checklist-item.completed i.fa-circle { display: none; }
+        .checklist-item.completed i.fa-check-circle { display: inline-block; transform: scale(1.1); }
+
+        /* Progress Bar */
+        .progress { height: 25px; font-size: 0.9rem; border-radius: 50px; background-color: #e9ecef; }
+        .progress-bar { background-color: var(--primary-color); font-weight: bold; color: var(--accent-color); display: flex; align-items: center; justify-content: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); transition: width 0.6s ease; }
+
+        /* Agenda Styling */
+        .agenda-list { list-style: none; padding-left: 0; }
+        .agenda-list li { padding: 1.2rem 0; border-bottom: 1px solid rgba(0, 51, 102, 0.1); /* Lighter border */ display: flex; flex-wrap: wrap; align-items: flex-start; transition: background-color 0.2s ease; }
+        .agenda-list li:hover { background-color: rgba(255, 255, 255, 0.4); } /* Subtle hover */
+        .agenda-list li:last-child { border-bottom: none; }
+        .agenda-time { font-weight: 700; color: var(--primary-color); flex: 0 0 140px; margin-bottom: 0.5rem; padding-right: 1rem; display: flex; align-items: center; font-size: 1rem; }
+        .agenda-time i { margin-right: 0.6rem; color: var(--secondary-color); width: 20px; text-align: center; }
+        .agenda-details { flex: 1 1 auto; padding-right: 1.5rem; margin-bottom: 0.5rem; }
+        .agenda-details strong { display: block; font-size: 1.15em; color: var(--secondary-color); margin-bottom: 0.3rem; font-weight: 600; }
+        .agenda-details p { margin-bottom: 0; font-size: 1rem; color: #444; } /* Slightly darker text */
+        .agenda-speaker { font-style: italic; color: var(--text-color); flex: 0 0 220px; text-align: right; padding-left: 1rem; font-size: 0.95rem; }
+        .agenda-speaker small { display: block; font-size: 0.9em; color: #6c757d; font-style: normal; }
+        .agenda-speaker.- { font-style: normal; color: #aaa; }
+        .agenda-break { background-color: rgba(0, 51, 102, 0.05); border-radius: 8px; margin: 0.5rem 0; padding-left: 1rem; padding-right: 1rem; }
+        .agenda-break .agenda-time, .agenda-break .agenda-details { color: #5a6f82; }
+        .agenda-break strong { color: #5a6f82 !important; }
+        @media (max-width: 991px) { .agenda-speaker { flex-basis: 180px; } }
+        @media (max-width: 767px) { .agenda-speaker { text-align: left; flex-basis: 100%; margin-top: 0.5rem; padding-left: 0; font-style: normal; font-weight: 500; border-top: 1px dashed #eee; padding-top: 0.5rem; } .agenda-list li { flex-direction: column; padding-left: 0.5rem; padding-right: 0.5rem; } .agenda-time, .agenda-details, .agenda-speaker { flex-basis: auto; padding-right: 0; width: 100%; } .agenda-time { margin-bottom: 0.25rem; } .agenda-details { margin-bottom: 0.5rem; } .agenda-break { margin-left: -0.5rem; margin-right: -0.5rem; } }
+
+         /* General List Styling */
+         .list-unstyled i, .list-group-item i { vertical-align: middle; }
+         .card ul { list-style: none; padding-left: 0; }
+
+        /* Task Tracker Floating Button */
+         .task-tracker-button { position: fixed; bottom: 75px; right: 20px; width: 60px; height: 60px; background-color: var(--secondary-color); color: var(--accent-color); border: 2px solid var(--primary-color); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0, 51, 102, 0.4); cursor: pointer; z-index: 1050; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; }
+         .task-tracker-button:hover { background-color: #004a8d; transform: scale(1.1); box-shadow: 0 6px 20px rgba(0, 51, 102, 0.6); }
+
+        /* Modal Styling Enhancements */
+        .modal-header { background-color: var(--secondary-color); color: var(--accent-color); border-bottom: 2px solid var(--primary-color); }
+        .modal-header .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+        .modal-title { font-family: 'Poppins', sans-serif; }
+        #trackModal .modal-body h4 { color: var(--secondary-color); font-weight: 600; margin-top: 0.5rem; margin-bottom: 0.75rem; font-size: 1.2rem; }
+        #trackModal .modal-body p { font-size: 1rem; line-height: 1.6; margin-bottom: 1rem; }
+        #trackModal .modal-body strong { color: var(--secondary-color); }
+        #trackModal .modal-footer .btn-choose-track { margin-top: 0; }
+        #task-message-area .alert { margin-top: 1rem; padding: 0.8rem 1.2rem; font-size: 0.95rem; }
+
+        /* Bottom Navigation Styles */
+        .bottom-nav { display: none; position: fixed; bottom: 0; width: 100%; background-color: var(--bottom-nav-bg); box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 0.5rem 0; z-index: 1040; }
+        .bottom-nav .btn { color: var(--bottom-nav-icon); background-color: transparent; border: none; padding: 0.5rem; font-size: 0.9rem; display: flex; flex-direction: column; align-items: center; transition: color 0.3s ease; text-decoration: none; }
+        .bottom-nav .btn:hover, .bottom-nav .btn.active { color: var(--bottom-nav-active); }
+        .bottom-nav i { font-size: 1.2rem; margin-bottom: 0.2rem; }
+
+        /* Media query to show bottom nav on small screens */
+        @media (max-width: 576px) {
+             .bottom-nav { display: flex; }
+             body { padding-bottom: 60px; }
+             .task-tracker-button { bottom: 75px; }
+             /* Update track grid for mobile */
+             #tracks .col-lg-4 { flex-basis: 50%; max-width: 50%; } /* Force 2 columns */
+        }
+
+        /* Quick Info Card Styling */
+        #quick-info {
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent */
+            border-left: 5px solid var(--primary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+        }
+        #quick-info .card-body { padding: 1.5rem 2rem; }
+        #quick-info h3 { color: var(--secondary-color); margin-top: 0; margin-bottom: 1rem; font-size: 1.4rem; }
+        #quick-info ul li { margin-bottom: 0.8rem; font-size: 1.05rem; }
+        #quick-info ul li i { margin-top: 0.1em; }
+
+        /* Logistics Info Card Styling */
+        #logistics-info {
+            background-color: rgba(230, 240, 255, 0.7); /* Lighter blue semi-transparent */
+            border-left: 5px solid var(--secondary-color);
+        }
+         #logistics-info .card-body ul li i { color: var(--secondary-color); } /* Match icon color to border */
+
+    </style>
+</head>
+<body>
+    <!-- No Top Navbar -->
+
+    <!-- Main Content -->
+    <div class="container mt-4" id="hackathon">
+        <header class="text-center mb-5">
+            <img src="./wellingtoncampus.png" alt="Wellington Campus Logo" style="max-width: 150px; margin-bottom: 1rem;">
+            <!-- Optional: Add Dubai CommerCity Logo -->
+            <!-- <img src="./commercity-logo.png" alt="Dubai CommerCity Logo" style="max-width: 150px; margin-bottom: 1rem; margin-left: 1rem;"> -->
+             <h1><i class="fas fa-cogs me-2"></i>AI Hackathon: Shaping Tomorrow's Solution</h1>
+            <p class="hackathon-subtitle">Dubai CommerCity x Wellington Campus</p>
+        </header>
+
+         <!-- Progress Bar (Placeholder - Link to task list if needed) -->
+         <section id="progress" class="mb-5 card">
+             <div class="card-header">
+                 <h2><i class="fas fa-tasks"></i>Team Progress Overview</h2>
+             </div>
+            <div class="card-body">
+                <p>Track your team's completion of key hackathon milestones using the <i class="fas fa-tasks"></i> Task Tracker button (bottom right).</p>
+                <div class="progress" role="progressbar" aria-label="Hackathon Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%">0% Tasks Complete</div> <!-- Updated by JS -->
+                </div>
+            </div>
+         </section>
+
+        <!-- Quick Info Summary Card -->
+        <section id="quick-info" class="card">
+            <div class="card-body">
+                <h3><i class="fas fa-bolt me-2"></i>Quick Info</h3>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-calendar-alt"></i> <strong>Event:</strong> Shaping Tomorrow’s Solution Hackathon</li>
+                    <li><i class="fas fa-calendar-day"></i> <strong>Date:</strong> Day 1 - [Insert Date, e.g., Monday, 21st April 2025]</li>
+                    <li><i class="fas fa-clock"></i> <strong>Time:</strong> 08:30 AM - 02:00 PM (Wrap-up)</li>
+                    <li><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> Dubai CommerCity (Specific Hall/Area TBC)</li>
+                    <li><i class="fas fa-users"></i> <strong>Organizers:</strong> Dubai CommerCity (DAFZ) & Wellington Campus</li>
+                    <!-- Removed registration link here assuming it's elsewhere or managed via invite -->
+                </ul>
+            </div>
+        </section>
+
+        <!-- Detailed Hackathon Agenda (UPDATED FOR DAY 1) -->
+        <section id="agenda" class="card">
+             <div class="card-header">
+                 <h2><i class="fas fa-calendar-alt"></i>Day 1 Agenda: Hackathon Kick-off</h2>
+             </div>
+             <div class="card-body">
+                 <h3 class="mb-3 mt-2" style="color: var(--primary-color);"><i class="fas fa-flag-checkered me-2"></i>Monday, [Date] - Shaping Tomorrow's Solution</h3>
+                 <ul class="agenda-list">
+                     <li>
+                        <span class="agenda-time"><i class="fas fa-sign-in-alt"></i>08:30 - 09:00</span>
+                        <span class="agenda-details">
+                            <strong>Team Registrations & Check-in</strong>
+                            <p>Arrive, check-in, grab your hackathon kit, and enjoy light refreshments.</p>
+                        </span>
+                        <span class="agenda-speaker">
+                            <small>DAFZ Team (Logistics)</small>
+                            <small>Wellington Team (Welcome)</small>
+                        </span>
+                     </li>
+                     <li>
+                        <span class="agenda-time"><i class="fas fa-bullhorn"></i>09:00 - 09:05</span>
+                        <span class="agenda-details">
+                            <strong>Opening Speech</strong>
+                            <p>Official kick-off. Setting the tone: "Building Tomorrow’s Solutions, Today."</p>
+                        </span>
+                        <span class="agenda-speaker">Wellington Leadership</span>
+                     </li>
+                      <li>
+                        <span class="agenda-time"><i class="fas fa-scroll"></i>09:05 - 09:10</span>
+                        <span class="agenda-details">
+                            <strong>Hackathon Code of Conduct</strong>
+                            <p>Briefing on respectful collaboration, IP protection, fairness, and timelines.</p>
+                        </span>
+                        <span class="agenda-speaker">Event Coordinator</span>
+                     </li>
+                     <li>
+                        <span class="agenda-time"><i class="fas fa-users"></i>09:10 - 09:20</span>
+                        <span class="agenda-details">
+                            <strong>Team Introductions (Ice-Breaker)</strong>
+                            <p>Quick round where team members introduce themselves and their academic backgrounds.</p>
+                        </span>
+                        <span class="agenda-speaker">All Teams</span>
+                     </li>
+                      <li>
+                        <span class="agenda-time"><i class="fas fa-dice"></i>09:20 - 09:30</span>
+                        <span class="agenda-details">
+                            <strong>Spin the Wheel & Challenge Assignment</strong>
+                            <p>Gamified assignment of predefined industry challenges. (Challenges shared in advance with universities).</p>
+                        </span>
+                        <span class="agenda-speaker">
+                            <small>Facilitated by Wellington</small>
+                             <small><a href="game.html" target="_blank">(See Example Wheel)</a></small> <!-- Link to the game page -->
+                        </span>
+                     </li>
+                     <li>
+                        <span class="agenda-time"><i class="fas fa-laptop-code"></i>09:30</span>
+                        <span class="agenda-details">
+                            <strong>Hacking Begins!</strong>
+                            <p>Teams start working on their assigned challenges.</p>
+                        </span>
+                        <span class="agenda-speaker">-</span>
+                     </li>
+                     <li class="agenda-break">
+                         <span class="agenda-time"><i class="fas fa-chalkboard-teacher"></i>Ongoing</span>
+                         <span class="agenda-details">
+                            <strong>Hackathon Support Structure Active</strong>
+                            <p>Challenge clarifications, Mentor assignments (1 per team), Help Desk (Technical/Structure), Pitch Coaching (Mid-day onwards).</p>
+                         </span>
+                         <span class="agenda-speaker">
+                            <small>Led by Wellington Campus</small>
+                         </span>
+                    </li>
+                     <li>
+                        <span class="agenda-time"><i class="fas fa-file-alt"></i>Ongoing</span>
+                        <span class="agenda-details">
+                            <strong>Resource Access</strong>
+                            <p>Digital folder provided with datasets, AI toolkits, visual templates, etc.</p>
+                        </span>
+                        <span class="agenda-speaker">
+                            <small>Provided by Wellington Campus</small>
+                        </span>
+                    </li>
+                    <!-- Example Mid-day checkpoint / Pitch coaching -->
+                     <li class="agenda-break">
+                        <span class="agenda-time"><i class="fas fa-microphone-alt"></i>~12:00 PM</span>
+                        <span class="agenda-details">
+                            <strong>Pitch Coaching Station Opens</strong>
+                            <p>Mentors available to help teams start outlining their pitch deck structure and story.</p>
+                        </span>
+                        <span class="agenda-speaker">
+                            <small>Wellington Pitch Mentors</small>
+                        </span>
+                     </li>
+                    <!-- Placeholder for potential lunch/break -->
+                     <li class="agenda-break">
+                        <span class="agenda-time"><i class="fas fa-utensils"></i>TBC</span>
+                        <span class="agenda-details">
+                            <strong>Lunch / Refreshment Break</strong>
+                            <p>Time to refuel and network.</p>
+                        </span>
+                        <span class="agenda-speaker">-</span>
+                     </li>
+                     <li>
+                        <span class="agenda-time"><i class="fas fa-flag-checkered"></i>02:00 PM</span>
+                        <span class="agenda-details">
+                            <strong>Day 1 Wrap-Up & Submission</strong>
+                            <p>Teams finalize Day 1 deliverables: Rough model/logic, 3-5 slide pitch deck draft. Submit materials for internal review.</p>
+                        </span>
+                        <span class="agenda-speaker">
+                             <small>Submission via Link</small>
+                        </span>
+                    </li>
+                 </ul>
+             </div>
+        </section>
+
+        <!-- Hackathon Support Structure -->
+        <section id="support" class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-hands-helping"></i>Hackathon Support Structure</h2>
+            </div>
+            <div class="card-body">
+                <p>Wellington Campus is committed to providing comprehensive support throughout Day 1:</p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-chalkboard-teacher"></i> <strong>Challenge Briefing & Clarifications:</strong> Detailed printed/digital briefs. Faculty available for conceptual questions.</li>
+                    <li><i class="fas fa-user-friends"></i> <strong>Mentor Assignment:</strong> One dedicated mentor (faculty/industry) per team to guide logic, data interpretation, and roadmapping.</li>
+                    <li><i class="fas fa-headset"></i> <strong>On-Ground Help Desk:</strong> Central point for technical queries (Excel, Python, UI/UX) and solution structuring guidance.</li>
+                    <li><i class="fas fa-microphone-alt"></i> <strong>Pitch Coaching Station:</strong> Mid-day support for refining pitch structure, value proposition, and presentation.</li>
+                    <li><i class="fas fa-folder-open"></i> <strong>Resource Access:</strong> Digital folder with sample datasets, AI toolkits, slide templates. (LMS access for finalists).</li>
+                    <li><i class="fas fa-camera"></i> <strong>Marketing Support:</strong> Capturing student engagement through photos and videos.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Day 1 Expected Outcomes -->
+         <section id="outcomes" class="card">
+             <div class="card-header">
+                 <h2><i class="fas fa-check-double"></i>End of Day 1: Expected Outcomes</h2>
+             </div>
+            <div class="card-body">
+                <p>By the wrap-up at 2:00 PM, each team should aim to have:</p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-cogs text-success"></i> A rough working model or defined logic (e.g., Excel structure, basic Python script, UI prototype/wireframe).</li>
+                    <li><i class="fas fa-file-powerpoint text-success"></i> A preliminary 3–5 slide pitch deck outlining the problem, proposed solution, and approach.</li>
+                    <li><i class="fas fa-upload text-success"></i> Submitted these materials electronically for Wellington’s internal review ahead of Day 2 evaluations.</li>
+                </ul>
+            </div>
+         </section>
+
+         <!-- DAFZ/CommerCity Logistics Request -->
+        <section id="logistics-info" class="card">
+            <div class="card-body">
+                <h3><i class="fas fa-building me-2"></i>Venue & Logistics (DAFZ/CommerCity)</h3>
+                <p>The following facilities are requested to ensure a smooth hackathon experience:</p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-users"></i> Dedicated breakout spaces or zones for one-on-one mentor sessions.</li>
+                    <li><i class="fas fa-desktop"></i> A display screen or projector available for potential team dry runs or presentations.</li>
+                    <li><i class="fas fa-video"></i> If feasible, a basic recording setup for capturing pitch rehearsals or sessions could be beneficial.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact Information -->
+        <section id="contact" class="card">
+             <div class="card-header">
+                 <h2><i class="fas fa-envelope"></i>Contact Information</h2>
+             </div>
+             <div class="card-body">
+                 <p class="card-text">For questions regarding the hackathon organization or academic support:</p>
+                 <div class="row">
+                     <div class="col-md-6">
+                         <strong>Wellington Campus (Academic & Support):</strong>
+                         <ul class="list-unstyled mt-2">
+                             <li><i class="fas fa-envelope-open-text"></i> Email: <a href="mailto:info@wellingtoncampus.co">info@wellingtoncampus.co</a></li>
+                             <li><i class="fas fa-phone"></i> Phone: <a href="tel:+971542523922">+971 54 252 3922</a></li>
+                             <li><i class="fas fa-map-marker-alt"></i> Address: Wellington Campus, Dubai CommerCity, Dubai, UAE</li>
+                         </ul>
+                     </div>
+                      <div class="col-md-6">
+                         <strong>Dubai CommerCity (Venue & Logistics):</strong>
+                         <ul class="list-unstyled mt-2">
+                              <li><i class="fas fa-envelope-open-text"></i> Email: [Insert DAFZ Contact Email]</li>
+                              <li><i class="fas fa-phone"></i> Phone: [Insert DAFZ Contact Phone]</li>
+                              <li><i class="fas fa-info-circle"></i> DAFZ team will manage check-in logistics on site.</li>
+                         </ul>
+                     </div>
+                 </div>
+             </div>
+        </section>
+
+         <!-- Footer Placeholder -->
+         <footer class="text-center mt-5 mb-4 text-muted">
+            <small>© 2024-2025 Dubai CommerCity & Wellington Campus. All Rights Reserved.</small>
+         </footer>
+
+    </div> <!-- End Main Container -->
+
+    <!-- Task Tracker Floating Button -->
+    <button class="task-tracker-button" id="task-tracker-btn" title="Open Task Tracker" data-bs-toggle="modal" data-bs-target="#taskTrackerModal">
+        <i class="fas fa-tasks"></i>
+    </button>
+
+    <!-- Task Tracker Modal -->
+    <div class="modal fade" id="taskTrackerModal" tabindex="-1" aria-labelledby="taskTrackerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="taskTrackerModalLabel"><i class="fas fa-tasks me-2"></i>Hackathon Task Tracker</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted">Click on a task to mark it as complete. Your progress is saved locally in your browser. (These are general hackathon tasks, adapt as needed for Day 1 goals).</p>
+                    <div id="task-message-area" class="mb-3"></div>
+                    <!-- Simplified Checklist for Day 1 Context -->
+                    <div class="checklist" id="modal-checklist">
+                         <div class="checklist-item" data-task-id="register"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Register & Check-in:</strong> Arrive and get your kit.</div> </div>
+                         <div class="checklist-item" data-task-id="briefing"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Attend Briefing:</strong> Understand rules & conduct.</div> </div>
+                         <div class="checklist-item" data-task-id="challenge"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Receive Challenge:</strong> Note your assigned industry problem.</div> </div>
+                         <div class="checklist-item" data-task-id="brainstorm"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Initial Brainstorm & Plan:</strong> Outline approach with your team.</div> </div>
+                         <div class="checklist-item" data-task-id="mentor-meet"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Meet Mentor:</strong> Connect with your assigned mentor.</div> </div>
+                         <div class="checklist-item" data-task-id="logic-dev"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Develop Rough Logic/Model:</strong> Start building the core idea (Excel, Python, UI).</div> </div>
+                         <div class="checklist-item" data-task-id="deck-start"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Start Pitch Deck:</strong> Create initial 3-5 slides (Problem, Solution, Approach).</div> </div>
+                         <div class="checklist-item" data-task-id="pitch-coach"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Visit Pitch Coach (Optional):</strong> Get feedback on deck structure.</div> </div>
+                         <div class="checklist-item" data-task-id="day1-submit"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Submit Day 1 Materials:</strong> Upload rough model/logic and deck draft.</div> </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Bottom Navigation for Mobile -->
+     <nav class="bottom-nav" aria-label="Mobile navigation">
+         <div class="d-flex justify-content-around w-100">
+             <a href="index.html" class="btn"><i class="fas fa-home"></i>Home</a>
+             <a href="courses.html" class="btn"><i class="fas fa-book"></i>LMS</a>
+             <a href="game.html" class="btn"><i class="fas fa-gamepad"></i>Game/Wheel</a>
+             <a href="hackathon.html" class="btn active"><i class="fas fa-laptop-code"></i>Hackathon</a>
+         </div>
+     </nav>
+
+    <!-- Bootstrap Bundle JS -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- Custom JS for Task Tracker -->
+    <script id="feature-script">
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Common Elements & State ---
+            const modalChecklist = document.getElementById('modal-checklist');
+            // const mainChecklist = document.getElementById('main-checklist'); // Main checklist removed from this version
+            const messageArea = document.getElementById('task-message-area');
+            const storageKey = 'hackathonDay1TaskStatus'; // Use a specific key for Day 1
+            const progressBar = document.querySelector('#progress .progress-bar');
+            let taskState = loadTaskState(); // Load initial state
+
+            // --- Task Tracker Elements & Logic ---
+            const taskModalElement = document.getElementById('taskTrackerModal');
+
+            function loadTaskState() {
+                const storedState = localStorage.getItem(storageKey);
+                return storedState ? JSON.parse(storedState) : {};
+            }
+            function saveTaskState(state) {
+                localStorage.setItem(storageKey, JSON.stringify(state));
+            }
+
+            function updateTaskUI(taskId, isCompleted) {
+                // Update Modal Item
+                const modalItem = modalChecklist.querySelector(`.checklist-item[data-task-id="${taskId}"]`);
+                if (modalItem) { modalItem.classList.toggle('completed', isCompleted); }
+            }
+
+            function showMessage(message, type = 'success') {
+                if (messageArea) {
+                   messageArea.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+                }
+            }
+            function clearMessages() {
+                 if (messageArea) { messageArea.innerHTML = ''; }
+            }
+
+            function updateProgressBar() {
+                 const state = loadTaskState();
+                 const taskItems = modalChecklist.querySelectorAll('.checklist-item[data-task-id]');
+                 const totalTasks = taskItems.length;
+                 if (totalTasks === 0 || !progressBar) return; // Avoid division by zero and check element exists
+
+                 const completedTasks = Object.values(state).filter(status => status === true).length;
+                 const progressPercent = Math.round((completedTasks / totalTasks) * 100);
+
+                 progressBar.style.width = progressPercent + '%';
+                 progressBar.textContent = `${progressPercent}% Day 1 Tasks Complete`;
+                 progressBar.setAttribute('aria-valuenow', progressPercent);
+                 progressBar.classList.toggle('bg-success', progressPercent === 100);
+                 progressBar.classList.toggle('progress-bar-animated', progressPercent < 100);
+                 progressBar.classList.toggle('progress-bar-striped', progressPercent < 100);
+            }
+
+            // Initial Load for Task Tracker UI state
+             if (modalChecklist) {
+                modalChecklist.querySelectorAll('.checklist-item[data-task-id]').forEach(item => {
+                    const taskId = item.dataset.taskId;
+                    if (taskId && taskState[taskId]) {
+                         item.classList.add('completed');
+                    } else {
+                         item.classList.remove('completed');
+                    }
+                });
+             } else {
+                 console.warn("Modal checklist container not found.");
+             }
+             updateProgressBar(); // Initial progress bar update
+
+
+            // Event Listener for Modal Task Clicks
+             if (modalChecklist) {
+                modalChecklist.addEventListener('click', function(event) {
+                    const taskItem = event.target.closest('.checklist-item[data-task-id]');
+                    if (taskItem) {
+                        const taskId = taskItem.dataset.taskId;
+                        const isNowCompleted = !taskState[taskId]; // Toggle state
+                        taskState[taskId] = isNowCompleted; // Update local state variable
+                        saveTaskState(taskState); // Save updated state
+                        updateTaskUI(taskId, isNowCompleted); // Update checklist visually
+                        clearMessages();
+                        const taskNameElement = taskItem.querySelector('strong');
+                        const taskName = taskNameElement ? taskNameElement.textContent.trim() : `Task ${taskId}`;
+                        if (isNowCompleted) { showMessage(`Task "${taskName}" marked complete!`, 'success'); }
+                        else { showMessage(`Task "${taskName}" marked as incomplete.`, 'warning'); }
+                        updateProgressBar(); // Update progress bar on click
+                    }
+                });
+             }
+
+             // Optional: Clear messages when modal is closed
+             if (taskModalElement) {
+                taskModalElement.addEventListener('hidden.bs.modal', clearMessages);
+             }
+
+             // --- Smooth scroll for internal links ---
+             document.querySelectorAll('.scroll-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId && targetId.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            highlightElement(targetElement);
+                        }
+                    }
+                });
+            });
+
+            function highlightElement(element) {
+                 element.style.transition = 'background-color 0.1s ease-in-out';
+                 element.style.backgroundColor = 'rgba(212, 175, 55, 0.15)'; // Use primary color with alpha
+                 setTimeout(() => {
+                     element.style.backgroundColor = '';
+                     setTimeout(() => { element.style.transition = ''; }, 100);
+                 }, 1500);
+            }
+
+         });
+    </script>
+
+</body>
+</html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python for AI Hackathon - Wellington Campus</title>
