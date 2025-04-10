@@ -8,10 +8,10 @@
 
     <!-- Standard Meta -->
     <meta name="description" content="Day 1 Agenda and details for the Dubai CommerCity x Wellington Campus AI Hackathon. Includes AI Judge Simulation & Live Leaderboard. Earn Welly Points by completing tasks!">
-    <meta name="keywords" content="Wellington Campus, Dubai CommerCity, hackathon, AI, Day 1, agenda, judge, leaderboard, Telegram Mini App, profile, points, tasks, welly points">
+    <meta name="keywords" content="Wellington Campus, Dubai CommerCity, hackathon, AI, Day 1, agenda, judge, leaderboard, Telegram Mini App, profile, points, tasks, welly points, registration, teams">
     <meta name="author" content="Wellington Campus & Dubai CommerCity">
     <meta property="og:title" content="Dubai CommerCity x Wellington AI Hackathon - Day 1">
-    <meta property="og:description" content="Detailed Day 1 Agenda and Support Info, featuring an AI Judge Simulation, Live Leaderboard, and Task Tracker with Welly Points within the Telegram Mini App.">
+    <meta property="og:description" content="Detailed Day 1 Agenda and Support Info, featuring an AI Judge Simulation, Live Leaderboard, and Task Tracker with Welly Points within the Telegram Mini App. Register your team!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wellingtoncampus.co/hackathon.html"> <!-- Update -->
     <meta property="og:image" content="./wellingtoncampus.png"> <!-- Update Path -->
@@ -38,7 +38,8 @@
             --accent-color: #ffffff; /* White */
             --card-bg-color: rgba(255, 255, 255, 0.9);
             --success-color: #28a745;
-            --error-color: #dc3545;
+            --error-color: #dc3545; /* Standard danger color */
+            --danger-color: #dc3545; /* Added for consistency */
             --shadow: 0 8px 24px rgba(0,0,0,0.1);
             --border-radius: 15px;
             --bottom-nav-bg: var(--accent-color);
@@ -63,7 +64,8 @@
             min-height: var(--tg-viewport-height, 100vh);
             box-sizing: border-box;
             overflow-x: hidden;
-            padding-bottom: calc(150px + var(--tg-safe-area-inset-bottom, 0px));
+            /* Adjusted padding for bottom nav */
+            padding-bottom: calc(80px + var(--tg-safe-area-inset-bottom, 0px));
             display: flex;
             flex-direction: column;
         }
@@ -72,53 +74,46 @@
         #main-header { text-align: center; margin-bottom: 1rem; position: relative; padding-top: 1rem; flex-shrink: 0; }
         #header-logo { display: block; margin: 0 auto 0.5rem auto; max-width: 100px; width: 100px; height: auto; position: relative; top: 0; left: 0; z-index: 10; cursor: pointer; transition: width 0.4s ease-in-out, max-width 0.4s ease-in-out, top 0.4s ease-in-out, left 0.4s ease-in-out, padding 0.4s ease-in-out, border-radius 0.4s ease-in-out, background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out; }
         #header-logo.logo-scrolled { position: fixed; top: 8px; left: 12px; width: 45px; max-width: 45px; height: auto; z-index: 1045; margin: 0; background-color: rgba(255, 255, 255, 0.85); padding: 4px; border-radius: 50%; box-shadow: 0 3px 8px rgba(0, 51, 102, 0.3); }
-        body.logo-state-scrolled .container { padding-top: 60px; }
+        body.logo-state-scrolled .container { padding-top: 60px; } /* Keep padding adjustment */
 
-        /* --- User Profile (Keep existing) --- */
-        #user-profile { position: fixed; top: 8px; right: 12px; font-size: 0.85rem; color: var(--secondary-color); background-color: rgba(255, 255, 255, 0.85); padding: 5px 10px; border-radius: 20px; display: flex; align-items: center; z-index: 1045; box-shadow: 0 2px 5px rgba(0, 51, 102, 0.2); transition: top 0.4s ease-in-out; }
+        /* --- User Profile (Modified for Clickability) --- */
+        #user-profile {
+            position: fixed; top: 8px; right: 12px; font-size: 0.85rem;
+            color: var(--secondary-color); background-color: rgba(255, 255, 255, 0.85);
+            padding: 5px 10px; border-radius: 20px; display: flex; align-items: center;
+            z-index: 1045; box-shadow: 0 2px 5px rgba(0, 51, 102, 0.2);
+            transition: top 0.4s ease-in-out;
+            cursor: pointer; /* Make it clickable */
+        }
+        #user-profile:hover { background-color: rgba(230, 230, 230, 0.9); } /* Subtle hover */
         #user-avatar { display: inline-block; width: 28px; height: 28px; border-radius: 50%; margin-right: 8px; vertical-align: middle; background-color: #e9ecef; text-align: center; line-height: 28px; font-size: 18px; overflow: hidden; }
         #user-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
         #user-name-display { font-weight: 600; margin-right: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
         #welly-points { font-weight: bold; margin-left: 5px; }
         #user-profile .fa-star { margin-left: 5px; }
+
+        /* --- Welly Points Gain Animation (Keep existing) --- */
         .welly-points-gain {
-            position: fixed;
-            z-index: 1100;
-            color: var(--primary-color);
-            font-weight: bold;
-            font-size: 1.1rem;
-            padding: 3px 8px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            opacity: 0;
+            position: fixed; z-index: 1100; color: var(--primary-color); font-weight: bold;
+            font-size: 1.1rem; padding: 3px 8px; background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); opacity: 0;
             transition: top 0.8s ease-out, opacity 0.8s ease-out, transform 0.8s ease-out;
-            pointer-events: none;
-            white-space: nowrap;
+            pointer-events: none; white-space: nowrap; transform: translateX(-50%);
         }
 
-
-        /* --- Mini App Specific Adjustments --- */
+        /* --- Mini App Specific Adjustments (Keep existing) --- */
         .navbar-custom { display: none; }
         .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; width: 100%; background-color: var(--bottom-nav-bg); box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 0.5rem 0 max(0.5rem, var(--tg-safe-area-inset-bottom, 0px)); z-index: 1040; flex-shrink: 0; }
         .floating-button { position: fixed; width: 55px; height: 55px; font-size: 1.6rem; z-index: 1050; background-color: var(--secondary-color); color: var(--accent-color); border: 2px solid var(--primary-color); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0, 51, 102, 0.4); cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; }
         .floating-button:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(0, 51, 102, 0.6); }
 
-        /* --- MODIFIED: Task Tracker Button Position --- */
-        #task-tracker-btn {
-            left: 15px; /* Changed from right */
-            bottom: calc(75px + var(--tg-safe-area-inset-bottom, 0px));
-        }
-        #ai-judge-btn {
-            right: 15px; /* Kept on right */
-            bottom: calc(75px + var(--tg-safe-area-inset-bottom, 0px));
-            background-color: var(--primary-color); color: var(--secondary-color); border-color: var(--secondary-color);
-        }
-        /* Keep hover effects */
+        /* --- MODIFIED: Task Tracker Button Position (Keep existing) --- */
+        #task-tracker-btn { left: 15px; bottom: calc(75px + var(--tg-safe-area-inset-bottom, 0px)); }
+        #ai-judge-btn { right: 15px; bottom: calc(75px + var(--tg-safe-area-inset-bottom, 0px)); background-color: var(--primary-color); color: var(--secondary-color); border-color: var(--secondary-color); }
         #task-tracker-btn:hover { background-color: #004a8d; }
         #ai-judge-btn:hover { background-color: #b8860b; color: var(--secondary-color); }
 
-        /* --- Main Container --- */
+        /* --- Main Container (Keep existing) --- */
         .container { flex-grow: 1; width: 100%; }
 
         /* --- Other Existing Styles (Keep as before, truncated for brevity) --- */
@@ -162,44 +157,71 @@
          .progress { height: 18px; font-size: 0.75rem; border-radius: 50px; background-color: #e9ecef; }
          .progress-bar { background-color: var(--primary-color); font-weight: bold; color: var(--accent-color); display: flex; align-items: center; justify-content: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); transition: width 0.6s ease; }
          .agenda-list { list-style: none; padding-left: 0; }
-         /* ... other styles truncated ... */
          #task-message-area .alert { margin-top: 1rem; padding: 0.7rem 1rem; font-size: 0.9rem; }
          #aiJudgeModal .modal-body { min-height: 300px; }
          #judgeLoader { text-align: center; padding: 2rem 0; display: none; }
          #judgeLoader p { margin-top: 0.8rem; color: var(--secondary-color); font-style: italic; font-size: 0.9rem;}
          #judgeResultsArea { display: none; }
-         /* ... more styles truncated ... */
          .bottom-nav .btn { color: var(--bottom-nav-icon); background-color: transparent; border: none; padding: 0.5rem; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; transition: color 0.3s ease; text-decoration: none; }
          .bottom-nav i { font-size: 1.1rem; margin-bottom: 0.15rem; }
-         /* --- Add active style for bottom nav --- */
          .bottom-nav .btn.active { color: var(--bottom-nav-active); font-weight: 600;}
+         .task-points { font-size: 0.75rem; font-weight: bold; color: var(--accent-color); background-color: var(--primary-color); padding: 2px 6px; border-radius: 10px; margin-left: auto; margin-right: 5px; white-space: nowrap; }
+         .checklist-item.completed .task-points { background-color: var(--success-color); color: var(--accent-color); }
+         .btn-custom { background-color: var(--primary-color); color: var(--accent-color) !important; border: none; padding: 0.6rem 1.5rem; border-radius: 25px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212,175,55,0.3); font-weight: 600; text-decoration: none; display: inline-block; }
+         .btn-custom:hover { background-color: #b8860b; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,175,55,0.4); color: var(--accent-color) !important; }
+         .form-check-label { font-size: 0.9rem; }
+         #registrationFeedback { font-size: 0.9rem; min-height: 1.2em; margin-top: 0.5rem; }
 
-         /* --- Style for Point value on task --- */
-         .task-points {
-            font-size: 0.75rem;
-            font-weight: bold;
+        /* --- Profile Modal Specific Styles --- */
+        #userProfileModal .modal-header {
+            background-color: var(--secondary-color);
             color: var(--accent-color);
-            background-color: var(--primary-color);
-            padding: 2px 6px;
-            border-radius: 10px;
-            margin-left: auto; /* Pushes to the right */
-            margin-right: 5px; /* Spacing from edge */
-            white-space: nowrap;
-         }
-         .checklist-item.completed .task-points {
-             background-color: var(--success-color);
-             color: var(--accent-color);
-         }
+            border-bottom: 3px solid var(--primary-color);
+        }
+        #userProfileModal .modal-header .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        #userProfileModal .modal-body {
+            text-align: center;
+        }
+        #modal-user-avatar {
+            width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 0.5rem auto;
+            display: block; background-color: #e9ecef; font-size: 40px; line-height: 80px;
+            overflow: hidden; border: 3px solid var(--primary-color);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        #modal-user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        #modal-user-name { font-size: 1.3rem; font-weight: 600; color: var(--secondary-color); margin-bottom: 0.2rem; }
+        #modal-welly-points-display { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); margin-bottom: 1rem; }
+        #modal-welly-points-display .fa-star { font-size: 1.5rem; margin-right: 5px; vertical-align: middle; }
+        #profile-rank-display { font-size: 0.95rem; color: var(--text-color); margin-bottom: 1.5rem; background-color: rgba(0, 51, 102, 0.05); padding: 0.5rem; border-radius: 8px; border-left: 4px solid var(--secondary-color); }
+        #profile-leaderboard-section h5 { color: var(--secondary-color); margin-bottom: 0.8rem; font-size: 1.1rem; }
+        #profile-leaderboard-table { font-size: 0.9rem; }
+        #profile-leaderboard-table thead { background-color: var(--secondary-color); color: var(--accent-color); }
+        #profile-leaderboard-body tr td { vertical-align: middle; }
+        #profile-leaderboard-body .rank-badge { font-weight: bold; font-size: 0.9em; color: var(--secondary-color); display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; border-radius: 50%; background-color: rgba(212, 175, 55, 0.8); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        #profile-leaderboard-body tr:nth-child(1) .rank-badge { background-color: #ffd700; color: #333; }
+        #profile-leaderboard-body tr:nth-child(2) .rank-badge { background-color: #c0c0c0; color: #333; }
+        #profile-leaderboard-body tr:nth-child(3) .rank-badge { background-color: #cd7f32; color: #fff; }
+        #profile-leaderboard-body .points-cell { font-weight: bold; color: var(--secondary-color); text-align: right; } /* Align right */
+        #profile-leaderboard-body tr.table-info { background-color: rgba(212, 175, 55, 0.15) !important; font-weight: bold; }
+        #delete-progress-btn { background-color: var(--danger-color); border-color: var(--danger-color); color: white; transition: background-color 0.2s ease, border-color 0.2s ease; }
+        #delete-progress-btn:hover { background-color: #c82333; border-color: #bd2130; }
+        #delete-progress-btn:disabled { background-color: #6c757d; border-color: #6c757d; cursor: not-allowed; }
+        #leaderboard-loading, #leaderboard-empty { color: #6c757d; font-style: italic; padding: 1rem 0; text-align: center; } /* Centered */
+        #reset-feedback { font-size: 0.8rem; margin-top: 5px; min-height: 1.2rem; }
+        .feedback-success { color: var(--success-color, green); }
+        .feedback-error { color: var(--danger-color); }
 
     </style>
 </head>
 <body>
-    <!-- User Profile Display (Top Right) - No Changes -->
-    <div id="user-profile">
-        <span id="user-avatar">🎓</span>
+    <!-- User Profile Display (Top Right) - MODIFIED TO TRIGGER MODAL -->
+    <div id="user-profile" data-bs-toggle="modal" data-bs-target="#userProfileModal">
+        <span id="user-avatar">👤</span> <!-- Default -->
         <span id="user-name-display">Player</span>
         | <i class="fas fa-star"></i>
-        <span id="welly-points">0</span> WP
+        <span id="welly-points">0</span> WP
     </div>
 
     <!-- Main Content Container - No Changes -->
@@ -212,18 +234,26 @@
             <p class="hackathon-subtitle">Day 1 @ Dubai CommerCity</p>
         </header>
 
-        <!-- Progress Bar Section -->
+        <!-- ADDED: Registration Button -->
+        <section id="registration-action" class="text-center mb-3">
+            <button class="btn btn-custom btn-lg" id="registerTeamBtn" data-bs-toggle="modal" data-bs-target="#registrationModal" disabled>
+                <i class="fas fa-users me-2"></i> Register / View Team
+            </button>
+            <p id="registration-status-message" class="small text-muted mt-1 fst-italic"></p>
+        </section>
+
+        <!-- Progress Bar Section (Keep Existing) -->
         <section id="progress" class="mb-3 card">
-             <div class="card-header"> <h2><i class="fas fa-tasks"></i>Progress & Points</h2> </div> <!-- Title updated -->
+             <div class="card-header"> <h2><i class="fas fa-tasks"></i>Progress & Points</h2> </div>
              <div class="card-body">
-                 <p class="small mb-2">Track Day 1 tasks via <i class="fas fa-tasks"></i> button & earn WP!</p> <!-- Text updated -->
+                 <p class="small mb-2">Track Day 1 tasks via <i class="fas fa-tasks"></i> button & earn WP!</p>
                  <div class="progress" role="progressbar" aria-label="Hackathon Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                      <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%">0%</div>
                  </div>
              </div>
         </section>
 
-        <!-- Quick Info Section - No Changes -->
+        <!-- Quick Info Section (Keep Existing) -->
         <section id="quick-info" class="card mb-3">
              <div class="card-body">
                  <h3><i class="fas fa-bolt me-2"></i>Quick Info - Day 1</h3>
@@ -236,29 +266,28 @@
              </div>
         </section>
 
-        <!-- Collapsible Sections (Keep existing structure, content truncated for brevity) -->
+        <!-- Collapsible Sections (Keep existing structure) -->
         <div id="accordionHackathon">
             <!-- Agenda -->
             <section id="agenda" class="card mb-3">
                 <div class="card-header" data-bs-toggle="collapse" data-bs-target="#collapseAgenda" aria-expanded="true" aria-controls="collapseAgenda"> <h2><i class="fas fa-calendar-alt"></i>Agenda</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div>
                 <div class="collapse show" id="collapseAgenda" data-bs-parent="#accordionHackathon">
                     <div class="card-body">
-                        <!-- Agenda content remains the same -->
                          <h3 class="mb-3 mt-0 small" style="color: var(--primary-color);"><i class="fas fa-flag-checkered me-2"></i>Monday, 21st April 2025</h3>
                          <ul class="agenda-list"> <li> <span class="agenda-time"><i class="fas fa-sign-in-alt"></i>08:30</span> <span class="agenda-details"><strong>Registrations & Check-in</strong><p>Arrival, kits, refreshments.</p></span> <span class="agenda-speaker"><small>DAFZ & Wellington</small></span> </li> <li> <span class="agenda-time"><i class="fas fa-bullhorn"></i>09:00</span> <span class="agenda-details"><strong>Opening Speech</strong><p>Kick-off.</p></span> <span class="agenda-speaker"><small>Wellington</small></span> </li> <li> <span class="agenda-time"><i class="fas fa-scroll"></i>09:05</span> <span class="agenda-details"><strong>Code of Conduct</strong><p>Rules & IP.</p></span> <span class="agenda-speaker"><small>Coordinator</small></span> </li> <li> <span class="agenda-time"><i class="fas fa-users"></i>09:10</span> <span class="agenda-details"><strong>Team Intros</strong><p>Ice-breaker.</p></span> <span class="agenda-speaker"><small>All Teams</small></span> </li> <li> <span class="agenda-time"><i class="fas fa-dice"></i>09:20</span> <span class="agenda-details"><strong>Challenge Assignment</strong><p>Spin Wheel. <a href="game.html" target="_self" class="link-secondary small">(Go to Wheel)</a></p></span> <span class="agenda-speaker"><small>Facilitated</small></span> </li> <li> <span class="agenda-time"><i class="fas fa-laptop-code"></i>09:30</span> <span class="agenda-details"><strong>Hacking Begins!</strong></span> <span class="agenda-speaker">-</span> </li> <li class="agenda-break"> <span class="agenda-time"><i class="fas fa-headset"></i>Ongoing</span> <span class="agenda-details"><strong>Support Active</strong><p>Mentors, Help Desk, Pitch Coach.</p></span> <span class="agenda-speaker"><small>Wellington</small></span> </li> <li class="agenda-break"> <span class="agenda-time"><i class="fas fa-utensils"></i>~12:30</span> <span class="agenda-details"><strong>Lunch Break</strong></span> <span class="agenda-speaker">-</span> </li> <li> <span class="agenda-time"><i class="fas fa-flag-checkered"></i>14:00</span> <span class="agenda-details"><strong>Day 1 Wrap-Up & Submit</strong><p>Submit rough model & deck draft.</p></span> <span class="agenda-speaker"><small>Via Link</small></span> </li> </ul>
                     </div>
                 </div>
             </section>
-            <!-- Other sections (Support, Outcomes, etc.) - Keep as before -->
-            <section id="support" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseSupport" aria-expanded="false" aria-controls="collapseSupport"> <h2><i class="fas fa-hands-helping"></i>Support</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseSupport" data-bs-parent="#accordionHackathon"> <div class="card-body"> <ul class="list-unstyled"> <li><i class="fas fa-chalkboard-teacher"></i> Briefing & Q&A</li> <li><i class="fas fa-user-friends"></i> Mentor Assignment</li> <li><i class="fas fa-headset"></i> Help Desk</li> <li><i class="fas fa-microphone-alt"></i> Pitch Coaching</li> <li><i class="fas fa-folder-open"></i> Resource Access</li> </ul> </div> </div> </section>
-            <section id="outcomes" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOutcomes" aria-expanded="false" aria-controls="collapseOutcomes"> <h2><i class="fas fa-check-double"></i>Outcomes</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseOutcomes" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">By end of Day 1:</p> <ul class="list-unstyled"> <li><i class="fas fa-cogs text-success"></i> Rough model/logic</li> <li><i class="fas fa-file-powerpoint text-success"></i> Draft pitch deck</li> <li><i class="fas fa-upload text-success"></i> Submitted materials</li> </ul> </div> </div> </section>
-            <section id="tracks" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTracks" aria-expanded="false" aria-controls="collapseTracks"> <h2><i class="fas fa-stream"></i>Themes</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseTracks" data-bs-parent="#accordionHackathon"> <div class="card-body"> <ul class="list-unstyled"> <li><i class="fas fa-truck-loading"></i> Supply Chain</li> <li><i class="fas fa-leaf"></i> Sustainability</li> <li><i class="fas fa-briefcase-medical"></i> Healthcare</li> <li><i class="fas fa-tasks"></i> Project Mgmt</li> <li><i class="fas fa-city"></i> Real Estate</li> <li><i class="fas fa-landmark"></i> Government</li> <li><i class="fas fa-lightbulb"></i> Open Innovation</li> </ul> <p class="small text-muted mt-2">Assigned via <a href="game.html" target="_self">Spin the Wheel</a>.</p> </div> </div> </section>
-            <section id="preparation" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapsePrep" aria-expanded="false" aria-controls="collapsePrep"> <h2><i class="fas fa-laptop-code"></i>Preparation</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapsePrep" data-bs-parent="#accordionHackathon"> <div class="card-body"> <h5 class="card-title small"><i class="fas fa-laptop me-2"></i>Hardware</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fas fa-check-circle"></i> Laptop</li> <li><i class="fas fa-check-circle"></i> Charger</li> <li><i class="fas fa-check-circle"></i> Wi-Fi @ Venue</li> </ul> <h5 class="card-title small mt-2"><i class="fas fa-tools me-2"></i>Software</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fab fa-python"></i> Python 3.8+</li> <li><i class="fas fa-book"></i> Jupyter/Editor</li> <li><i class="fas fa-code-branch"></i> Git/GitHub</li> <li><i class="fas fa-brain"></i> AI Libs (Opt)</li> <li><i class="fas fa-cloud-upload-alt"></i> Cloud Acct (Opt)</li> </ul> <h5 class="card-title small mt-2"><i class="fas fa-lightbulb me-2"></i>Knowledge</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fas fa-check"></i> Python Basics</li> <li><i class="fas fa-check"></i> Basic AI/ML</li> <li><i class="fas fa-check"></i> Teamwork!</li> </ul> </div> </div> </section>
-            <section id="prizes" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapsePrizes" aria-expanded="false" aria-controls="collapsePrizes"> <h2><i class="fas fa-trophy"></i>Prizes</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapsePrizes" data-bs-parent="#accordionHackathon"> <div class="card-body"> <ul class="list-unstyled small"> <li><i class="fas fa-trophy"></i> 1st: AED 10k, Swag, Ops</li> <li><i class="fas fa-medal"></i> 2nd: AED 5k, Swag</li> <li><i class="fas fa-award"></i> 3rd: AED 2.5k, Swag</li> <li><i class="fas fa-lightbulb"></i> Innovation Award</li> <li><i class="fas fa-gifts"></i> All: Certificate, Swag</li> <li><i class="fas fa-handshake"></i> Networking</li> </ul> </div> </div> </section>
-            <section id="judging" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseJudging" aria-expanded="false" aria-controls="collapseJudging"> <h2><i class="fas fa-gavel"></i>Judging</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseJudging" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Final judging (Day 2) considers:</p> <ul class="list-unstyled small"> <li><i class="fas fa-cogs"></i> Technical</li> <li><i class="fas fa-lightbulb"></i> Innovation</li> <li><i class="fas fa-bullseye"></i> Impact</li> <li><i class="fas fa-presentation"></i> Pitch/Demo</li> <li><i class="fas fa-check-circle"></i> Completion</li> </ul> </div> </div> </section>
-            <section id="logistics-info" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLogistics" aria-expanded="false" aria-controls="collapseLogistics"> <h2><i class="fas fa-building me-2"></i>Logistics</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseLogistics" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Venue requests:</p> <ul class="list-unstyled small"> <li><i class="fas fa-users"></i> Breakout spaces</li> <li><i class="fas fa-desktop"></i> Screen/Projector</li> <li><i class="fas fa-video"></i> Basic Recording?</li> </ul> </div> </div> </section>
-            <section id="registration-note" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseRegNote" aria-expanded="false" aria-controls="collapseRegNote"> <h2><i class="fas fa-user-check"></i>Registration</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseRegNote" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Managed via prior official communication. Ensure team details are confirmed.</p> </div> </div> </section>
-            <section id="contact" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseContact" aria-expanded="false" aria-controls="collapseContact"> <h2><i class="fas fa-envelope"></i>Contact</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseContact" data-bs-parent="#accordionHackathon"> <div class="card-body"> <div class="row small"> <div class="col-6 mb-2"> <strong>Wellington:</strong> <ul class="list-unstyled mt-1"> <li><i class="fas fa-envelope-open-text"></i> <a href="mailto:info@wellingtoncampus.co">Email</a></li> <li><i class="fas fa-phone"></i> <a href="tel:+971542523922">Call</a></li> </ul> </div> <div class="col-6 mb-2"> <strong>CommerCity:</strong> <ul class="list-unstyled mt-1"> <li><i class="fas fa-envelope-open-text"></i> Email DCC</li> <li><i class="fas fa-phone"></i> Call DCC</li> </ul> </div> </div> </div> </div> </section>
+            <!-- Other sections (Support, Outcomes, etc. - Keep as before) -->
+             <section id="support" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseSupport" aria-expanded="false" aria-controls="collapseSupport"> <h2><i class="fas fa-hands-helping"></i>Support</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseSupport" data-bs-parent="#accordionHackathon"> <div class="card-body"> <ul class="list-unstyled"> <li><i class="fas fa-chalkboard-teacher"></i> Briefing & Q&A</li> <li><i class="fas fa-user-friends"></i> Mentor Assignment</li> <li><i class="fas fa-headset"></i> Help Desk</li> <li><i class="fas fa-microphone-alt"></i> Pitch Coaching</li> <li><i class="fas fa-folder-open"></i> Resource Access</li> </ul> </div> </div> </section>
+             <section id="outcomes" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOutcomes" aria-expanded="false" aria-controls="collapseOutcomes"> <h2><i class="fas fa-check-double"></i>Outcomes</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseOutcomes" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">By end of Day 1:</p> <ul class="list-unstyled"> <li><i class="fas fa-cogs text-success"></i> Rough model/logic</li> <li><i class="fas fa-file-powerpoint text-success"></i> Draft pitch deck</li> <li><i class="fas fa-upload text-success"></i> Submitted materials</li> </ul> </div> </div> </section>
+             <section id="tracks" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTracks" aria-expanded="false" aria-controls="collapseTracks"> <h2><i class="fas fa-stream"></i>Themes</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseTracks" data-bs-parent="#accordionHackathon"> <div class="card-body"> <ul class="list-unstyled"> <li><i class="fas fa-truck-loading"></i> Supply Chain</li> <li><i class="fas fa-leaf"></i> Sustainability</li> <li><i class="fas fa-briefcase-medical"></i> Healthcare</li> <li><i class="fas fa-tasks"></i> Project Mgmt</li> <li><i class="fas fa-city"></i> Real Estate</li> <li><i class="fas fa-landmark"></i> Government</li> <li><i class="fas fa-lightbulb"></i> Open Innovation</li> </ul> <p class="small text-muted mt-2">Assigned via <a href="game.html" target="_self">Spin the Wheel</a>.</p> </div> </div> </section>
+             <section id="preparation" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapsePrep" aria-expanded="false" aria-controls="collapsePrep"> <h2><i class="fas fa-laptop-code"></i>Preparation</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapsePrep" data-bs-parent="#accordionHackathon"> <div class="card-body"> <h5 class="card-title small"><i class="fas fa-laptop me-2"></i>Hardware</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fas fa-check-circle"></i> Laptop</li> <li><i class="fas fa-check-circle"></i> Charger</li> <li><i class="fas fa-check-circle"></i> Wi-Fi @ Venue</li> </ul> <h5 class="card-title small mt-2"><i class="fas fa-tools me-2"></i>Software</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fab fa-python"></i> Python 3.8+</li> <li><i class="fas fa-book"></i> Jupyter/Editor</li> <li><i class="fas fa-code-branch"></i> Git/GitHub</li> <li><i class="fas fa-brain"></i> AI Libs (Opt)</li> <li><i class="fas fa-cloud-upload-alt"></i> Cloud Acct (Opt)</li> </ul> <h5 class="card-title small mt-2"><i class="fas fa-lightbulb me-2"></i>Knowledge</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fas fa-check"></i> Python Basics</li> <li><i class="fas fa-check"></i> Basic AI/ML</li> <li><i class="fas fa-check"></i> Teamwork!</li> </ul> </div> </div> </section>
+             <section id="prizes" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapsePrizes" aria-expanded="false" aria-controls="collapsePrizes"> <h2><i class="fas fa-trophy"></i>Prizes</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapsePrizes" data-bs-parent="#accordionHackathon"> <div class="card-body"> <ul class="list-unstyled small"> <li><i class="fas fa-trophy"></i> 1st: AED 10k, Swag, Ops</li> <li><i class="fas fa-medal"></i> 2nd: AED 5k, Swag</li> <li><i class="fas fa-award"></i> 3rd: AED 2.5k, Swag</li> <li><i class="fas fa-lightbulb"></i> Innovation Award</li> <li><i class="fas fa-gifts"></i> All: Certificate, Swag</li> <li><i class="fas fa-handshake"></i> Networking</li> </ul> </div> </div> </section>
+             <section id="judging" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseJudging" aria-expanded="false" aria-controls="collapseJudging"> <h2><i class="fas fa-gavel"></i>Judging</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseJudging" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Final judging (Day 2) considers:</p> <ul class="list-unstyled small"> <li><i class="fas fa-cogs"></i> Technical</li> <li><i class="fas fa-lightbulb"></i> Innovation</li> <li><i class="fas fa-bullseye"></i> Impact</li> <li><i class="fas fa-presentation"></i> Pitch/Demo</li> <li><i class="fas fa-check-circle"></i> Completion</li> </ul> <p class="small mt-2">Note: AI Judge Sim (<i class="fas fa-gavel"></i> button) provides simulated scores for fun/practice.</p> </div> </div> </section>
+             <section id="logistics-info" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLogistics" aria-expanded="false" aria-controls="collapseLogistics"> <h2><i class="fas fa-building me-2"></i>Logistics</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseLogistics" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Venue requests:</p> <ul class="list-unstyled small"> <li><i class="fas fa-users"></i> Breakout spaces</li> <li><i class="fas fa-desktop"></i> Screen/Projector</li> <li><i class="fas fa-video"></i> Basic Recording?</li> </ul> </div> </div> </section>
+             <section id="registration-note" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseRegNote" aria-expanded="false" aria-controls="collapseRegNote"> <h2><i class="fas fa-user-check"></i>Registration Info</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseRegNote" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Official registration was managed via prior communication. Use the 'Register / View Team' button above to confirm/join your team in the app (max 4 members/team). This is required for AI Judge inclusion.</p> </div> </div> </section>
+             <section id="contact" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseContact" aria-expanded="false" aria-controls="collapseContact"> <h2><i class="fas fa-envelope"></i>Contact</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseContact" data-bs-parent="#accordionHackathon"> <div class="card-body"> <div class="row small"> <div class="col-6 mb-2"> <strong>Wellington:</strong> <ul class="list-unstyled mt-1"> <li><i class="fas fa-envelope-open-text"></i> <a href="mailto:info@wellingtoncampus.co">Email</a></li> <li><i class="fas fa-phone"></i> <a href="tel:+971542523922">Call</a></li> </ul> </div> <div class="col-6 mb-2"> <strong>CommerCity:</strong> <ul class="list-unstyled mt-1"> <li><i class="fas fa-envelope-open-text"></i> Email DCC</li> <li><i class="fas fa-phone"></i> Call DCC</li> </ul> </div> </div> </div> </div> </section>
         </div> <!-- End Accordion -->
 
         <!-- Footer - No Changes -->
@@ -268,7 +297,7 @@
 
     </div> <!-- End Main Container -->
 
-    <!-- Floating Buttons (Position updated via CSS) -->
+    <!-- Floating Buttons (Keep Existing) -->
     <button class="floating-button" id="task-tracker-btn" title="Task Tracker" data-bs-toggle="modal" data-bs-target="#taskTrackerModal">
         <i class="fas fa-tasks"></i>
     </button>
@@ -276,7 +305,7 @@
         <i class="fas fa-gavel"></i>
     </button>
 
-    <!-- Task Tracker Modal -->
+    <!-- Task Tracker Modal (Keep Existing) -->
     <div class="modal fade" id="taskTrackerModal" tabindex="-1" aria-labelledby="taskTrackerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
@@ -288,52 +317,15 @@
                     <p class="text-muted small">Tap task to verify & mark complete. Earn Welly Points!</p>
                     <div id="task-message-area" class="mb-3"></div>
                     <div class="checklist" id="modal-checklist">
-                        <!-- ADDED data-points attribute and points span -->
-                        <div class="checklist-item" data-task-id="register" data-points="5">
-                            <i class="far fa-circle"></i><i class="far fa-check-circle"></i>
-                            <div><strong>Check-in</strong></div>
-                            <span class="task-points">+5 WP</span>
-                        </div>
-                        <div class="checklist-item" data-task-id="briefing" data-points="5">
-                            <i class="far fa-circle"></i><i class="far fa-check-circle"></i>
-                            <div><strong>Attend Briefing</strong></div>
-                            <span class="task-points">+5 WP</span>
-                        </div>
-                        <div class="checklist-item" data-task-id="challenge" data-points="10">
-                            <i class="far fa-circle"></i><i class="far fa-check-circle"></i>
-                            <div><strong>Get Challenge</strong></div>
-                            <span class="task-points">+10 WP</span>
-                        </div>
-                        <div class="checklist-item" data-task-id="brainstorm" data-points="15">
-                            <i class="far fa-circle"></i><i class="far fa-check-circle"></i>
-                            <div><strong>Plan Approach</strong></div>
-                            <span class="task-points">+15 WP</span>
-                        </div>
-                        <div class="checklist-item" data-task-id="mentor-meet" data-points="10">
-                            <i class="far fa-circle"></i><i class="far fa-check-circle"></i>
-                            <div><strong>Meet Mentor</strong></div>
-                            <span class="task-points">+10 WP</span>
-                        </div>
-                        <div class="checklist-item" data-task-id="logic-dev" data-points="25">
-                            <i class="far fa-circle"></i><i class="far fa-check-circle"></i>
-                            <div><strong>Develop Logic/Model (Draft)</strong></div>
-                            <span class="task-points">+25 WP</span>
-                        </div>
-                        <div class="checklist-item" data-task-id="deck-start" data-points="15">
-                            <i class="far fa-circle"></i><i class="far fa-check-circle"></i>
-                            <div><strong>Start Pitch Deck (Draft)</strong></div>
-                            <span class="task-points">+15 WP</span>
-                        </div>
-                        <div class="checklist-item" data-task-id="pitch-coach" data-points="10">
-                             <i class="far fa-circle"></i><i class="far fa-check-circle"></i>
-                             <div><strong>Pitch Coach Session (Optional)</strong></div>
-                             <span class="task-points">+10 WP</span>
-                         </div>
-                        <div class="checklist-item" data-task-id="day1-submit" data-points="20">
-                            <i class="far fa-circle"></i><i class="far fa-check-circle"></i>
-                            <div><strong>Submit Day 1 Drafts</strong></div>
-                            <span class="task-points">+20 WP</span>
-                        </div>
+                        <div class="checklist-item" data-task-id="register" data-points="5"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Check-in</strong></div> <span class="task-points">+5 WP</span> </div>
+                        <div class="checklist-item" data-task-id="briefing" data-points="5"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Attend Briefing</strong></div> <span class="task-points">+5 WP</span> </div>
+                        <div class="checklist-item" data-task-id="challenge" data-points="10"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Get Challenge</strong></div> <span class="task-points">+10 WP</span> </div>
+                        <div class="checklist-item" data-task-id="brainstorm" data-points="15"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Plan Approach</strong></div> <span class="task-points">+15 WP</span> </div>
+                        <div class="checklist-item" data-task-id="mentor-meet" data-points="10"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Meet Mentor</strong></div> <span class="task-points">+10 WP</span> </div>
+                        <div class="checklist-item" data-task-id="logic-dev" data-points="25"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Develop Logic/Model (Draft)</strong></div> <span class="task-points">+25 WP</span> </div>
+                        <div class="checklist-item" data-task-id="deck-start" data-points="15"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Start Pitch Deck (Draft)</strong></div> <span class="task-points">+15 WP</span> </div>
+                        <div class="checklist-item" data-task-id="pitch-coach" data-points="10"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Pitch Coach Session (Optional)</strong></div> <span class="task-points">+10 WP</span> </div>
+                        <div class="checklist-item" data-task-id="day1-submit" data-points="20"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Submit Day 1 Drafts</strong></div> <span class="task-points">+20 WP</span> </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -343,21 +335,107 @@
         </div>
     </div>
 
-    <!-- AI Judge Modal - No Changes needed here -->
+    <!-- AI Judge Modal (MODIFIED Select Options) -->
     <div class="modal fade" id="aiJudgeModal" tabindex="-1" aria-labelledby="aiJudgeModalLabel" aria-hidden="true">
-         <div class="modal-dialog modal-lg modal-dialog-scrollable"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="aiJudgeModalLabel"><i class="fas fa-brain me-2"></i>AI Judge Sim</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <p class="text-muted small">Select team, click Judge.</p> <div class="row g-2 align-items-end mb-3"> <div class="col-8"> <label for="judgeTeamSelect" class="form-label visually-hidden">Select Team:</label> <select class="form-select form-select-sm" id="judgeTeamSelect"> <option selected disabled value="">-- Choose Team --</option> <option value="Team Alpha">Team Alpha (Logistics)</option> <option value="Team Beta">Team Beta (Sustainability)</option> <option value="Team Gamma">Team Gamma (Healthcare)</option> <option value="Team Delta">Team Delta (Open Innovation)</option> <option value="The AI Mavericks">The AI Mavericks (Proj Mgmt)</option> </select> </div> <div class="col-4"> <button class="btn btn-primary w-100 btn-sm" type="button" id="judgeProjectBtn"> <i class="fas fa-play me-1"></i> Judge </button> </div> </div> <div id="judgeLoader"> <div class="spinner-border spinner-border-sm text-primary" role="status"> <span class="visually-hidden">Loading...</span> </div> <p class="small">AI analyzing...</p> </div> <div id="judgeResultsArea"> <h5 id="judgeResultTeamName" class="small"></h5> <div id="judgeResultAnalysis"> <h6 class="small">Analysis:</h6> <ul id="judgeResultAnalysisList" class="small"></ul> </div> <div id="judgeResultScore"></div> </div> <p class="mb-0 small text-muted fst-italic mt-3"> <i class="fas fa-info-circle me-1"></i> Simulation only. </p> <hr class="my-3"> <div id="leaderboardSection"> <h5 class="text-center mb-2 small"><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>Leaderboard</h5> <div class="table-responsive"> <table class="table table-striped table-hover table-sm align-middle small"> <thead class="table-dark small"> <tr> <th scope="col" style="width: 15%; text-align: center;">Rank</th> <th scope="col">Team</th> <th scope="col" style="width: 25%; text-align: center;">Score</th> </tr> </thead> <tbody id="leaderboard-body"> <tr id="leaderboard-placeholder"> <td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td> </tr> </tbody> </table> </div> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button> </div> </div> </div>
+         <div class="modal-dialog modal-lg modal-dialog-scrollable"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="aiJudgeModalLabel"><i class="fas fa-brain me-2"></i>AI Judge Sim</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <p class="text-muted small">Select a registered team, click Judge.</p> <div class="row g-2 align-items-end mb-3"> <div class="col-8"> <label for="judgeTeamSelect" class="form-label visually-hidden">Select Team:</label> <select class="form-select form-select-sm" id="judgeTeamSelect"> <option selected disabled value="">-- Choose Registered Team --</option> <!-- Options will be populated dynamically --> </select> </div> <div class="col-4"> <button class="btn btn-primary w-100 btn-sm" type="button" id="judgeProjectBtn"> <i class="fas fa-play me-1"></i> Judge </button> </div> </div> <div id="judgeLoader"> <div class="spinner-border spinner-border-sm text-primary" role="status"> <span class="visually-hidden">Loading...</span> </div> <p class="small">AI analyzing...</p> </div> <div id="judgeResultsArea"> <h5 id="judgeResultTeamName" class="small"></h5> <div id="judgeResultAnalysis"> <h6 class="small">Analysis:</h6> <ul id="judgeResultAnalysisList" class="small"></ul> </div> <div id="judgeResultScore"></div> </div> <p class="mb-0 small text-muted fst-italic mt-3"> <i class="fas fa-info-circle me-1"></i> Simulation only. </p> <hr class="my-3"> <div id="leaderboardSection"> <h5 class="text-center mb-2 small"><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>AI Judge Leaderboard</h5> <div class="table-responsive"> <table class="table table-striped table-hover table-sm align-middle small"> <thead class="table-dark small"> <tr> <th scope="col" style="width: 15%; text-align: center;">Rank</th> <th scope="col">Team</th> <th scope="col" style="width: 25%; text-align: center;">Score</th> </tr> </thead> <tbody id="leaderboard-body"> <tr id="leaderboard-placeholder"> <td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td> </tr> </tbody> </table> </div> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button> </div> </div> </div>
     </div>
 
-    <!-- Flying Score Element - No Changes -->
+    <!-- ADDED: Registration Modal -->
+    <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registrationModalLabel"><i class="fas fa-users me-2"></i>Hackathon Team Registration</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registrationForm">
+                        <div class="mb-3">
+                            <label for="participantName" class="form-label small">Your Name:</label>
+                            <input type="text" class="form-control form-control-sm" id="participantName" readonly disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="universityInput" class="form-label small">Your University/Institution:<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-sm" id="universityInput" required placeholder="e.g., Wellington University">
+                        </div>
+                        <hr>
+                        <p class="small text-muted">Choose ONE option below (max 4 members per team):</p>
+                        <div class="mb-3">
+                            <label for="existingTeamSelect" class="form-label small">1. Join Existing Team:</label>
+                            <select class="form-select form-select-sm" id="existingTeamSelect">
+                                <option value="">-- Select a team to join --</option>
+                                <!-- Teams populated dynamically -->
+                            </select>
+                            <div id="team-member-count" class="form-text small"></div>
+                        </div>
+                        <div class="mb-3 text-center small fw-bold">OR</div>
+                        <div class="mb-3">
+                            <label for="newTeamNameInput" class="form-label small">2. Create New Team:</label>
+                            <input type="text" class="form-control form-control-sm" id="newTeamNameInput" placeholder="Enter unique team name">
+                        </div>
+                        <div id="registrationFeedback" class="text-center"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="submitRegistrationBtn">
+                        <i class="fas fa-check me-1"></i> Confirm Registration
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADDED: Profile Modal -->
+    <div class="modal fade" id="userProfileModal" tabindex="-1" aria-labelledby="userProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userProfileModalLabel">Your Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-user-avatar">👤</div>
+                    <h4 id="modal-user-name">Player Name</h4>
+                    <div id="modal-welly-points-display">
+                        <i class="fas fa-star"></i> <span id="modal-welly-points">0</span> WP
+                    </div>
+                    <div id="profile-rank-display">Rank: Calculating...</div>
+                    <div id="profile-leaderboard-section">
+                        <h5><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>Points Leaderboard (Top 5)</h5>
+                        <div id="leaderboard-loading" style="display: none;">Loading leaderboard...</div>
+                        <div id="leaderboard-empty" style="display: none;">Leaderboard is empty or unavailable.</div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover table-sm caption-top" id="profile-leaderboard-table">
+                                <thead><tr><th scope="col" style="width: 15%; text-align: center;">Rank</th><th scope="col">Player</th><th scope="col" style="width: 30%; text-align: right;">Points</th></tr></thead>
+                                <tbody id="profile-leaderboard-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <div> <!-- Wrap button and feedback -->
+                        <button type="button" class="btn btn-danger btn-sm" id="delete-progress-btn">
+                            <i class="fas fa-trash-alt me-1"></i> Reset Points/Tasks
+                        </button>
+                        <div id="reset-feedback" class="small"></div> <!-- Feedback area -->
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flying Score Element (Keep Existing) -->
     <div id="flying-score-element"></div>
 
-    <!-- Bottom Navigation - Added active class to Hackathon -->
+    <!-- Bottom Navigation (Keep Existing, Hackathon active) -->
     <nav class="bottom-nav" aria-label="Mobile navigation">
          <div class="d-flex justify-content-around w-100">
              <a href="index.html" target="_self" class="btn"><i class="fas fa-home"></i>Home</a>
              <a href="courses.html" target="_self" class="btn"><i class="fas fa-book"></i>LMS</a>
              <a href="game.html" target="_self" class="btn"><i class="fas fa-puzzle-piece"></i>Quest</a>
-             <a href="hackathon.html" target="_self" class="btn active"><i class="fas fa-laptop-code"></i>Hackathon</a> <!-- Added 'active' class -->
+             <a href="hackathon.html" target="_self" class="btn active"><i class="fas fa-laptop-code"></i>Hackathon</a> <!-- Active -->
          </div>
      </nav>
 
@@ -368,6 +446,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const tg = window.Telegram.WebApp;
+            const MAX_TEAM_MEMBERS = 4;
 
             // --- Element References ---
             const logo = document.getElementById('header-logo');
@@ -375,187 +454,270 @@
             const userNameDisplay = document.getElementById('user-name-display');
             const wellyPointsDisplay = document.getElementById('welly-points');
             const userAvatarContainer = document.getElementById('user-avatar');
-            const userProfileElement = document.getElementById('user-profile'); // Ref for points animation target
+            const userProfileElement = document.getElementById('user-profile');
             const modalChecklist = document.getElementById('modal-checklist');
             const messageArea = document.getElementById('task-message-area');
             const progressBar = document.querySelector('#progress .progress-bar');
             const taskModalElement = document.getElementById('taskTrackerModal');
             const judgeModalElement = document.getElementById('aiJudgeModal');
-            const judgeTeamSelect = document.getElementById('judgeTeamSelect');
+            const judgeTeamSelect = document.getElementById('judgeTeamSelect'); // AI Judge dropdown
             const judgeProjectBtn = document.getElementById('judgeProjectBtn');
             const judgeLoader = document.getElementById('judgeLoader');
             const judgeResultsArea = document.getElementById('judgeResultsArea');
             const judgeResultTeamName = document.getElementById('judgeResultTeamName');
             const judgeResultAnalysisList = document.getElementById('judgeResultAnalysisList');
             const judgeResultScore = document.getElementById('judgeResultScore');
-            const leaderboardSection = document.getElementById('leaderboardSection');
-            const leaderboardBody = document.getElementById('leaderboard-body');
+            const aiJudgeLeaderboardSection = document.getElementById('leaderboardSection'); // AI Judge leaderboard
+            const aiJudgeLeaderboardBody = document.getElementById('leaderboard-body');
+            const aiJudgeLeaderboardPlaceholder = document.getElementById('leaderboard-placeholder');
             const flyingScoreElement = document.getElementById('flying-score-element');
-            const leaderboardPlaceholder = document.getElementById('leaderboard-placeholder');
+
+            // Profile Modal Elements
+            const profileModalElement = document.getElementById('userProfileModal');
+            const modalUserAvatar = document.getElementById('modal-user-avatar');
+            const modalUserName = document.getElementById('modal-user-name');
+            const modalWellyPoints = document.getElementById('modal-welly-points');
+            const profileRankDisplay = document.getElementById('profile-rank-display');
+            const profileLeaderboardTableBody = document.getElementById('profile-leaderboard-body');
+            const profileLeaderboardLoading = document.getElementById('leaderboard-loading');
+            const profileLeaderboardEmpty = document.getElementById('leaderboard-empty');
+            const deleteProgressBtn = document.getElementById('delete-progress-btn');
+            const resetFeedbackArea = document.getElementById('reset-feedback');
+
+            // Registration Elements
+            const registerTeamBtn = document.getElementById('registerTeamBtn');
+            const registrationModalElement = document.getElementById('registrationModal');
+            const participantNameInput = document.getElementById('participantName');
+            const universityInput = document.getElementById('universityInput');
+            const existingTeamSelect = document.getElementById('existingTeamSelect');
+            const newTeamNameInput = document.getElementById('newTeamNameInput');
+            const submitRegistrationBtn = document.getElementById('submitRegistrationBtn');
+            const registrationFeedback = document.getElementById('registrationFeedback');
+            const registrationStatusMsg = document.getElementById('registration-status-message');
+            const teamMemberCountDisplay = document.getElementById('team-member-count');
+
+
+            // --- CloudStorage Keys ---
+            const POINTS_KEY = 'totalWellyPoints_CS';
+            const TASK_STATE_KEY_CS = 'hackathonDay1TaskStatus_CS';
+            const TASK_STATE_KEY_LS = 'hackathonDay1TaskStatus_LS';
+            const POINTS_LEADERBOARD_KEY = 'pointsLeaderboardData_CS'; // For profile modal
+            const HACKATHON_TEAMS_KEY = 'hackathonTeamsData_CS';       // Stores team structures { teamName: { members: [{id, name, uni}], theme: "assigned_theme" (optional) } }
+            const USER_REGISTRATION_KEY_PREFIX = 'userHackathonReg_'; // Stores user's team name: userHackathonReg_USERID = "TeamName"
 
 
             // --- State Variables ---
             let currentUser = null;
             let totalWellyPoints = 0;
-            let taskState = {}; // Load after initializing TG
-            let leaderboardData = []; // AI Judge Leaderboard data
+            let taskState = {};
+            let aiJudgeLeaderboardData = []; // AI Judge Simulation leaderboard data
+            let hackathonTeamsData = {}; // Structure to hold team info { teamName: { members: [], theme: null } }
+            let userRegisteredTeam = null; // Store the team name the current user is registered to
+
+            // --- PRESET TEAMS (Optional: For initial AI Judge list if desired) ---
+            const PRESET_TEAMS = [
+                 { name: "Team Alpha", theme: "Logistics" },
+                 { name: "Team Beta", theme: "Sustainability" },
+                 { name: "Team Gamma", theme: "Healthcare" },
+                 { name: "Team Delta", theme: "Open Innovation" },
+                 { name: "The AI Mavericks", theme: "Proj Mgmt" }
+            ];
+
 
             // --- Initialize Telegram Mini App & Profile ---
-            function initializeTelegramApp() {
-                if (tg && tg.initDataUnsafe) {
-                    tg.ready();
-                    tg.expand(); // Expand the Mini App view
-                    tg.BackButton.show();
-                    tg.onEvent('backButtonClicked', handleBackButton);
+            async function initializeTelegramApp() {
+                try {
+                    if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                        tg.ready();
+                        tg.expand();
+                        tg.BackButton.show();
+                        tg.onEvent('backButtonClicked', handleBackButton);
 
-                    currentUser = tg.initDataUnsafe.user;
-                    updateUserProfileDisplay();
-                    loadWellyPoints(); // Load points AFTER initializing TG
+                        currentUser = tg.initDataUnsafe.user;
+                        console.log("User Initialized:", currentUser);
+                        updateUserProfileDisplay(); // Update header and potentially modal elements if open
 
-                    // Load task state AFTER TG is ready and points are loaded
-                    loadTaskState().then(() => {
-                        initializeTaskUI(); // Populate UI based on loaded state
-                        updateProgressBar(); // Update progress bar after loading state
-                    });
+                        // Enable registration button only after user is loaded
+                        if (registerTeamBtn) registerTeamBtn.disabled = false;
 
-                    console.log("Telegram Mini App Initialized on Hackathon Page.");
-                    if (tg.CloudStorage) {
-                        console.log("CloudStorage is available.");
+                        // Parallel loading of data
+                        await Promise.all([
+                            loadWellyPoints(),
+                            loadTaskState(),
+                            loadHackathonTeams(),
+                            checkUserRegistration() // Check registration status *after* loading user
+                        ]);
+
+                        // Initialize UI elements that depend on loaded data
+                        initializeTaskUI();
+                        updateProgressBar();
+                        updateAiJudgeTeamsDropdown(); // Populate AI judge dropdown
+                        updateRegistrationButtonState(); // Update button text/status based on registration
+
+                        console.log("Telegram Mini App Initialized on Hackathon Page.");
+                        if (tg.CloudStorage) {
+                            console.log("CloudStorage is available.");
+                        } else {
+                            console.warn("CloudStorage is NOT available. Progress/Teams may not save/load correctly.");
+                            tg.showAlert("Warning: Cloud Storage not available. Progress might not be saved.", () => {});
+                        }
+
                     } else {
-                         console.warn("CloudStorage is NOT available.");
+                        console.warn("Not running in Telegram context or user data unavailable.");
+                        displayGuestProfile();
+                        // Load tasks from local storage if not in TG
+                        taskState = loadTaskStateLocal();
+                        initializeTaskUI();
+                        updateProgressBar();
                     }
-
-                } else {
-                    console.warn("Not running in Telegram context or initDataUnsafe missing.");
-                    const profileElement = document.getElementById('user-profile');
-                    if(profileElement) profileElement.style.display = 'none'; // Hide profile if not in TG
-                    // Initialize tasks with local storage if not in TG
-                    taskState = loadTaskStateLocal();
-                    initializeTaskUI();
-                    updateProgressBar();
+                } catch (error) {
+                     console.error("Error during Telegram App Initialization:", error);
+                     displayGuestProfile();
+                     tg.showAlert(`Initialization Error: ${error.message || error}`);
                 }
             }
 
+            function displayGuestProfile() {
+                 if(userProfileElement) {
+                     userProfileElement.style.display = 'none';
+                     userProfileElement.removeAttribute('data-bs-toggle');
+                     userProfileElement.removeAttribute('data-bs-target');
+                     userProfileElement.style.cursor = 'default';
+                 }
+                 if(registerTeamBtn) {
+                     registerTeamBtn.disabled = true;
+                     registerTeamBtn.textContent = 'Login via Telegram to Register';
+                 }
+                 if(userNameDisplay) userNameDisplay.textContent = 'Guest';
+                 if(userAvatarContainer) userAvatarContainer.innerHTML = '👤';
+                 if(wellyPointsDisplay) wellyPointsDisplay.textContent = '0';
+                 if (deleteProgressBtn) deleteProgressBtn.disabled = true;
+            }
+
             function handleBackButton() {
-                // Navigate back or close the app
                 if (window.history.length > 1) {
                     window.history.back();
                 } else if (tg && tg.close) {
                     tg.close();
                 } else {
                     console.log("No history to go back to.");
-                    // Potentially redirect to a known 'home' page if needed
-                    // window.location.href = 'index.html';
+                    // window.location.href = 'index.html'; // Optional fallback
                 }
             }
 
-             function updateUserProfileDisplay() {
-                 if (!currentUser) {
-                     if(userNameDisplay) userNameDisplay.textContent = 'Guest';
-                     if(userAvatarContainer) userAvatarContainer.textContent = '👤';
-                     return;
-                 };
-                 if (userNameDisplay) userNameDisplay.textContent = currentUser.first_name || 'Player';
+            // Combined function to update user profile display (header and potentially modal)
+            function updateUserProfileDisplay() {
+                 if (!currentUser) return; // Ensure currentUser is loaded
+
+                 const displayName = currentUser.first_name || 'Player';
+                 const photoUrl = currentUser.photo_url;
+
+                 // Header Update
+                 if (userNameDisplay) userNameDisplay.textContent = displayName;
                  if (userAvatarContainer) {
                      userAvatarContainer.innerHTML = ''; // Clear default
-                     if (currentUser.photo_url) {
+                     if (photoUrl) {
                          const img = document.createElement('img');
-                         img.src = currentUser.photo_url;
-                         img.alt = `${currentUser.first_name}'s photo`; // More descriptive alt text
+                         img.src = photoUrl;
+                         img.alt = `${displayName}'s photo`;
                          userAvatarContainer.appendChild(img);
                      } else {
                          userAvatarContainer.textContent = '🎓'; // Fallback icon
                      }
                  }
-             }
+                 if (wellyPointsDisplay) wellyPointsDisplay.textContent = totalWellyPoints;
 
-             // --- Welly Points Management ---
+                 // Profile Modal Update (if it exists)
+                 if (modalUserName) modalUserName.textContent = displayName;
+                 if (modalUserAvatar) {
+                     modalUserAvatar.innerHTML = '';
+                     if (photoUrl) {
+                         const img = document.createElement('img');
+                         img.src = photoUrl;
+                         img.alt = `Profile picture`;
+                         modalUserAvatar.appendChild(img);
+                     } else {
+                         modalUserAvatar.textContent = '🎓';
+                     }
+                 }
+                 if (modalWellyPoints) modalWellyPoints.textContent = totalWellyPoints; // Update points in modal too
+            }
+
+             // --- Welly Points Management (Adapted Key) ---
              function loadWellyPoints() {
                  return new Promise((resolve) => {
-                     totalWellyPoints = 0; // Default
+                     totalWellyPoints = 0;
                      if (tg && tg.CloudStorage) {
-                          console.log("Attempting to load WP from CloudStorage...");
-                          tg.CloudStorage.getItem('totalWellyPoints', (error, value) => {
+                          tg.CloudStorage.getItem(POINTS_KEY, (error, value) => {
                                if (error) {
-                                   console.error("CS Load Error:", error);
-                                   tg.showAlert(`Error loading points: ${error}`);
-                                   totalWellyPoints = 0; // Fallback
+                                   console.error(`CS Load Error (${POINTS_KEY}):`, error);
+                                   // Don't show alert here, let initialization handle overall errors
                                } else if (value) {
                                    totalWellyPoints = parseInt(value, 10) || 0;
-                                   console.log("Loaded WP from CloudStorage:", totalWellyPoints);
+                                   console.log(`Loaded WP from CloudStorage (${POINTS_KEY}):`, totalWellyPoints);
                                } else {
-                                   totalWellyPoints = 0;
-                                   console.log("No WP found in CloudStorage, starting at 0.");
+                                   console.log(`${POINTS_KEY} not found in CS, starting at 0.`);
                                }
-                               updateWellyPointsDisplay(); // Update UI after loading
-                               resolve(); // Resolve the promise
+                               updateUserProfileDisplay(); // Update UI after loading/defaulting
+                               resolve();
                           });
                      } else {
-                         console.warn("CloudStorage not available. Points will not persist.");
-                         updateWellyPointsDisplay(); // Update UI with default 0
-                         resolve(); // Resolve anyway
+                         console.warn("CloudStorage not available for points.");
+                         updateUserProfileDisplay();
+                         resolve();
                      }
                  });
              }
 
             function saveWellyPoints() {
-                 if (tg && tg.CloudStorage) {
-                     console.log("Attempting to save WP to CloudStorage:", totalWellyPoints);
-                     tg.CloudStorage.setItem('totalWellyPoints', totalWellyPoints.toString(), (error, success) => {
-                          if (error) {
-                              console.error("CS Save Error:", error);
-                              tg.showAlert(`Error saving points: ${error}`);
-                          } else if (success) {
-                              console.log("WP saved successfully to CloudStorage:", totalWellyPoints);
-                          } else {
-                               console.warn("WP save call completed, but success flag was not true.");
-                          }
-                     });
-                 } else {
-                      console.warn("CloudStorage not available. Points not saved.");
-                 }
-             }
-
-             function updateWellyPointsDisplay() {
-                 if (wellyPointsDisplay) {
-                     wellyPointsDisplay.textContent = totalWellyPoints;
-                 }
+                 return new Promise((resolve, reject) => {
+                     if (tg && tg.CloudStorage) {
+                         tg.CloudStorage.setItem(POINTS_KEY, totalWellyPoints.toString(), (error, success) => {
+                              if (error) {
+                                  console.error(`CS Save Error (${POINTS_KEY}):`, error);
+                                  reject(error); // Reject promise on error
+                              } else if (success) {
+                                  console.log(`WP saved successfully to CS (${POINTS_KEY}):`, totalWellyPoints);
+                                  resolve(true); // Resolve promise on success
+                              } else {
+                                   console.warn(`WP save call (${POINTS_KEY}) completed, but success flag was not true.`);
+                                   resolve(false); // Resolve with false if not explicitly successful
+                              }
+                         });
+                     } else {
+                          console.warn("CloudStorage not available. Points not saved.");
+                          resolve(false); // Resolve with false if CS not available
+                     }
+                 });
              }
 
             function showPointsGainAnimation(points) {
+                 // (Keep existing implementation)
                  if (!userProfileElement || points <= 0) return;
-
                  const gainElement = document.createElement('div');
                  gainElement.textContent = `+${points} WP`;
                  gainElement.className = 'welly-points-gain';
                  document.body.appendChild(gainElement);
-
                  const profileRect = userProfileElement.getBoundingClientRect();
                  const startX = profileRect.left + profileRect.width / 2;
-                 const startY = profileRect.bottom + 10; // Start below the profile
-
+                 const startY = profileRect.bottom + 10;
                  gainElement.style.left = `${startX}px`;
                  gainElement.style.top = `${startY}px`;
-                 gainElement.style.transform = 'translateX(-50%) scale(0.8)'; // Center align horizontally
-
-                 // Force reflow to apply initial styles before transition
-                 void gainElement.offsetWidth;
-
-                 // Animate upwards and fade out
+                 gainElement.style.opacity = '0'; // Start invisible
+                 gainElement.style.transform = 'translateX(-50%) scale(0.8)';
+                 void gainElement.offsetWidth; // Reflow
                  gainElement.style.top = `${startY - 40}px`;
                  gainElement.style.opacity = '1';
                  gainElement.style.transform = 'translateX(-50%) scale(1)';
-
                  setTimeout(() => {
                      gainElement.style.opacity = '0';
                      gainElement.style.transform = 'translateX(-50%) scale(0.8)';
-                     setTimeout(() => {
-                         gainElement.remove();
-                     }, 800); // Remove after fade out transition
-                 }, 1000); // Start fading out after 1 second
-             }
+                     setTimeout(() => gainElement.remove(), 800);
+                 }, 1000);
+            }
 
-            // --- Shrinking Logo Logic ---
+
+            // --- Shrinking Logo Logic (Keep existing) ---
             function setupLogoScroll() {
                  if (logo) {
                      const handleScroll = () => {
@@ -569,208 +731,554 @@
                  }
             }
 
-            // --- Task Tracker Logic (Modified for Points & Verification) ---
-
-            const TASK_STATE_KEY_CS = 'hackathonDay1TaskStatus_CS'; // CloudStorage key
-            const TASK_STATE_KEY_LS = 'hackathonDay1TaskStatus_LS'; // LocalStorage fallback key
-
-            // Load state: Prioritize CloudStorage, fallback to LocalStorage
+            // --- Task Tracker Logic (Keep Existing - Uses TASK_STATE_KEY_CS/LS) ---
             function loadTaskState() {
                 return new Promise((resolve) => {
                     if (tg && tg.CloudStorage) {
                         tg.CloudStorage.getItem(TASK_STATE_KEY_CS, (error, value) => {
-                            if (error) {
-                                console.error("CS Task Load Error:", error);
-                                // Fallback to localStorage on CS error
-                                taskState = loadTaskStateLocal();
-                                resolve();
-                            } else if (value) {
-                                try {
-                                    taskState = JSON.parse(value);
-                                    console.log("Loaded Task State from CloudStorage:", taskState);
-                                } catch (e) {
-                                    console.error("Error parsing Task State from CS:", e);
-                                    taskState = loadTaskStateLocal(); // Fallback if parse error
-                                }
-                                resolve();
-                            } else {
-                                console.log("No Task State in CloudStorage, trying LocalStorage.");
-                                taskState = loadTaskStateLocal(); // Fallback if no value in CS
-                                resolve();
-                            }
+                            if (error) { console.error("CS Task Load Error:", error); taskState = loadTaskStateLocal(); }
+                            else if (value) { try { taskState = JSON.parse(value); console.log("Loaded Task State from CS:", taskState); } catch (e) { console.error("Error parsing Task State from CS:", e); taskState = loadTaskStateLocal(); } }
+                            else { console.log("No Task State in CS, trying LS."); taskState = loadTaskStateLocal(); }
+                            resolve();
                         });
+                    } else { console.warn("CloudStorage not available for tasks. Using LS."); taskState = loadTaskStateLocal(); resolve(); }
+                });
+            }
+            function loadTaskStateLocal() { const storedState = localStorage.getItem(TASK_STATE_KEY_LS); try { return storedState ? JSON.parse(storedState) : {}; } catch (e) { console.error("Error parsing Task State from LS:", e); return {}; } }
+            function saveTaskState(state) {
+                 const stateString = JSON.stringify(state);
+                 if (tg && tg.CloudStorage) {
+                     tg.CloudStorage.setItem(TASK_STATE_KEY_CS, stateString, (error, success) => { if (error) console.error("CS Task Save Error:", error); else if (success) console.log("Task State saved to CS."); else console.warn("Task State CS save call completed, but success flag false."); });
+                 }
+                 try { localStorage.setItem(TASK_STATE_KEY_LS, stateString); console.log("Task State saved to LS."); } catch (e) { console.error("Error saving Task State to LS:", e); }
+            }
+            function initializeTaskUI() { if (!modalChecklist) return; modalChecklist.querySelectorAll('.checklist-item[data-task-id]').forEach(item => { const taskId = item.dataset.taskId; updateTaskUI(taskId, taskState[taskId] === true); }); }
+            function updateTaskUI(taskId, isCompleted) { const modalItem = modalChecklist?.querySelector(`.checklist-item[data-task-id="${taskId}"]`); if (modalItem) { modalItem.classList.toggle('completed', isCompleted); } }
+            function showMessage(message, type = 'success', area = messageArea) { if (area) { area.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show small p-2" role="alert">${message}<button type="button" class="btn-close btn-sm p-2" data-bs-dismiss="alert" aria-label="Close"></button></div>`; } }
+            function clearMessages(area = messageArea) { if (area) area.innerHTML = ''; }
+            function updateProgressBar() { const taskItems = modalChecklist?.querySelectorAll('.checklist-item[data-task-id]'); if (!taskItems || taskItems.length === 0 || !progressBar) return; const totalTasks = taskItems.length; const completedTasks = Object.values(taskState).filter(status => status === true).length; const progressPercent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0; progressBar.style.width = progressPercent + '%'; progressBar.textContent = `${progressPercent}%`; progressBar.setAttribute('aria-valuenow', progressPercent); progressBar.classList.toggle('bg-success', progressPercent === 100); progressBar.classList.toggle('progress-bar-animated', progressPercent < 100); progressBar.classList.toggle('progress-bar-striped', progressPercent < 100); }
+            if (modalChecklist) {
+                modalChecklist.addEventListener('click', function(event) {
+                    const taskItem = event.target.closest('.checklist-item[data-task-id]'); if (!taskItem) return; const taskId = taskItem.dataset.taskId; const taskNameElement = taskItem.querySelector('strong'); const taskName = taskNameElement ? taskNameElement.textContent.trim() : `Task ${taskId}`; const pointsToAdd = parseInt(taskItem.dataset.points || '0', 10); const isCurrentlyCompleted = taskState[taskId] === true; clearMessages();
+                    if (isCurrentlyCompleted) {
+                         if (confirm(`Mark "${taskName}" as incomplete? (Points will not be deducted)`)) { taskState[taskId] = false; saveTaskState(taskState); updateTaskUI(taskId, false); updateProgressBar(); showMessage(`Task "${taskName}" marked incomplete.`, 'warning'); }
                     } else {
-                        console.warn("CloudStorage not available for tasks. Using LocalStorage.");
-                        taskState = loadTaskStateLocal();
-                        resolve();
+                         if (confirm(`Mark "${taskName}" as complete and claim ${pointsToAdd} WP?`)) { taskState[taskId] = true; saveTaskState(taskState); updateTaskUI(taskId, true); if (pointsToAdd > 0) { totalWellyPoints += pointsToAdd; saveWellyPoints(); updateUserProfileDisplay(); showPointsGainAnimation(pointsToAdd); showMessage(`Task "${taskName}" complete! +${pointsToAdd} WP earned.`, 'success'); } else { showMessage(`Task "${taskName}" complete!`, 'success'); } updateProgressBar(); }
                     }
+                });
+            } else console.warn("Modal checklist container (#modal-checklist) not found.");
+            if (taskModalElement) taskModalElement.addEventListener('hidden.bs.modal', clearMessages);
+            // --- END Task Tracker Logic ---
+
+
+            // --- Hackathon Team Registration Logic ---
+            function getUserRegistrationKey() {
+                return currentUser ? `${USER_REGISTRATION_KEY_PREFIX}${currentUser.id}` : null;
+            }
+
+            function loadHackathonTeams() {
+                return new Promise((resolve) => {
+                    hackathonTeamsData = {}; // Reset
+                    if (tg && tg.CloudStorage) {
+                        tg.CloudStorage.getItem(HACKATHON_TEAMS_KEY, (error, value) => {
+                            if (error) { console.error(`CS Load Error (${HACKATHON_TEAMS_KEY}):`, error); }
+                            else if (value) { try { hackathonTeamsData = JSON.parse(value); console.log("Loaded Teams from CS:", hackathonTeamsData); } catch (e) { console.error("Error parsing Teams from CS:", e); hackathonTeamsData = {}; } }
+                            else { console.log("No Teams found in CS, starting empty."); }
+                            resolve();
+                        });
+                    } else { console.warn("CloudStorage not available for teams."); resolve(); }
                 });
             }
 
-            // Helper to load from LocalStorage
-            function loadTaskStateLocal() {
-                const storedState = localStorage.getItem(TASK_STATE_KEY_LS);
-                try {
-                     return storedState ? JSON.parse(storedState) : {};
-                } catch (e) {
-                    console.error("Error parsing Task State from LocalStorage:", e);
-                    return {}; // Return empty if parse error
-                }
+            function saveHackathonTeams() {
+                return new Promise((resolve, reject) => {
+                    if (tg && tg.CloudStorage) {
+                        tg.CloudStorage.setItem(HACKATHON_TEAMS_KEY, JSON.stringify(hackathonTeamsData), (error, success) => {
+                            if (error) { console.error(`CS Save Error (${HACKATHON_TEAMS_KEY}):`, error); reject(error); }
+                            else if (success) { console.log("Teams saved to CS:", hackathonTeamsData); resolve(true); }
+                            else { console.warn(`Teams save call (${HACKATHON_TEAMS_KEY}) completed, but success flag false.`); resolve(false); }
+                        });
+                    } else { console.warn("CloudStorage not available. Teams not saved."); resolve(false); }
+                });
             }
 
-            // Save state: Save to both CloudStorage (if available) and LocalStorage
-            function saveTaskState(state) {
-                 const stateString = JSON.stringify(state);
+            function checkUserRegistration() {
+                return new Promise((resolve) => {
+                    userRegisteredTeam = null; // Reset
+                    const userRegKey = getUserRegistrationKey();
+                    if (userRegKey && tg && tg.CloudStorage) {
+                        tg.CloudStorage.getItem(userRegKey, (error, value) => {
+                            if (error) { console.error(`CS Load Error (${userRegKey}):`, error); }
+                            else if (value) { userRegisteredTeam = value; console.log(`User ${currentUser.id} is registered to team: ${userRegisteredTeam}`); }
+                            else { console.log(`User ${currentUser.id} not found registered.`); }
+                            resolve();
+                        });
+                    } else { resolve(); } // Resolve immediately if no key or CS
+                });
+            }
 
-                 // Save to CloudStorage
-                 if (tg && tg.CloudStorage) {
-                     tg.CloudStorage.setItem(TASK_STATE_KEY_CS, stateString, (error, success) => {
-                          if (error) {
-                              console.error("CS Task Save Error:", error);
-                              // Optionally show user error
-                          } else if (success) {
-                              console.log("Task State saved successfully to CloudStorage.");
-                          } else {
-                              console.warn("Task State CS save call completed, but success flag was not true.");
-                          }
+            function saveUserRegistration(teamName) {
+                 return new Promise((resolve, reject) => {
+                     const userRegKey = getUserRegistrationKey();
+                     if (userRegKey && tg && tg.CloudStorage) {
+                         tg.CloudStorage.setItem(userRegKey, teamName, (error, success) => {
+                             if (error) { console.error(`CS Save Error (${userRegKey}):`, error); reject(error); }
+                             else if (success) { userRegisteredTeam = teamName; console.log(`User ${currentUser.id} registration saved for team: ${teamName}`); resolve(true); }
+                             else { console.warn(`User reg save call (${userRegKey}) completed, but success flag false.`); resolve(false); }
+                         });
+                     } else { console.warn("CloudStorage/UserKey not available. User registration not saved."); resolve(false); }
+                 });
+            }
+
+             function populateRegistrationForm() {
+                 if (!currentUser || !registrationModalElement) return;
+
+                 // Pre-fill user name
+                 if (participantNameInput) participantNameInput.value = currentUser.first_name || '';
+
+                 // Clear previous options and feedback
+                 if (existingTeamSelect) {
+                    existingTeamSelect.innerHTML = '<option value="">-- Select a team to join --</option>'; // Reset
+                 }
+                 if (newTeamNameInput) newTeamNameInput.value = '';
+                 if (universityInput) universityInput.value = ''; // Clear university field
+                 if (registrationFeedback) registrationFeedback.innerHTML = '';
+                 if (teamMemberCountDisplay) teamMemberCountDisplay.textContent = '';
+
+                 // Populate existing teams dropdown
+                 Object.entries(hackathonTeamsData).forEach(([teamName, teamData]) => {
+                    if (teamData && teamData.members) {
+                        const memberCount = teamData.members.length;
+                        if (memberCount < MAX_TEAM_MEMBERS) {
+                            const option = document.createElement('option');
+                            option.value = teamName;
+                            option.textContent = `${teamName} (${memberCount}/${MAX_TEAM_MEMBERS} members)`;
+                            option.dataset.count = memberCount; // Store count for easy access
+                             if (existingTeamSelect) existingTeamSelect.appendChild(option);
+                        }
+                    }
+                 });
+
+                 // Add listener to show member count on selection change
+                 if(existingTeamSelect && teamMemberCountDisplay){
+                     existingTeamSelect.addEventListener('change', () => {
+                         const selectedOption = existingTeamSelect.options[existingTeamSelect.selectedIndex];
+                         if(selectedOption && selectedOption.value){
+                             const count = selectedOption.dataset.count || 0;
+                             teamMemberCountDisplay.textContent = `This team has ${count} member(s). Joining will make it ${parseInt(count) + 1}.`;
+                         } else {
+                              teamMemberCountDisplay.textContent = '';
+                         }
                      });
                  }
 
-                 // Save to LocalStorage (always, as backup or primary if CS fails/unavailable)
-                 try {
-                    localStorage.setItem(TASK_STATE_KEY_LS, stateString);
-                    console.log("Task State saved to LocalStorage.");
-                 } catch (e) {
-                     console.error("Error saving Task State to LocalStorage:", e);
+                 // Disable fields if user is already registered
+                 const isRegistered = !!userRegisteredTeam;
+                 if(universityInput) universityInput.disabled = isRegistered;
+                 if(existingTeamSelect) existingTeamSelect.disabled = isRegistered;
+                 if(newTeamNameInput) newTeamNameInput.disabled = isRegistered;
+                 if(submitRegistrationBtn) submitRegistrationBtn.disabled = isRegistered;
+
+                 if (isRegistered) {
+                    showMessage(`You are already registered in team: <strong>${userRegisteredTeam}</strong>. Contact support to change teams.`, 'info', registrationFeedback);
+                 }
+             }
+
+            function updateRegistrationButtonState() {
+                if (registerTeamBtn) {
+                    if (userRegisteredTeam) {
+                        registerTeamBtn.innerHTML = `<i class="fas fa-check-circle me-2"></i> View Your Team: ${userRegisteredTeam}`;
+                        if (registrationStatusMsg) registrationStatusMsg.textContent = "Click to view team details (registration closed).";
+                    } else {
+                        registerTeamBtn.innerHTML = `<i class="fas fa-users me-2"></i> Register / Join Team`;
+                         if (registrationStatusMsg) registrationStatusMsg.textContent = "Register your team to appear in the AI Judge.";
+                    }
+                }
+            }
+
+            async function handleRegistrationSubmit() {
+                if (!currentUser) { showMessage("User data not loaded.", 'danger', registrationFeedback); return; }
+                if (userRegisteredTeam) { showMessage("You are already registered.", 'warning', registrationFeedback); return; }
+
+                clearMessages(registrationFeedback); // Clear previous messages
+                const university = universityInput.value.trim();
+                const selectedTeam = existingTeamSelect.value;
+                const newTeamName = newTeamNameInput.value.trim();
+
+                // --- Validation ---
+                if (!university) { showMessage("Please enter your University/Institution.", 'danger', registrationFeedback); universityInput.focus(); return; }
+                if (!selectedTeam && !newTeamName) { showMessage("Please either select an existing team or enter a new team name.", 'danger', registrationFeedback); return; }
+                if (selectedTeam && newTeamName) { showMessage("Please choose only ONE option: Join OR Create team.", 'danger', registrationFeedback); return; }
+
+                let targetTeamName = '';
+                let isNewTeam = false;
+
+                try {
+                    // Disable button during processing
+                    if(submitRegistrationBtn) submitRegistrationBtn.disabled = true;
+
+                    // Reload latest team data just before saving to minimize race conditions
+                    await loadHackathonTeams();
+
+                    if (selectedTeam) {
+                        // --- Join Existing Team ---
+                        if (!hackathonTeamsData[selectedTeam] || !hackathonTeamsData[selectedTeam].members) {
+                            showMessage(`Selected team "${selectedTeam}" seems invalid. Please refresh and try again.`, 'danger', registrationFeedback);
+                            if(submitRegistrationBtn) submitRegistrationBtn.disabled = false; populateRegistrationForm(); // Refresh dropdown
+                            return;
+                        }
+                        if (hackathonTeamsData[selectedTeam].members.length >= MAX_TEAM_MEMBERS) {
+                            showMessage(`Team "${selectedTeam}" is already full (${MAX_TEAM_MEMBERS} members).`, 'danger', registrationFeedback);
+                             if(submitRegistrationBtn) submitRegistrationBtn.disabled = false; populateRegistrationForm(); // Refresh dropdown
+                            return;
+                        }
+                        targetTeamName = selectedTeam;
+                    } else {
+                        // --- Create New Team ---
+                        if (newTeamName.length < 3) { showMessage("New team name must be at least 3 characters.", 'danger', registrationFeedback); newTeamNameInput.focus(); if(submitRegistrationBtn) submitRegistrationBtn.disabled = false; return; }
+                        if (hackathonTeamsData[newTeamName] || PRESET_TEAMS.some(t => t.name.toLowerCase() === newTeamName.toLowerCase())) { // Check against existing and presets
+                            showMessage(`Team name "${newTeamName}" is already taken. Please choose another.`, 'danger', registrationFeedback); newTeamNameInput.focus(); if(submitRegistrationBtn) submitRegistrationBtn.disabled = false; return;
+                        }
+                        targetTeamName = newTeamName;
+                        isNewTeam = true;
+                    }
+
+                    // --- Prepare User Data ---
+                    const newUserMember = {
+                        id: currentUser.id,
+                        name: currentUser.first_name || 'Player',
+                        university: university
+                    };
+
+                    // --- Update Team Data Structure ---
+                    if (isNewTeam) {
+                        hackathonTeamsData[targetTeamName] = { members: [newUserMember], theme: null }; // Initialize new team
+                    } else {
+                        // Add to existing team (double-check member doesn't already exist - unlikely but good practice)
+                         if (!hackathonTeamsData[targetTeamName].members.some(m => m.id === currentUser.id)) {
+                             hackathonTeamsData[targetTeamName].members.push(newUserMember);
+                         } else {
+                             console.warn(`User ${currentUser.id} already found in team ${targetTeamName} members list?`);
+                         }
+                    }
+
+                    // --- Save Updates ---
+                    const teamsSaved = await saveHackathonTeams();
+                    const registrationSaved = await saveUserRegistration(targetTeamName);
+
+                    if (teamsSaved && registrationSaved) {
+                         showMessage(`Successfully registered for team: <strong>${targetTeamName}</strong>!`, 'success', registrationFeedback);
+                         updateAiJudgeTeamsDropdown(); // Update judge list immediately
+                         updateRegistrationButtonState(); // Update main button text
+
+                         // Optionally close modal after delay
+                         setTimeout(() => {
+                            const modalInstance = bootstrap.Modal.getInstance(registrationModalElement);
+                            if (modalInstance) modalInstance.hide();
+                         }, 1500);
+                    } else {
+                        showMessage("Registration failed. Could not save data. Please try again.", 'danger', registrationFeedback);
+                        // Attempt to revert local changes if save failed? More complex.
+                        if(submitRegistrationBtn) submitRegistrationBtn.disabled = false;
+                    }
+
+                } catch (error) {
+                     console.error("Registration Error:", error);
+                     showMessage(`An error occurred: ${error.message || error}`, 'danger', registrationFeedback);
+                     if(submitRegistrationBtn) submitRegistrationBtn.disabled = false;
+                }
+            }
+
+
+            // Add listeners for registration modal
+            if (registrationModalElement) {
+                 registrationModalElement.addEventListener('show.bs.modal', populateRegistrationForm);
+            }
+            if (submitRegistrationBtn) {
+                 submitRegistrationBtn.addEventListener('click', handleRegistrationSubmit);
+            }
+
+
+            // --- AI Judge & Leaderboard Logic (MODIFIED for Dynamic Teams) ---
+
+            // Update the AI Judge dropdown based on *registered* teams
+            function updateAiJudgeTeamsDropdown() {
+                 if (!judgeTeamSelect) return;
+                 const currentValue = judgeTeamSelect.value; // Preserve selection if possible
+                 judgeTeamSelect.innerHTML = '<option selected disabled value="">-- Choose Registered Team --</option>'; // Clear existing
+
+                 // Combine presets and registered teams, ensuring uniqueness
+                 const allTeamNames = new Set([
+                     ...PRESET_TEAMS.map(t => t.name), // Add preset names first
+                     ...Object.keys(hackathonTeamsData) // Add registered team names
+                 ]);
+
+
+                 allTeamNames.forEach(teamName => {
+                     const teamData = hackathonTeamsData[teamName];
+                     const memberCount = teamData?.members?.length ?? 0;
+                     // Only add teams that have at least one registered member OR are presets
+                     if (memberCount > 0 || PRESET_TEAMS.some(t => t.name === teamName)) {
+                        const presetInfo = PRESET_TEAMS.find(t => t.name === teamName);
+                        const theme = teamData?.theme || presetInfo?.theme || 'Unknown Theme'; // Get theme if available
+                        const option = document.createElement('option');
+                        option.value = teamName;
+                        // Add member count for registered teams
+                        option.textContent = `${teamName} (${theme})${memberCount > 0 ? ` [${memberCount} reg.]`:''}`;
+                        judgeTeamSelect.appendChild(option);
+                     }
+                 });
+
+                 // Try to restore previous selection
+                 if (currentValue && judgeTeamSelect.querySelector(`option[value="${currentValue}"]`)) {
+                    judgeTeamSelect.value = currentValue;
                  }
             }
 
 
-            function initializeTaskUI() {
-                if (!modalChecklist) return;
-                modalChecklist.querySelectorAll('.checklist-item[data-task-id]').forEach(item => {
-                    const taskId = item.dataset.taskId;
-                    updateTaskUI(taskId, taskState[taskId] === true); // Update based on loaded state
+            // Keep existing AI Judge logic, but use updated dropdown
+            const teamAnalysisData = { /* (Keep existing data or potentially make it dynamic) */ "Team Alpha": ["Strong logistics model.", "Good data processing.", "Innovation moderate.", "High feasibility.", "Presentation needs polish."], "Team Beta": ["Creative environment monitoring.", "Well-organized code.", "High innovation potential.", "Needs validation.", "Compelling impact analysis."], "Team Gamma": ["Sound NLP for feedback.", "Relevant healthcare problem.", "Demo lacks user-friendliness.", "Significant potential impact.", "Solid innovation."], "Team Delta": ["Very high novelty factor.", "Promising tech execution.", "Optimistic feasibility.", "Pitch conveys vision.", "Adequate completion."], "The AI Mavericks": ["Well-implemented risk prediction.", "Good data integration.", "Practical solution.", "Good technical depth.", "Clear presentation & demo."] };
+            function displayAnalysisSequentially(analysisPoints) { /* (Keep existing) */ if (!judgeResultAnalysisList) return 0; judgeResultAnalysisList.innerHTML = ''; let delay = 0; const interval = 400; analysisPoints.forEach(point => { setTimeout(() => { const li = document.createElement('li'); li.textContent = point; judgeResultAnalysisList.appendChild(li); void li.offsetWidth; li.classList.add('visible'); }, delay); }); return delay; }
+            function generateScore(teamName) { /* (Keep existing) */ let baseScore = 6.0; let randomness = Math.random() * 2.0; let bonus = 0; if (teamName === "Team Beta" || teamName === "The AI Mavericks") bonus = 0.5 + Math.random(); if (teamName === "Team Delta") bonus = Math.random() * 1.5; let finalScore = baseScore + randomness + bonus; finalScore = Math.min(Math.max(finalScore, 4.0), 9.8); return parseFloat(finalScore.toFixed(1)); }
+            function updateAiJudgeLeaderboardData(teamName, score) { /* (Keep existing) */ const existingIndex = aiJudgeLeaderboardData.findIndex(item => item.teamName === teamName); if (existingIndex > -1) { aiJudgeLeaderboardData[existingIndex].score = score; } else { aiJudgeLeaderboardData.push({ teamName: teamName, score: score }); } aiJudgeLeaderboardData.sort((a, b) => b.score - a.score); }
+            function animateTextWordByWord(element, text, speed = 50) { /* (Keep existing) */ element.innerHTML = ''; const words = text.split(' '); let currentWordIndex = 0; const intervalId = setInterval(() => { if (currentWordIndex < words.length) { const span = document.createElement('span'); span.textContent = words[currentWordIndex] + ' '; element.appendChild(span); setTimeout(() => span.classList.add('visible'), 10); currentWordIndex++; } else { clearInterval(intervalId); } }, speed); }
+            function renderAiJudgeLeaderboard(highlightTeam = null) { /* (Keep existing - uses aiJudgeLeaderboardBody) */ if (!aiJudgeLeaderboardBody) return; aiJudgeLeaderboardBody.innerHTML = ''; if (aiJudgeLeaderboardData.length === 0) { aiJudgeLeaderboardBody.innerHTML = `<tr id="leaderboard-placeholder"><td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td></tr>`; aiJudgeLeaderboardSection.classList.remove('visible'); return; } aiJudgeLeaderboardPlaceholder?.remove(); aiJudgeLeaderboardSection.classList.add('visible'); aiJudgeLeaderboardData.forEach((item, index) => { const rank = index + 1; const row = document.createElement('tr'); row.setAttribute('data-team', item.teamName); row.innerHTML = `<td class="text-center"><span class="rank-badge">${rank}</span></td><td class="team-name-cell">${item.teamName}</td><td class="text-center score-display">${item.score.toFixed(1)}</td>`; aiJudgeLeaderboardBody.appendChild(row); if (item.teamName === highlightTeam) { row.classList.add('highlight-new'); setTimeout(() => { row.classList.remove('highlight-new'); }, 1500); } }); }
+            function animateScoreToLeaderboard(teamName, score) { /* (Keep existing - targets aiJudgeLeaderboardBody) */ if (!flyingScoreElement || !judgeResultScore || !aiJudgeLeaderboardBody) return; const rank = aiJudgeLeaderboardData.findIndex(item => item.teamName === teamName) + 1; let targetRow = aiJudgeLeaderboardBody.querySelector(`tr:nth-child(${rank})`); let targetY, targetX; const tableRect = aiJudgeLeaderboardBody.getBoundingClientRect(); if (targetRow) { const rowRect = targetRow.getBoundingClientRect(); targetY = rowRect.top + (rowRect.height / 2); targetX = rowRect.left + (rowRect.width / 2); } else { targetY = tableRect.top + (rank * 25); targetX = tableRect.left + (tableRect.width / 2); } const startRect = judgeResultScore.getBoundingClientRect(); const startY = startRect.top + (startRect.height / 2); const startX = startRect.left + (startRect.width / 2); flyingScoreElement.textContent = `${score.toFixed(1)}`; flyingScoreElement.style.top = `${startY}px`; flyingScoreElement.style.left = `${startX}px`; flyingScoreElement.style.opacity = '1'; flyingScoreElement.style.transform = 'scale(1)'; requestAnimationFrame(() => { flyingScoreElement.style.top = `${targetY}px`; flyingScoreElement.style.left = `${targetX}px`; flyingScoreElement.style.opacity = '0'; flyingScoreElement.style.transform = 'scale(0.3)'; }); flyingScoreElement.addEventListener('transitionend', () => { flyingScoreElement.style.opacity = '0'; flyingScoreElement.style.transform = 'scale(1)'; renderAiJudgeLeaderboard(teamName); const newlyRenderedRow = aiJudgeLeaderboardBody.querySelector(`tr[data-team="${teamName}"]`); if (newlyRenderedRow) { const nameCell = newlyRenderedRow.querySelector('.team-name-cell'); if (nameCell) { /* Find item again to pass to animateText */ const itemData = aiJudgeLeaderboardData.find(i => i.teamName === teamName); if (itemData) animateTextWordByWord(nameCell, itemData.teamName, 75); } } }, { once: true }); }
+             if (judgeProjectBtn && judgeTeamSelect && judgeLoader && judgeResultsArea && judgeResultAnalysisList && judgeResultScore) {
+                judgeProjectBtn.addEventListener('click', function() {
+                    const selectedTeam = judgeTeamSelect.value;
+                    if (!selectedTeam) { /* (Keep existing error handling) */ judgeResultsArea.style.display = 'block'; judgeLoader.style.display = 'none'; judgeResultTeamName.textContent = "Error"; judgeResultAnalysisList.innerHTML = '<li class="visible" style="border-color: var(--error-color);">Please select a team.</li>'; judgeResultScore.innerHTML = ''; return; }
+                    judgeResultsArea.style.display = 'none'; judgeResultAnalysisList.innerHTML = ''; judgeResultScore.innerHTML = ''; judgeLoader.style.display = 'block'; judgeProjectBtn.disabled = true; judgeTeamSelect.disabled = true; aiJudgeLeaderboardSection.classList.remove('visible'); const processingTime = 2500;
+                    const analysisPoints = teamAnalysisData[selectedTeam] || ["Standard analysis.", "Details pending.", `Simulating for: ${selectedTeam}`]; // Default analysis
+                    setTimeout(() => {
+                        judgeLoader.style.display = 'none'; judgeResultsArea.style.display = 'block'; judgeResultTeamName.textContent = `Eval: ${selectedTeam}`;
+                        const totalDisplayTime = displayAnalysisSequentially(analysisPoints);
+                        setTimeout(() => {
+                            const score = generateScore(selectedTeam); judgeResultScore.innerHTML = `Score: <span>${score.toFixed(1)}/10</span>`;
+                            updateAiJudgeLeaderboardData(selectedTeam, score); // Use AI Judge data
+                            setTimeout(() => { animateScoreToLeaderboard(selectedTeam, score); }, 150);
+                            judgeProjectBtn.disabled = false; judgeTeamSelect.disabled = false;
+                        }, totalDisplayTime + 100);
+                    }, processingTime);
                 });
+                judgeModalElement.addEventListener('shown.bs.modal', () => { renderAiJudgeLeaderboard(); }); // Render AI Judge board on show
+            } else { console.error("AI Judging elements not found."); }
+            // --- END AI Judge & Leaderboard Logic ---
+
+
+            // --- Profile Modal Logic (Imported & Adapted) ---
+            // Uses POINTS_LEADERBOARD_KEY
+
+            async function getPointsLeaderboardData() {
+                 return new Promise((resolve) => {
+                     if (tg && tg.CloudStorage) {
+                         tg.CloudStorage.getItem(POINTS_LEADERBOARD_KEY, (error, value) => {
+                             let data = [];
+                             if (error) console.error(`CS Error loading ${POINTS_LEADERBOARD_KEY}:`, error);
+                             else if (value) { try { data = JSON.parse(value); if (!Array.isArray(data)) data = []; console.log(`Loaded ${POINTS_LEADERBOARD_KEY} from CS:`, data.length, "entries"); } catch (e) { console.error(`Error parsing ${POINTS_LEADERBOARD_KEY}:`, e); data = []; } }
+                             else console.log(`${POINTS_LEADERBOARD_KEY} not found in CS.`);
+
+                             // Ensure current user is in the list ONLY IF currentUser exists
+                             if (currentUser) {
+                                const userExists = data.some(entry => entry.userId === currentUser.id);
+                                if (!userExists) { data.push({ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: totalWellyPoints }); }
+                             }
+                             resolve(data);
+                         });
+                     } else {
+                         console.warn("CloudStorage not available for points leaderboard.");
+                         resolve(currentUser ? [{ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: totalWellyPoints }] : []);
+                     }
+                 });
             }
 
-            function updateTaskUI(taskId, isCompleted) {
-                const modalItem = modalChecklist?.querySelector(`.checklist-item[data-task-id="${taskId}"]`);
-                if (modalItem) {
-                    modalItem.classList.toggle('completed', isCompleted);
-                }
+            async function savePointsLeaderboardData(data) {
+                if (!Array.isArray(data)) return;
+                 if (tg && tg.CloudStorage) {
+                     tg.CloudStorage.setItem(POINTS_LEADERBOARD_KEY, JSON.stringify(data), (error, success) => {
+                         if (error) console.error(`CS Error saving ${POINTS_LEADERBOARD_KEY}:`, error);
+                         else if (success) console.log(`Saved ${POINTS_LEADERBOARD_KEY} to CS.`);
+                         else console.warn(`CS save call for ${POINTS_LEADERBOARD_KEY} failed silently.`);
+                     });
+                 } else console.warn("CloudStorage not available. Points leaderboard not saved.");
             }
 
-            function showMessage(message, type = 'success') {
-                if (messageArea) {
-                    // Simple message display
-                    messageArea.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show small p-2" role="alert">${message}<button type="button" class="btn-close btn-sm p-2" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+            async function updatePointsLeaderboardWithCurrentUser(currentPoints) {
+                if (!currentUser) return;
+                try {
+                    let leaderboard = await getPointsLeaderboardData();
+                    const userIndex = leaderboard.findIndex(entry => entry.userId === currentUser.id);
+                    let changed = false;
+                    const userName = currentUser.first_name || 'Player';
 
-                    // Optional: Use Telegram's native popup for important messages
-                    // if (tg && tg.showAlert) {
-                    //     tg.showAlert(message);
-                    // }
-                }
-            }
-
-            function clearMessages() {
-                if (messageArea) { messageArea.innerHTML = ''; }
-            }
-
-            function updateProgressBar() {
-                const taskItems = modalChecklist?.querySelectorAll('.checklist-item[data-task-id]');
-                if (!taskItems || taskItems.length === 0 || !progressBar) return;
-
-                const totalTasks = taskItems.length;
-                // Count completed tasks directly from the current state object
-                const completedTasks = Object.values(taskState).filter(status => status === true).length;
-
-                const progressPercent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
-
-                progressBar.style.width = progressPercent + '%';
-                progressBar.textContent = `${progressPercent}%`;
-                progressBar.setAttribute('aria-valuenow', progressPercent);
-                progressBar.classList.toggle('bg-success', progressPercent === 100);
-                progressBar.classList.toggle('progress-bar-animated', progressPercent < 100);
-                progressBar.classList.toggle('progress-bar-striped', progressPercent < 100);
-            }
-
-            // Attach Event Listener for Task Clicks
-            if (modalChecklist) {
-                modalChecklist.addEventListener('click', function(event) {
-                    const taskItem = event.target.closest('.checklist-item[data-task-id]');
-                    if (!taskItem) return; // Ignore clicks not on a task item
-
-                    const taskId = taskItem.dataset.taskId;
-                    const taskNameElement = taskItem.querySelector('strong');
-                    const taskName = taskNameElement ? taskNameElement.textContent.trim() : `Task ${taskId}`;
-                    const pointsToAdd = parseInt(taskItem.dataset.points || '0', 10);
-                    const isCurrentlyCompleted = taskState[taskId] === true;
-
-                    clearMessages(); // Clear previous messages
-
-                    if (isCurrentlyCompleted) {
-                        // --- Action: Mark as Incomplete ---
-                        const confirmationMessage = `Mark "${taskName}" as incomplete? (Points will not be deducted)`;
-                        if (confirm(confirmationMessage)) {
-                            taskState[taskId] = false; // Update state object
-                            saveTaskState(taskState);  // Save the updated state
-                            updateTaskUI(taskId, false); // Update item UI
-                            updateProgressBar();      // Update progress bar
-                            showMessage(`Task "${taskName}" marked incomplete.`, 'warning');
-                        } else {
-                            // User cancelled
+                    if (userIndex > -1) {
+                        if (leaderboard[userIndex].points !== currentPoints || leaderboard[userIndex].firstName !== userName) {
+                             leaderboard[userIndex].points = currentPoints;
+                             leaderboard[userIndex].firstName = userName;
+                             changed = true;
                         }
                     } else {
-                        // --- Action: Mark as Complete ---
-                        const confirmationMessage = `Mark "${taskName}" as complete and claim ${pointsToAdd} WP?`;
-                        if (confirm(confirmationMessage)) {
-                            taskState[taskId] = true; // Update state object
-                            saveTaskState(taskState); // Save the updated state
-                            updateTaskUI(taskId, true);  // Update item UI
+                        leaderboard.push({ userId: currentUser.id, firstName: userName, points: currentPoints });
+                        changed = true;
+                    }
 
-                            // Award points ONLY if points > 0
-                            if (pointsToAdd > 0) {
-                                totalWellyPoints += pointsToAdd;
-                                saveWellyPoints();       // Save the new points total
-                                updateWellyPointsDisplay(); // Update points display in header
-                                showPointsGainAnimation(pointsToAdd); // Show visual feedback
-                                showMessage(`Task "${taskName}" complete! +${pointsToAdd} WP earned.`, 'success');
-                            } else {
-                                showMessage(`Task "${taskName}" complete!`, 'success'); // Message without points if 0
-                            }
+                    if (changed) {
+                        leaderboard.sort((a, b) => b.points - a.points); // Sort before saving
+                        await savePointsLeaderboardData(leaderboard);
+                    }
+                } catch (error) {
+                    console.error("Failed to update points leaderboard:", error);
+                }
+            }
 
-                            updateProgressBar();      // Update progress bar
-                        } else {
-                             // User cancelled
-                        }
+            async function fetchAndDisplayPointsLeaderboard(currentPoints) {
+                if (!profileLeaderboardLoading || !profileLeaderboardTableBody || !profileRankDisplay || !profileLeaderboardEmpty || !currentUser) return;
+
+                profileLeaderboardLoading.style.display = 'block';
+                profileLeaderboardTableBody.innerHTML = '';
+                profileLeaderboardEmpty.style.display = 'none';
+                profileRankDisplay.textContent = 'Rank: Calculating...';
+
+                try {
+                    let leaderboard = await getPointsLeaderboardData();
+
+                    // Ensure current user's points are up-to-date before display/ranking
+                    const userIndex = leaderboard.findIndex(entry => entry.userId === currentUser.id);
+                    if (userIndex > -1) {
+                         if (leaderboard[userIndex].points !== currentPoints) { leaderboard[userIndex].points = currentPoints; }
+                         if (leaderboard[userIndex].firstName !== (currentUser.first_name || 'Player')) { leaderboard[userIndex].firstName = currentUser.first_name || 'Player';}
+                    } else {
+                         leaderboard.push({ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: currentPoints });
+                    }
+
+                    leaderboard.sort((a, b) => b.points - a.points); // Sort *after* ensuring user data is correct
+
+                    if (leaderboard.length === 0) {
+                        profileRankDisplay.textContent = 'Rank: N/A';
+                        profileLeaderboardEmpty.textContent = 'Leaderboard is empty.';
+                        profileLeaderboardEmpty.style.display = 'block';
+                    } else {
+                        const userRank = leaderboard.findIndex(entry => entry.userId === currentUser.id) + 1;
+                        const totalPlayers = leaderboard.length;
+                        profileRankDisplay.textContent = `Your Rank: #${userRank} of ${totalPlayers}`;
+
+                        const topN = 5;
+                        leaderboard.slice(0, topN).forEach((entry, index) => {
+                            const rank = index + 1;
+                            const row = profileLeaderboardTableBody.insertRow();
+                            row.innerHTML = `
+                                <td class="text-center"><span class="rank-badge">${rank}</span></td>
+                                <td>${entry.firstName || 'Player'} ${entry.userId === currentUser.id ? '<small class="text-muted">(You)</small>' : ''}</td>
+                                <td class="points-cell">${entry.points}</td>
+                            `;
+                             if (entry.userId === currentUser.id) {
+                                 row.classList.add('table-info'); // Highlight user
+                             }
+                        });
+                    }
+
+                    profileLeaderboardLoading.style.display = 'none';
+
+                } catch (error) {
+                     console.error("Error fetching/displaying points leaderboard:", error);
+                     profileRankDisplay.textContent = 'Rank: Error';
+                     profileLeaderboardEmpty.textContent = 'Error loading leaderboard.';
+                     profileLeaderboardEmpty.style.display = 'block';
+                     profileLeaderboardLoading.style.display = 'none';
+                 }
+            }
+
+
+            // Profile Modal Event Listener
+            if (profileModalElement) {
+                profileModalElement.addEventListener('show.bs.modal', async function () {
+                    if (!currentUser) {
+                        console.error("Cannot open profile modal: User not initialized.");
+                        const modalInstance = bootstrap.Modal.getInstance(profileModalElement);
+                        if (modalInstance) modalInstance.hide();
+                        tg.showAlert("Could not load profile data.");
+                        return;
+                    }
+                    console.log("Profile modal opening...");
+                    updateUserProfileDisplay(); // Ensure modal fields have latest basic info
+
+                    if (resetFeedbackArea) resetFeedbackArea.textContent = '';
+                    if (deleteProgressBtn) deleteProgressBtn.disabled = false;
+
+                    try {
+                        // Re-fetch points first to ensure leaderboard has correct value
+                        await loadWellyPoints();
+                        await fetchAndDisplayPointsLeaderboard(totalWellyPoints); // Display points leaderboard
+                        // Update points leaderboard in background
+                        updatePointsLeaderboardWithCurrentUser(totalWellyPoints);
+                    } catch (error) {
+                        console.error("Error loading data for profile modal:", error);
+                        if (modalWellyPoints) modalWellyPoints.textContent = 'Error';
+                        if (profileRankDisplay) profileRankDisplay.textContent = 'Rank: Error';
                     }
                 });
-            } else {
-                console.warn("Modal checklist container (#modal-checklist) not found.");
             }
 
+            // Delete Progress Button Listener (Simplified - only points/tasks/points-leaderboard)
+             if (deleteProgressBtn && currentUser) {
+                 deleteProgressBtn.addEventListener('click', function() {
+                     if(resetFeedbackArea) resetFeedbackArea.textContent = '';
+                     if (!tg || !tg.showConfirm) {
+                         if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Action only available in Telegram.'; resetFeedbackArea.className = 'small feedback-error'; }
+                         else { alert("This action is only available within the Telegram app."); }
+                         return;
+                     }
 
-            if (taskModalElement) {
-                taskModalElement.addEventListener('hidden.bs.modal', clearMessages);
-            }
-            // Initial updateProgressBar call is now inside initializeTelegramApp after loading state
+                     tg.showConfirm("Reset ALL Points and Task Progress?\nThis cannot be undone.", async (confirmed) => {
+                         if (confirmed) {
+                             console.log("User confirmed progress reset.");
+                             deleteProgressBtn.disabled = true;
+                             if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Resetting...'; resetFeedbackArea.className = 'small text-muted'; }
+
+                             try {
+                                 // 1. Reset Points
+                                 totalWellyPoints = 0;
+                                 await saveWellyPoints(); // Save 0 points
+                                 updateUserProfileDisplay(); // Update UI
+
+                                 // 2. Reset Tasks
+                                 taskState = {};
+                                 saveTaskState(taskState); // Save empty task state
+                                 initializeTaskUI(); // Update task UI in modal
+                                 updateProgressBar(); // Update progress bar
+
+                                 // 3. Clear Points Leaderboard (Optional: remove user or clear all?)
+                                 // Let's clear the user's entry or reset their points in the leaderboard
+                                 await updatePointsLeaderboardWithCurrentUser(0); // Set user points to 0 on leaderboard
+
+                                 // 4. Update Modal UI Immediately
+                                 if (modalWellyPoints) modalWellyPoints.textContent = '0';
+                                 await fetchAndDisplayPointsLeaderboard(0); // Refresh leaderboard view
 
 
-            // --- AI Judge & Leaderboard Logic (Keep existing - unchanged) ---
-            const teamAnalysisData = { "Team Alpha": ["Strong logistics model.", "Good data processing.", "Innovation moderate.", "High feasibility.", "Presentation needs polish."], "Team Beta": ["Creative environment monitoring.", "Well-organized code.", "High innovation potential.", "Needs validation.", "Compelling impact analysis."], "Team Gamma": ["Sound NLP for feedback.", "Relevant healthcare problem.", "Demo lacks user-friendliness.", "Significant potential impact.", "Solid innovation."], "Team Delta": ["Very high novelty factor.", "Promising tech execution.", "Optimistic feasibility.", "Pitch conveys vision.", "Adequate completion."], "The AI Mavericks": ["Well-implemented risk prediction.", "Good data integration.", "Practical solution.", "Good technical depth.", "Clear presentation & demo."] };
-            function displayAnalysisSequentially(analysisPoints) { if (!judgeResultAnalysisList) return 0; judgeResultAnalysisList.innerHTML = ''; let delay = 0; const interval = 400; analysisPoints.forEach(point => { setTimeout(() => { const li = document.createElement('li'); li.textContent = point; judgeResultAnalysisList.appendChild(li); void li.offsetWidth; li.classList.add('visible'); }, delay); delay += interval; }); return delay; }
-            function generateScore(teamName) { let baseScore = 6.0; let randomness = Math.random() * 2.0; let bonus = 0; if (teamName === "Team Beta" || teamName === "The AI Mavericks") bonus = 0.5 + Math.random(); if (teamName === "Team Delta") bonus = Math.random() * 1.5; let finalScore = baseScore + randomness + bonus; finalScore = Math.min(Math.max(finalScore, 4.0), 9.8); return parseFloat(finalScore.toFixed(1)); }
-            function updateLeaderboardData(teamName, score) { const existingIndex = leaderboardData.findIndex(item => item.teamName === teamName); if (existingIndex > -1) { leaderboardData[existingIndex].score = score; } else { leaderboardData.push({ teamName: teamName, score: score }); } leaderboardData.sort((a, b) => b.score - a.score); }
-            function animateTextWordByWord(element, text, speed = 50) { element.innerHTML = ''; const words = text.split(' '); let currentWordIndex = 0; let intervalId = setInterval(() => { if (currentWordIndex < words.length) { const span = document.createElement('span'); span.textContent = words[currentWordIndex] + ' '; element.appendChild(span); setTimeout(() => span.classList.add('visible'), 10); currentWordIndex++; } else { clearInterval(intervalId); } }, speed); }
-            function renderLeaderboard(highlightTeam = null) { if (!leaderboardBody) return; leaderboardBody.innerHTML = ''; if (leaderboardData.length === 0) { leaderboardBody.innerHTML = `<tr id="leaderboard-placeholder"><td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td></tr>`; leaderboardSection.classList.remove('visible'); return; } leaderboardPlaceholder?.remove(); leaderboardSection.classList.add('visible'); leaderboardData.forEach((item, index) => { const rank = index + 1; const row = document.createElement('tr'); row.setAttribute('data-team', item.teamName); const rankCell = document.createElement('td'); rankCell.classList.add('text-center'); rankCell.innerHTML = `<span class="rank-badge">${rank}</span>`; const nameCell = document.createElement('td'); nameCell.classList.add('team-name-cell'); nameCell.textContent = item.teamName; const scoreCell = document.createElement('td'); scoreCell.classList.add('text-center', 'score-display'); scoreCell.textContent = item.score.toFixed(1); row.appendChild(rankCell); row.appendChild(nameCell); row.appendChild(scoreCell); leaderboardBody.appendChild(row); if (item.teamName === highlightTeam) { row.classList.add('highlight-new'); setTimeout(() => { row.classList.remove('highlight-new'); }, 1500); } }); }
-            function animateScoreToLeaderboard(teamName, score) { if (!flyingScoreElement || !judgeResultScore || !leaderboardBody) return; const rank = leaderboardData.findIndex(item => item.teamName === teamName) + 1; let targetRow = leaderboardBody.querySelector(`tr:nth-child(${rank})`); let targetY, targetX; const tableRect = leaderboardBody.getBoundingClientRect(); if (targetRow) { const rowRect = targetRow.getBoundingClientRect(); targetY = rowRect.top + (rowRect.height / 2); targetX = rowRect.left + (rowRect.width / 2); } else { targetY = tableRect.top + (rank * 25); targetX = tableRect.left + (tableRect.width / 2); } const startRect = judgeResultScore.getBoundingClientRect(); const startY = startRect.top + (startRect.height / 2); const startX = startRect.left + (startRect.width / 2); flyingScoreElement.textContent = `${score.toFixed(1)}`; flyingScoreElement.style.top = `${startY}px`; flyingScoreElement.style.left = `${startX}px`; flyingScoreElement.style.opacity = '1'; flyingScoreElement.style.transform = 'scale(1)'; requestAnimationFrame(() => { flyingScoreElement.style.top = `${targetY}px`; flyingScoreElement.style.left = `${targetX}px`; flyingScoreElement.style.opacity = '0'; flyingScoreElement.style.transform = 'scale(0.3)'; }); flyingScoreElement.addEventListener('transitionend', () => { flyingScoreElement.style.opacity = '0'; flyingScoreElement.style.transform = 'scale(1)'; renderLeaderboard(teamName); const newlyRenderedRow = leaderboardBody.querySelector(`tr[data-team="${teamName}"]`); if (newlyRenderedRow) { const nameCell = newlyRenderedRow.querySelector('.team-name-cell'); if (nameCell) animateTextWordByWord(nameCell, item.teamName, 75); } }, { once: true }); } // Corrected target for animateTextWordByWord
-            if (judgeProjectBtn && judgeTeamSelect && judgeLoader && judgeResultsArea && judgeResultAnalysisList && judgeResultScore) { judgeProjectBtn.addEventListener('click', function() { const selectedTeam = judgeTeamSelect.value; if (!selectedTeam) { judgeResultsArea.style.display = 'block'; judgeLoader.style.display = 'none'; judgeResultTeamName.textContent = "Error"; judgeResultAnalysisList.innerHTML = '<li class="visible" style="border-color: var(--error-color);">Please select a team.</li>'; judgeResultScore.innerHTML = ''; return; } judgeResultsArea.style.display = 'none'; judgeResultAnalysisList.innerHTML = ''; judgeResultScore.innerHTML = ''; judgeLoader.style.display = 'block'; judgeProjectBtn.disabled = true; judgeTeamSelect.disabled = true; leaderboardSection.classList.remove('visible'); const processingTime = 2500; const analysisPoints = teamAnalysisData[selectedTeam] || ["Standard analysis.", "Details pending."]; setTimeout(() => { judgeLoader.style.display = 'none'; judgeResultsArea.style.display = 'block'; judgeResultTeamName.textContent = `Eval: ${selectedTeam}`; const totalDisplayTime = displayAnalysisSequentially(analysisPoints); setTimeout(() => { const score = generateScore(selectedTeam); judgeResultScore.innerHTML = `Score: <span>${score.toFixed(1)}/10</span>`; updateLeaderboardData(selectedTeam, score); setTimeout(() => { animateScoreToLeaderboard(selectedTeam, score); }, 150); judgeProjectBtn.disabled = false; judgeTeamSelect.disabled = false; }, totalDisplayTime + 100); }, processingTime); }); judgeModalElement.addEventListener('shown.bs.modal', () => { renderLeaderboard(); }); } else { console.error("AI Judging elements not found."); }
-             // --- END AI Judge & Leaderboard Logic ---
+                                 // 5. Show Success Feedback
+                                 if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Points & Tasks Reset!'; resetFeedbackArea.className = 'small feedback-success'; }
+                                 tg.showAlert("Your points and task progress have been reset.");
 
-            // --- Smooth Scroll Logic (Optional - Keep existing) ---
+                             } catch (error) {
+                                 console.error("Error during progress reset:", error);
+                                 if(resetFeedbackArea) { resetFeedbackArea.textContent = `Reset failed: ${error.message || 'Unknown error'}`; resetFeedbackArea.className = 'small feedback-error'; }
+                                 tg.showAlert(`An error occurred while resetting progress: ${error.message || error}`);
+                                 deleteProgressBtn.disabled = false; // Re-enable on error
+                             }
+                         } else {
+                             console.log("User cancelled progress reset.");
+                             if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Reset cancelled.'; resetFeedbackArea.className = 'small text-muted'; }
+                         }
+                     });
+                 });
+             }
+            // --- END Profile Modal Logic ---
+
+
+            // --- Smooth Scroll Logic (Keep existing) ---
             document.querySelectorAll('a[href^="#"]').forEach(link => { link.addEventListener('click', function(e) { const targetId = this.getAttribute('href'); if (targetId && targetId.startsWith('#')) { e.preventDefault(); const targetElement = document.querySelector(targetId); if (targetElement) { targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); } } }); });
-            // --- END Smooth Scroll Logic ---
+
 
             // --- Final Initializations ---
             initializeTelegramApp(); // Start the app initialization
