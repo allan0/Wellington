@@ -7,16 +7,16 @@
     <title>AI Challenge Quest - Wellington</title>
 
     <!-- Standard Meta -->
-    <meta name="description" content="Spin the AI Challenge wheel, answer AI-themed questions, and earn Welly Points!">
-    <meta name="keywords" content="Wellington Campus, game, spin the wheel, quiz, challenge, AI, points, general knowledge, Telegram Mini App, profile, SVG">
+    <meta name="description" content="Spin the AI Challenge wheel, answer AI-themed questions, and earn Welly Points! Check your profile and rank.">
+    <meta name="keywords" content="Wellington Campus, game, spin the wheel, quiz, challenge, AI, points, general knowledge, Telegram Mini App, profile, leaderboard, SVG">
     <meta name="author" content="Wellington Campus">
     <meta property="og:title" content="AI Challenge Quest - Wellington Campus">
-    <meta property="og:description" content="Spin the wheel, answer AI questions, earn Welly Points!">
+    <meta property="og:description" content="Spin the wheel, answer AI questions, earn Welly Points, and see your rank!">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://wellingtoncampus.co/game.html"> <!-- Update -->
-    <meta property="og:image" content="./wellingtoncampus.png"> <!-- Update Path -->
+    <meta property="og:url" content="https://wellingtoncampus.co/game.html">
+    <meta property="og:image" content="./wellingtoncampus.png">
     <meta property="og:image:alt" content="Wellington Campus Logo">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon"> <!-- Update Path -->
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
 
     <!-- **Telegram Mini App Script - MUST be first script** -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -29,6 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
 
     <style>
+        /* --- Root Variables (Consistent) --- */
         :root {
             --primary-color: #d4af37; /* Gold */
             --secondary-color: #003366; /* Dark Blue */
@@ -38,18 +39,18 @@
             --card-bg-color: rgba(255, 255, 255, 0.9);
             --correct-color: #28a745; /* Green */
             --incorrect-color: #dc3545; /* Red */
+            --danger-color: #dc3545; /* For Reset Button */
             --shadow: 0 8px 24px rgba(0,0,0,0.1);
             --border-radius: 15px;
             --bottom-nav-bg: var(--accent-color);
             --bottom-nav-icon: #6c757d;
             --bottom-nav-active: var(--primary-color);
-            /* Wheel Colors (8 segments) */
+            /* Wheel Colors */
             --color1: #ffcb80; --color2: #82d5fb; --color3: #c6e2a6; --color4: #ffac92;
             --color5: #b49edc; --color6: #fff69e; --color7: #91ccfa; --color8: #f590b2;
         }
 
         html { scroll-behavior: smooth; }
-
         body {
             font-family: 'Roboto', sans-serif; color: var(--text-color); background-color: var(--bg-color);
             background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)), linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
@@ -58,16 +59,18 @@
             box-sizing: border-box; overflow-x: hidden;
             padding-bottom: calc(100px + var(--tg-safe-area-inset-bottom, 0px));
             display: flex; flex-direction: column;
+            padding-top: 60px; /* Initial padding for fixed header */
         }
 
-        /* --- Header & Logo Styling --- */
-        #main-header { text-align: center; margin-bottom: 1rem; position: relative; padding-top: 1rem; flex-shrink: 0; }
+        /* --- Header & Logo Styling (Consistent) --- */
+        #main-header { padding-top: 1rem; text-align: center; margin-bottom: 1rem; flex-shrink: 0; /* Removed position/z-index */ }
         #header-logo { display: block; margin: 0 auto 0.5rem auto; max-width: 100px; width: 100px; height: auto; position: relative; top: 0; left: 0; z-index: 10; cursor: pointer; transition: width 0.4s ease-in-out, max-width 0.4s ease-in-out, top 0.4s ease-in-out, left 0.4s ease-in-out, padding 0.4s ease-in-out, border-radius 0.4s ease-in-out, background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out; }
         #header-logo.logo-scrolled { position: fixed; top: 8px; left: 12px; width: 45px; max-width: 45px; height: auto; z-index: 1045; margin: 0; background-color: rgba(255, 255, 255, 0.85); padding: 4px; border-radius: 50%; box-shadow: 0 3px 8px rgba(0, 51, 102, 0.3); }
-        body.logo-state-scrolled .content-wrapper { padding-top: 60px; }
+        body.logo-state-scrolled .content-wrapper { padding-top: 70px; /* Adjusted padding when scrolled */ }
 
-        /* --- User Profile Styling --- */
-        #user-profile { position: fixed; top: 8px; right: 12px; font-size: 0.85rem; color: var(--secondary-color); background-color: rgba(255, 255, 255, 0.85); padding: 5px 10px; border-radius: 20px; display: flex; align-items: center; z-index: 1045; box-shadow: 0 2px 5px rgba(0, 51, 102, 0.2); transition: top 0.4s ease-in-out; }
+        /* --- User Profile Styling (Consistent) --- */
+        #user-profile { position: fixed; top: 8px; right: 12px; font-size: 0.85rem; color: var(--secondary-color); background-color: rgba(255, 255, 255, 0.85); padding: 5px 10px; border-radius: 20px; display: flex; align-items: center; z-index: 1045; box-shadow: 0 2px 5px rgba(0, 51, 102, 0.2); transition: top 0.4s ease-in-out; cursor: pointer; }
+        #user-profile:hover { background-color: rgba(230, 230, 230, 0.9); }
         #user-avatar { display: inline-block; width: 28px; height: 28px; border-radius: 50%; margin-right: 8px; vertical-align: middle; background-color: #e9ecef; text-align: center; line-height: 28px; font-size: 18px; overflow: hidden; }
         #user-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
         #user-name-display { font-weight: 600; margin-right: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
@@ -79,9 +82,9 @@
         .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; width: 100%; background-color: var(--bottom-nav-bg); box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 0.5rem 0 max(0.5rem, var(--tg-safe-area-inset-bottom, 0.5rem)); z-index: 1040; flex-shrink: 0; }
 
         /* --- General & Game Styles --- */
-        .content-wrapper { position: relative; padding: 1rem; text-align: center; flex-grow: 1; display: flex; flex-direction: column; align-items: center; width: 100%; box-sizing: border-box; overflow-y: auto; }
+        .content-wrapper { position: relative; padding: 1rem; text-align: center; flex-grow: 1; display: flex; flex-direction: column; align-items: center; width: 100%; box-sizing: border-box; overflow-y: auto; transition: padding-top 0.4s ease-in-out; /* Smooth padding transition */ }
         h1, h2 { font-family: 'Poppins', sans-serif; color: var(--secondary-color); margin-bottom: 0.5rem; }
-        h1 { font-size: 1.8rem; }
+        h1 { font-size: 1.8rem; margin-top: 0; /* Title below header now */ }
         h2 { font-size: 1.3rem; }
         .content-section { width: 100%; max-width: 600px; margin: 0 auto 1.5rem auto; background-color: var(--card-bg-color); border-radius: var(--border-radius); box-shadow: var(--shadow); border: none; overflow: hidden; flex-shrink: 0; }
         .content-section-header { background-color: var(--secondary-color); color: var(--accent-color); font-weight: 600; border-bottom: 3px solid var(--primary-color); padding: 0.8rem 1.2rem; display: flex; align-items: center; }
@@ -89,91 +92,36 @@
         .content-section-header i { margin-right: 0.75rem; font-size: 1.1rem; color: var(--primary-color); }
         .content-section-body { padding: 1.5rem; }
 
-        /* --- Enhanced Wheel Styles --- */
-        #wheel-container {
-            position: relative; width: 90vw; max-width: 320px; aspect-ratio: 1 / 1;
-            margin: 1rem auto; border: 8px solid var(--secondary-color); border-radius: 50%;
-            box-shadow: 0 5px 15px rgba(0, 51, 102, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: #eee; overflow: hidden;
-             /* Faint logo background */
-             background-image: url('./wellingtoncampus.png'); /* Add path to your logo */
-             background-repeat: no-repeat;
-             background-position: center center;
-             background-size: 60%; /* Adjust size as needed */
-             position: relative; /* Needed for pseudo-element overlay */
-        }
-        /* Overlay to make background logo faint */
-         #wheel-container::before {
-             content: '';
-             position: absolute;
-             top: 0; left: 0; right: 0; bottom: 0;
-             background-color: rgba(255, 255, 255, 0.85); /* Adjust opacity (0.8 = 80% white overlay) */
-             border-radius: 50%;
-             z-index: 1; /* Behind SVG, above bg image */
-         }
-
-        #wheel-svg {
-            display: block; width: 100%; height: 100%;
-            transform-origin: center center;
-            transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1);
-            position: relative; z-index: 2; /* Above faint logo overlay */
-        }
+        /* --- Wheel Styles (Keep existing) --- */
+        #wheel-container { position: relative; width: 90vw; max-width: 320px; aspect-ratio: 1 / 1; margin: 1rem auto; border: 8px solid var(--secondary-color); border-radius: 50%; box-shadow: 0 5px 15px rgba(0, 51, 102, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.1); background-color: #eee; overflow: hidden; background-image: url('./wellingtoncampus.png'); background-repeat: no-repeat; background-position: center center; background-size: 60%; }
+        #wheel-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.85); border-radius: 50%; z-index: 1; }
+        #wheel-svg { display: block; width: 100%; height: 100%; transform-origin: center center; transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1); position: relative; z-index: 2; }
         #wheel-svg g#wheel-group { transform-origin: center center; }
         #wheel-svg path.wheel-segment { stroke: rgba(255, 255, 255, 0.3); stroke-width: 1; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-origin: center center; }
         #wheel-svg path.wheel-segment.highlighted-segment { transform: scale(1.05); filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.3)); }
-        /* Removed .segment-label text style */
-        #wheel-svg text.segment-emoji {
-            font-size: 24px; /* Larger emoji */
-            text-anchor: middle; dominant-baseline: central; /* Better vertical centering */
-            pointer-events: none; user-select: none;
-            fill: var(--secondary-color); /* Ensure color */
-            filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.2)); /* Slight shadow */
-        }
-        /* Center decoration */
-         #wheel-container::after {
-              content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-              width: 40px; height: 40px; background-color: var(--secondary-color);
-              border-radius: 50%; border: 5px solid var(--accent-color);
-              box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 5;
-         }
-
+        #wheel-svg text.segment-emoji { font-size: 24px; text-anchor: middle; dominant-baseline: central; pointer-events: none; user-select: none; fill: var(--secondary-color); filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.2)); }
+        #wheel-container::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background-color: var(--secondary-color); border-radius: 50%; border: 5px solid var(--accent-color); box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 5; }
         #wheel-pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid var(--primary-color); z-index: 10; filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.4)); }
         #spin-button { display: inline-block; margin-top: 1rem; padding: 0.7rem 2rem; font-size: 1.1rem; font-weight: 600; color: var(--accent-color); background-color: var(--primary-color); border: none; border-radius: 50px; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4); font-family: 'Poppins', sans-serif; }
         #spin-button:hover { background-color: #b8860b; transform: translateY(-2px); }
         #spin-button:active { transform: translateY(1px); box-shadow: 0 2px 5px rgba(212, 175, 55, 0.4); }
         #spin-button:disabled { background-color: #aaa; cursor: not-allowed; box-shadow: none; transform: none; }
 
-        /* Result Display Area - now includes Spin Again / Start Quiz buttons */
+        /* --- Result/Quiz Styles (Keep existing) --- */
         #result-area { margin-top: 1rem; padding: 0.8rem 1rem; background-color: rgba(255, 255, 255, 0.8); border-radius: var(--border-radius); min-height: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid var(--primary-color); box-shadow: var(--shadow); opacity: 0; transition: opacity 0.5s ease-in-out; }
         #result-area.visible { opacity: 1; }
-        #challenge-result-text { font-size: 1.1rem; font-weight: bold; color: var(--secondary-color); font-family: 'Poppins', sans-serif; margin-bottom: 0.8rem; /* Space before buttons */ }
-        #result-buttons { display: flex; gap: 10px; /* Space between buttons */ }
-        #spin-again-button, #start-quiz-button {
-            padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: 20px;
-        }
-         #spin-again-button { background-color: var(--secondary-color); } /* Blue for spin again */
+        #challenge-result-text { font-size: 1.1rem; font-weight: bold; color: var(--secondary-color); font-family: 'Poppins', sans-serif; margin-bottom: 0.8rem; }
+        #result-buttons { display: flex; gap: 10px; }
+        #spin-again-button, #start-quiz-button { padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: 20px; }
+        #spin-again-button { background-color: var(--secondary-color); }
 
-
-        /* --- Full Screen Loader --- */
-        #quiz-loader-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 51, 102, 0.85); /* Dark blue semi-transparent */
-            color: var(--accent-color);
-            display: none; /* Hidden initially */
-            flex-direction: column; align-items: center; justify-content: center;
-            z-index: 1100; /* Above everything */
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
+        #quiz-loader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 51, 102, 0.85); color: var(--accent-color); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 1100; opacity: 0; transition: opacity 0.3s ease-in-out; }
         #quiz-loader-overlay.visible { display: flex; opacity: 1; }
         #quiz-loader-overlay .spinner-border { width: 3rem; height: 3rem; color: var(--primary-color); }
         #quiz-loader-overlay p { margin-top: 1rem; font-size: 1.1rem; font-style: italic; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
 
-
-        /* Quiz Display Area Styles */
         #quiz-display-area { margin-top: 1.5rem; display: none; text-align: left; opacity: 0; transition: opacity 0.6s ease-out; }
         #quiz-display-area.visible { display: block; opacity: 1; }
-        /* Quiz Loader removed from here, now uses overlay */
         .quiz-question-block { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed #ccc; }
         .quiz-question-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         .quiz-question-text { font-size: 1.05rem; font-weight: bold; color: var(--secondary-color); margin-bottom: 1rem; line-height: 1.4; }
@@ -188,20 +136,59 @@
         #quiz-feedback.incorrect { color: var(--incorrect-color); }
         #submit-quiz-button, #play-again-button { margin-top: 1.5rem; display: block; margin-left: auto; margin-right: auto;}
 
-        /* Bottom Nav Styles */
-        .bottom-nav .btn { color: var(--bottom-nav-icon); background-color: transparent; border: none; padding: 0.5rem; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; transition: color 0.3s ease; text-decoration: none; }
-        .bottom-nav .btn:hover, .bottom-nav .btn.active { color: var(--bottom-nav-active); }
+        /* Bottom Nav Styles (Keep existing) */
+        .bottom-nav .btn { color: var(--bottom-nav-icon); background-color: transparent; border: none; padding: 0.5rem; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; transition: color 0.3s ease; text-decoration: none; flex-grow: 1; }
+        .bottom-nav .btn:hover, .bottom-nav .btn.active { color: var(--bottom-nav-active); font-weight: 600; }
         .bottom-nav i { font-size: 1.1rem; margin-bottom: 0.15rem; }
+
+        /* --- Profile Modal Styles (Consistent) --- */
+        #userProfileModal .modal-header { background-color: var(--secondary-color); color: var(--accent-color); border-bottom: 3px solid var(--primary-color); }
+        #userProfileModal .modal-header .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+        #userProfileModal .modal-body { text-align: center; }
+        #modal-user-avatar { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 0.5rem auto; display: block; background-color: #e9ecef; font-size: 40px; line-height: 80px; overflow: hidden; border: 3px solid var(--primary-color); box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+        #modal-user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        #modal-user-name { font-size: 1.3rem; font-weight: 600; color: var(--secondary-color); margin-bottom: 0.2rem; }
+        #modal-welly-points-display { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); margin-bottom: 1rem; }
+        #modal-welly-points-display .fa-star { font-size: 1.5rem; margin-right: 5px; vertical-align: middle; }
+        #profile-rank-display { font-size: 0.95rem; color: var(--text-color); margin-bottom: 1.5rem; background-color: rgba(0, 51, 102, 0.05); padding: 0.5rem; border-radius: 8px; border-left: 4px solid var(--secondary-color); }
+        #profile-leaderboard-section h5 { color: var(--secondary-color); margin-bottom: 0.8rem; font-size: 1.1rem; }
+        #profile-leaderboard-table { font-size: 0.9rem; }
+        #profile-leaderboard-table thead { background-color: var(--secondary-color); color: var(--accent-color); }
+        #profile-leaderboard-body tr td { vertical-align: middle; }
+        #profile-leaderboard-body .rank-badge { font-weight: bold; font-size: 0.9em; color: var(--secondary-color); display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; border-radius: 50%; background-color: rgba(212, 175, 55, 0.8); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        #profile-leaderboard-body tr:nth-child(1) .rank-badge { background-color: #ffd700; color: #333; }
+        #profile-leaderboard-body tr:nth-child(2) .rank-badge { background-color: #c0c0c0; color: #333; }
+        #profile-leaderboard-body tr:nth-child(3) .rank-badge { background-color: #cd7f32; color: #fff; }
+        #profile-leaderboard-body .points-cell { font-weight: bold; color: var(--secondary-color); }
+        #profile-leaderboard-body tr.table-info { background-color: rgba(212, 175, 55, 0.15) !important; font-weight: bold; }
+        #delete-progress-btn { background-color: var(--danger-color); border-color: var(--danger-color); color: white; transition: background-color 0.2s ease, border-color 0.2s ease; }
+        #delete-progress-btn:hover { background-color: #c82333; border-color: #bd2130; }
+        #delete-progress-btn:disabled { background-color: #6c757d; border-color: #6c757d; cursor: not-allowed; }
+        #leaderboard-loading, #leaderboard-empty { color: #6c757d; font-style: italic; padding: 1rem 0; }
+        #reset-feedback { font-size: 0.8rem; margin-top: 5px; min-height: 1.2rem; }
+        .feedback-success { color: var(--correct-color); } /* Use correct color variable */
+        .feedback-error { color: var(--danger-color); }
 
         /* Helper class */
         .hidden { display: none !important; }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+             body { padding-top: 50px; }
+             body.logo-state-scrolled .content-wrapper { padding-top: 60px; }
+             h1 { font-size: 1.6rem; }
+             #wheel-container { width: 85vw; max-width: 280px; border-width: 6px; }
+             #wheel-container::after { width: 30px; height: 30px; border-width: 4px; }
+             #wheel-pointer { border-left-width: 12px; border-right-width: 12px; border-top-width: 20px; top: -12px;}
+             #wheel-svg text.segment-emoji { font-size: 20px; }
+        }
 
     </style>
 </head>
 <body>
     <!-- User Profile Display (Top Right) -->
-    <div id="user-profile">
-        <span id="user-avatar">🎓</span> <!-- Default Emoji -->
+    <div id="user-profile" data-bs-toggle="modal" data-bs-target="#userProfileModal">
+        <span id="user-avatar">👤</span>
         <span id="user-name-display">Player</span>
         | <i class="fas fa-star"></i>
         <span id="welly-points">0</span> WP
@@ -215,27 +202,21 @@
     <!-- Main Content -->
     <div class="content-wrapper">
 
-        <!-- Wheel Section (Card Structure) -->
+        <h1>AI Challenge Quest</h1>
+
+        <!-- Wheel Section -->
         <section id="wheel-section" class="content-section">
-             <div class="content-section-header">
-                 <h2><i class="fas fa-dice"></i> AI Challenge Quest</h2>
-             </div>
+             <div class="content-section-header"><h2><i class="fas fa-dice"></i> Spin the Wheel</h2></div>
              <div class="content-section-body">
                  <p class="lead mb-2 small text-center">Spin for an AI challenge theme!</p>
                  <div id="wheel-container">
-                     <svg id="wheel-svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
-                         <g id="wheel-group">
-                             <!-- Segments and labels added here by JS -->
-                         </g>
-                     </svg>
-                     <!-- Removed label container, now part of SVG -->
+                     <svg id="wheel-svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet"><g id="wheel-group"></g></svg>
                      <div id="wheel-pointer"></div>
                  </div>
                  <button id="spin-button" class="btn-custom">Spin the Wheel!</button>
-                 <!-- Result Area Now includes Spin Again / Start Quiz -->
                  <div id="result-area">
                      <div id="challenge-result-text">Spin to receive your AI challenge theme...</div>
-                     <div id="result-buttons" class="mt-2 hidden"> <!-- Hidden initially -->
+                     <div id="result-buttons" class="mt-2 hidden">
                          <button id="spin-again-button" class="btn btn-secondary btn-sm"><i class="fas fa-redo me-1"></i> Spin Again</button>
                          <button id="start-quiz-button" class="btn btn-primary btn-sm"><i class="fas fa-play me-1"></i> Start Quiz</button>
                      </div>
@@ -243,16 +224,10 @@
              </div>
         </section>
 
-        <!-- Quiz Display Area (Card Structure, Initially Hidden) -->
+        <!-- Quiz Display Area -->
         <section id="quiz-display-area" class="content-section hidden">
-             <div class="content-section-header">
-                 <h2 id="quiz-display-title"><i class="fas fa-question-circle"></i> AI Challenge Questions</h2>
-             </div>
-             <!-- Question Container -->
-             <div class="content-section-body" id="quiz-questions-container">
-                 <!-- Quiz questions will be loaded here -->
-             </div>
-             <!-- Footer for Feedback/Buttons -->
+             <div class="content-section-header"><h2 id="quiz-display-title"><i class="fas fa-question-circle"></i> AI Challenge Questions</h2></div>
+             <div class="content-section-body" id="quiz-questions-container"></div>
              <div class="content-section-body text-center border-top mt-3 pt-3">
                  <div id="quiz-feedback"></div>
                  <button id="submit-quiz-button" class="btn-custom hidden">Submit Answers</button>
@@ -264,9 +239,7 @@
 
     <!-- Full Screen Loader Overlay -->
     <div id="quiz-loader-overlay">
-         <div class="spinner-border" role="status">
-             <span class="visually-hidden">Loading...</span>
-         </div>
+         <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
          <p>AI preparing your challenge questions...</p>
     </div>
 
@@ -280,11 +253,53 @@
         </div>
     </nav>
 
+     <!-- Profile Modal (Copied HTML from index.html) -->
+     <div class="modal fade" id="userProfileModal" tabindex="-1" aria-labelledby="userProfileModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="userProfileModalLabel">Your Profile</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                     <div id="modal-user-avatar">👤</div>
+                     <h4 id="modal-user-name">Player Name</h4>
+                     <div id="modal-welly-points-display">
+                         <i class="fas fa-star"></i> <span id="modal-welly-points">0</span> WP
+                     </div>
+                     <div id="profile-rank-display">Rank: Calculating...</div>
+                     <div id="profile-leaderboard-section">
+                         <h5><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>Leaderboard (Top 5)</h5>
+                         <div id="leaderboard-loading" style="display: none;">Loading leaderboard...</div>
+                         <div id="leaderboard-empty" style="display: none;">Leaderboard is empty or unavailable.</div>
+                         <div class="table-responsive">
+                             <table class="table table-striped table-hover table-sm caption-top" id="profile-leaderboard-table">
+                                 <thead><tr><th scope="col" style="width: 15%; text-align: center;">Rank</th><th scope="col">Player</th><th scope="col" style="width: 30%; text-align: right;">Points</th></tr></thead>
+                                 <tbody id="profile-leaderboard-body"></tbody>
+                             </table>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="modal-footer justify-content-between">
+                     <div>
+                         <button type="button" class="btn btn-danger btn-sm" id="delete-progress-btn">
+                             <i class="fas fa-trash-alt me-1"></i> Reset Progress
+                         </button>
+                         <div id="reset-feedback" class="small"></div>
+                     </div>
+                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- Telegram script already included -->
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- DOM Elements ---
+            // --- DOM Elements (Game + Profile) ---
             const logo = document.getElementById('header-logo');
             const bodyElement = document.body;
             const wheelSVG = document.getElementById('wheel-svg');
@@ -292,345 +307,187 @@
             const spinButton = document.getElementById('spin-button');
             const resultArea = document.getElementById('result-area');
             const challengeResultText = document.getElementById('challenge-result-text');
-            const resultButtonsContainer = document.getElementById('result-buttons'); // New button container
+            const resultButtonsContainer = document.getElementById('result-buttons');
             const spinAgainButton = document.getElementById('spin-again-button');
             const startQuizButton = document.getElementById('start-quiz-button');
             const wheelSection = document.getElementById('wheel-section');
             const quizDisplayArea = document.getElementById('quiz-display-area');
-            const quizLoaderOverlay = document.getElementById('quiz-loader-overlay'); // Full screen loader
+            const quizLoaderOverlay = document.getElementById('quiz-loader-overlay');
             const quizDisplayTitle = document.getElementById('quiz-display-title');
             const quizQuestionsContainer = document.getElementById('quiz-questions-container');
             const quizFeedback = document.getElementById('quiz-feedback');
             const submitQuizButton = document.getElementById('submit-quiz-button');
             const playAgainButton = document.getElementById('play-again-button');
+            // Profile Elements
+            const userProfileElement = document.getElementById('user-profile'); // Added
             const userNameDisplay = document.getElementById('user-name-display');
             const wellyPointsDisplay = document.getElementById('welly-points');
             const userAvatarContainer = document.getElementById('user-avatar');
+            const profileModalElement = document.getElementById('userProfileModal'); // Added
+            const modalUserAvatar = document.getElementById('modal-user-avatar'); // Added
+            const modalUserName = document.getElementById('modal-user-name'); // Added
+            const modalWellyPoints = document.getElementById('modal-welly-points'); // Added
+            const profileRankDisplay = document.getElementById('profile-rank-display'); // Added
+            const leaderboardTableBody = document.getElementById('profile-leaderboard-body'); // Added
+            const leaderboardLoading = document.getElementById('leaderboard-loading'); // Added
+            const leaderboardEmpty = document.getElementById('leaderboard-empty'); // Added
+            const deleteProgressBtn = document.getElementById('delete-progress-btn'); // Added
+            const resetFeedbackArea = document.getElementById('reset-feedback'); // Added
 
-            // --- Telegram WebApp ---
+            // --- Telegram WebApp & State (Consistent Keys) ---
             const tg = window.Telegram.WebApp;
             let currentUser = null;
             let totalWellyPoints = 0;
+            const POINTS_KEY = 'totalWellyPoints';
+            const HACKATHON_TASKS_KEY = 'hackathonDay1TaskStatus_CS';
+            const QUEST_PROGRESS_KEY = 'questProgress_CS'; // ** ADJUST IF YOUR QUEST SAVES DATA **
+            const LEADERBOARD_KEY = 'leaderboardData_CS';
 
-            // --- Challenges & Emojis (8 segments) ---
-            const challenges = [
-                 { name: "Supply Chain AI", theme: "logistics", emoji: "🚚" },
-                 { name: "Green AI", theme: "sustainability", emoji: "♻️" },
-                 { name: "Health AI", theme: "healthcare", emoji: "⚕️" },
-                 { name: "Project AI", theme: "management", emoji: "📊" },
-                 { name: "Real Estate AI", theme: "realestate", emoji: "🏢" },
-                 { name: "Gov AI", theme: "government", emoji: "🏛️" },
-                 { name: "Innovate w/ AI", theme: "open", emoji: "💡" },
-                 { name: "AI Trivia", theme: "general", emoji: "🧠" }
-            ];
+            // --- Challenges & Emojis (Keep existing) ---
+            const challenges = [ { name: "Supply Chain AI", theme: "logistics", emoji: "🚚" }, { name: "Green AI", theme: "sustainability", emoji: "♻️" }, { name: "Health AI", theme: "healthcare", emoji: "⚕️" }, { name: "Project AI", theme: "management", emoji: "📊" }, { name: "Real Estate AI", theme: "realestate", emoji: "🏢" }, { name: "Gov AI", theme: "government", emoji: "🏛️" }, { name: "Innovate w/ AI", theme: "open", emoji: "💡" }, { name: "AI Trivia", theme: "general", emoji: "🧠" } ];
 
-             // --- AI-Focused Quiz Questions (MINIMUM 5 PER THEME) ---
-             // **TODO: Add more diverse and challenging questions!**
-             const quizData = {
-                  logistics: [
-                      { q: "AI analyzes shipping data to predict optimal container loading patterns, reducing wasted space. True or False?", o: ["True", "False"], a: 0 },
-                      { q: "Which AI helps logistics companies anticipate disruptions like port closures?", o: ["Predictive Analytics", "Image Recognition", "Chatbots", "Speech Synthesis"], a: 0 },
-                      { q: "An AI system identifying the fastest AND cheapest delivery route is solving a(n) ____ problem.", o: ["Classification", "Optimization", "Clustering", "Generation"], a: 1 },
-                      { q: "Using computer vision AI to automatically scan package labels in sorting hubs improves?", o: ["Driver Morale", "Efficiency & Accuracy", "Fuel Economy", "Building Security"], a: 1 },
-                      { q: "AI predicting future fuel price fluctuations helps logistics companies manage?", o: ["Inventory Levels", "Employee Schedules", "Operating Costs", "Marketing Campaigns"], a: 2 }
-                  ],
-                  sustainability: [
-                      { q: "AI algorithms optimizing power grid distribution based on renewable energy availability help reduce reliance on?", o: ["Solar Panels", "Batteries", "Fossil Fuels", "Wind Turbines"], a: 2 },
-                      { q: "Precision agriculture uses AI and sensors to apply water/fertilizer only where needed, reducing?", o: ["Crop Yields", "Resource Waste", "Farm Size", "Harvest Time"], a: 1 },
-                      { q: "AI analyzing consumption patterns can help individuals and companies reduce their?", o: ["Carbon Footprint", "Internet Speed", "Social Media Followers", "Favorite Colors"], a: 0 },
-                      { q: "Developing new, biodegradable materials can be accelerated by AI predicting?", o: ["Material Properties", "Fashion Trends", "Stock Prices", "Weather Patterns"], a: 0 },
-                      { q: "AI models tracking illegal deforestation or fishing activities primarily use data from?", o: ["Newspapers", "Satellites & Drones", "Social Media", "Cookbooks"], a: 1 }
-                  ],
-                  healthcare: [
-                       { q: "AI analyzing patient records can identify individuals at high risk for certain diseases, enabling?", o: ["Higher Insurance Premiums", "Early Intervention", "Guaranteed Cures", "Longer Wait Times"], a: 1 },
-                       { q: "Robotic surgery systems guided by AI can potentially improve?", o: ["Procedure Precision", "Hospital Food Quality", "Parking Availability", "Recovery Time (by days)", "Both A & D"], a: 4 },
-                       { q: "AI virtual assistants can help patients manage medication schedules and provide?", o: ["Surgical Advice", "Personalized Health Info", "Financial Loans", "Gourmet Recipes"], a: 1 },
-                       { q: "Identifying novel drug candidates from vast chemical libraries is a task well-suited for?", o: ["Manual Searching", "Machine Learning", "Basic Calculators", "Patient Interviews"], a: 1 },
-                       { q: "A major ethical consideration for AI in healthcare is preventing?", o: ["Algorithmic Bias", "Faster Diagnoses", "Lower Costs", "Improved Outcomes"], a: 0 }
-                  ],
-                   management: [
-                       { q: "AI tools analyzing past project data can provide more accurate estimations for?", o: ["Team Lunch Preferences", "Future Project Timelines & Budgets", "Office Decor", "Competitor Stock Prices"], a: 1 },
-                       { q: "Natural Language Processing (NLP) can analyze project meeting transcripts to identify?", o: ["Action Items & Key Decisions", "The Best Jokes", "Typing Speed", "Software Bugs Mentioned"], a: 0 }, // D is plausible but A is primary
-                       { q: "AI can help assign tasks to team members based on their?", o: ["Hair Color", "Skills & Availability", "Favorite Music Genre", "Distance from Office"], a: 1 },
-                       { q: "An AI 'risk assessment' tool in project management aims to highlight potential?", o: ["Success Stories", "Problems Before They Occur", "Team Achievements", "Budget Surpluses"], a: 1 },
-                       { q: "Using AI to automate status report generation frees up project managers for more?", o: ["Coffee Breaks", "Strategic Thinking & Problem Solving", "Manual Data Entry", "Vacation Planning"], a: 1 }
-                   ],
-                   realestate: [
-                       { q: "AI algorithms analyzing neighborhood data (crime rates, schools, amenities) contribute to more accurate?", o: ["Weather Forecasts", "Property Valuations", "Restaurant Menus", "Fashion Advice"], a: 1 },
-                       { q: "AI-powered chatbots on property portals can pre-qualify leads by asking initial questions about?", o: ["Favorite Colors", "Budget & Requirements", "Dream Vacation", "Pet Names"], a: 1 },
-                       { q: "Computer vision AI can analyze property photos/videos to automatically identify?", o: ["Potential Buyers", "Key Features & Room Types", "Hidden Treasure", "Nearby Parks"], a: 1 },
-                       { q: "AI analyzing market sentiment (news, social media) can predict shifts in?", o: ["Building Materials", "Property Demand & Prices", "Interior Design Trends", "Commute Times"], a: 1 },
-                       { q: "Optimizing building energy usage with AI falls under the category of?", o: ["Property Marketing", "Smart Building Management", "Tenant Screening", "Virtual Staging"], a: 1 }
-                   ],
-                   government: [
-                       { q: "AI analyzing citizen feedback from multiple channels (email, social media) can help governments identify?", o: ["Popular Memes", "Public Service Improvement Areas", "Weather Patterns", "Stock Market Tips"], a: 1 },
-                       { q: "Using AI for predictive policing is controversial due to concerns about?", o: ["Accuracy", "Bias & Civil Liberties", "Cost Savings", "Computational Speed"], a: 1 },
-                       { q: "AI can help streamline the application process for permits or benefits by?", o: ["Making Forms Longer", "Automating Eligibility Checks & Routing", "Requiring In-Person Visits", "Using Morse Code"], a: 1 },
-                       { q: "Analyzing public health data with AI can help predict and track?", o: ["Fashion Trends", "Disease Outbreaks", "Election Results", "Movie Preferences"], a: 1 },
-                       { q: "An AI system translating laws into plain language improves?", o: ["Legal Complexity", "Citizen Understanding & Access", "Lawyer Job Security", "Judicial Speed"], a: 1 }
-                   ],
-                   open: [
-                       { q: "AI analyzing open climate datasets can help researchers model?", o: ["Next Season's Fashion", "Future Climate Scenarios", "Stock Market Performance", "Traffic Congestion"], a: 1 },
-                       { q: "Using AI to match open innovation challenges with potential solvers relies on understanding?", o: ["Solver Locations", "Problem Details & Solver Expertise", "Company Logos", "Website Colors"], a: 1 },
-                       { q: "AI summarizing open access research helps overcome the challenge of?", o: ["Too Few Publications", "Information Overload", "Lack of Funding", "Slow Internet"], a: 1 },
-                       { q: "Analyzing contributions to open-source software projects with AI can reveal?", o: ["Developer Locations", "Code Quality Trends & Bug Hotspots", "Favorite Programming Fonts", "Project Budget"], a: 1 },
-                       { q: "An 'open' AI model refers to a model whose?", o: ["Predictions are always correct", "Architecture & Code are publicly available", "Use is restricted", "Training data is secret"], a: 1 }
-                   ],
-                   general: [ // AI Trivia / General Knowledge
-                       { q: "What does the 'Turing Test' evaluate in AI?", o: ["Computational Speed", "Ability to Exhibit Human-like Intelligence", "Energy Efficiency", "Artistic Skill"], a: 1 },
-                       { q: "Deep Blue was a famous AI that defeated a world champion in which game?", o: ["Go", "Poker", "Chess", "Checkers"], a: 2 },
-                       { q: "Which tech giant developed the AI assistant 'Alexa'?", o: ["Google", "Apple", "Microsoft", "Amazon"], a: 3 },
-                       { q: "Reinforcement Learning in AI involves training agents through?", o: ["Reading Books", "Rewards & Punishments", "Watching Videos", "Direct Instruction"], a: 1 },
-                       { q: "The term 'Singularity' in AI discussions often refers to a hypothetical point where?", o: ["AI Debugging Ends", "AI Surpasses Human Intelligence", "All Computers Connect", "Robots Take Vacations"], a: 1 }
-                  ]
+            // --- Quiz Questions (Keep existing) ---
+            const quizData = { /* ... (Keep existing quiz data object) ... */
+                logistics: [{ q: "AI analyzes shipping data to predict optimal container loading patterns, reducing wasted space. True or False?", o: ["True", "False"], a: 0 }, { q: "Which AI helps logistics companies anticipate disruptions like port closures?", o: ["Predictive Analytics", "Image Recognition", "Chatbots", "Speech Synthesis"], a: 0 }, { q: "An AI system identifying the fastest AND cheapest delivery route is solving a(n) ____ problem.", o: ["Classification", "Optimization", "Clustering", "Generation"], a: 1 }, { q: "Using computer vision AI to automatically scan package labels in sorting hubs improves?", o: ["Driver Morale", "Efficiency & Accuracy", "Fuel Economy", "Building Security"], a: 1 }, { q: "AI predicting future fuel price fluctuations helps logistics companies manage?", o: ["Inventory Levels", "Employee Schedules", "Operating Costs", "Marketing Campaigns"], a: 2 }],
+                sustainability: [{ q: "AI algorithms optimizing power grid distribution based on renewable energy availability help reduce reliance on?", o: ["Solar Panels", "Batteries", "Fossil Fuels", "Wind Turbines"], a: 2 }, { q: "Precision agriculture uses AI and sensors to apply water/fertilizer only where needed, reducing?", o: ["Crop Yields", "Resource Waste", "Farm Size", "Harvest Time"], a: 1 }, { q: "AI analyzing consumption patterns can help individuals and companies reduce their?", o: ["Carbon Footprint", "Internet Speed", "Social Media Followers", "Favorite Colors"], a: 0 }, { q: "Developing new, biodegradable materials can be accelerated by AI predicting?", o: ["Material Properties", "Fashion Trends", "Stock Prices", "Weather Patterns"], a: 0 }, { q: "AI models tracking illegal deforestation or fishing activities primarily use data from?", o: ["Newspapers", "Satellites & Drones", "Social Media", "Cookbooks"], a: 1 }],
+                healthcare: [{ q: "AI analyzing patient records can identify individuals at high risk for certain diseases, enabling?", o: ["Higher Insurance Premiums", "Early Intervention", "Guaranteed Cures", "Longer Wait Times"], a: 1 }, { q: "Robotic surgery systems guided by AI can potentially improve?", o: ["Procedure Precision", "Hospital Food Quality", "Parking Availability", "Recovery Time (by days)", "Both A & D"], a: 4 }, { q: "AI virtual assistants can help patients manage medication schedules and provide?", o: ["Surgical Advice", "Personalized Health Info", "Financial Loans", "Gourmet Recipes"], a: 1 }, { q: "Identifying novel drug candidates from vast chemical libraries is a task well-suited for?", o: ["Manual Searching", "Machine Learning", "Basic Calculators", "Patient Interviews"], a: 1 }, { q: "A major ethical consideration for AI in healthcare is preventing?", o: ["Algorithmic Bias", "Faster Diagnoses", "Lower Costs", "Improved Outcomes"], a: 0 }],
+                management: [{ q: "AI tools analyzing past project data can provide more accurate estimations for?", o: ["Team Lunch Preferences", "Future Project Timelines & Budgets", "Office Decor", "Competitor Stock Prices"], a: 1 }, { q: "Natural Language Processing (NLP) can analyze project meeting transcripts to identify?", o: ["Action Items & Key Decisions", "The Best Jokes", "Typing Speed", "Software Bugs Mentioned"], a: 0 }, { q: "AI can help assign tasks to team members based on their?", o: ["Hair Color", "Skills & Availability", "Favorite Music Genre", "Distance from Office"], a: 1 }, { q: "An AI 'risk assessment' tool in project management aims to highlight potential?", o: ["Success Stories", "Problems Before They Occur", "Team Achievements", "Budget Surpluses"], a: 1 }, { q: "Using AI to automate status report generation frees up project managers for more?", o: ["Coffee Breaks", "Strategic Thinking & Problem Solving", "Manual Data Entry", "Vacation Planning"], a: 1 }],
+                realestate: [{ q: "AI algorithms analyzing neighborhood data (crime rates, schools, amenities) contribute to more accurate?", o: ["Weather Forecasts", "Property Valuations", "Restaurant Menus", "Fashion Advice"], a: 1 }, { q: "AI-powered chatbots on property portals can pre-qualify leads by asking initial questions about?", o: ["Favorite Colors", "Budget & Requirements", "Dream Vacation", "Pet Names"], a: 1 }, { q: "Computer vision AI can analyze property photos/videos to automatically identify?", o: ["Potential Buyers", "Key Features & Room Types", "Hidden Treasure", "Nearby Parks"], a: 1 }, { q: "AI analyzing market sentiment (news, social media) can predict shifts in?", o: ["Building Materials", "Property Demand & Prices", "Interior Design Trends", "Commute Times"], a: 1 }, { q: "Optimizing building energy usage with AI falls under the category of?", o: ["Property Marketing", "Smart Building Management", "Tenant Screening", "Virtual Staging"], a: 1 }],
+                government: [{ q: "AI analyzing citizen feedback from multiple channels (email, social media) can help governments identify?", o: ["Popular Memes", "Public Service Improvement Areas", "Weather Patterns", "Stock Market Tips"], a: 1 }, { q: "Using AI for predictive policing is controversial due to concerns about?", o: ["Accuracy", "Bias & Civil Liberties", "Cost Savings", "Computational Speed"], a: 1 }, { q: "AI can help streamline the application process for permits or benefits by?", o: ["Making Forms Longer", "Automating Eligibility Checks & Routing", "Requiring In-Person Visits", "Using Morse Code"], a: 1 }, { q: "Analyzing public health data with AI can help predict and track?", o: ["Fashion Trends", "Disease Outbreaks", "Election Results", "Movie Preferences"], a: 1 }, { q: "An AI system translating laws into plain language improves?", o: ["Legal Complexity", "Citizen Understanding & Access", "Lawyer Job Security", "Judicial Speed"], a: 1 }],
+                open: [{ q: "AI analyzing open climate datasets can help researchers model?", o: ["Next Season's Fashion", "Future Climate Scenarios", "Stock Market Performance", "Traffic Congestion"], a: 1 }, { q: "Using AI to match open innovation challenges with potential solvers relies on understanding?", o: ["Solver Locations", "Problem Details & Solver Expertise", "Company Logos", "Website Colors"], a: 1 }, { q: "AI summarizing open access research helps overcome the challenge of?", o: ["Too Few Publications", "Information Overload", "Lack of Funding", "Slow Internet"], a: 1 }, { q: "Analyzing contributions to open-source software projects with AI can reveal?", o: ["Developer Locations", "Code Quality Trends & Bug Hotspots", "Favorite Programming Fonts", "Project Budget"], a: 1 }, { q: "An 'open' AI model refers to a model whose?", o: ["Predictions are always correct", "Architecture & Code are publicly available", "Use is restricted", "Training data is secret"], a: 1 }],
+                general: [{ q: "What does the 'Turing Test' evaluate in AI?", o: ["Computational Speed", "Ability to Exhibit Human-like Intelligence", "Energy Efficiency", "Artistic Skill"], a: 1 }, { q: "Deep Blue was a famous AI that defeated a world champion in which game?", o: ["Go", "Poker", "Chess", "Checkers"], a: 2 }, { q: "Which tech giant developed the AI assistant 'Alexa'?", o: ["Google", "Apple", "Microsoft", "Amazon"], a: 3 }, { q: "Reinforcement Learning in AI involves training agents through?", o: ["Reading Books", "Rewards & Punishments", "Watching Videos", "Direct Instruction"], a: 1 }, { q: "The term 'Singularity' in AI discussions often refers to a hypothetical point where?", o: ["AI Debugging Ends", "AI Surpasses Human Intelligence", "All Computers Connect", "Robots Take Vacations"], a: 1 }]
              };
 
-
-            // --- Game State ---
-            const numSegments = challenges.length;
-            const anglePerSegment = 360 / numSegments;
-            const wheelRadius = 100; // SVG viewBox units
-            const emojiRadius = wheelRadius * 0.70; // Position emojis inwards slightly
-            let isSpinning = false;
-            let currentRotation = 0;
-            let currentChallenge = null;
-            let currentQuizSet = [];
-            let userSelections = {};
-            let quizSubmitted = false;
+            // --- Game State (Keep existing) ---
+            const numSegments = challenges.length; const anglePerSegment = 360 / numSegments; const wheelRadius = 100; const emojiRadius = wheelRadius * 0.70; let isSpinning = false; let currentRotation = 0; let currentChallenge = null; let currentQuizSet = []; let userSelections = {}; let quizSubmitted = false;
 
             // --- Initialization ---
             function initializeApp() {
                  createWheelSVG();
-                 setupTelegramIntegration();
+                 setupTelegramIntegration(); // Setup TG, user, points first
                  setupLogoScroll();
-                 setupButtonListeners(); // Setup listeners for new buttons
+                 setupButtonListeners();
                  resetUI();
             }
 
-            // --- SVG Wheel Generation ---
-            function createWheelSVG() {
-                 if (!wheelGroup) { console.error("SVG group not found!"); return; }
-                 wheelGroup.innerHTML = '';
-                 const center = wheelRadius;
-
-                 challenges.forEach((challenge, index) => {
-                     const startAngle = index * anglePerSegment;
-                     const endAngle = startAngle + anglePerSegment;
-                     const colorVar = `var(--color${(index % 8) + 1})`;
-
-                     // Segment Path
-                     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                     path.setAttribute("d", describeArc(center, center, center - 1, startAngle, endAngle)); // Slightly smaller radius for stroke visibility
-                     path.setAttribute("fill", colorVar);
-                     path.setAttribute("id", `segment-${index}`);
-                     path.classList.add('wheel-segment');
-                     wheelGroup.appendChild(path);
-
-                     // Emoji Position
-                     const midAngle = startAngle + anglePerSegment / 2;
-                     const midAngleRad = midAngle * (Math.PI / 180);
-                     const emojiX = center + emojiRadius * Math.cos(midAngleRad - Math.PI / 2);
-                     const emojiY = center + emojiRadius * Math.sin(midAngleRad - Math.PI / 2);
-
-                     // Emoji Text Element
-                     const emojiText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                     emojiText.setAttribute("x", emojiX);
-                     emojiText.setAttribute("y", emojiY);
-                     // No rotation needed if centered like this
-                     // emojiText.setAttribute("transform", `rotate(${midAngle}, ${emojiX}, ${emojiY})`);
-                     emojiText.classList.add("segment-emoji");
-                     emojiText.textContent = challenge.emoji;
-                     wheelGroup.appendChild(emojiText);
-                 });
+            // --- SVG Wheel Generation (Keep existing) ---
+            function createWheelSVG() { /* ... (Keep existing SVG code) ... */
+                if (!wheelGroup) { console.error("SVG group not found!"); return; } wheelGroup.innerHTML = ''; const center = wheelRadius; challenges.forEach((challenge, index) => { const startAngle = index * anglePerSegment; const endAngle = startAngle + anglePerSegment; const colorVar = `var(--color${(index % 8) + 1})`; const path = document.createElementNS("http://www.w3.org/2000/svg", "path"); path.setAttribute("d", describeArc(center, center, center - 1, startAngle, endAngle)); path.setAttribute("fill", colorVar); path.setAttribute("id", `segment-${index}`); path.classList.add('wheel-segment'); wheelGroup.appendChild(path); const midAngle = startAngle + anglePerSegment / 2; const midAngleRad = midAngle * (Math.PI / 180); const emojiX = center + emojiRadius * Math.cos(midAngleRad - Math.PI / 2); const emojiY = center + emojiRadius * Math.sin(midAngleRad - Math.PI / 2); const emojiText = document.createElementNS("http://www.w3.org/2000/svg", "text"); emojiText.setAttribute("x", emojiX); emojiText.setAttribute("y", emojiY); emojiText.classList.add("segment-emoji"); emojiText.textContent = challenge.emoji; wheelGroup.appendChild(emojiText); });
+            }
+            function describeArc(x, y, radius, startAngle, endAngle) { /* ... (Keep existing helper) ... */
+                const startRad = (startAngle - 90) * Math.PI / 180; const endRad = (endAngle - 90) * Math.PI / 180; const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1"; const startX = x + radius * Math.cos(startRad); const startY = y + radius * Math.sin(startRad); const endX = x + radius * Math.cos(endRad); const endY = y + radius * Math.sin(endRad); const d = ["M", startX, startY, "A", radius, radius, 0, largeArcFlag, 1, endX, endY, "L", x, y, "Z"].join(" "); return d;
             }
 
-            // Helper function for SVG arc path
-            function describeArc(x, y, radius, startAngle, endAngle) {
-                const startRad = (startAngle - 90) * Math.PI / 180;
-                const endRad = (endAngle - 90) * Math.PI / 180;
-                const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
-                const startX = x + radius * Math.cos(startRad);
-                const startY = y + radius * Math.sin(startRad);
-                const endX = x + radius * Math.cos(endRad);
-                const endY = y + radius * Math.sin(endRad);
-                const d = ["M", startX, startY, "A", radius, radius, 0, largeArcFlag, 1, endX, endY, "L", x, y, "Z"].join(" ");
-                return d;
-            }
-
-             // --- Telegram & Profile Logic (using CloudStorage) ---
+             // --- Telegram & Profile Logic (MERGED & USING CONSISTENT FUNCTIONS) ---
             function setupTelegramIntegration() {
-                 if (tg && tg.initDataUnsafe) {
-                     tg.ready(); tg.BackButton.show();
-                     tg.onEvent('backButtonClicked', handleBackButton);
-                     currentUser = tg.initDataUnsafe.user;
-                     updateUserProfileDisplay();
-                     loadWellyPoints(); // Load points on init
-                 } else {
-                     console.warn("Not running in Telegram context.");
-                     const profileElement = document.getElementById('user-profile');
-                     if(profileElement) profileElement.style.display = 'none';
-                     updateWellyPointsDisplay(); // Show 0 if no CS
+                 try {
+                     if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                         tg.ready(); tg.expand(); tg.BackButton.show(); // Show back button
+                         tg.onEvent('backButtonClicked', handleBackButton); // Use combined handler
+
+                         currentUser = tg.initDataUnsafe.user;
+                         console.log("User Initialized (Game):", currentUser);
+                         updateUserProfileDisplayHeader(); // Update header display
+
+                         // Load points and update leaderboard
+                         loadWellyPoints().then(loadedPoints => {
+                             console.log(`Initial points loaded (Game): ${loadedPoints}`);
+                             updateLeaderboardWithCurrentUser(loadedPoints);
+                         }).catch(error => {
+                              console.error("Error during initial points load (Game):", error);
+                              updateWellyPointsDisplayUI(0);
+                         });
+                         console.log("Telegram Mini App Initialized on Game Page.");
+                     } else {
+                         console.warn("Not running in Telegram context or user data unavailable (Game).");
+                         displayGuestProfile(); // Show guest state
+                     }
+                 } catch (error) {
+                     console.error("Error during Telegram App Initialization (Game):", error);
+                     displayGuestProfile();
                  }
             }
-            function handleBackButton() { if (!quizDisplayArea.classList.contains('hidden')) { resetToWheelView(); } else if (window.history.length > 1) { window.history.back(); } else if (tg && tg.close) { tg.close(); } }
-            function updateUserProfileDisplay() { if (!currentUser) { if(userNameDisplay) userNameDisplay.textContent = 'Guest'; if(userAvatarContainer) userAvatarContainer.textContent = '👤'; return; }; if (userNameDisplay) userNameDisplay.textContent = currentUser.first_name || 'Player'; if (userAvatarContainer) { userAvatarContainer.innerHTML = ''; if (currentUser.photo_url) { const img = document.createElement('img'); img.src = currentUser.photo_url; img.alt = `Profile photo`; userAvatarContainer.appendChild(img); } else { userAvatarContainer.textContent = '🎓'; } } }
-            function loadWellyPoints() { totalWellyPoints = 0; if (tg && tg.CloudStorage) { tg.CloudStorage.getItem('totalWellyPoints', (error, value) => { if (!error && value) { totalWellyPoints = parseInt(value, 10) || 0; } else { totalWellyPoints = 0; if(error) console.error("CS Load Error:", error); } updateWellyPointsDisplay(); console.log("Loaded WP:", totalWellyPoints); }); } else { updateWellyPointsDisplay(); } }
-            function updateWellyPointsDisplay() { if (wellyPointsDisplay) { wellyPointsDisplay.textContent = totalWellyPoints; } }
-            function saveWellyPoints() { console.log("Attempting to save WP:", totalWellyPoints); if (tg && tg.CloudStorage) { tg.CloudStorage.setItem('totalWellyPoints', totalWellyPoints.toString(), (error, success) => { if (error) console.error('CS Save Error:', error); else if (!success) console.warn('CS Save returned false.'); else console.log('CS Points Saved.'); }); } else { console.warn("CloudStorage not available."); } }
-
-            // --- Logo Scroll Logic ---
-            function setupLogoScroll() { if (logo) { const handleScroll = () => { const isScrolled = window.scrollY > 30; logo.classList.toggle('logo-scrolled', isScrolled); bodyElement.classList.toggle('logo-state-scrolled', isScrolled); }; logo.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }); window.addEventListener('scroll', handleScroll, { passive: true }); handleScroll(); } }
-
-            // --- Button Listeners ---
-            function setupButtonListeners() {
-                spinButton.addEventListener('click', () => { if (!isSpinning) startSpin(); });
-                spinAgainButton.addEventListener('click', handleSpinAgain);
-                startQuizButton.addEventListener('click', handleStartQuiz);
-                submitQuizButton.addEventListener('click', handleSubmitQuiz);
-                playAgainButton.addEventListener('click', resetToWheelView);
-            }
-
-            function resetUI() {
-                challengeResultText.textContent = 'Spin for your AI challenge theme...';
-                resultArea.classList.add('visible');
-                resultButtonsContainer.classList.add('hidden'); // Hide choice buttons
-                spinButton.disabled = false;
-                spinButton.classList.remove('hidden');
-                quizDisplayArea.classList.add('hidden');
-                quizDisplayArea.classList.remove('visible');
-                quizLoaderOverlay.classList.remove('visible'); // Ensure loader hidden
-                quizQuestionsContainer.innerHTML = '';
-                quizQuestionsContainer.style.display = 'none';
-                submitQuizButton.classList.add('hidden');
-                playAgainButton.classList.add('hidden');
-                quizFeedback.textContent = '';
-                quizFeedback.className = '';
-                quizSubmitted = false;
-                userSelections = {};
-                wheelSection.classList.remove('hidden');
-                wheelGroup.querySelectorAll('.highlighted-segment').forEach(el => el.classList.remove('highlighted-segment'));
-            }
-
-            // --- Wheel Logic ---
-            function startSpin() {
-                 isSpinning = true; spinButton.disabled = true;
-                 resultArea.classList.remove('visible');
-                 resultButtonsContainer.classList.add('hidden'); // Hide choice buttons
-                 quizDisplayArea.classList.add('hidden');
-                 quizDisplayArea.classList.remove('visible');
-                 challengeResultText.textContent = 'Spinning...';
-                 wheelGroup.querySelectorAll('.highlighted-segment').forEach(el => el.classList.remove('highlighted-segment'));
-
-                 const randomExtraRotation = Math.random() * 360;
-                 const spins = 5 + Math.floor(Math.random() * 3);
-                 const targetRotation = currentRotation + spins * 360 + randomExtraRotation;
-
-                 wheelSVG.style.transition = 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)';
-                 wheelSVG.style.transform = `rotate(${targetRotation}deg)`;
-                 currentRotation = targetRotation;
-                 setTimeout(handleSpinEnd, 5100);
-            }
-
-            function handleSpinEnd() {
-                isSpinning = false;
-                const finalEffectiveAngle = currentRotation % 360;
-                const pointerAngle = (360 - finalEffectiveAngle) % 360;
-                const winningIndex = Math.floor(pointerAngle / anglePerSegment);
-                currentChallenge = challenges[winningIndex];
-
-                challengeResultText.innerHTML = `Theme: <strong>${currentChallenge.emoji} ${currentChallenge.name}</strong>!`;
-                resultArea.classList.add('visible');
-                resultButtonsContainer.classList.remove('hidden'); // Show Spin Again / Start Quiz
-                spinButton.classList.add('hidden'); // Hide main spin button
-
-                const winningSegmentPath = wheelGroup.querySelector(`#segment-${winningIndex}`);
-                if (winningSegmentPath) { winningSegmentPath.classList.add('highlighted-segment'); }
-            }
-
-             // --- New Button Handlers ---
-             function handleSpinAgain() {
-                  spinButton.disabled = false; // Re-enable main button
-                  resultButtonsContainer.classList.add('hidden'); // Hide choice buttons
-                  startSpin(); // Immediately spin again
+             // --- Back Button Logic (Handles Quiz State) ---
+             function handleBackButton() {
+                 if (!quizDisplayArea.classList.contains('hidden')) {
+                     // If quiz is showing, confirm before going back to wheel
+                     if (confirm("Go back to the wheel? Your current quiz progress will be lost.")) {
+                         resetToWheelView();
+                     }
+                 } else if (window.history.length > 1) {
+                     window.history.back(); // Standard browser back
+                 } else if (tg && tg.close) {
+                     tg.close(); // Close Mini App if no history
+                 } else {
+                     window.location.href = 'index.html'; // Fallback to home
+                 }
              }
 
-             function handleStartQuiz() {
-                 resultButtonsContainer.classList.add('hidden'); // Hide choice buttons
-                 // Show full-screen loader
-                 quizLoaderOverlay.classList.add('visible');
-
-                 const generationTime = 2000; // 2 seconds
-                 setTimeout(() => {
-                     quizLoaderOverlay.classList.remove('visible'); // Hide loader
-                     displayQuizForChallenge(); // Display the quiz questions
-                     // Scroll down after a very short delay to allow rendering
-                     setTimeout(() => {
-                         quizDisplayArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                     }, 100);
-                 }, generationTime);
+             // --- Guest Profile Display (Copied) ---
+             function displayGuestProfile() { /* ... (Keep existing function) ... */
+                if(userProfileElement) { userProfileElement.style.display = 'none'; userProfileElement.removeAttribute('data-bs-toggle'); userProfileElement.removeAttribute('data-bs-target'); userProfileElement.style.cursor = 'default'; } if(userNameDisplay) userNameDisplay.textContent = 'Guest'; if(userAvatarContainer) userAvatarContainer.innerHTML = '👤'; if(wellyPointsDisplay) wellyPointsDisplay.textContent = '0'; if (deleteProgressBtn) deleteProgressBtn.disabled = true;
+             }
+             // --- Update Header Profile Display (Copied) ---
+             function updateUserProfileDisplayHeader() { /* ... (Keep existing function) ... */
+                if (!currentUser) return; if (userNameDisplay) userNameDisplay.textContent = currentUser.first_name || 'Player'; if (userAvatarContainer) { userAvatarContainer.innerHTML = ''; if (currentUser.photo_url) { const img = document.createElement('img'); img.src = currentUser.photo_url; img.alt = `${currentUser.first_name || 'User'}'s profile picture`; userAvatarContainer.appendChild(img); } else { userAvatarContainer.textContent = '🎓'; } }
+             }
+             // --- Update Points UI (Copied) ---
+             function updateWellyPointsDisplayUI(points) { /* ... (Keep existing function) ... */
+                 totalWellyPoints = points; if (wellyPointsDisplay) { wellyPointsDisplay.textContent = points; } if (profileModalElement.classList.contains('show') && modalWellyPoints) { modalWellyPoints.textContent = points; }
+             }
+             // --- Welly Points Management (Copied & Consistent) ---
+             function loadWellyPoints() { /* ... (Keep existing function) ... */
+                 return new Promise((resolve, reject) => { if (tg && tg.CloudStorage) { tg.CloudStorage.getItem(POINTS_KEY, (error, value) => { let loadedPoints = 0; if (error) { console.error(`CS Error loading ${POINTS_KEY}:`, error); } else if (value) { loadedPoints = parseInt(value, 10) || 0; console.log(`Loaded ${POINTS_KEY} from CS:`, loadedPoints); } else { console.log(`${POINTS_KEY} not found in CS, defaulting to 0.`); } updateWellyPointsDisplayUI(loadedPoints); resolve(loadedPoints); }); } else { console.warn("CloudStorage not available. Points display 0."); updateWellyPointsDisplayUI(0); resolve(0); } });
+             }
+             function saveWellyPoints() { /* ... (REPLACED original game save with consistent one) ... */
+                 console.log("Attempting to save WP:", totalWellyPoints);
+                 return new Promise((resolve, reject) => { // Return promise
+                     if (tg && tg.CloudStorage) {
+                         tg.CloudStorage.setItem(POINTS_KEY, totalWellyPoints.toString(), (error, success) => {
+                             if (error) { console.error(`CS Error saving ${POINTS_KEY}:`, error); reject(new Error(`CloudStorage Error: ${error}`)); }
+                             else if (success) { console.log(`Saved ${POINTS_KEY} to CS:`, totalWellyPoints); updateWellyPointsDisplayUI(totalWellyPoints); updateLeaderboardWithCurrentUser(totalWellyPoints); resolve(true); }
+                             else { console.warn(`CS save call for ${POINTS_KEY} failed silently.`); reject(new Error("CloudStorage save failed silently.")); }
+                         });
+                     } else { console.warn("CloudStorage not available. Points not saved."); reject(new Error("CloudStorage not available.")); }
+                 });
              }
 
-             // --- Quiz Logic ---
-             function displayQuizForChallenge() {
-                 if (!currentChallenge || !quizData[currentChallenge.theme]) { resetToWheelView(); return; }
-                 const allQuestions = quizData[currentChallenge.theme];
-                 currentQuizSet = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 5);
-                 if (currentQuizSet.length === 0) { resetToWheelView(); return; }
-
-                 quizDisplayTitle.innerHTML = `<i class="fas fa-question-circle"></i> ${currentChallenge.name} Quiz`;
-                 quizQuestionsContainer.innerHTML = '';
-                 quizSubmitted = false; userSelections = {};
-
-                 currentQuizSet.forEach((qData, index) => {
-                      const questionBlock = document.createElement('div');
-                      questionBlock.classList.add('quiz-question-block');
-                      questionBlock.dataset.qIndex = index;
-                      const questionText = document.createElement('div');
-                      questionText.classList.add('quiz-question-text');
-                      questionText.textContent = `Q${index + 1}: ${qData.q}`;
-                      const optionsDiv = document.createElement('div');
-                      optionsDiv.classList.add('quiz-options');
-                      qData.o.forEach((option, optionIndex) => {
-                          const button = document.createElement('button');
-                          button.textContent = option;
-                          button.dataset.index = optionIndex;
-                          button.addEventListener('click', () => handleOptionSelect(index, optionIndex, button));
-                          optionsDiv.appendChild(button);
-                      });
-                      questionBlock.appendChild(questionText);
-                      questionBlock.appendChild(optionsDiv);
-                      quizQuestionsContainer.appendChild(questionBlock);
-                  });
-
-                 quizQuestionsContainer.style.display = 'block';
-                 submitQuizButton.classList.remove('hidden');
-                 submitQuizButton.disabled = true;
-                 playAgainButton.classList.add('hidden');
-                 quizFeedback.textContent = '';
-                 quizDisplayArea.classList.remove('hidden'); // Show quiz card
-                 quizDisplayArea.classList.add('visible'); // Trigger fade in
+            // --- Logo Scroll Logic (Copied) ---
+            function setupLogoScroll() { /* ... (Keep existing function) ... */
+                const scrollThreshold = 30; if (logo && bodyElement) { const handleScroll = () => { const isScrolled = window.scrollY > scrollThreshold; logo.classList.toggle('logo-scrolled', isScrolled); bodyElement.classList.toggle('logo-state-scrolled', isScrolled); }; logo.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }); window.addEventListener('scroll', handleScroll, { passive: true }); handleScroll(); } else { console.warn("Header logo or body element not found for scroll effect."); }
             }
 
-            function handleOptionSelect(questionIndex, optionIndex, clickedButton) {
-                 if (quizSubmitted) return;
-                 userSelections[questionIndex] = optionIndex;
-                 const questionBlock = clickedButton.closest('.quiz-question-block');
-                 const optionsInBlock = questionBlock.querySelectorAll('.quiz-options button');
-                 optionsInBlock.forEach(btn => btn.classList.remove('selected'));
-                 clickedButton.classList.add('selected');
-                 // Enable submit only when all 5 questions have answers
-                 submitQuizButton.disabled = Object.keys(userSelections).length !== currentQuizSet.length;
+            // --- Button Listeners (Keep existing) ---
+            function setupButtonListeners() { spinButton.addEventListener('click', () => { if (!isSpinning) startSpin(); }); spinAgainButton.addEventListener('click', handleSpinAgain); startQuizButton.addEventListener('click', handleStartQuiz); submitQuizButton.addEventListener('click', handleSubmitQuiz); playAgainButton.addEventListener('click', resetToWheelView); }
+            function resetUI() { challengeResultText.textContent = 'Spin for your AI challenge theme...'; resultArea.classList.add('visible'); resultButtonsContainer.classList.add('hidden'); spinButton.disabled = false; spinButton.classList.remove('hidden'); quizDisplayArea.classList.add('hidden'); quizDisplayArea.classList.remove('visible'); quizLoaderOverlay.classList.remove('visible'); quizQuestionsContainer.innerHTML = ''; quizQuestionsContainer.style.display = 'none'; submitQuizButton.classList.add('hidden'); playAgainButton.classList.add('hidden'); quizFeedback.textContent = ''; quizFeedback.className = ''; quizSubmitted = false; userSelections = {}; wheelSection.classList.remove('hidden'); wheelGroup.querySelectorAll('.highlighted-segment').forEach(el => el.classList.remove('highlighted-segment')); }
+
+            // --- Wheel Logic (Keep existing) ---
+            function startSpin() { /* ... (Keep existing function) ... */
+                 isSpinning = true; spinButton.disabled = true; resultArea.classList.remove('visible'); resultButtonsContainer.classList.add('hidden'); quizDisplayArea.classList.add('hidden'); quizDisplayArea.classList.remove('visible'); challengeResultText.textContent = 'Spinning...'; wheelGroup.querySelectorAll('.highlighted-segment').forEach(el => el.classList.remove('highlighted-segment')); const randomExtraRotation = Math.random() * 360; const spins = 5 + Math.floor(Math.random() * 3); const targetRotation = currentRotation + spins * 360 + randomExtraRotation; wheelSVG.style.transition = 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)'; wheelSVG.style.transform = `rotate(${targetRotation}deg)`; currentRotation = targetRotation; setTimeout(handleSpinEnd, 5100);
+            }
+            function handleSpinEnd() { /* ... (Keep existing function) ... */
+                isSpinning = false; const finalEffectiveAngle = currentRotation % 360; const pointerAngle = (360 - finalEffectiveAngle) % 360; const winningIndex = Math.floor(pointerAngle / anglePerSegment); currentChallenge = challenges[winningIndex]; challengeResultText.innerHTML = `Theme: <strong>${currentChallenge.emoji} ${currentChallenge.name}</strong>!`; resultArea.classList.add('visible'); resultButtonsContainer.classList.remove('hidden'); spinButton.classList.add('hidden'); const winningSegmentPath = wheelGroup.querySelector(`#segment-${winningIndex}`); if (winningSegmentPath) { winningSegmentPath.classList.add('highlighted-segment'); }
             }
 
-            function handleSubmitQuiz() { // Renamed function
-                if (Object.keys(userSelections).length !== currentQuizSet.length) {
-                    if(tg && tg.showAlert) tg.showAlert("Please answer all questions."); else alert("Please answer all questions.");
-                    return;
-                }
-                checkAllAnswers();
-            }
+             // --- New Button Handlers (Keep existing) ---
+             function handleSpinAgain() { /* ... (Keep existing function) ... */
+                 spinButton.disabled = false; resultButtonsContainer.classList.add('hidden'); startSpin();
+             }
+             function handleStartQuiz() { /* ... (Keep existing function) ... */
+                 resultButtonsContainer.classList.add('hidden'); quizLoaderOverlay.classList.add('visible'); const generationTime = 2000; setTimeout(() => { quizLoaderOverlay.classList.remove('visible'); displayQuizForChallenge(); setTimeout(() => { quizDisplayArea.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100); }, generationTime);
+             }
 
-            function checkAllAnswers() {
+             // --- Quiz Logic (MODIFIED checkAllAnswers to use new saveWellyPoints) ---
+             function displayQuizForChallenge() { /* ... (Keep existing function) ... */
+                if (!currentChallenge || !quizData[currentChallenge.theme]) { resetToWheelView(); return; } const allQuestions = quizData[currentChallenge.theme]; currentQuizSet = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 5); if (currentQuizSet.length === 0) { resetToWheelView(); return; } quizDisplayTitle.innerHTML = `<i class="fas fa-question-circle"></i> ${currentChallenge.name} Quiz`; quizQuestionsContainer.innerHTML = ''; quizSubmitted = false; userSelections = {}; currentQuizSet.forEach((qData, index) => { const questionBlock = document.createElement('div'); questionBlock.classList.add('quiz-question-block'); questionBlock.dataset.qIndex = index; const questionText = document.createElement('div'); questionText.classList.add('quiz-question-text'); questionText.textContent = `Q${index + 1}: ${qData.q}`; const optionsDiv = document.createElement('div'); optionsDiv.classList.add('quiz-options'); qData.o.forEach((option, optionIndex) => { const button = document.createElement('button'); button.textContent = option; button.dataset.index = optionIndex; button.addEventListener('click', () => handleOptionSelect(index, optionIndex, button)); optionsDiv.appendChild(button); }); questionBlock.appendChild(questionText); questionBlock.appendChild(optionsDiv); quizQuestionsContainer.appendChild(questionBlock); }); quizQuestionsContainer.style.display = 'block'; submitQuizButton.classList.remove('hidden'); submitQuizButton.disabled = true; playAgainButton.classList.add('hidden'); quizFeedback.textContent = ''; quizDisplayArea.classList.remove('hidden'); quizDisplayArea.classList.add('visible');
+            }
+            function handleOptionSelect(questionIndex, optionIndex, clickedButton) { /* ... (Keep existing function) ... */
+                if (quizSubmitted) return; userSelections[questionIndex] = optionIndex; const questionBlock = clickedButton.closest('.quiz-question-block'); const optionsInBlock = questionBlock.querySelectorAll('.quiz-options button'); optionsInBlock.forEach(btn => btn.classList.remove('selected')); clickedButton.classList.add('selected'); submitQuizButton.disabled = Object.keys(userSelections).length !== currentQuizSet.length;
+            }
+            function handleSubmitQuiz() { /* ... (Keep existing function) ... */
+                 if (Object.keys(userSelections).length !== currentQuizSet.length) { if(tg && tg.showAlert) tg.showAlert("Please answer all questions."); else alert("Please answer all questions."); return; } checkAllAnswers();
+             }
+            async function checkAllAnswers() { // Made async to await saveWellyPoints
                  quizSubmitted = true; let correctAnswersCount = 0;
                  currentQuizSet.forEach((qData, index) => {
                       const questionBlock = quizQuestionsContainer.querySelector(`.quiz-question-block[data-q-index="${index}"]`);
@@ -645,33 +502,44 @@
                       if (selectedIndex === correctIndex) correctAnswersCount++;
                  });
                  const pointsEarned = correctAnswersCount;
-                 totalWellyPoints += pointsEarned;
-                 updateWellyPointsDisplay();
-                 saveWellyPoints(); // Save points to CloudStorage
+                 totalWellyPoints += pointsEarned; // Update local variable first
+                 updateWellyPointsDisplayUI(totalWellyPoints); // Update UI
+
+                 try {
+                    await saveWellyPoints(); // Use the consistent save function (awaits completion)
+                 } catch (error) {
+                     console.error("Failed to save points after quiz:", error);
+                     // Optionally show an error to the user if saving fails
+                     if(tg && tg.showAlert) tg.showAlert("Error saving your points. Please try again later.");
+                 }
+
                  quizFeedback.textContent = `Quiz Complete! Score: ${correctAnswersCount}/${currentQuizSet.length} (+${pointsEarned} WP)`;
-                 quizFeedback.className = pointsEarned > 0 ? 'correct' : 'incorrect';
+                 quizFeedback.className = pointsEarned > 0 ? 'feedback-success' : 'feedback-error'; // Use CSS classes
                  submitQuizButton.classList.add('hidden');
                  playAgainButton.classList.remove('hidden');
                  if (tg && tg.HapticFeedback) { if (pointsEarned === currentQuizSet.length) tg.HapticFeedback.notificationOccurred('success'); else if (pointsEarned > 0) tg.HapticFeedback.notificationOccurred('warning'); else tg.HapticFeedback.notificationOccurred('error'); }
             }
 
-            function resetToWheelView() {
-                 // Reset UI logic remains mostly the same, ensures choice buttons are hidden
-                 quizDisplayArea.classList.add('hidden');
-                 quizDisplayArea.classList.remove('visible');
-                 wheelSection.classList.remove('hidden');
-                 spinButton.classList.remove('hidden');
-                 spinButton.disabled = false;
-                 resultArea.classList.remove('visible'); // Hide result area briefly
-                 resultButtonsContainer.classList.add('hidden'); // Hide choice buttons
-                 challengeResultText.textContent = 'Spin again for a new quest!';
-                 resultArea.classList.add('visible'); // Show updated text
-                 currentChallenge = null;
-                 quizSubmitted = false;
-                 userSelections = {};
-                 wheelGroup.querySelectorAll('.highlighted-segment').forEach(el => el.classList.remove('highlighted-segment'));
-                 if (tg && tg.BackButton.isVisible) tg.BackButton.show();
+            function resetToWheelView() { /* ... (Keep existing function) ... */
+                 quizDisplayArea.classList.add('hidden'); quizDisplayArea.classList.remove('visible'); wheelSection.classList.remove('hidden'); spinButton.classList.remove('hidden'); spinButton.disabled = false; resultArea.classList.remove('visible'); resultButtonsContainer.classList.add('hidden'); challengeResultText.textContent = 'Spin again for a new quest!'; resultArea.classList.add('visible'); currentChallenge = null; quizSubmitted = false; userSelections = {}; wheelGroup.querySelectorAll('.highlighted-segment').forEach(el => el.classList.remove('highlighted-segment')); if (tg && tg.BackButton.isVisible) tg.BackButton.show(); // Ensure back button is shown
             }
+
+            // --- Profile Modal Logic (Copied) ---
+             if (profileModalElement) {
+                 profileModalElement.addEventListener('show.bs.modal', async function () { /* ... (Keep existing 'show.bs.modal' listener code) ... */
+                    if (!currentUser) { console.error("Cannot open profile modal: User not initialized."); const modalInstance = bootstrap.Modal.getInstance(profileModalElement); if (modalInstance) modalInstance.hide(); tg.showAlert("Could not load profile data."); return; } console.log("Modal opening (Game). Current User:", currentUser); if (modalUserName) modalUserName.textContent = currentUser.first_name || 'Player'; if (modalUserAvatar) { modalUserAvatar.innerHTML = ''; if (currentUser.photo_url) { const img = document.createElement('img'); img.src = currentUser.photo_url; img.alt = `Profile picture`; modalUserAvatar.appendChild(img); } else { modalUserAvatar.textContent = '🎓'; } } if(resetFeedbackArea) resetFeedbackArea.textContent = ''; if(deleteProgressBtn) deleteProgressBtn.disabled = false; try { const currentPoints = await loadWellyPoints(); console.log("Points re-loaded for modal (Game):", currentPoints); if (modalWellyPoints) modalWellyPoints.textContent = currentPoints; await fetchAndDisplayLeaderboard(currentPoints); } catch (error) { console.error("Error loading points/leaderboard for modal (Game):", error); if (modalWellyPoints) modalWellyPoints.textContent = 'Error'; if (profileRankDisplay) profileRankDisplay.textContent = 'Rank: Error'; if (leaderboardTableBody) leaderboardTableBody.innerHTML = '<tr><td colspan="3" class="text-center text-danger">Error loading data.</td></tr>'; if (leaderboardLoading) leaderboardLoading.style.display = 'none'; if (leaderboardEmpty) leaderboardEmpty.style.display = 'none'; }
+                 });
+                 if (deleteProgressBtn) { deleteProgressBtn.addEventListener('click', function() { /* ... (Keep existing 'click' listener code for deleteProgressBtn) ... */
+                    if(resetFeedbackArea) resetFeedbackArea.textContent = ''; if (!tg || !tg.showConfirm) { if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Action only available in Telegram.'; resetFeedbackArea.className = 'small feedback-error'; } else { alert("This action is only available within the Telegram app."); } return; } tg.showConfirm("Reset ALL progress (Points, Tasks, Quests)?\nThis cannot be undone.", async (confirmed) => { if (confirmed) { console.log("User confirmed progress reset."); deleteProgressBtn.disabled = true; if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Resetting...'; resetFeedbackArea.className = 'small text-muted'; } try { await saveWellyPoints(0); console.log("Points reset to 0."); const keysToRemove = [HACKATHON_TASKS_KEY, QUEST_PROGRESS_KEY, LEADERBOARD_KEY]; let deletePromises = []; if (tg.CloudStorage) { keysToRemove.forEach(key => { deletePromises.push(new Promise((resolve) => { tg.CloudStorage.deleteItem(key, (error, success) => { if (error) { console.error(`CS Error deleting ${key}:`, error); resolve({ status: 'rejected', key: key, error: error }); } else { console.log(`${key} deleted from CS: ${success}`); resolve({ status: 'fulfilled', key: key, success: success }); } }); })); }); const results = await Promise.allSettled(deletePromises); console.log("Deletion results:", results); const failedDeletions = results.filter(r => r.status === 'rejected' || (r.status === 'fulfilled' && !r.value.success)); if (failedDeletions.length > 0) { console.warn("Some keys might not have been deleted:", failedDeletions); } } else { console.warn("CloudStorage not available. Cannot delete server-side progress."); } if (modalWellyPoints) modalWellyPoints.textContent = '0'; if (profileRankDisplay) profileRankDisplay.textContent = 'Rank: N/A (Reset)'; if (leaderboardTableBody) leaderboardTableBody.innerHTML = ''; if (leaderboardEmpty) { leaderboardEmpty.textContent = 'Leaderboard reset.'; leaderboardEmpty.style.display = 'block'; } if (leaderboardLoading) leaderboardLoading.style.display = 'none'; if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Progress Reset Successfully!'; resetFeedbackArea.className = 'small feedback-success'; } tg.showAlert("Your progress has been reset successfully."); } catch (error) { console.error("Error during progress reset:", error); if(resetFeedbackArea) { resetFeedbackArea.textContent = `Reset failed: ${error.message || 'Unknown error'}`; resetFeedbackArea.className = 'small feedback-error'; } tg.showAlert(`An error occurred: ${error.message || error}`); deleteProgressBtn.disabled = false; } } else { console.log("User cancelled progress reset."); if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Reset cancelled.'; resetFeedbackArea.className = 'small text-muted'; } } });
+                 }); }
+             } else { console.error("Profile modal element (#userProfileModal) not found (Game)."); }
+
+            // --- Leaderboard Simulation Logic (Copied) ---
+            async function getLeaderboardData() { /* ... (Keep existing function) ... */ return new Promise((resolve) => { if (tg && tg.CloudStorage) { tg.CloudStorage.getItem(LEADERBOARD_KEY, (error, value) => { let data = []; if (error) { console.error(`CS Error loading ${LEADERBOARD_KEY}:`, error); } else if (value) { try { data = JSON.parse(value); if (!Array.isArray(data)) data = []; console.log(`Loaded ${LEADERBOARD_KEY} from CS:`, data.length, "entries"); } catch (e) { console.error(`Error parsing ${LEADERBOARD_KEY} from CS:`, e); data = []; } } else { console.log(`${LEADERBOARD_KEY} not found in CS. Initializing.`); } if (currentUser) { const userExists = data.some(entry => entry.userId === currentUser.id); if (!userExists) { data.push({ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: totalWellyPoints }); } } resolve(data); }); } else { console.warn("CloudStorage not available for leaderboard."); resolve(currentUser ? [{ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: totalWellyPoints }] : []); } }); }
+            async function saveLeaderboardData(data) { /* ... (Keep existing function) ... */ if (!Array.isArray(data)) return; if (tg && tg.CloudStorage) { tg.CloudStorage.setItem(LEADERBOARD_KEY, JSON.stringify(data), (error, success) => { if (error) console.error(`CS Error saving ${LEADERBOARD_KEY}:`, error); else if (success) console.log(`Saved ${LEADERBOARD_KEY} to CS:`, data.length, "entries"); else console.warn(`CS save call for ${LEADERBOARD_KEY} failed silently.`); }); } else console.warn("CloudStorage not available. Leaderboard not saved."); }
+            async function updateLeaderboardWithCurrentUser(currentPoints) { /* ... (Keep existing function) ... */ if (!currentUser) return; try { let leaderboard = await getLeaderboardData(); const userIndex = leaderboard.findIndex(entry => entry.userId === currentUser.id); let changed = false; if (userIndex > -1) { if (leaderboard[userIndex].points !== currentPoints || leaderboard[userIndex].firstName !== (currentUser.first_name || 'Player')) { leaderboard[userIndex].points = currentPoints; leaderboard[userIndex].firstName = currentUser.first_name || 'Player'; changed = true; } } else { leaderboard.push({ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: currentPoints }); changed = true; } if (changed) { await saveLeaderboardData(leaderboard); } else { console.log("Leaderboard already up-to-date for current user (Game)."); } } catch (error) { console.error("Failed to update leaderboard with current user (Game):", error); } }
+            async function fetchAndDisplayLeaderboard(currentPoints) { /* ... (Keep existing function) ... */ if (!leaderboardLoading || !leaderboardTableBody || !profileRankDisplay || !leaderboardEmpty || !currentUser) return; leaderboardLoading.style.display = 'block'; leaderboardTableBody.innerHTML = ''; leaderboardEmpty.style.display = 'none'; profileRankDisplay.textContent = 'Rank: Calculating...'; try { let leaderboard = await getLeaderboardData(); const userIndex = leaderboard.findIndex(entry => entry.userId === currentUser.id); if (userIndex > -1 && leaderboard[userIndex].points !== currentPoints) { leaderboard[userIndex].points = currentPoints; } else if (userIndex === -1) { leaderboard.push({ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: currentPoints }); } if (leaderboard.length === 0) { profileRankDisplay.textContent = 'Rank: N/A'; leaderboardEmpty.textContent = 'Leaderboard is empty.'; leaderboardEmpty.style.display = 'block'; leaderboardLoading.style.display = 'none'; return; } leaderboard.sort((a, b) => b.points - a.points); const userRank = leaderboard.findIndex(entry => entry.userId === currentUser.id) + 1; const totalPlayers = leaderboard.length; if (userRank > 0) { profileRankDisplay.textContent = `Your Rank: #${userRank} out of ${totalPlayers}`; } else { profileRankDisplay.textContent = 'Rank: Calculating...'; console.warn("User rank couldn't be determined (Game)."); } const topN = 5; leaderboard.slice(0, topN).forEach((entry, index) => { const rank = index + 1; const row = leaderboardTableBody.insertRow(); row.innerHTML = `<td class="text-center"><span class="rank-badge">${rank}</span></td><td>${entry.firstName || 'Player'} ${entry.userId === currentUser.id ? '<small>(You)</small>' : ''}</td><td class="text-end points-cell">${entry.points}</td>`; if (entry.userId === currentUser.id) { row.classList.add('table-info'); } }); leaderboardLoading.style.display = 'none'; } catch (error) { console.error("Error fetching/displaying leaderboard (Game):", error); profileRankDisplay.textContent = 'Rank: Error loading'; leaderboardEmpty.textContent = 'Error loading leaderboard data.'; leaderboardEmpty.style.display = 'block'; leaderboardLoading.style.display = 'none'; } }
+
 
             // --- Start the app ---
             initializeApp();
