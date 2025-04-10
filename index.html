@@ -8,7 +8,7 @@
 
     <!-- Standard Meta -->
     <meta name="description" content="Discover innovative courses, diverse education, and a thriving campus community at Wellington Campus, UAE.">
-    <meta name="keywords" content="Wellington Campus, UAE university, education, courses, admissions, Telegram Mini App">
+    <meta name="keywords" content="Wellington Campus, UAE university, education, courses, admissions, Telegram Mini App, profile">
     <meta name="author" content="Wellington Campus">
     <meta property="og:title" content="Wellington Campus - Innovative Education in UAE">
     <meta property="og:description" content="Explore our diverse programs and innovative learning environment at Wellington Campus.">
@@ -61,41 +61,20 @@
             min-height: 100vh;
             min-height: var(--tg-viewport-height, 100vh);
             box-sizing: border-box;
-            /* Prevent horizontal scrollbar */
             overflow-x: hidden;
-            /* Add padding at bottom to avoid overlap with fixed bottom nav */
-            padding-bottom: 80px; /* Adjust based on nav height */
+            padding-bottom: calc(80px + var(--tg-safe-area-inset-bottom, 0px)); /* Adjusted padding */
         }
-
-        /* --- Mini App Specific Adjustments --- */
-        .navbar-custom { display: none; } /* Hide desktop nav */
-        .bottom-nav {
-            display: flex; /* Always show */
-            position: fixed;
-            bottom: 0;
-            left: 0; right: 0; /* Ensure full width */
-            width: 100%;
-            background-color: var(--bottom-nav-bg);
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            padding: 0.5rem 0 max(0.5rem, var(--tg-safe-area-inset-bottom, 0.5rem)); /* Account for safe area */
-            z-index: 1040; /* Below modals */
-        }
-         body { padding-bottom: calc(60px + var(--tg-safe-area-inset-bottom, 0px)); } /* Add padding matching nav height + safe area */
-
 
         /* --- Header & Logo Styling --- */
         #main-header {
             text-align: center;
             margin-bottom: 1rem;
             position: relative;
-             padding-top: 1rem;
+            padding-top: 1rem;
         }
         #header-logo {
-            display: block;
-            margin: 0 auto 0.5rem auto;
-            max-width: 100px; width: 100px; height: auto;
-            position: relative; top: 0; left: 0; z-index: 10;
-            cursor: pointer;
+            display: block; margin: 0 auto 0.5rem auto; max-width: 100px; width: 100px; height: auto;
+            position: relative; top: 0; left: 0; z-index: 10; cursor: pointer;
             transition: width 0.4s ease-in-out, max-width 0.4s ease-in-out, top 0.4s ease-in-out,
                         left 0.4s ease-in-out, padding 0.4s ease-in-out, border-radius 0.4s ease-in-out,
                         background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
@@ -105,168 +84,107 @@
             z-index: 1045; margin: 0; background-color: rgba(255, 255, 255, 0.85);
             padding: 4px; border-radius: 50%; box-shadow: 0 3px 8px rgba(0, 51, 102, 0.3);
         }
-        body.logo-state-scrolled .container {
-            padding-top: 10px; /* Add space below fixed logo */
-        }
+        body.logo-state-scrolled .container { padding-top: 10px; }
 
-        /* --- General & Page Specific Styles --- */
-        h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--secondary-color); }
-        h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
-        h3 { font-size: 1.2rem; margin-bottom: 0.8rem;}
-
-        .banner {
-            position: relative;
-            background: url('./wellingtoncampus.png') no-repeat center center; /* Ensure path is correct */
-            background-size: contain; /* Contain logo within banner bounds */
-            background-color: rgba(0, 51, 102, 0.1); /* Add slight bg color if image doesn't cover */
-            color: var(--text-color); /* Use text color for better contrast */
-            padding: 4rem 1rem 5rem 1rem; /* Adjust padding */
-            text-align: center;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            min-height: 300px; /* Adjust height as needed */
-            margin-bottom: 1.5rem; /* Add margin below banner */
-            display: flex; /* Use flexbox for centering text */
-            flex-direction: column;
-            justify-content: center; /* Center vertically */
-            align-items: center; /* Center horizontally */
-        }
-        .banner::before { /* Darker overlay for text contrast */
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.25); z-index: 1; border-radius: inherit;
-        }
-        .banner h1, .banner p, .banner .btn-custom { position: relative; z-index: 2; color: var(--accent-color); /* White text on overlay */}
-        .banner h1 { text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
-        .banner p { font-size: 1.1rem; margin-bottom: 1.5rem; max-width: 600px; }
-        .banner .btn-custom { margin-top: 1rem; }
-
-        /* Card Structure */
-        .content-section {
-            margin-bottom: 1.5rem;
-            background-color: var(--card-bg-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            border: none;
-            overflow: hidden; /* Prevents content bleed */
-        }
-        .content-section-header {
-            background-color: var(--secondary-color);
-            color: var(--accent-color);
-            font-weight: 600;
-            border-bottom: 3px solid var(--primary-color);
-            padding: 0.8rem 1.2rem;
+        /* --- User Profile Styling --- */
+        #user-profile {
+            position: fixed; /* Stick to viewport */
+            top: 8px;
+            right: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            background-color: rgba(255, 255, 255, 0.85); /* Similar to scrolled logo bg */
+            padding: 5px 10px;
+            border-radius: 20px; /* Pill shape */
             display: flex;
             align-items: center;
+            z-index: 1045; /* Same level as scrolled logo */
+            box-shadow: 0 2px 5px rgba(0, 51, 102, 0.2);
+            transition: top 0.4s ease-in-out; /* Smooth transition if needed */
         }
-        .content-section-header h2 {
-            color: var(--accent-color);
-            margin: 0;
-            font-size: 1.1rem;
-        }
-        .content-section-header i {
-            margin-right: 0.75rem;
-            font-size: 1.1rem;
-            color: var(--primary-color); /* Icon color */
-        }
-        .content-section-body {
-            padding: 1.5rem;
-        }
-
-        .feature-card { /* Style for individual cards within the features section */
-            padding: 1.5rem;
+        #user-avatar {
+            display: inline-block;
+            width: 28px; /* Size of the circle */
+            height: 28px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+            background-color: #e9ecef; /* Fallback bg */
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.7); /* Slightly transparent */
-            border-radius: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%; /* Make cards in a row equal height */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Distribute space */
-             border: 1px solid rgba(0, 51, 102, 0.1);
+            line-height: 28px; /* Center emoji vertically */
+            font-size: 18px; /* Emoji size */
+            overflow: hidden; /* Clip image */
         }
-        .feature-card:hover {
-             transform: translateY(-5px);
-             box-shadow: 0 10px 20px rgba(0, 51, 102, 0.1);
+        #user-avatar img {
+            display: block; /* Remove extra space */
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover the circle area */
         }
-
-        /* Video Container */
-        #intro-video-container {
-             margin-top: 1rem; /* Space above video */
-             border-radius: 10px;
-             overflow: hidden; /* Clip corners */
-             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-             width: 100%; /* Ensure it fits */
-             line-height: 0; /* Remove extra space below video */
-        }
-        #introVideo {
-             width: 100%; /* Make video responsive */
-             height: auto; /* Maintain aspect ratio */
-             display: block; /* Remove extra space */
-             max-height: 40vh; /* Limit height */
-             object-fit: cover; /* Cover container */
-        }
-
-        /* Subscription Form */
-        .subscription-form form { margin-top: 1rem; }
-        .subscription-form .form-control { border-radius: 50px; padding: 0.7rem 1.2rem; }
-        .subscription-form .btn-custom { border-radius: 50px; padding: 0.7rem 1.5rem; width: 100%; }
-
-
-        .btn-custom {
-            background-color: var(--primary-color);
-            color: var(--accent-color) !important; /* Ensure text is white */
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212,175,55,0.3);
+        #user-name-display {
             font-weight: 600;
-            text-decoration: none; /* Remove underline from links styled as buttons */
-             display: inline-block; /* Correct display for links */
+            margin-right: 5px;
+            white-space: nowrap; /* Prevent name wrapping */
+            overflow: hidden; /* Hide overflow */
+            text-overflow: ellipsis; /* Add ... if too long */
+            max-width: 100px; /* Limit name width */
         }
-        .btn-custom:hover {
-            background-color: #b8860b;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(212,175,55,0.4);
-            color: var(--accent-color) !important;
-        }
-
-        /* Bottom Nav Specific Styles */
-        .bottom-nav .btn { color: var(--bottom-nav-icon); background-color: transparent; border: none; padding: 0.5rem; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; transition: color 0.3s ease; text-decoration: none; }
-        .bottom-nav .btn:hover, .bottom-nav .btn.active { color: var(--bottom-nav-active); }
-        .bottom-nav i { font-size: 1.1rem; margin-bottom: 0.15rem; }
+        #welly-points { font-weight: bold; margin-left: 5px; }
+        #user-profile .fa-star { margin-left: 5px; }
 
 
-        /* Scroll Animation Classes */
-        .animate-on-scroll {
-            opacity: 0;
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-        }
-        .fade-in {
-            opacity: 0;
-        }
-        .slide-up {
-             transform: translateY(40px);
-        }
-        .slide-left {
-            transform: translateX(-40px);
-        }
-        .slide-right {
-            transform: translateX(40px);
-        }
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0) translateX(0); /* Reset transforms */
-        }
+        /* --- Mini App Specific Adjustments --- */
+        .navbar-custom { display: none; }
+        .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; width: 100%; background-color: var(--bottom-nav-bg); box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 0.5rem 0 max(0.5rem, var(--tg-safe-area-inset-bottom, 0.5rem)); z-index: 1040; }
 
-         /* Ensure containers don't get animation transforms themselves */
+        /* Keep all other existing styles the same... */
+         h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--secondary-color); }
+         h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
+         h3 { font-size: 1.2rem; margin-bottom: 0.8rem;}
+         .banner { position: relative; background: url('./wellingtoncampus.png') no-repeat center center; background-size: contain; background-color: rgba(0, 51, 102, 0.1); color: var(--text-color); padding: 4rem 1rem 5rem 1rem; text-align: center; border-radius: var(--border-radius); box-shadow: var(--shadow); overflow: hidden; min-height: 300px; margin-bottom: 1.5rem; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+         .banner::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.25); z-index: 1; border-radius: inherit; }
+         .banner h1, .banner p, .banner .btn-custom { position: relative; z-index: 2; color: var(--accent-color); }
+         .banner h1 { text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
+         .banner p { font-size: 1.1rem; margin-bottom: 1.5rem; max-width: 600px; }
+         .banner .btn-custom { margin-top: 1rem; }
+         .content-section { margin-bottom: 1.5rem; background-color: var(--card-bg-color); border-radius: var(--border-radius); box-shadow: var(--shadow); border: none; overflow: hidden; }
+         .content-section-header { background-color: var(--secondary-color); color: var(--accent-color); font-weight: 600; border-bottom: 3px solid var(--primary-color); padding: 0.8rem 1.2rem; display: flex; align-items: center; }
+         .content-section-header h2 { color: var(--accent-color); margin: 0; font-size: 1.1rem; }
+         .content-section-header i { margin-right: 0.75rem; font-size: 1.1rem; color: var(--primary-color); }
+         .content-section-body { padding: 1.5rem; }
+         .feature-card { padding: 1.5rem; text-align: center; background-color: rgba(255, 255, 255, 0.7); border-radius: 10px; transition: transform 0.3s ease, box-shadow 0.3s ease; height: 100%; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(0, 51, 102, 0.1); }
+         .feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 51, 102, 0.1); }
+         #intro-video-container { margin-top: 1rem; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 100%; line-height: 0; }
+         #introVideo { width: 100%; height: auto; display: block; max-height: 40vh; object-fit: cover; }
+         .subscription-form form { margin-top: 1rem; }
+         .subscription-form .form-control { border-radius: 50px; padding: 0.7rem 1.2rem; }
+         .subscription-form .btn-custom { border-radius: 50px; padding: 0.7rem 1.5rem; width: 100%; }
+         .btn-custom { background-color: var(--primary-color); color: var(--accent-color) !important; border: none; padding: 0.8rem 2rem; border-radius: 25px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212,175,55,0.3); font-weight: 600; text-decoration: none; display: inline-block; }
+         .btn-custom:hover { background-color: #b8860b; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(212,175,55,0.4); color: var(--accent-color) !important; }
+         .bottom-nav .btn { color: var(--bottom-nav-icon); background-color: transparent; border: none; padding: 0.5rem; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; transition: color 0.3s ease; text-decoration: none; }
+         .bottom-nav .btn:hover, .bottom-nav .btn.active { color: var(--bottom-nav-active); }
+         .bottom-nav i { font-size: 1.1rem; margin-bottom: 0.15rem; }
+         .animate-on-scroll { opacity: 0; transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
+         .fade-in { opacity: 0; }
+         .slide-up { transform: translateY(40px); }
+         .slide-left { transform: translateX(-40px); }
+         .slide-right { transform: translateX(40px); }
+         .animate-on-scroll.visible { opacity: 1; transform: translateY(0) translateX(0); }
          .container { transition: none; }
-
 
     </style>
 </head>
 <body>
+    <!-- User Profile Display (Top Right) -->
+    <div id="user-profile">
+        <span id="user-avatar">
+            <!-- Image or Emoji will be inserted here by JS -->
+        </span>
+        <span id="user-name-display">Player</span>
+        | <i class="fas fa-star"></i> <!-- Star icon for points -->
+        <span id="welly-points">0</span> WP
+    </div>
+
     <!-- Main Content Container -->
     <div class="container mt-2" id="home">
 
@@ -279,7 +197,12 @@
             <p class="hackathon-subtitle small text-muted">Innovative Education in the UAE</p>
         </header>
 
-       
+        <!-- Banner Section -->
+        <section class="banner animate-on-scroll fade-in">
+            <h1>Discover, Learn, Thrive</h1>
+            <p>Spring 2025 Applications Now Open!</p>
+            <a href="admissions.html" target="_self" class="btn btn-custom">Apply Now</a>
+        </section>
 
         <!-- Features Section (New Card Structure) -->
         <section class="content-section animate-on-scroll slide-up">
@@ -291,9 +214,9 @@
                     <!-- Card 1: Innovative Courses -->
                     <div class="col-md-4 d-flex align-items-stretch">
                         <div class="feature-card animate-on-scroll slide-left">
-                            <div> <!-- Content wrapper for flexbox -->
+                            <div>
                                 <h3><i class="fas fa-lightbulb text-primary mb-2"></i><br>Innovative Courses</h3>
-                                <p class="small">Cutting-edge programs in tech, design, and business tailored for the modern world.</p>
+                                <p class="small">Cutting-edge programs in tech, design, and business.</p>
                             </div>
                         </div>
                     </div>
@@ -302,7 +225,7 @@
                         <div class="feature-card animate-on-scroll slide-up">
                              <div>
                                 <h3><i class="fas fa-chalkboard-teacher text-primary mb-2"></i><br>Top Instructors</h3>
-                                <p class="small">Learn from industry leaders and renowned academics with decades of expertise.</p>
+                                <p class="small">Learn from industry leaders and renowned academics.</p>
                              </div>
                         </div>
                     </div>
@@ -313,10 +236,8 @@
                                 <h3><i class="fas fa-globe text-primary mb-2"></i><br>Online Education</h3>
                                 <p class="small">Flexible learning options available 24/7, from anywhere.</p>
                             </div>
-                            <!-- Video - Placed within the card -->
                             <div id="intro-video-container">
                                 <video id="introVideo" controls muted playsinline preload="metadata" aria-label="Binciya Introduction Video">
-                                    <!-- NOTE: Added #t=38 to attempt starting at 38s -->
                                     <source src="./Binciya-Introduction.mp4#t=38" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
@@ -326,12 +247,7 @@
                 </div>
             </div>
         </section>
- <!-- Banner Section -->
-        <section class="banner animate-on-scroll fade-in">
-            <h1>Discover, Learn, Thrive</h1>
-            <p>Spring 2025 Applications Now Open!</p>
-            <a href="admissions.html" target="_self" class="btn btn-custom">Apply Now</a>
-        </section>
+
         <!-- Subscription Section (New Card Structure) -->
         <section class="content-section subscription-form animate-on-scroll fade-in">
             <div class="content-section-header">
@@ -350,19 +266,16 @@
             </div>
         </section>
 
-        <!-- Placeholder for potential future sections -->
-        <!-- <section class="content-section animate-on-scroll slide-up"> ... </section> -->
-
     </div> <!-- End Main Container -->
 
-    <!-- Bottom Navigation (Copied from hackathon.html) -->
+    <!-- Bottom Navigation -->
     <nav class="bottom-nav" aria-label="Mobile navigation">
          <div class="d-flex justify-content-around w-100">
-             <!-- Ensure paths are correct -->
+             <!-- Link to hackathon.html as requested -->
              <a href="index.html" target="_self" class="btn active"><i class="fas fa-home"></i>Home</a>
              <a href="courses.html" target="_self" class="btn"><i class="fas fa-book"></i>LMS</a>
              <a href="game.html" target="_self" class="btn"><i class="fas fa-puzzle-piece"></i>Quest</a>
-             <a href="hackathons.html" target="_self" class="btn"><i class="fas fa-laptop-code"></i>Hackathon</a>
+             <a href="hackathon.html" target="_self" class="btn"><i class="fas fa-laptop-code"></i>Hackathon</a>
          </div>
      </nav>
 
@@ -374,29 +287,86 @@
         document.addEventListener('DOMContentLoaded', function() {
             const tg = window.Telegram.WebApp;
 
+            // --- Element References ---
+            const logo = document.getElementById('header-logo');
+            const bodyElement = document.body;
+            const videoElement = document.getElementById('introVideo');
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            const subForm = document.querySelector('.subscription-form form');
+            const userNameDisplay = document.getElementById('user-name-display');
+            const wellyPointsDisplay = document.getElementById('welly-points');
+            const userAvatarContainer = document.getElementById('user-avatar');
+
             // --- Initialize Telegram Mini App ---
             function initializeTelegramApp() {
-                if (tg && tg.initData) {
-                    tg.ready(); // Signal readiness
+                if (tg && tg.initDataUnsafe) { // Check for initDataUnsafe specifically
+                    tg.ready();
 
                     // Configure Back Button for Home Page
-                    tg.BackButton.hide(); // Hide initially on home
-                    tg.onEvent('backButtonClicked', function() {
-                        // On home page, back button should close the Mini App
-                        tg.close();
-                    });
-                     console.log("Telegram Mini App Initialized on Home Page.");
+                    tg.BackButton.hide();
+                    tg.onEvent('backButtonClicked', function() { tg.close(); });
+
+                    // --- Display User Profile ---
+                    const currentUser = tg.initDataUnsafe.user;
+                    if (currentUser) {
+                        // Display Name
+                        if (userNameDisplay) {
+                            userNameDisplay.textContent = currentUser.first_name || 'Player';
+                        }
+
+                        // Display Avatar (or Fallback Emoji)
+                        if (userAvatarContainer) {
+                            userAvatarContainer.innerHTML = ''; // Clear previous content
+                            if (currentUser.photo_url) {
+                                const img = document.createElement('img');
+                                img.src = currentUser.photo_url;
+                                img.alt = `${currentUser.first_name || 'User'}'s profile picture`;
+                                // Styles applied via CSS (#user-avatar img)
+                                userAvatarContainer.appendChild(img);
+                            } else {
+                                // Fallback Emoji
+                                userAvatarContainer.textContent = '🎓'; // Graduation Cap Emoji
+                            }
+                        }
+
+                        // Display Points (Initialized to 0 - needs CloudStorage for persistence)
+                        if (wellyPointsDisplay) {
+                            // TODO: Load actual points from CloudStorage if implemented
+                            wellyPointsDisplay.textContent = '0';
+                            // Example loading (uncomment and adapt if using CloudStorage):
+                            /*
+                            tg.CloudStorage.getItem('totalWellyPoints', (error, value) => {
+                                if (!error && value) {
+                                    wellyPointsDisplay.textContent = parseInt(value, 10) || 0;
+                                } else {
+                                    wellyPointsDisplay.textContent = '0';
+                                    if(error) console.error("CloudStorage Error:", error);
+                                }
+                            });
+                            */
+                        }
+
+                    } else {
+                        console.warn("User data not found in initDataUnsafe.");
+                        // Optionally hide profile or show defaults if no user data
+                        if(userNameDisplay) userNameDisplay.textContent = 'Guest';
+                        if(userAvatarContainer) userAvatarContainer.textContent = '👤'; // Default person emoji
+                        if(wellyPointsDisplay) wellyPointsDisplay.textContent = '0';
+                    }
+
+                    console.log("Telegram Mini App Initialized on Home Page.");
+
                 } else {
-                    console.warn("Not running in Telegram context or initData unavailable.");
+                    console.warn("Not running in Telegram context or initDataUnsafe unavailable.");
+                     // Handle non-Telegram UI (e.g., hide profile)
+                     const profileElement = document.getElementById('user-profile');
+                     if(profileElement) profileElement.style.display = 'none';
                 }
             }
-            initializeTelegramApp(); // Run Telegram setup
+            initializeTelegramApp();
 
             // --- Shrinking Logo Logic ---
-            const logo = document.getElementById('header-logo');
-            const scrollThreshold = 30; // Pixels to scroll before effect triggers
-            const bodyElement = document.body; // Reference to body for class toggling
-
+            const scrollThreshold = 30;
             if (logo) {
                 const handleScroll = () => {
                     const isScrolled = window.scrollY > scrollThreshold;
@@ -405,90 +375,54 @@
                 };
                 logo.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
                 window.addEventListener('scroll', handleScroll, { passive: true });
-                handleScroll(); // Initial check
+                handleScroll();
             } else { console.warn("Header logo element (#header-logo) not found."); }
-            // --- END Shrinking Logo Logic ---
-
 
             // --- Intersection Observer for Video Start Time ---
-            const videoElement = document.getElementById('introVideo');
-            let videoTimeSet = false; // Flag to set time only once
-
+            let videoTimeSet = false;
             if (videoElement) {
                 const videoObserver = new IntersectionObserver((entries, observer) => {
                     entries.forEach(entry => {
-                        // When the video is at least 50% visible
                         if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !videoTimeSet) {
-                            console.log("Video intersecting, attempting to set time to 38s.");
-                            // Attempt to set currentTime. May fail if metadata not loaded.
-                            // The preload="metadata" and #t=38 help, but this is a fallback.
                             try {
                                 videoElement.currentTime = 38;
-                                videoTimeSet = true; // Mark as set
-                                // Optional: Autoplay when visible (consider user experience)
-                                // videoElement.play().catch(e => console.warn("Autoplay prevented:", e));
-                                observer.unobserve(entry.target); // Stop observing once set
-                            } catch (e) {
-                                console.warn("Could not set video time yet:", e);
-                                // It might work later if metadata loads after intersection
-                            }
+                                videoTimeSet = true;
+                                observer.unobserve(entry.target);
+                            } catch (e) { console.warn("Could not set video time yet:", e); }
                         }
                     });
-                }, {
-                    threshold: 0.5 // Trigger when 50% of the video is visible
-                });
-
+                }, { threshold: 0.5 });
                 videoObserver.observe(videoElement);
             } else { console.warn("Video element (#introVideo) not found."); }
-            // --- END Video Start Time Logic ---
-
 
             // --- Intersection Observer for Scroll Animations ---
-            const animatedElements = document.querySelectorAll('.animate-on-scroll');
-
             if ("IntersectionObserver" in window && animatedElements.length > 0) {
                 const animationObserver = new IntersectionObserver((entries, observer) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('visible');
-                            observer.unobserve(entry.target); // Animate only once
+                            observer.unobserve(entry.target);
                         }
                     });
-                }, {
-                    threshold: 0.1 // Trigger when 10% of the element is visible
-                });
-
-                animatedElements.forEach(el => {
-                    animationObserver.observe(el);
-                });
+                }, { threshold: 0.1 });
+                animatedElements.forEach(el => animationObserver.observe(el));
             } else {
-                // Fallback for older browsers or if no elements found: make elements visible immediately
                 animatedElements.forEach(el => el.classList.add('visible'));
                 console.warn("IntersectionObserver not supported or no elements to animate.");
             }
-            // --- END Scroll Animation Logic ---
 
-
-            // --- Subscription Form Handler (Optional) ---
-            const subForm = document.querySelector('.subscription-form form');
+            // --- Subscription Form Handler ---
              if (subForm) {
                  subForm.addEventListener('submit', function(e) {
                      e.preventDefault();
                      const emailInput = this.querySelector('input[type="email"]');
                      const email = emailInput ? emailInput.value : 'N/A';
-                     console.log("Subscription attempt:", email); // Log or send to backend
-
-                     // Use Telegram's alert for consistency
-                      if (tg) {
-                         tg.showAlert('Thank you for subscribing!');
-                      } else {
-                         alert('Thank you for subscribing!');
-                      }
+                     console.log("Subscription attempt:", email);
+                      if (tg) { tg.showAlert('Thank you for subscribing!'); }
+                      else { alert('Thank you for subscribing!'); }
                      this.reset();
                  });
              }
-            // --- END Subscription Form Handler ---
-
         });
     </script>
 
