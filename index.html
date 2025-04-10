@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <!-- Essential Mini App Viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
-    <title>Wellington Campus - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
+    <title>Wellington Campus</title>
 
     <!-- Standard Meta -->
-    <meta name="description" content="Welcome to Wellington Campus! Explore courses, quests, hackathons, and track your progress in our Telegram Mini App.">
-    <meta name="keywords" content="Wellington Campus, UAE university, education, courses, admissions, Telegram Mini App, profile, points, leaderboard, quests, hackathon">
+    <meta name="description" content="Wellington Campus Mini App: Explore courses, quests, hackathons, and track your progress.">
+    <meta name="keywords" content="Wellington Campus, UAE university, education, courses, admissions, Telegram Mini App, profile, points, leaderboard, quests, hackathon, game, LMS">
     <meta name="author" content="Wellington Campus">
-    <meta property="og:title" content="Wellington Campus - Home">
+    <meta property="og:title" content="Wellington Campus Mini App">
     <meta property="og:description" content="Your hub for Wellington Campus activities: courses, quests, hackathons, and profile management.">
     <meta property="og:type" content="website">
+    <!-- Update URL if deploying -->
     <meta property="og:url" content="https://wellingtoncampus.co/index.html">
     <meta property="og:image" content="./wellingtoncampus.png">
     <meta property="og:image:alt" content="Wellington Campus Logo">
@@ -27,276 +28,40 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
-
-    <style>
-        /* --- KEEP ALL EXISTING CSS STYLES --- */
-        :root {
-            --primary-color: #d4af37; /* Gold */
-            --secondary-color: #003366; /* Dark Blue */
-            --text-color: #212529;
-            --bg-color: #cce5ff; /* Light Blueish */
-            --accent-color: #ffffff; /* White */
-            --card-bg-color: rgba(255, 255, 255, 0.9);
-            --shadow: 0 8px 24px rgba(0,0,0,0.1);
-            --border-radius: 15px;
-            --bottom-nav-bg: var(--accent-color);
-            --bottom-nav-icon: #6c757d;
-            --bottom-nav-active: var(--primary-color);
-            --danger-color: #dc3545;
-        }
-
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Roboto', sans-serif;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
-                              linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
-            background-size: 20px 20px;
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            min-height: var(--tg-viewport-height, 100vh);
-            box-sizing: border-box;
-            overflow-x: hidden;
-            padding-bottom: calc(80px + var(--tg-safe-area-inset-bottom, 0px));
-        }
-
-        /* --- Header & Logo Styling --- */
-        #main-header { text-align: center; margin-bottom: 1rem; position: relative; padding-top: 1rem; }
-        #header-logo { display: block; margin: 0 auto 0.5rem auto; max-width: 100px; width: 100px; height: auto; position: relative; top: 0; left: 0; z-index: 10; cursor: pointer; transition: width 0.4s ease-in-out, max-width 0.4s ease-in-out, top 0.4s ease-in-out, left 0.4s ease-in-out, padding 0.4s ease-in-out, border-radius 0.4s ease-in-out, background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out; }
-        #header-logo.logo-scrolled { position: fixed; top: 8px; left: 12px; width: 45px; max-width: 45px; height: auto; z-index: 1045; margin: 0; background-color: rgba(255, 255, 255, 0.85); padding: 4px; border-radius: 50%; box-shadow: 0 3px 8px rgba(0, 51, 102, 0.3); }
-        body.logo-state-scrolled .container { padding-top: 10px; }
-
-        /* --- User Profile Styling (Top Right) --- */
-        #user-profile {
-            position: fixed; top: 8px; right: 12px; font-size: 0.85rem;
-            color: var(--secondary-color); background-color: rgba(255, 255, 255, 0.85);
-            padding: 5px 10px; border-radius: 20px; display: flex; align-items: center;
-            z-index: 1045; box-shadow: 0 2px 5px rgba(0, 51, 102, 0.2);
-            transition: top 0.4s ease-in-out;
-            cursor: pointer; /* Make it clickable */
-        }
-        #user-profile:hover { background-color: rgba(230, 230, 230, 0.9); } /* Subtle hover */
-        #user-avatar { display: inline-block; width: 28px; height: 28px; border-radius: 50%; margin-right: 8px; vertical-align: middle; background-color: #e9ecef; text-align: center; line-height: 28px; font-size: 18px; overflow: hidden; }
-        #user-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
-        #user-name-display { font-weight: 600; margin-right: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
-        #welly-points { font-weight: bold; margin-left: 5px; }
-        #user-profile .fa-star { margin-left: 5px; }
-
-        /* --- Mini App Specific Adjustments --- */
-        .navbar-custom { display: none; }
-        .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; width: 100%; background-color: var(--bottom-nav-bg); box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 0.5rem 0 max(0.5rem, var(--tg-safe-area-inset-bottom, 0.5rem)); z-index: 1040; }
-
-        /* --- General Content Styles (Keep existing) --- */
-         h1, h2, h3 { font-family: 'Poppins', sans-serif; color: var(--secondary-color); }
-         h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
-         h3 { font-size: 1.2rem; margin-bottom: 0.8rem;}
-         .banner { position: relative; background: url('./wellingtoncampus.png') no-repeat center center; background-size: contain; background-color: rgba(0, 51, 102, 0.1); color: var(--text-color); padding: 4rem 1rem 5rem 1rem; text-align: center; border-radius: var(--border-radius); box-shadow: var(--shadow); overflow: hidden; min-height: 300px; margin-bottom: 1.5rem; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-         .banner::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.25); z-index: 1; border-radius: inherit; }
-         .banner h1, .banner p, .banner .btn-custom { position: relative; z-index: 2; color: var(--accent-color); }
-         .banner h1 { text-shadow: 1px 1px 3px rgba(0,0,0,0.4); }
-         .banner p { font-size: 1.1rem; margin-bottom: 1.5rem; max-width: 600px; }
-         .banner .btn-custom { margin-top: 1rem; }
-         .content-section { margin-bottom: 1.5rem; background-color: var(--card-bg-color); border-radius: var(--border-radius); box-shadow: var(--shadow); border: none; overflow: hidden; }
-         .content-section-header { background-color: var(--secondary-color); color: var(--accent-color); font-weight: 600; border-bottom: 3px solid var(--primary-color); padding: 0.8rem 1.2rem; display: flex; align-items: center; }
-         .content-section-header h2 { color: var(--accent-color); margin: 0; font-size: 1.1rem; }
-         .content-section-header i { margin-right: 0.75rem; font-size: 1.1rem; color: var(--primary-color); }
-         .content-section-body { padding: 1.5rem; }
-         .feature-card { padding: 1.5rem; text-align: center; background-color: rgba(255, 255, 255, 0.7); border-radius: 10px; transition: transform 0.3s ease, box-shadow 0.3s ease; height: 100%; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(0, 51, 102, 0.1); }
-         .feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 51, 102, 0.1); }
-         #intro-video-container { margin-top: 1rem; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 100%; line-height: 0; }
-         #introVideo { width: 100%; height: auto; display: block; max-height: 40vh; object-fit: cover; }
-         .subscription-form form { margin-top: 1rem; }
-         .subscription-form .form-control { border-radius: 50px; padding: 0.7rem 1.2rem; }
-         .subscription-form .btn-custom { border-radius: 50px; padding: 0.7rem 1.5rem; width: 100%; }
-         .btn-custom { background-color: var(--primary-color); color: var(--accent-color) !important; border: none; padding: 0.8rem 2rem; border-radius: 25px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212,175,55,0.3); font-weight: 600; text-decoration: none; display: inline-block; }
-         .btn-custom:hover { background-color: #b8860b; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(212,175,55,0.4); color: var(--accent-color) !important; }
-         .bottom-nav .btn { color: var(--bottom-nav-icon); background-color: transparent; border: none; padding: 0.5rem; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; transition: color 0.3s ease; text-decoration: none; }
-         .bottom-nav .btn:hover, .bottom-nav .btn.active { color: var(--bottom-nav-active); }
-         .bottom-nav i { font-size: 1.1rem; margin-bottom: 0.15rem; }
-         .animate-on-scroll { opacity: 0; transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
-         .fade-in { opacity: 0; }
-         .slide-up { transform: translateY(40px); }
-         .slide-left { transform: translateX(-40px); }
-         .slide-right { transform: translateX(40px); }
-         .animate-on-scroll.visible { opacity: 1; transform: translateY(0) translateX(0); }
-         .container { transition: none; }
-
-        /* --- Profile Modal Specific Styles --- */
-        #userProfileModal .modal-header {
-            background-color: var(--secondary-color);
-            color: var(--accent-color);
-            border-bottom: 3px solid var(--primary-color);
-        }
-        #userProfileModal .modal-header .btn-close {
-            filter: invert(1) grayscale(100%) brightness(200%);
-        }
-        #userProfileModal .modal-body {
-            text-align: center;
-        }
-        #modal-user-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin: 0 auto 0.5rem auto; /* Center and add margin */
-            display: block;
-            background-color: #e9ecef;
-            font-size: 40px; /* Larger emoji fallback */
-            line-height: 80px; /* Center emoji vertically */
-            overflow: hidden;
-             border: 3px solid var(--primary-color);
-             box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
-        #modal-user-avatar img {
-            width: 100%; height: 100%; object-fit: cover;
-        }
-        #modal-user-name {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--secondary-color);
-            margin-bottom: 0.2rem;
-        }
-        #modal-welly-points-display {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-         #modal-welly-points-display .fa-star {
-             font-size: 1.5rem;
-             margin-right: 5px;
-             vertical-align: middle;
-         }
-        #profile-rank-display {
-            font-size: 0.95rem;
-            color: var(--text-color);
-            margin-bottom: 1.5rem;
-            background-color: rgba(0, 51, 102, 0.05);
-            padding: 0.5rem;
-            border-radius: 8px;
-            border-left: 4px solid var(--secondary-color);
-        }
-        #profile-leaderboard-section h5 {
-            color: var(--secondary-color);
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-        }
-        #profile-leaderboard-table {
-            font-size: 0.9rem; /* Smaller text for table */
-        }
-        #profile-leaderboard-table thead {
-            background-color: var(--secondary-color);
-            color: var(--accent-color);
-        }
-        #profile-leaderboard-body tr td {
-             vertical-align: middle;
-         }
-         #profile-leaderboard-body .rank-badge {
-            font-weight: bold;
-            font-size: 0.9em;
-            color: var(--secondary-color);
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            line-height: 24px;
-            text-align: center;
-            border-radius: 50%;
-            background-color: rgba(212, 175, 55, 0.8);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-         }
-        #profile-leaderboard-body tr:nth-child(1) .rank-badge { background-color: #ffd700; color: #333; }
-        #profile-leaderboard-body tr:nth-child(2) .rank-badge { background-color: #c0c0c0; color: #333; }
-        #profile-leaderboard-body tr:nth-child(3) .rank-badge { background-color: #cd7f32; color: #fff; }
-        #profile-leaderboard-body .points-cell {
-            font-weight: bold;
-            color: var(--secondary-color);
-        }
-        #profile-leaderboard-body tr.table-info { /* Style for highlighting user row */
-            background-color: rgba(212, 175, 55, 0.15) !important; /* Light gold highlight */
-            font-weight: bold;
-        }
-        #delete-progress-btn {
-             background-color: var(--danger-color);
-             border-color: var(--danger-color);
-             color: white;
-             transition: background-color 0.2s ease, border-color 0.2s ease;
-         }
-        #delete-progress-btn:hover {
-             background-color: #c82333;
-             border-color: #bd2130;
-         }
-         #delete-progress-btn:disabled {
-             background-color: #6c757d;
-             border-color: #6c757d;
-             cursor: not-allowed;
-         }
-        #leaderboard-loading, #leaderboard-empty {
-             color: #6c757d;
-             font-style: italic;
-             padding: 1rem 0;
-        }
-        #reset-feedback {
-             font-size: 0.8rem;
-             margin-top: 5px;
-             min-height: 1.2rem; /* Prevent layout shifts */
-        }
-        .feedback-success { color: var(--success-color, green); }
-        .feedback-error { color: var(--danger-color); }
-    </style>
+    <!-- Link to your combined CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- User Profile Display (Top Right) -->
+    <!-- Always Fixed User Profile Display -->
     <div id="user-profile" data-bs-toggle="modal" data-bs-target="#userProfileModal">
-        <span id="user-avatar">👤</span> <!-- Default -->
+        <span id="user-avatar">👤</span>
         <span id="user-name-display">Player</span>
         | <i class="fas fa-star"></i>
         <span id="welly-points">0</span> WP
+        <!-- Fullscreen Toggle Button -->
+        <button id="fullscreen-toggle-btn" title="Toggle Fullscreen" class="btn btn-sm p-0 ms-2">
+            <i class="fas fa-expand"></i>
+        </button>
     </div>
 
-    <!-- Main Content Container -->
-    <div class="container mt-2" id="home">
-        <!-- Header -->
-        <header id="main-header">
-            <img src="./wellingtoncampus.png" alt="Wellington Campus Logo" id="header-logo">
-            <h1>Wellington Campus</h1>
-            <p class="hackathon-subtitle small text-muted">Innovative Education in the UAE</p>
-        </header>
+    <!-- Always Fixed Header Logo -->
+    <img src="./wellingtoncampus.png" alt="Wellington Campus Logo" id="header-logo">
 
-        
+    <!-- Main Content Area (Dynamically Filled) -->
+    <main id="content-area" class="container"></main>
 
-        <!-- Features -->
-        <section class="content-section animate-on-scroll slide-up">
-            <div class="content-section-header"><h2><i class="fas fa-star"></i> Key Features</h2></div>
-            <div class="content-section-body"> <div class="row g-3"> <div class="col-md-4 d-flex align-items-stretch"> <div class="feature-card animate-on-scroll slide-left"> <div> <h3><i class="fas fa-lightbulb text-primary mb-2"></i><br>Innovative Courses</h3> <p class="small">Cutting-edge programs in tech, design, and business.</p> </div> </div> </div> <div class="col-md-4 d-flex align-items-stretch"> <div class="feature-card animate-on-scroll slide-up"> <div> <h3><i class="fas fa-chalkboard-teacher text-primary mb-2"></i><br>Top Instructors</h3> <p class="small">Learn from industry leaders and renowned academics.</p> </div> </div> </div> <div class="col-md-4 d-flex align-items-stretch"> <div class="feature-card animate-on-scroll slide-right"> <div> <h3><i class="fas fa-globe text-primary mb-2"></i><br>Online Education</h3> <p class="small">Flexible learning options available 24/7, from anywhere.</p> </div> <div id="intro-video-container"> <video id="introVideo" controls muted playsinline preload="metadata" aria-label="Binciya Introduction Video"> <source src="./Binciya-Introduction.mp4#t=38" type="video/mp4"> Your browser does not support the video tag. </video> </div> </div> </div> </div> </div>
-        </section>
-
-        <!-- Banner -->
-        <section class="banner animate-on-scroll fade-in">
-             <h1>Discover, Learn, Thrive</h1>
-             <p>Spring 2025 Applications Now Open!</p>
-             <a href="admissions.html" target="_self" class="btn btn-custom">Apply Now</a>
-         </section>
-        
-        <!-- Subscription -->
-        <section class="content-section subscription-form animate-on-scroll fade-in">
-            <div class="content-section-header"><h2><i class="fas fa-envelope-open-text"></i> Stay Informed</h2></div>
-            <div class="content-section-body"> <p class="text-center small">Subscribe for updates on courses, events, and admissions.</p> <form class="row g-2 justify-content-center" aria-label="Subscription form"> <div class="col-md-6 col-8"> <input type="email" class="form-control form-control-sm" placeholder="Enter your email" aria-label="Email" required> </div> <div class="col-md-3 col-4"> <button type="submit" class="btn btn-custom btn-sm">Subscribe</button> </div> </form> </div>
-        </section>
-
-    </div> <!-- End Main Container -->
-
-    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation (Always Visible unless fullscreen) -->
     <nav class="bottom-nav" aria-label="Mobile navigation">
          <div class="d-flex justify-content-around w-100">
-             <a href="index.html" target="_self" class="btn active"><i class="fas fa-home"></i>Home</a>
-             <a href="courses.html" target="_self" class="btn"><i class="fas fa-book"></i>LMS</a>
-             <a href="game.html" target="_self" class="btn"><i class="fas fa-puzzle-piece"></i>Quest</a>
-             <a href="hackathons.html" target="_self" class="btn"><i class="fas fa-laptop-code"></i>Hackathon</a>
+             <!-- Use data-view attribute for easier JS targeting -->
+             <a href="#home" data-view="home" class="btn active"><i class="fas fa-home"></i>Home</a>
+             <a href="#lms" data-view="lms" class="btn"><i class="fas fa-book"></i>LMS</a>
+             <a href="#quest" data-view="quest" class="btn"><i class="fas fa-puzzle-piece"></i>Quest</a>
+             <a href="#hackathon" data-view="hackathon" class="btn"><i class="fas fa-laptop-code"></i>Hackathon</a>
          </div>
      </nav>
+
+    <!-- Modals (Structure only, content handled by JS potentially) -->
 
     <!-- Profile Modal -->
     <div class="modal fade" id="userProfileModal" tabindex="-1" aria-labelledby="userProfileModalLabel" aria-hidden="true">
@@ -315,8 +80,8 @@
                     <div id="profile-rank-display">Rank: Calculating...</div>
                     <div id="profile-leaderboard-section">
                         <h5><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>Leaderboard (Top 5)</h5>
-                        <div id="leaderboard-loading" style="display: none;">Loading leaderboard...</div>
-                        <div id="leaderboard-empty" style="display: none;">Leaderboard is empty or unavailable.</div>
+                        <div id="leaderboard-loading" class="text-center" style="display: none;">Loading leaderboard...</div>
+                        <div id="leaderboard-empty" class="text-center" style="display: none;">Leaderboard is empty or unavailable.</div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover table-sm caption-top" id="profile-leaderboard-table">
                                 <thead><tr><th scope="col" style="width: 15%; text-align: center;">Rank</th><th scope="col">Player</th><th scope="col" style="width: 30%; text-align: right;">Points</th></tr></thead>
@@ -326,11 +91,11 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <div> <!-- Wrap button and feedback -->
+                    <div>
                         <button type="button" class="btn btn-danger btn-sm" id="delete-progress-btn">
                             <i class="fas fa-trash-alt me-1"></i> Reset Progress
                         </button>
-                        <div id="reset-feedback" class="small"></div> <!-- Feedback area -->
+                        <div id="reset-feedback" class="small"></div>
                     </div>
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
                 </div>
@@ -338,493 +103,90 @@
         </div>
     </div>
 
+    <!-- Hackathon: Task Tracker Modal -->
+    <div class="modal fade" id="taskTrackerModal" tabindex="-1" aria-labelledby="taskTrackerModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-lg modal-dialog-scrollable">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="taskTrackerModalLabel"><i class="fas fa-tasks me-2"></i>Day 1 Tasks & Points</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                     <p class="text-muted small">Tap task to verify & mark complete. Earn Welly Points!</p>
+                     <div id="task-message-area" class="mb-3"></div>
+                     <!-- Checklist items will be added here by JS if needed, or kept in hackathon-content.html -->
+                     <div class="checklist" id="modal-checklist"></div>
+                 </div>
+                 <div class="modal-footer"> <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button> </div>
+             </div>
+         </div>
+     </div>
+
+    <!-- Hackathon: AI Judge Modal -->
+    <div class="modal fade" id="aiJudgeModal" tabindex="-1" aria-labelledby="aiJudgeModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-lg modal-dialog-scrollable">
+             <div class="modal-content">
+                 <div class="modal-header"> <h5 class="modal-title" id="aiJudgeModalLabel"><i class="fas fa-brain me-2"></i>AI Judge Sim</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>
+                 <div class="modal-body">
+                     <p class="text-muted small">Select a registered team, click Judge.</p>
+                     <div class="row g-2 align-items-end mb-3">
+                         <div class="col-8"> <label for="judgeTeamSelect" class="form-label visually-hidden">Select Team:</label> <select class="form-select form-select-sm" id="judgeTeamSelect"> <option selected disabled value="">-- Choose Registered Team --</option> </select> </div>
+                         <div class="col-4"> <button class="btn btn-primary w-100 btn-sm" type="button" id="judgeProjectBtn"> <i class="fas fa-play me-1"></i> Judge </button> </div>
+                     </div>
+                     <div id="judgeLoader" class="text-center py-3" style="display: none;"> <div class="spinner-border spinner-border-sm text-primary" role="status"> <span class="visually-hidden">Loading...</span> </div> <p class="small mt-2">AI analyzing...</p> </div>
+                     <div id="judgeResultsArea" style="display: none;"> <h5 id="judgeResultTeamName" class="small"></h5> <div id="judgeResultAnalysis"> <h6 class="small">Analysis:</h6> <ul id="judgeResultAnalysisList" class="small list-unstyled"></ul> </div> <div id="judgeResultScore" class="mt-2 fw-bold"></div> </div>
+                     <p class="mb-0 small text-muted fst-italic mt-3"> <i class="fas fa-info-circle me-1"></i> Simulation only. </p>
+                     <hr class="my-3">
+                     <div id="leaderboardSection">
+                         <h5 class="text-center mb-2 small"><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>AI Judge Leaderboard</h5>
+                         <div class="table-responsive">
+                             <table class="table table-striped table-hover table-sm align-middle small">
+                                 <thead class="table-dark small"> <tr> <th scope="col" style="width: 15%; text-align: center;">Rank</th> <th scope="col">Team</th> <th scope="col" style="width: 25%; text-align: center;">Score</th> </tr> </thead>
+                                 <tbody id="leaderboard-body"> <tr id="leaderboard-placeholder"> <td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td> </tr> </tbody>
+                             </table>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="modal-footer"> <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button> </div>
+             </div>
+         </div>
+     </div>
+
+    <!-- Hackathon: Registration Modal -->
+    <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered">
+             <div class="modal-content">
+                 <div class="modal-header"> <h5 class="modal-title" id="registrationModalLabel"><i class="fas fa-users me-2"></i>Hackathon Team Registration</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>
+                 <div class="modal-body">
+                     <form id="registrationForm">
+                         <div class="mb-3"> <label for="participantName" class="form-label small">Your Name:</label> <input type="text" class="form-control form-control-sm" id="participantName" readonly disabled> </div>
+                         <div class="mb-3"> <label for="universityInput" class="form-label small">Your University/Institution:<span class="text-danger">*</span></label> <input type="text" class="form-control form-control-sm" id="universityInput" required placeholder="e.g., Wellington University"> </div>
+                         <hr>
+                         <p class="small text-muted">Choose ONE option below (max 4 members per team):</p>
+                         <div class="mb-3"> <label for="existingTeamSelect" class="form-label small">1. Join Existing Team:</label> <select class="form-select form-select-sm" id="existingTeamSelect"> <option value="">-- Select a team to join --</option> </select> <div id="team-member-count" class="form-text small"></div> </div>
+                         <div class="mb-3 text-center small fw-bold">OR</div>
+                         <div class="mb-3"> <label for="newTeamNameInput" class="form-label small">2. Create New Team:</label> <input type="text" class="form-control form-control-sm" id="newTeamNameInput" placeholder="Enter unique team name"> </div>
+                         <div id="registrationFeedback" class="text-center small mt-2" style="min-height: 1.2em;"></div>
+                     </form>
+                 </div>
+                 <div class="modal-footer"> <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button> <button type="button" class="btn btn-primary btn-sm" id="submitRegistrationBtn"> <i class="fas fa-check me-1"></i> Confirm Registration </button> </div>
+             </div>
+         </div>
+     </div>
+
+    <!-- Quest: Loader Overlay (Moved from game.html) -->
+    <div id="quiz-loader-overlay">
+         <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
+         <p>AI preparing your challenge questions...</p>
+    </div>
+
+    <!-- Universal: Flying Score Element -->
+    <div id="flying-score-element"></div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
-    <!-- Mini App & Custom Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tg = window.Telegram.WebApp;
-
-            // --- Element References ---
-            const logo = document.getElementById('header-logo');
-            const bodyElement = document.body;
-            const videoElement = document.getElementById('introVideo');
-            const animatedElements = document.querySelectorAll('.animate-on-scroll');
-            const subForm = document.querySelector('.subscription-form form');
-            const userProfileElement = document.getElementById('user-profile');
-            const userNameDisplay = document.getElementById('user-name-display');
-            const wellyPointsDisplay = document.getElementById('welly-points');
-            const userAvatarContainer = document.getElementById('user-avatar');
-            const profileModalElement = document.getElementById('userProfileModal');
-            const modalUserAvatar = document.getElementById('modal-user-avatar');
-            const modalUserName = document.getElementById('modal-user-name');
-            const modalWellyPoints = document.getElementById('modal-welly-points');
-            const profileRankDisplay = document.getElementById('profile-rank-display');
-            const leaderboardTableBody = document.getElementById('profile-leaderboard-body');
-            const leaderboardLoading = document.getElementById('leaderboard-loading');
-            const leaderboardEmpty = document.getElementById('leaderboard-empty');
-            const deleteProgressBtn = document.getElementById('delete-progress-btn');
-            const resetFeedbackArea = document.getElementById('reset-feedback');
-
-            // --- State Variables ---
-            let currentUser = null;
-            let totalWellyPoints = 0;
-            const POINTS_KEY = 'totalWellyPoints';
-            const HACKATHON_TASKS_KEY = 'hackathonDay1TaskStatus_CS';
-            const QUEST_PROGRESS_KEY = 'questProgress_CS'; // ADJUST IF NEEDED
-            const LEADERBOARD_KEY = 'leaderboardData_CS';
-
-            // --- Initialize Telegram Mini App & Profile ---
-            function initializeTelegramApp() {
-                try {
-                    if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                        tg.ready();
-                        tg.expand();
-                        tg.BackButton.hide();
-
-                        currentUser = tg.initDataUnsafe.user;
-                        console.log("User Initialized:", currentUser); // DEBUG
-                        updateUserProfileDisplayHeader(); // Update header name/avatar
-
-                        // Load points and then update leaderboard
-                        loadWellyPoints().then(loadedPoints => {
-                            console.log(`Initial points loaded: ${loadedPoints}`);
-                            // Update leaderboard data in background after points load
-                            updateLeaderboardWithCurrentUser(loadedPoints);
-                        }).catch(error => {
-                             console.error("Error during initial points load:", error);
-                             updateWellyPointsDisplayUI(0); // Show 0 if error
-                        });
-
-                        console.log("Telegram Mini App Initialized on Home Page.");
-
-                    } else {
-                        console.warn("Not running in Telegram context or user data unavailable.");
-                        displayGuestProfile();
-                    }
-                } catch (error) {
-                     console.error("Error during Telegram App Initialization:", error);
-                     displayGuestProfile(); // Fallback to guest view on error
-                }
-            }
-
-            function displayGuestProfile() {
-                 if(userProfileElement) {
-                     userProfileElement.style.display = 'none';
-                     userProfileElement.removeAttribute('data-bs-toggle');
-                     userProfileElement.removeAttribute('data-bs-target');
-                     userProfileElement.style.cursor = 'default';
-                 }
-                 // Set defaults for other elements if needed
-                 if(userNameDisplay) userNameDisplay.textContent = 'Guest';
-                 if(userAvatarContainer) userAvatarContainer.innerHTML = '👤';
-                 if(wellyPointsDisplay) wellyPointsDisplay.textContent = '0';
-                 // Disable delete button if visible for guests (though modal won't open)
-                 if (deleteProgressBtn) deleteProgressBtn.disabled = true;
-            }
-
-            // Updates only the header display
-            function updateUserProfileDisplayHeader() {
-                 if (!currentUser) return;
-                 if (userNameDisplay) userNameDisplay.textContent = currentUser.first_name || 'Player';
-                 if (userAvatarContainer) {
-                     userAvatarContainer.innerHTML = ''; // Clear default
-                     if (currentUser.photo_url) {
-                         const img = document.createElement('img');
-                         img.src = currentUser.photo_url;
-                         img.alt = `${currentUser.first_name || 'User'}'s profile picture`;
-                         userAvatarContainer.appendChild(img);
-                     } else {
-                         userAvatarContainer.textContent = '🎓'; // Default icon
-                     }
-                 }
-            }
-
-            // Updates points display elements (header and potentially modal if open)
-            function updateWellyPointsDisplayUI(points) {
-                totalWellyPoints = points; // Update global state
-                if (wellyPointsDisplay) {
-                    wellyPointsDisplay.textContent = points;
-                }
-                // Also update modal if it's currently open
-                if (profileModalElement.classList.contains('show') && modalWellyPoints) {
-                     modalWellyPoints.textContent = points;
-                }
-            }
-
-
-            // --- Welly Points Management ---
-            function loadWellyPoints() {
-                 return new Promise((resolve, reject) => {
-                     if (tg && tg.CloudStorage) {
-                         tg.CloudStorage.getItem(POINTS_KEY, (error, value) => {
-                             let loadedPoints = 0;
-                             if (error) {
-                                 console.error(`CS Error loading ${POINTS_KEY}:`, error);
-                                 // Don't reject, resolve with 0 on error
-                             } else if (value) {
-                                 loadedPoints = parseInt(value, 10) || 0;
-                                 console.log(`Loaded ${POINTS_KEY} from CS:`, loadedPoints);
-                             } else {
-                                 console.log(`${POINTS_KEY} not found in CS, defaulting to 0.`);
-                             }
-                             updateWellyPointsDisplayUI(loadedPoints); // Update UI
-                             resolve(loadedPoints); // Resolve with the loaded value
-                         });
-                     } else {
-                         console.warn("CloudStorage not available. Points display 0.");
-                         updateWellyPointsDisplayUI(0);
-                         resolve(0); // Resolve with 0 if CS not available
-                     }
-                 });
-            }
-
-            function saveWellyPoints(pointsToSave) {
-                return new Promise((resolve, reject) => {
-                     if (tg && tg.CloudStorage) {
-                         tg.CloudStorage.setItem(POINTS_KEY, pointsToSave.toString(), (error, success) => {
-                             if (error) {
-                                 console.error(`CS Error saving ${POINTS_KEY}:`, error);
-                                 reject(new Error(`CloudStorage Error: ${error}`));
-                             } else if (success) {
-                                 console.log(`Saved ${POINTS_KEY} to CS:`, pointsToSave);
-                                 updateWellyPointsDisplayUI(pointsToSave); // Update UI immediately
-                                 // Update leaderboard in background after saving points
-                                 updateLeaderboardWithCurrentUser(pointsToSave);
-                                 resolve(true);
-                             } else {
-                                 console.warn(`CS save call for ${POINTS_KEY} completed, but success flag was not true.`);
-                                 reject(new Error("CloudStorage save failed silently."));
-                             }
-                         });
-                     } else {
-                          console.warn("CloudStorage not available. Points not saved.");
-                          reject(new Error("CloudStorage not available."));
-                     }
-                });
-            }
-
-
-            // --- Profile Modal Logic ---
-            if (profileModalElement) {
-                profileModalElement.addEventListener('show.bs.modal', async function () {
-                    // Ensure we have the current user data
-                    if (!currentUser) {
-                        console.error("Cannot open profile modal: User not initialized.");
-                        // Optionally close the modal immediately or show an error message inside
-                        const modalInstance = bootstrap.Modal.getInstance(profileModalElement);
-                        if (modalInstance) modalInstance.hide();
-                        tg.showAlert("Could not load profile data. Please try again later.");
-                        return;
-                    }
-
-                    console.log("Modal opening. Current User:", currentUser);
-
-                    // Populate static info
-                    if (modalUserName) modalUserName.textContent = currentUser.first_name || 'Player';
-                    if (modalUserAvatar) {
-                        modalUserAvatar.innerHTML = '';
-                        if (currentUser.photo_url) {
-                            const img = document.createElement('img');
-                            img.src = currentUser.photo_url;
-                            img.alt = `Profile picture`;
-                            modalUserAvatar.appendChild(img);
-                        } else {
-                            modalUserAvatar.textContent = '🎓';
-                        }
-                    }
-
-                    // Reset feedback area
-                     if(resetFeedbackArea) resetFeedbackArea.textContent = '';
-                     if(deleteProgressBtn) deleteProgressBtn.disabled = false; // Ensure button is enabled initially
-
-
-                    // Re-fetch points and then leaderboard
-                    try {
-                        const currentPoints = await loadWellyPoints(); // Get latest points
-                        console.log("Points re-loaded for modal:", currentPoints);
-                        if (modalWellyPoints) modalWellyPoints.textContent = currentPoints;
-
-                        // Now fetch and display the leaderboard
-                        await fetchAndDisplayLeaderboard(currentPoints);
-
-                    } catch (error) {
-                        console.error("Error loading points/leaderboard for modal:", error);
-                        if (modalWellyPoints) modalWellyPoints.textContent = 'Error';
-                        if (profileRankDisplay) profileRankDisplay.textContent = 'Rank: Error';
-                        if (leaderboardTableBody) leaderboardTableBody.innerHTML = '<tr><td colspan="3" class="text-center text-danger">Error loading leaderboard data.</td></tr>';
-                        if (leaderboardLoading) leaderboardLoading.style.display = 'none';
-                        if (leaderboardEmpty) leaderboardEmpty.style.display = 'none';
-                    }
-                });
-
-                // Delete Progress Button Listener
-                if (deleteProgressBtn && currentUser) { // Ensure button and user exist
-                    deleteProgressBtn.addEventListener('click', function() {
-                         // Clear previous feedback
-                         if(resetFeedbackArea) resetFeedbackArea.textContent = '';
-
-                        if (!tg || !tg.showConfirm) {
-                             if(resetFeedbackArea) {
-                                resetFeedbackArea.textContent = 'Action only available in Telegram.';
-                                resetFeedbackArea.className = 'small feedback-error';
-                             } else {
-                                alert("This action is only available within the Telegram app.");
-                             }
-                             return;
-                        }
-
-                        tg.showConfirm("Reset ALL progress (Points, Tasks, Quests)?\nThis cannot be undone.", async (confirmed) => {
-                            if (confirmed) {
-                                console.log("User confirmed progress reset.");
-                                deleteProgressBtn.disabled = true; // Disable button during operation
-                                if(resetFeedbackArea) {
-                                    resetFeedbackArea.textContent = 'Resetting... Please wait.';
-                                    resetFeedbackArea.className = 'small text-muted';
-                                }
-                                try {
-                                    // 1. Reset Points on server/storage
-                                    await saveWellyPoints(0);
-                                    console.log("Points reset to 0.");
-
-                                    // 2. Delete other progress keys
-                                    const keysToRemove = [HACKATHON_TASKS_KEY, QUEST_PROGRESS_KEY, LEADERBOARD_KEY];
-                                    let deletePromises = [];
-                                    if (tg.CloudStorage) {
-                                        keysToRemove.forEach(key => {
-                                            deletePromises.push(new Promise((resolve, reject) => {
-                                                tg.CloudStorage.deleteItem(key, (error, success) => {
-                                                    if (error) {
-                                                        console.error(`CS Error deleting ${key}:`, error);
-                                                        // Resolve even on error to not block Promise.allSettled entirely
-                                                        resolve({ status: 'rejected', key: key, error: error });
-                                                    } else {
-                                                        console.log(`${key} deleted from CS: ${success}`);
-                                                        resolve({ status: 'fulfilled', key: key, success: success });
-                                                    }
-                                                });
-                                            }));
-                                        });
-
-                                        const results = await Promise.allSettled(deletePromises);
-                                        console.log("Deletion results:", results);
-                                        // Check if any deletions failed (optional: provide more specific feedback)
-                                        const failedDeletions = results.filter(r => r.status === 'rejected' || (r.status === 'fulfilled' && !r.value.success));
-                                        if (failedDeletions.length > 0) {
-                                            console.warn("Some progress keys might not have been deleted:", failedDeletions);
-                                        }
-
-                                    } else {
-                                        console.warn("CloudStorage not available. Cannot delete server-side progress.");
-                                        // Clear local storage as fallback (adapt keys if necessary)
-                                        // keysToRemove.forEach(key => localStorage.removeItem(key.replace('_CS', '_LS')));
-                                    }
-
-                                    // 3. Update Modal UI Immediately
-                                    if (modalWellyPoints) modalWellyPoints.textContent = '0';
-                                    if (profileRankDisplay) profileRankDisplay.textContent = 'Rank: N/A (Reset)';
-                                    if (leaderboardTableBody) leaderboardTableBody.innerHTML = '';
-                                    if (leaderboardEmpty) {
-                                        leaderboardEmpty.textContent = 'Leaderboard reset.';
-                                        leaderboardEmpty.style.display = 'block';
-                                    }
-                                     if (leaderboardLoading) leaderboardLoading.style.display = 'none';
-
-
-                                    // 4. Show Success Feedback
-                                    if(resetFeedbackArea) {
-                                        resetFeedbackArea.textContent = 'Progress Reset Successfully!';
-                                        resetFeedbackArea.className = 'small feedback-success';
-                                    }
-                                    tg.showAlert("Your progress has been reset successfully.");
-
-                                    // Re-enable button after a short delay? Or keep disabled until modal reopens?
-                                    // setTimeout(() => { deleteProgressBtn.disabled = false; }, 2000);
-
-
-                                } catch (error) {
-                                    console.error("Error during progress reset:", error);
-                                    if(resetFeedbackArea) {
-                                        resetFeedbackArea.textContent = `Reset failed: ${error.message || 'Unknown error'}`;
-                                        resetFeedbackArea.className = 'small feedback-error';
-                                    }
-                                    tg.showAlert(`An error occurred while resetting progress: ${error.message || error}`);
-                                    deleteProgressBtn.disabled = false; // Re-enable on error
-                                }
-                            } else {
-                                console.log("User cancelled progress reset.");
-                                 if(resetFeedbackArea) {
-                                    resetFeedbackArea.textContent = 'Reset cancelled.';
-                                    resetFeedbackArea.className = 'small text-muted';
-                                 }
-                            }
-                        });
-                    });
-                } else if (!currentUser) {
-                    console.log("Delete button listener not added: User not logged in.");
-                }
-            } else {
-                console.error("Profile modal element (#userProfileModal) not found.");
-            }
-
-
-            // --- Leaderboard Simulation Logic ---
-            async function getLeaderboardData() {
-                // ... (Keep existing getLeaderboardData function) ...
-                return new Promise((resolve) => {
-                     if (tg && tg.CloudStorage) {
-                         tg.CloudStorage.getItem(LEADERBOARD_KEY, (error, value) => {
-                             let data = [];
-                             if (error) {
-                                 console.error(`CS Error loading ${LEADERBOARD_KEY}:`, error);
-                             } else if (value) {
-                                 try {
-                                     data = JSON.parse(value);
-                                     if (!Array.isArray(data)) data = [];
-                                     console.log(`Loaded ${LEADERBOARD_KEY} from CS:`, data.length, "entries");
-                                 } catch (e) {
-                                     console.error(`Error parsing ${LEADERBOARD_KEY} from CS:`, e); data = [];
-                                 }
-                             } else {
-                                 console.log(`${LEADERBOARD_KEY} not found in CS. Initializing.`);
-                             }
-                             // Ensure current user is in the list ONLY IF currentUser exists
-                             if (currentUser) {
-                                const userExists = data.some(entry => entry.userId === currentUser.id);
-                                if (!userExists) {
-                                    // Add user with currently known points (might be 0 initially)
-                                    data.push({ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: totalWellyPoints });
-                                }
-                             }
-                             resolve(data);
-                         });
-                     } else {
-                         console.warn("CloudStorage not available for leaderboard.");
-                         resolve(currentUser ? [{ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: totalWellyPoints }] : []);
-                     }
-                 });
-            }
-
-            async function saveLeaderboardData(data) {
-                // ... (Keep existing saveLeaderboardData function) ...
-                if (!Array.isArray(data)) return;
-                 if (tg && tg.CloudStorage) {
-                     tg.CloudStorage.setItem(LEADERBOARD_KEY, JSON.stringify(data), (error, success) => {
-                         if (error) console.error(`CS Error saving ${LEADERBOARD_KEY}:`, error);
-                         else if (success) console.log(`Saved ${LEADERBOARD_KEY} to CS:`, data.length, "entries");
-                         else console.warn(`CS save call for ${LEADERBOARD_KEY} failed silently.`);
-                     });
-                 } else console.warn("CloudStorage not available. Leaderboard not saved.");
-            }
-
-            async function updateLeaderboardWithCurrentUser(currentPoints) {
-                if (!currentUser) return;
-                try {
-                    let leaderboard = await getLeaderboardData();
-                    const userIndex = leaderboard.findIndex(entry => entry.userId === currentUser.id);
-                    let changed = false;
-
-                    if (userIndex > -1) {
-                        if (leaderboard[userIndex].points !== currentPoints || leaderboard[userIndex].firstName !== (currentUser.first_name || 'Player')) {
-                             leaderboard[userIndex].points = currentPoints;
-                             leaderboard[userIndex].firstName = currentUser.first_name || 'Player';
-                             changed = true;
-                        }
-                    } else {
-                        leaderboard.push({ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: currentPoints });
-                        changed = true;
-                    }
-
-                    if (changed) {
-                        await saveLeaderboardData(leaderboard);
-                    } else {
-                         console.log("Leaderboard already up-to-date for current user.");
-                    }
-                } catch (error) {
-                    console.error("Failed to update leaderboard with current user:", error);
-                }
-            }
-
-            async function fetchAndDisplayLeaderboard(currentPoints) {
-                 // ... (Keep most of the existing fetchAndDisplayLeaderboard function) ...
-                if (!leaderboardLoading || !leaderboardTableBody || !profileRankDisplay || !leaderboardEmpty || !currentUser) return;
-
-                leaderboardLoading.style.display = 'block';
-                leaderboardTableBody.innerHTML = '';
-                leaderboardEmpty.style.display = 'none';
-                profileRankDisplay.textContent = 'Rank: Calculating...';
-
-                try {
-                    let leaderboard = await getLeaderboardData();
-
-                    // Ensure the current user's points in the fetched data are up-to-date
-                    const userIndex = leaderboard.findIndex(entry => entry.userId === currentUser.id);
-                    if (userIndex > -1 && leaderboard[userIndex].points !== currentPoints) {
-                         leaderboard[userIndex].points = currentPoints; // Correct points before sorting
-                    } else if (userIndex === -1) {
-                         // If user somehow wasn't added before, add now
-                         leaderboard.push({ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: currentPoints });
-                    }
-
-
-                    if (leaderboard.length === 0) {
-                        profileRankDisplay.textContent = 'Rank: N/A';
-                        leaderboardEmpty.textContent = 'Leaderboard is empty.'; // Specific message
-                        leaderboardEmpty.style.display = 'block';
-                        leaderboardLoading.style.display = 'none';
-                        return;
-                    }
-
-                    leaderboard.sort((a, b) => b.points - a.points);
-
-                    const userRank = leaderboard.findIndex(entry => entry.userId === currentUser.id) + 1;
-                    const totalPlayers = leaderboard.length;
-
-                    if (userRank > 0) {
-                        profileRankDisplay.textContent = `Your Rank: #${userRank} out of ${totalPlayers}`;
-                    } else {
-                        // This case should be less likely now
-                        profileRankDisplay.textContent = 'Rank: Calculating...';
-                        console.warn("User rank couldn't be determined after update attempt.");
-                    }
-
-                    const topN = 5;
-                    leaderboard.slice(0, topN).forEach((entry, index) => {
-                        const rank = index + 1;
-                        const row = leaderboardTableBody.insertRow();
-                        row.innerHTML = `
-                            <td class="text-center"><span class="rank-badge">${rank}</span></td>
-                            <td>${entry.firstName || 'Player'} ${entry.userId === currentUser.id ? '<small>(You)</small>' : ''}</td>
-                            <td class="text-end points-cell">${entry.points}</td>
-                        `;
-                         if (entry.userId === currentUser.id) {
-                             row.classList.add('table-info');
-                         }
-                    });
-
-                    leaderboardLoading.style.display = 'none';
-
-                } catch (error) {
-                     console.error("Error fetching/displaying leaderboard:", error);
-                     profileRankDisplay.textContent = 'Rank: Error loading';
-                     leaderboardEmpty.textContent = 'Error loading leaderboard data.';
-                     leaderboardEmpty.style.display = 'block';
-                     leaderboardLoading.style.display = 'none';
-                 }
-            }
-
-            // --- Other Initializations (Keep existing) ---
-            const scrollThreshold = 30; if (logo) { const handleScroll = () => { const isScrolled = window.scrollY > scrollThreshold; logo.classList.toggle('logo-scrolled', isScrolled); bodyElement.classList.toggle('logo-state-scrolled', isScrolled); }; logo.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }); window.addEventListener('scroll', handleScroll, { passive: true }); handleScroll(); } else { console.warn("Header logo element (#header-logo) not found."); }
-            let videoTimeSet = false; if (videoElement) { const videoObserver = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !videoTimeSet) { try { videoElement.currentTime = 38; videoTimeSet = true; } catch (e) { console.warn("Could not set video time yet:", e); } } }); }, { threshold: 0.5 }); videoObserver.observe(videoElement); } else { console.warn("Video element (#introVideo) not found."); }
-            if ("IntersectionObserver" in window && animatedElements.length > 0) { const animationObserver = new IntersectionObserver((entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }); }, { threshold: 0.1 }); animatedElements.forEach(el => animationObserver.observe(el)); } else { animatedElements.forEach(el => el.classList.add('visible')); console.warn("IntersectionObserver not supported or no elements to animate."); }
-            if (subForm) { subForm.addEventListener('submit', function(e) { e.preventDefault(); const emailInput = this.querySelector('input[type="email"]'); const email = emailInput ? emailInput.value : 'N/A'; console.log("Subscription attempt:", email); if (tg && tg.showAlert) { tg.showAlert('Thank you for subscribing!'); } else { alert('Thank you for subscribing!'); } this.reset(); }); }
-
-            // --- Start the App ---
-            initializeTelegramApp();
-
-        });
-    </script>
+    <!-- Link to your combined JS file -->
+    <script src="app.js"></script>
 
 </body>
 </html>
