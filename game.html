@@ -7,24 +7,26 @@
     <title>Challenge Quest - Wellington Campus</title> <!-- Updated Title -->
 
     <!-- Standard Meta -->
-    <meta name="description" content="Spin the wheel, take the challenge quiz, and earn Welly Points!">
-    <meta name="keywords" content="Wellington Campus, hackathon, game, spin the wheel, quiz, challenge, AI, points">
+    <meta name="description" content="Spin the wheel, answer themed questions, and earn Welly Points!">
+    <meta name="keywords" content="Wellington Campus, hackathon, game, spin the wheel, quiz, challenge, AI, points, general knowledge, Telegram Mini App">
     <meta name="author" content="Wellington Campus">
     <meta property="og:title" content="Challenge Quest - Wellington Campus">
-    <meta property="og:description" content="Spin the wheel, take the quiz, earn points!">
+    <meta property="og:description" content="Spin the wheel, answer questions, earn Welly Points!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wellingtoncampus.co/game.html"> <!-- Update -->
     <meta property="og:image" content="./wellingtoncampus.png"> <!-- Update Path -->
-
-    <!-- Stylesheets -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <meta property="og:image:alt" content="Wellington Campus Logo">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon"> <!-- Update Path -->
 
     <!-- **Telegram Mini App Script - MUST be first script** -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <!-- Stylesheets -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -33,6 +35,7 @@
             --text-color: #212529;
             --bg-color: #cce5ff; /* Light Blueish */
             --accent-color: #ffffff; /* White */
+            --card-bg-color: rgba(255, 255, 255, 0.9);
             --correct-color: #28a745; /* Green */
             --incorrect-color: #dc3545; /* Red */
             --shadow: 0 8px 24px rgba(0,0,0,0.1);
@@ -40,106 +43,141 @@
             --bottom-nav-bg: var(--accent-color);
             --bottom-nav-icon: #6c757d;
             --bottom-nav-active: var(--primary-color);
-            /* Wheel Colors */
+            /* Wheel Colors (8 segments now) */
             --color1: #ffcc80; --color2: #81d4fa; --color3: #c5e1a5; --color4: #ffab91;
-            --color5: #b39ddb; --color6: #fff59d; --color7: #90caf9;
+            --color5: #b39ddb; --color6: #fff59d; --color7: #90caf9; --color8: #f48fb1; /* Pink for GK */
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Roboto', sans-serif;
             color: var(--text-color);
             background-color: var(--bg-color);
-             background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
+            background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
                               linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
             background-size: 20px 20px;
-            font-size: 1.1rem;
-            line-height: 1.7;
+            font-size: 1.05rem;
+            line-height: 1.6;
             margin: 0;
             padding: 0;
             min-height: 100vh;
             min-height: var(--tg-viewport-height, 100vh);
-            display: flex;
-            flex-direction: column;
             box-sizing: border-box;
+            overflow-x: hidden;
+            /* Adjust padding for bottom nav + potential extra space */
+            padding-bottom: calc(100px + var(--tg-safe-area-inset-bottom, 0px));
         }
 
+        /* --- Header & Logo Styling (Copied from index.html) --- */
+        #main-header { text-align: center; margin-bottom: 1rem; position: relative; padding-top: 1rem; }
+        #header-logo { display: block; margin: 0 auto 0.5rem auto; max-width: 100px; width: 100px; height: auto; position: relative; top: 0; left: 0; z-index: 10; cursor: pointer; transition: width 0.4s ease-in-out, max-width 0.4s ease-in-out, top 0.4s ease-in-out, left 0.4s ease-in-out, padding 0.4s ease-in-out, border-radius 0.4s ease-in-out, background-color 0.4s ease-in-out, box-shadow 0.4s ease-in-out; }
+        #header-logo.logo-scrolled { position: fixed; top: 8px; left: 12px; width: 45px; max-width: 45px; height: auto; z-index: 1045; margin: 0; background-color: rgba(255, 255, 255, 0.85); padding: 4px; border-radius: 50%; box-shadow: 0 3px 8px rgba(0, 51, 102, 0.3); }
+        body.logo-state-scrolled .container { padding-top: 10px; } /* Adjusted from .container to .content-wrapper */
+        body.logo-state-scrolled .content-wrapper { padding-top: 60px; /* Add padding to main content when logo is small */}
+
+
+        /* --- User Profile Styling (Copied from index.html) --- */
+        #user-profile { position: fixed; top: 8px; right: 12px; font-size: 0.85rem; color: var(--secondary-color); background-color: rgba(255, 255, 255, 0.85); padding: 5px 10px; border-radius: 20px; display: flex; align-items: center; z-index: 1045; box-shadow: 0 2px 5px rgba(0, 51, 102, 0.2); transition: top 0.4s ease-in-out; }
+        #user-avatar { display: inline-block; width: 28px; height: 28px; border-radius: 50%; margin-right: 8px; vertical-align: middle; background-color: #e9ecef; text-align: center; line-height: 28px; font-size: 18px; overflow: hidden; }
+        #user-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        #user-name-display { font-weight: 600; margin-right: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
+        #welly-points { font-weight: bold; margin-left: 5px; }
+        #user-profile .fa-star { margin-left: 5px; }
+
         /* --- Mini App Specific Adjustments --- */
-        .navbar-custom { display: none; } /* Hide desktop nav */
-        .bottom-nav {
-            display: flex; /* Show bottom nav */
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: var(--bottom-nav-bg);
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            /* Account for safe area */
-            padding: 0.5rem 0 max(0.5rem, var(--tg-safe-area-inset-bottom, 0.5rem));
-            z-index: 1000;
-            flex-shrink: 0;
-        }
-         /* Add padding to body bottom to prevent overlap with fixed nav */
-        body { padding-bottom: 80px; } /* Adjust height based on nav */
+        .navbar-custom { display: none; }
+        .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; right: 0; width: 100%; background-color: var(--bottom-nav-bg); box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 0.5rem 0 max(0.5rem, var(--tg-safe-area-inset-bottom, 0.5rem)); z-index: 1040; }
 
         /* --- General & Game Styles --- */
         .content-wrapper {
-            position: relative;
+            position: relative; /* Needed for absolute positioning of profile if not fixed */
             padding: 1rem;
             text-align: center;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Center content */
-            overflow-y: auto; /* Allow scrolling if content overflows */
+            /* Removed justify-content: center to allow content flow */
+            overflow-y: auto;
         }
 
-        h1, h2 {
-            font-family: 'Poppins', sans-serif;
-            color: var(--secondary-color);
-            margin-bottom: 0.5rem;
-        }
+        h1, h2 { font-family: 'Poppins', sans-serif; color: var(--secondary-color); margin-bottom: 0.5rem; }
         h1 { font-size: 1.8rem; }
-        h2 { font-size: 1.5rem; }
+        h2 { font-size: 1.3rem; } /* Slightly smaller H2 */
 
-        /* User Profile Area */
-        #user-profile {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 0.9rem;
-            color: var(--secondary-color);
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 5px 10px;
-            border-radius: 10px;
+        /* Card Structure for Wheel and Quiz */
+        .content-section {
+            width: 100%;
+            max-width: 600px; /* Limit width */
+            margin: 0 auto 1.5rem auto; /* Center horizontally */
+            background-color: var(--card-bg-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border: none;
+            overflow: hidden;
+        }
+        .content-section-header {
+            background-color: var(--secondary-color);
+            color: var(--accent-color);
+            font-weight: 600;
+            border-bottom: 3px solid var(--primary-color);
+            padding: 0.8rem 1.2rem;
             display: flex;
             align-items: center;
-             z-index: 5; /* Above content, below modals if any */
         }
-        #user-profile i { margin-right: 5px; color: var(--primary-color); }
-        #welly-points { font-weight: bold; margin-left: 5px; }
+        .content-section-header h2 { color: var(--accent-color); margin: 0; font-size: 1.1rem; }
+        .content-section-header i { margin-right: 0.75rem; font-size: 1.1rem; color: var(--primary-color); }
+        .content-section-body { padding: 1.5rem; }
+
 
         /* Wheel Styles */
-        #wheel-section { /* Container for wheel elements */
-             display: flex;
-             flex-direction: column;
-             align-items: center;
-             width: 100%; /* Take full width */
-        }
         #wheel-container {
             position: relative;
-            width: 280px; /* Mobile-friendly size */
-            height: 280px;
-            margin: 1rem auto;
+            width: 280px; height: 280px;
+            margin: 1rem auto; /* Keep centering */
         }
         #spinner-wheel {
             width: 100%; height: 100%; border-radius: 50%;
             background-color: #eee;
-            background-image: conic-gradient( /* Defined via JS */ );
+            /* Gradient set by JS */
             border: 6px solid var(--secondary-color);
             box-shadow: 0 0 15px rgba(0, 51, 102, 0.2);
             transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1);
             position: relative; overflow: hidden;
+            /* For positioning segment content */
+            display: flex; /* Although content is absolutely positioned */
+            align-items: center;
+            justify-content: center;
         }
+        .segment-content { /* Style for the divs inside the wheel */
+             position: absolute;
+             top: 0; left: 50%; /* Start at top center */
+             width: 50%; /* Half the wheel width */
+             height: 50%; /* Half the wheel height */
+             transform-origin: 0% 100%; /* Rotate around bottom-left (center of wheel) */
+             display: flex;
+             flex-direction: column; /* Stack emoji and text */
+             align-items: center;
+             justify-content: center;
+             text-align: center;
+             padding: 5px;
+             box-sizing: border-box;
+             font-size: 10px; /* Small text */
+             font-weight: 600;
+             color: var(--secondary-color);
+             pointer-events: none; /* Don't interfere with spin */
+             line-height: 1.2;
+             overflow: hidden;
+        }
+        .segment-content .emoji {
+             font-size: 18px; /* Emoji size */
+             display: block;
+             margin-bottom: 2px;
+        }
+
         #wheel-pointer {
             position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
             width: 0; height: 0; border-left: 15px solid transparent;
@@ -149,7 +187,7 @@
          #spinner-wheel::after { /* Center circle */
              content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
              width: 30px; height: 30px; background-color: var(--secondary-color);
-             border-radius: 50%; border: 4px solid var(--accent-color);
+             border-radius: 50%; border: 4px solid var(--accent-color); z-index: 5; /* Above segment content */
          }
         #spin-button { /* Style for main action button */
              display: inline-block; margin-top: 1rem; padding: 0.7rem 2rem; font-size: 1.1rem;
@@ -164,101 +202,71 @@
 
         /* Result Display Area */
         #result-area {
-             margin-top: 1.5rem; padding: 1rem; background-color: rgba(255, 255, 255, 0.8);
-             border-radius: var(--border-radius); min-height: 50px;
-             display: flex; flex-direction: column; align-items: center; justify-content: center;
+             margin-top: 1rem; padding: 0.8rem 1rem; background-color: rgba(255, 255, 255, 0.8);
+             border-radius: var(--border-radius); min-height: 40px;
+             display: flex; align-items: center; justify-content: center;
              border: 2px solid var(--primary-color); box-shadow: var(--shadow);
-             opacity: 0; /* Hidden initially */ transition: opacity 0.5s ease-in-out;
+             opacity: 0; transition: opacity 0.5s ease-in-out;
         }
         #result-area.visible { opacity: 1; }
         #challenge-result-text {
-             font-size: 1.2rem; font-weight: bold; color: var(--secondary-color);
-             font-family: 'Poppins', sans-serif; margin-bottom: 0.5rem;
+             font-size: 1.1rem; font-weight: bold; color: var(--secondary-color);
+             font-family: 'Poppins', sans-serif; margin: 0; /* Remove default margin */
         }
-         #start-quiz-button { /* Specific style for quiz start */
-              margin-top: 0.5rem; padding: 0.5rem 1.5rem; font-size: 1rem;
-         }
 
-        /* Quiz Section Styles */
-        #quiz-section {
+        /* Quiz Display Area Styles */
+        #quiz-display-area {
+            margin-top: 1.5rem;
             display: none; /* Hidden by default */
-            width: 100%;
-            max-width: 500px; /* Limit width on larger screens */
-            margin-top: 1rem;
-            padding: 1.5rem;
-            background-color: var(--accent-color);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            text-align: left;
+            text-align: left; /* Align quiz content left */
+             opacity: 0; /* For fade-in */
+             transition: opacity 0.6s ease-out;
         }
-        #quiz-question {
-            font-size: 1.2rem;
+         #quiz-display-area.visible {
+             display: block;
+             opacity: 1;
+         }
+        .quiz-question-block {
+             margin-bottom: 1.5rem;
+             padding-bottom: 1rem;
+             border-bottom: 1px dashed #ccc;
+        }
+         .quiz-question-block:last-child {
+             border-bottom: none;
+             margin-bottom: 0;
+             padding-bottom: 0;
+         }
+        .quiz-question-text {
+            font-size: 1.05rem;
             font-weight: bold;
             color: var(--secondary-color);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             line-height: 1.4;
         }
         .quiz-options button {
-            display: block;
-            width: 100%;
-            margin-bottom: 0.8rem;
-            padding: 0.8rem;
-            text-align: left;
-            font-size: 1rem;
-            background-color: #f8f9fa; /* Light gray background */
-            border: 2px solid #dee2e6; /* Gray border */
-            border-radius: 8px;
-            cursor: pointer;
+            display: block; width: 100%; margin-bottom: 0.6rem; padding: 0.7rem 1rem;
+            text-align: left; font-size: 0.95rem; background-color: #f8f9fa;
+            border: 2px solid #dee2e6; border-radius: 8px; cursor: pointer;
             transition: background-color 0.2s, border-color 0.2s;
         }
-        .quiz-options button:hover {
-            background-color: #e9ecef;
-            border-color: #adb5bd;
-        }
-         .quiz-options button.selected {
-             background-color: var(--primary-color);
-             border-color: #b8860b;
-             color: white;
-         }
-         .quiz-options button.correct {
-             background-color: var(--correct-color);
-             border-color: #1e7e34;
-             color: white;
-         }
-         .quiz-options button.incorrect {
-             background-color: var(--incorrect-color);
-             border-color: #b21f2d;
-             color: white;
-         }
-         .quiz-options button:disabled {
-             opacity: 0.7;
-             cursor: not-allowed;
-         }
-        #quiz-feedback {
-            margin-top: 1rem;
-            font-weight: bold;
-            min-height: 24px; /* Reserve space */
+        .quiz-options button:hover { background-color: #e9ecef; border-color: #adb5bd; }
+        .quiz-options button.selected { background-color: var(--primary-color); border-color: #b8860b; color: white; }
+        .quiz-options button.correct { background-color: var(--correct-color); border-color: #1e7e34; color: white; }
+        .quiz-options button.incorrect { background-color: var(--incorrect-color); border-color: #b21f2d; color: white; }
+        .quiz-options button:disabled { opacity: 0.7; cursor: not-allowed; } /* Keep disabled style */
+
+        /* Feedback shown directly on options after submit */
+        #quiz-feedback { /* General feedback/score area */
+            margin-top: 1rem; font-weight: bold; min-height: 24px; text-align: center;
         }
         #quiz-feedback.correct { color: var(--correct-color); }
-        #quiz-feedback.incorrect { color: var(--incorrect-color); }
-        #quiz-submit-button, #quiz-next-button {
-            margin-top: 1.5rem;
-            float: right; /* Position buttons to the right */
-        }
-         #quiz-end-section {
-              text-align: center;
-              margin-top: 1.5rem;
-         }
-
+        #quiz-feedback.incorrect { color: var(--incorrect-color); } /* May not be used directly now */
+        #submit-quiz-button, #play-again-button { margin-top: 1.5rem; display: block; margin-left: auto; margin-right: auto;}
 
         /* Bottom Nav Styles */
-        .bottom-nav .btn {
-            color: var(--bottom-nav-icon); padding: 0.5rem; font-size: 0.9rem;
-            display: flex; flex-direction: column; align-items: center;
-            transition: color 0.3s ease; text-decoration: none; border: none; background: none;
-        }
+        .bottom-nav .btn { color: var(--bottom-nav-icon); background-color: transparent; border: none; padding: 0.5rem; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; transition: color 0.3s ease; text-decoration: none; }
         .bottom-nav .btn:hover, .bottom-nav .btn.active { color: var(--bottom-nav-active); }
-        .bottom-nav i { font-size: 1.2rem; margin-bottom: 0.2rem; }
+        .bottom-nav i { font-size: 1.1rem; margin-bottom: 0.15rem; }
 
          /* Helper class */
          .hidden { display: none !important; }
@@ -268,213 +276,329 @@
 <body>
     <!-- User Profile Display (Top Right) -->
     <div id="user-profile">
-        <i class="fas fa-user-circle"></i>
+        <span id="user-avatar">🎓</span> <!-- Default Emoji -->
         <span id="user-name-display">Player</span>
-        | <i class="fas fa-star" style="color: var(--primary-color);"></i>
-        <span id="welly-points">0</span> WP
+        | <i class="fas fa-star"></i>
+        <span id="welly-points">0</span> WP
     </div>
+
+     <!-- Header with Logo -->
+     <header id="main-header">
+        <img src="./wellingtoncampus.png" alt="Wellington Campus Logo" id="header-logo">
+     </header>
 
     <!-- Main Content -->
     <div class="content-wrapper">
 
-        <!-- Wheel Section -->
-        <div id="wheel-section">
-            <h1>Challenge Quest</h1>
-            <p class="lead mb-2">Spin for a challenge, test your knowledge!</p>
-
-            <div id="wheel-container">
-                <div id="spinner-wheel"></div>
-                <div id="wheel-pointer"></div>
-            </div>
-
-            <button id="spin-button" class="btn-custom">Spin the Wheel!</button>
-
-            <div id="result-area">
-                <div id="challenge-result-text">Spin to find out your challenge...</div>
-                <button id="start-quiz-button" class="btn-custom hidden">Start Challenge Quiz!</button>
-            </div>
-        </div>
-
-        <!-- Quiz Section (Initially Hidden) -->
-        <div id="quiz-section" class="hidden">
-            <h2 id="quiz-challenge-title">Challenge Quiz</h2>
-            <div id="quiz-question">Question text goes here...</div>
-            <div id="quiz-options" class="quiz-options">
-                <!-- Option buttons will be added dynamically -->
-            </div>
-            <div id="quiz-feedback"></div>
-            <button id="quiz-submit-button" class="btn-custom">Submit Answer</button>
-            <button id="quiz-next-button" class="btn-custom hidden">Next Question</button>
-             <div id="quiz-end-section" class="hidden">
-                 <h3>Quiz Complete!</h3>
-                 <p>Your Score: <span id="final-score">0</span> Welly Points</p>
-                 <button id="play-again-button" class="btn-custom">Spin Again</button>
+        <!-- Wheel Section (Styled as a Card) -->
+        <section id="wheel-section" class="content-section">
+             <div class="content-section-header">
+                 <h2><i class="fas fa-dice"></i> Challenge Quest Wheel</h2>
              </div>
-        </div>
+             <div class="content-section-body">
+                 <p class="lead mb-2 small text-center">Spin for a challenge, test your knowledge!</p>
+                 <div id="wheel-container">
+                     <div id="spinner-wheel">
+                         <!-- Segment content (emojis/text) added by JS -->
+                     </div>
+                     <div id="wheel-pointer"></div>
+                 </div>
+                 <button id="spin-button" class="btn-custom">Spin the Wheel!</button>
+                 <div id="result-area">
+                     <div id="challenge-result-text">Spin to find out your challenge...</div>
+                 </div>
+             </div>
+        </section>
 
-    </div>
+        <!-- Quiz Display Area (Styled as a Card, Initially Hidden) -->
+        <section id="quiz-display-area" class="content-section hidden">
+             <div class="content-section-header">
+                 <h2 id="quiz-display-title"><i class="fas fa-question-circle"></i> Challenge Questions</h2>
+             </div>
+             <div class="content-section-body" id="quiz-questions-container">
+                 <!-- Quiz questions will be loaded here by JS -->
+                 <p class="text-muted small">Select an answer for each question below.</p>
+             </div>
+             <div class="content-section-body text-center border-top mt-3 pt-3">
+                 <div id="quiz-feedback"></div>
+                 <button id="submit-quiz-button" class="btn-custom hidden">Submit Answers</button>
+                 <button id="play-again-button" class="btn-custom hidden">Spin Again</button>
+             </div>
+        </section>
+
+    </div> <!-- End Content Wrapper -->
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav" aria-label="Mobile navigation">
         <div class="d-flex justify-content-around w-100">
-            <a href="index.html" class="btn"><i class="fas fa-home"></i>Home</a>
-            <a href="courses.html" class="btn"><i class="fas fa-book"></i>LMS</a>
-            <a href="game.html" class="btn active"><i class="fas fa-puzzle-piece"></i>Quest</a> <!-- Updated Name/Icon -->
-            <a href="hackathons.html" class="btn"><i class="fas fa-laptop-code"></i>Hackathon</a>
+             <a href="index.html" target="_self" class="btn"><i class="fas fa-home"></i>Home</a>
+             <a href="courses.html" target="_self" class="btn"><i class="fas fa-book"></i>LMS</a>
+             <a href="game.html" target="_self" class="btn active"><i class="fas fa-puzzle-piece"></i>Quest</a>
+             <a href="hackathon.html" target="_self" class="btn"><i class="fas fa-laptop-code"></i>Hackathon</a>
         </div>
     </nav>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- DOM Elements ---
+            const logo = document.getElementById('header-logo');
+            const bodyElement = document.body;
             const wheel = document.getElementById('spinner-wheel');
             const spinButton = document.getElementById('spin-button');
             const resultArea = document.getElementById('result-area');
             const challengeResultText = document.getElementById('challenge-result-text');
-            const startQuizButton = document.getElementById('start-quiz-button');
-            const wheelSection = document.getElementById('wheel-section');
-            const quizSection = document.getElementById('quiz-section');
-            const quizChallengeTitle = document.getElementById('quiz-challenge-title');
-            const quizQuestionText = document.getElementById('quiz-question');
-            const quizOptionsContainer = document.getElementById('quiz-options');
+            const wheelSection = document.getElementById('wheel-section'); // Now the card
+            const quizDisplayArea = document.getElementById('quiz-display-area'); // New quiz container card
+            const quizDisplayTitle = document.getElementById('quiz-display-title');
+            const quizQuestionsContainer = document.getElementById('quiz-questions-container'); // Where questions go
             const quizFeedback = document.getElementById('quiz-feedback');
-            const quizSubmitButton = document.getElementById('quiz-submit-button');
-            const quizNextButton = document.getElementById('quiz-next-button');
-            const quizEndSection = document.getElementById('quiz-end-section');
-            const finalScoreDisplay = document.getElementById('final-score');
+            const submitQuizButton = document.getElementById('submit-quiz-button');
             const playAgainButton = document.getElementById('play-again-button');
             const userNameDisplay = document.getElementById('user-name-display');
             const wellyPointsDisplay = document.getElementById('welly-points');
+            const userAvatarContainer = document.getElementById('user-avatar');
 
-             // --- Telegram WebApp ---
-             const tg = window.Telegram.WebApp;
-             let currentUser = null;
-             let totalWellyPoints = 0; // This will hold the score across the app session or loaded from CloudStorage
+            // --- Telegram WebApp ---
+            const tg = window.Telegram.WebApp;
+            let currentUser = null;
+            let totalWellyPoints = 0; // Session or CloudStorage score
 
-            // --- Challenges ---
-             const challenges = [
-                { name: "Supply Chain & Logistics", theme: "logistics" },
-                { name: "Sustainability & Environment", theme: "sustainability" },
-                { name: "Medicine & Healthcare", theme: "healthcare" },
-                { name: "Project Management", theme: "management" },
-                { name: "Real Estate & Urban Planning", theme: "realestate" },
-                { name: "Government & Public Sector", theme: "government" },
-                { name: "Open Innovation", theme: "open" }
-             ];
+            // --- Challenges & Emojis ---
+            const challenges = [
+                { name: "Supply Chain", theme: "logistics", emoji: "🚚" },
+                { name: "Sustainability", theme: "sustainability", emoji: "♻️" }, // Changed leaf
+                { name: "Healthcare", theme: "healthcare", emoji: "⚕️" }, // Changed medical symbol
+                { name: "Project Mgmt", theme: "management", emoji: "📊" }, // Changed chart
+                { name: "Real Estate", theme: "realestate", emoji: "🏢" }, // Changed building
+                { name: "Government", theme: "government", emoji: "🏛️" }, // Changed classical building
+                { name: "Open Innovation", theme: "open", emoji: "💡" },
+                { name: "General Knowledge", theme: "general", emoji: "🧠" } // Added GK
+            ];
 
-            // --- Quiz Questions (Example Structure) ---
+            // --- Quiz Questions (MINIMUM 5 PER THEME NEEDED) ---
             const quizData = {
                 logistics: [
-                    { q: "What does 'last-mile delivery' refer to?", o: ["Warehouse sorting", "Final step to customer", "International shipping", "Manufacturing"], a: 1 },
-                    { q: "Which technology helps track goods in real-time?", o: ["Blockchain", "Email", "GPS & RFID", "Spreadsheets"], a: 2 },
+                    { q: "What does 'last-mile delivery' mean?", o: ["Warehouse sorting", "Final step to customer", "Shipping container loading", "Customs clearance"], a: 1 },
+                    { q: "Which technology uses satellites for tracking?", o: ["RFID", "Barcode", "GPS", "NFC"], a: 2 },
+                    { q: "A 'bill of lading' is a document for?", o: ["Payment", "Insurance", "Shipment receipt", "Employee contract"], a: 2 },
+                    { q: "What is 'inventory turnover'?", o: ["Stock value", "How often stock is sold", "Storage cost", "Number of items"], a: 1 },
+                    { q: "What does 'JIT' stand for in supply chain?", o: ["Just In Transit", "Job Instruction Training", "Just In Time", "Joint Inventory Tracking"], a: 2 }
                 ],
                 sustainability: [
-                    { q: "What is carbon footprint?", o: ["Shoe size", "Amount of CO2 emitted", "Water usage", "Forest area"], a: 1 },
-                    { q: "Which is a renewable energy source?", o: ["Coal", "Natural Gas", "Solar Power", "Nuclear Fission"], a: 2 },
+                    { q: "Which is NOT a fossil fuel?", o: ["Coal", "Natural Gas", "Petroleum", "Uranium"], a: 3 },
+                    { q: "What is the main gas responsible for the greenhouse effect?", o: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Helium"], a: 2 },
+                    { q: "Biodegradable materials...", o: ["Last forever", "Break down naturally", "Are always edible", "Must be recycled"], a: 1 },
+                    { q: "'Circular economy' aims to reduce?", o: ["Profits", "Waste", "Employment", "Transportation"], a: 1 },
+                    { q: "Planting trees helps combat climate change by absorbing?", o: ["Water", "Sunlight", "Carbon Dioxide", "Nitrogen"], a: 2 }
                 ],
                 healthcare: [
-                     { q: "What does AI assist with in diagnostics?", o: ["Making coffee", "Image analysis", "Scheduling appointments", "Billing"], a: 1 },
-                     { q: "Telemedicine allows patients to consult doctors via?", o: ["Mail", "Fax", "Video calls", "Carrier pigeon"], a: 2 },
+                     { q: "What does 'HIPAA' in the US regulate?", o: ["Drug prices", "Hospital locations", "Patient privacy", "Doctor salaries"], a: 2 },
+                     { q: "A placebo is used in clinical trials as a?", o: ["Main treatment", "Control", "Diagnostic tool", "Painkiller"], a: 1 },
+                     { q: "Which vitamin is primarily synthesized by the skin upon sun exposure?", o: ["Vitamin A", "Vitamin C", "Vitamin D", "Vitamin B12"], a: 2 },
+                     { q: "What does 'MRI' stand for?", o: ["Medical Radio Imaging", "Magnetic Resonance Imaging", "Multiple Response Index", "Major Radiation Incident"], a: 1 },
+                     { q: "Which of these is a common vital sign?", o: ["Hair color", "Blood pressure", "Shoe size", "Favorite food"], a: 1 }
                 ],
-                 management: [
-                     { q: "What is a common project management methodology?", o: ["Waterfall", "Agile", "Both A & B", "Neither"], a: 2 },
-                     { q: "A 'Gantt chart' is used for?", o: ["Budgeting", "Task scheduling", "Team meetings", "Marketing"], a: 1 },
+                management: [
+                     { q: "What is a 'project scope'?", o: ["The budget", "The timeline", "The defined work/goals", "The team members"], a: 2 },
+                     { q: "Agile methodology emphasizes?", o: ["Strict planning", "Documentation", "Flexibility & iteration", "Individual work"], a: 2 },
+                     { q: "A 'stakeholder' in a project is?", o: ["Only the manager", "Only the client", "Anyone affected by it", "The accountant"], a: 2 },
+                     { q: "What does 'SWOT' analysis stand for?", o: ["Software Workflow Optimization Tool", "Strengths, Weaknesses, Opportunities, Threats", "Sales Workflow & Operations Tracking", "System Wide Online Test"], a: 1 },
+                     { q: "What is 'scope creep'?", o: ["A slow computer", "Project finishing early", "Uncontrolled changes/growth", "A team member leaving"], a: 2 }
                 ],
-                 realestate: [
-                     { q: "What is 'proptech'?", o: ["Property tax", "Tech for real estate", "Building props", "Selling techniques"], a: 1 },
-                     { q: "Virtual property tours use which technology?", o: ["AI", "VR/360 imaging", "Drones", "Satellites"], a: 1 },
+                realestate: [
+                     { q: "What is 'property appraisal'?", o: ["Selling a house", "Estimating market value", "Renting an apartment", "Building inspection"], a: 1 },
+                     { q: "'Zoning laws' typically regulate?", o: ["Property taxes", "Building materials", "Land use", "Interior design"], a: 2 },
+                     { q: "What is 'equity' in a property?", o: ["The garden size", "Value minus debt owed", "Monthly rent", "Number of rooms"], a: 1 },
+                     { q: "A 'mortgage' is a loan specifically for?", o: ["Cars", "Education", "Real estate", "Starting a business"], a: 2 },
+                     { q: "'MLS' stands for?", o: ["Master Listing Service", "Multiple Listing Service", "Mortgage Loan System", "Market Leverage Score"], a: 1 }
                 ],
-                 government: [
-                     { q: "Digital transformation in government aims to improve?", o: ["Citizen services", "Bureaucracy", "Waiting times", "Paper usage"], a: 0 },
-                     { q: "What is 'GovTech'?", o: ["Government TV", "Technology for public sector", "Tech regulation", "Political polling"], a: 1 },
+                government: [
+                     { q: "What are the three main branches of the US government?", o: ["FBI, CIA, NSA", "Army, Navy, Air Force", "Legislative, Executive, Judicial", "Federal, State, Local"], a: 2 },
+                     { q: "A 'referendum' allows citizens to vote directly on?", o: ["Candidates", "Specific laws/proposals", "Court cases", "Budgets"], a: 1 },
+                     { q: "What is 'diplomacy' primarily concerned with?", o: ["Military strategy", "International relations", "Domestic policy", "Economic forecasting"], a: 1 },
+                     { q: "A 'bicameral' legislature has how many chambers?", o: ["One", "Two", "Three", "Four"], a: 1 },
+                     { q: "'Public sector' refers to organizations owned/operated by?", o: ["Private companies", "Individuals", "The government", "Non-profits"], a: 2 }
                 ],
-                 open: [
-                     { q: "'Open Innovation' involves using ideas from?", o: ["Only internal R&D", "Only competitors", "Both internal and external sources", "Only universities"], a: 2 },
-                     { q: "Crowdsourcing is a form of?", o: ["Marketing", "Financing", "Open innovation", "Closed research"], a: 2 },
+                open: [
+                     { q: "Which company is known for its 'open source' operating system?", o: ["Microsoft (Windows)", "Apple (macOS)", "Google (Android/Linux based)", "IBM (OS/2)"], a: 2 },
+                     { q: "A 'patent' grants the inventor?", o: ["Funding", "Exclusive rights", "A job", "A Nobel Prize"], a: 1 },
+                     { q: "What does 'API' stand for?", o: ["Advanced Programming Interface", "Application Programming Interface", "Automated Process Integration", "Applied Physics Incubation"], a: 1 },
+                     { q: "Wikipedia is an example of?", o: ["Crowdsourcing knowledge", "A government website", "A private company", "A search engine"], a: 0 },
+                     { q: "'Creative Commons' licenses allow creators to?", o: ["Sell work only", "Share work with conditions", "Keep work private", "Patent ideas"], a: 1 }
                 ],
-                 // Add more questions for each theme
+                general: [
+                     { q: "What is the capital of Australia?", o: ["Sydney", "Melbourne", "Canberra", "Brisbane"], a: 2 },
+                     { q: "How many planets are in our solar system?", o: ["7", "8", "9", "10"], a: 1 },
+                     { q: "What is the chemical symbol for Gold?", o: ["Go", "Gd", "Au", "Ag"], a: 2 },
+                     { q: "Which artist painted the Mona Lisa?", o: ["Michelangelo", "Raphael", "Donatello", "Leonardo da Vinci"], a: 3 },
+                     { q: "What is the longest river in the world?", o: ["Amazon", "Nile", "Mississippi", "Yangtze"], a: 1 } // Nile is often cited, but Amazon is longer by recent measures
+                ]
             };
 
-
             // --- Game State ---
-            const numSegments = challenges.length;
+            const numSegments = challenges.length; // Now 8
             const anglePerSegment = 360 / numSegments;
             let isSpinning = false;
             let currentRotation = 0;
-            let currentChallenge = null; // Stores the {name, theme} object
-            let currentQuizQuestions = [];
-            let currentQuestionIndex = 0;
-            let sessionScore = 0; // Score for the current quiz session
-            let selectedAnswerIndex = null;
+            let currentChallenge = null;
+            let currentQuizSet = []; // Holds the 5 questions for the current round
+            let userSelections = {}; // Stores user's answer index for each question { qIndex: selectedIndex }
+            let quizSubmitted = false; // Flag to track if quiz answers were submitted
 
             // --- Initialization ---
             function initializeApp() {
-                // Set wheel segments dynamically
-                const gradientColors = challenges.map((challenge, index) => {
-                     const colorVar = `var(--color${(index % 7) + 1})`; // Cycle through 7 colors
-                     const startAngle = index * anglePerSegment;
-                     const endAngle = (index + 1) * anglePerSegment;
-                     return `${colorVar} ${startAngle}deg ${endAngle}deg`;
-                }).join(', ');
-                wheel.style.backgroundImage = `conic-gradient(${gradientColors})`;
+                 setupWheelSegments(); // Call the new function to draw segments
+                 setupTelegramIntegration(); // Handle Telegram specific setup
+                 resetUI(); // Set initial UI state
+            }
 
-                // Set initial text
-                challengeResultText.textContent = 'Spin to begin your quest!';
-                resultArea.classList.add('visible');
+            function setupWheelSegments() {
+                 wheel.innerHTML = ''; // Clear previous segments if any
+                 challenges.forEach((challenge, index) => {
+                     const segmentAngle = anglePerSegment;
+                     const rotation = index * segmentAngle + segmentAngle / 2 - 90; // Center content within segment
 
-                // Setup Telegram Integration
-                if (tg && tg.initData) {
+                     const contentDiv = document.createElement('div');
+                     contentDiv.classList.add('segment-content');
+                     contentDiv.style.transform = `rotate(${rotation}deg) translate(65px) rotate(${-rotation}deg)`; // Position outwards, counter-rotate text
+
+                     const emojiSpan = document.createElement('span');
+                     emojiSpan.classList.add('emoji');
+                     emojiSpan.textContent = challenge.emoji;
+
+                     const textSpan = document.createElement('span');
+                     textSpan.textContent = challenge.name;
+
+                     contentDiv.appendChild(emojiSpan);
+                     contentDiv.appendChild(textSpan);
+                     wheel.appendChild(contentDiv);
+                 });
+
+                 // Set conic gradient based on the number of segments
+                 const gradientColors = challenges.map((challenge, index) => {
+                      const colorVar = `var(--color${(index % 8) + 1})`; // Use 8 colors
+                      const startAngle = index * anglePerSegment;
+                      const endAngle = (index + 1) * anglePerSegment;
+                      return `${colorVar} ${startAngle}deg ${endAngle}deg`;
+                 }).join(', ');
+                 wheel.style.backgroundImage = `conic-gradient(${gradientColors})`;
+            }
+
+
+            function setupTelegramIntegration() {
+                if (tg && tg.initDataUnsafe) {
                     tg.ready();
-                    // tg.expand(); // Optional: Make app full height
-
-                    // Configure Back Button (Game page is not home)
                     tg.BackButton.show();
-                    tg.onEvent('backButtonClicked', () => {
-                        // If in quiz, go back to wheel, else try history or close
-                        if (quizSection.style.display !== 'none') {
-                            resetToWheelView();
-                        } else if (window.history.length > 1) {
-                            window.history.back();
-                        } else {
-                            tg.close();
-                        }
-                    });
+                    tg.onEvent('backButtonClicked', handleBackButton);
 
-                    // Get User Data (Unsafe, for display only)
-                    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                        currentUser = tg.initDataUnsafe.user;
-                        userNameDisplay.textContent = currentUser.first_name || 'Player';
-                        // Optional: Add username display:
-                        // if(currentUser.username) {
-                        //     userNameDisplay.textContent += ` (@${currentUser.username})`;
-                        // }
-                    }
-
-                    // --- Load Total Score from CloudStorage (Example) ---
-                    // tg.CloudStorage.getItem('totalWellyPoints', (error, value) => {
-                    //     if (error) {
-                    //         console.error('Error getting points from CloudStorage:', error);
-                    //         // Optionally show an error to the user via tg.showAlert
-                    //         totalWellyPoints = 0; // Start fresh if error
-                    //     } else if (value) {
-                    //         totalWellyPoints = parseInt(value, 10) || 0;
-                    //         console.log('Loaded points from CloudStorage:', totalWellyPoints);
-                    //     } else {
-                    //         totalWellyPoints = 0; // No value stored yet
-                    //         console.log('No points found in CloudStorage, starting at 0.');
-                    //     }
-                    //     wellyPointsDisplay.textContent = totalWellyPoints;
-                    // });
-                    // For now, just display 0 until CloudStorage is implemented
-                     wellyPointsDisplay.textContent = totalWellyPoints;
-
+                    currentUser = tg.initDataUnsafe.user;
+                    updateUserProfileDisplay();
+                    loadWellyPoints(); // Load points (or init to 0)
 
                 } else {
-                     console.warn("Not running in Telegram Mini App context or initData unavailable.");
-                     // Handle non-Telegram environment if needed
+                    console.warn("Not running in Telegram context or initDataUnsafe unavailable.");
+                    // Fallback for non-Telegram environment
+                    const profileElement = document.getElementById('user-profile');
+                    if(profileElement) profileElement.style.display = 'none'; // Hide profile if no data
                 }
+            }
+
+            function handleBackButton() {
+                 // If quiz is visible, go back to wheel view, else default back/close
+                 if (!quizDisplayArea.classList.contains('hidden')) {
+                     resetToWheelView();
+                 } else if (window.history.length > 1) {
+                     window.history.back();
+                 } else {
+                     tg.close();
+                 }
+            }
+
+             function updateUserProfileDisplay() {
+                 if (!currentUser) return;
+                 if (userNameDisplay) userNameDisplay.textContent = currentUser.first_name || 'Player';
+                 if (userAvatarContainer) {
+                     userAvatarContainer.innerHTML = ''; // Clear default
+                     if (currentUser.photo_url) {
+                         const img = document.createElement('img');
+                         img.src = currentUser.photo_url;
+                         img.alt = `Profile photo`;
+                         userAvatarContainer.appendChild(img);
+                     } else {
+                         userAvatarContainer.textContent = '🎓'; // Fallback Emoji
+                     }
+                 }
+             }
+
+             function loadWellyPoints() {
+                 // Placeholder: Replace with CloudStorage logic later
+                 totalWellyPoints = 0; // Reset for session start or load from storage
+                 updateWellyPointsDisplay();
+
+                 // Example CloudStorage Load (adapt later)
+                 /*
+                 if (tg && tg.CloudStorage) {
+                      tg.CloudStorage.getItem('totalWellyPoints', (error, value) => {
+                           if (!error && value) {
+                               totalWellyPoints = parseInt(value, 10) || 0;
+                           } else { totalWellyPoints = 0; if(error) console.error("CS Load Error:", error);}
+                           updateWellyPointsDisplay();
+                      });
+                 } else { updateWellyPointsDisplay(); }
+                 */
+             }
+
+             function updateWellyPointsDisplay() {
+                 if (wellyPointsDisplay) {
+                     wellyPointsDisplay.textContent = totalWellyPoints;
+                 }
+             }
+
+              function saveWellyPoints() {
+                  // Placeholder: Replace with CloudStorage logic later
+                  console.log("Saving points (placeholder):", totalWellyPoints);
+
+                  // Example CloudStorage Save (adapt later)
+                  /*
+                   if (tg && tg.CloudStorage) {
+                       tg.CloudStorage.setItem('totalWellyPoints', totalWellyPoints.toString(), (error, success) => {
+                            if (error) console.error('CS Save Error:', error);
+                            else if (!success) console.warn('CS Save returned false');
+                            else console.log('CS Points Saved');
+                       });
+                   }
+                  */
+              }
+
+
+            function resetUI() {
+                challengeResultText.textContent = 'Spin to find out your challenge...';
+                resultArea.classList.add('visible');
+                spinButton.disabled = false;
+                spinButton.classList.remove('hidden');
+                quizDisplayArea.classList.add('hidden');
+                quizDisplayArea.classList.remove('visible'); // Hide for animation
+                quizQuestionsContainer.innerHTML = '<p class="text-muted small">Select an answer for each question below.</p>'; // Reset text
+                submitQuizButton.classList.add('hidden');
+                playAgainButton.classList.add('hidden');
+                quizFeedback.textContent = '';
+                quizFeedback.className = ''; // Reset feedback style
+                quizSubmitted = false;
+                userSelections = {};
+            }
+
+            // --- Shrinking Logo Logic ---
+            if (logo) {
+                const handleScroll = () => {
+                    const isScrolled = window.scrollY > 30;
+                    logo.classList.toggle('logo-scrolled', isScrolled);
+                    bodyElement.classList.toggle('logo-state-scrolled', isScrolled);
+                };
+                logo.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                handleScroll(); // Initial check
             }
 
             // --- Wheel Logic ---
@@ -487,7 +611,8 @@
                  isSpinning = true;
                  spinButton.disabled = true;
                  resultArea.classList.remove('visible');
-                 startQuizButton.classList.add('hidden'); // Hide quiz button during spin
+                 quizDisplayArea.classList.add('hidden'); // Hide quiz if visible
+                 quizDisplayArea.classList.remove('visible');
                  challengeResultText.textContent = 'Spinning...';
 
                  const randomExtraRotation = Math.random() * 360;
@@ -499,190 +624,185 @@
                  wheel.addEventListener('transitionend', handleSpinEnd, { once: true });
             }
 
-
             function handleSpinEnd() {
                 isSpinning = false;
-                spinButton.disabled = false; // Re-enable spin for now, might change later
+                // Don't re-enable spin button immediately, wait for quiz completion
+                // spinButton.disabled = false;
 
                 const finalAngle = currentRotation % 360;
                 const normalizedAngle = (360 - finalAngle) % 360;
                 const winningIndex = Math.floor((normalizedAngle + anglePerSegment / 2) % 360 / anglePerSegment);
 
                 currentChallenge = challenges[winningIndex];
-                challengeResultText.textContent = `Challenge: ${currentChallenge.name}!`;
+                challengeResultText.innerHTML = `Challenge: <strong>${currentChallenge.emoji} ${currentChallenge.name}</strong>!`; // Show emoji
                 resultArea.classList.add('visible');
-                startQuizButton.classList.remove('hidden'); // Show quiz button
-                spinButton.classList.add('hidden'); // Hide spin button after getting challenge
+                spinButton.classList.add('hidden'); // Hide spin button
+
+                displayQuizForChallenge(); // Immediately show the quiz
             }
 
             // --- Quiz Logic ---
-            startQuizButton.addEventListener('click', () => {
-                startQuiz();
-            });
-
-            function startQuiz() {
+            function displayQuizForChallenge() {
                 if (!currentChallenge || !quizData[currentChallenge.theme]) {
-                     console.error("Cannot start quiz: No challenge theme selected or no questions found.");
-                     tg.showAlert("Error starting quiz. Please spin again."); // Inform user
-                     return;
-                }
-
-                wheelSection.classList.add('hidden');
-                quizSection.classList.remove('hidden');
-                if (tg && tg.BackButton.isVisible) tg.BackButton.show(); // Ensure back button is shown in quiz view
-
-                quizChallengeTitle.textContent = `${currentChallenge.name} Quiz`;
-                currentQuizQuestions = [...quizData[currentChallenge.theme]]; // Get questions for the theme
-                // Optional: Shuffle questions: currentQuizQuestions.sort(() => Math.random() - 0.5);
-                currentQuestionIndex = 0;
-                sessionScore = 0; // Reset score for this quiz session
-                selectedAnswerIndex = null;
-
-                quizSubmitButton.classList.remove('hidden');
-                quizNextButton.classList.add('hidden');
-                quizEndSection.classList.add('hidden');
-                quizFeedback.textContent = ''; // Clear previous feedback
-
-                loadQuestion();
-            }
-
-            function loadQuestion() {
-                if (currentQuestionIndex >= currentQuizQuestions.length) {
-                    endQuiz();
+                    console.error("Cannot start quiz: Invalid challenge theme.");
+                    challengeResultText.textContent = "Error loading questions. Spin again!";
+                    spinButton.disabled = false; // Allow respin if error
+                    spinButton.classList.remove('hidden');
                     return;
                 }
 
-                const questionData = currentQuizQuestions[currentQuestionIndex];
-                quizQuestionText.textContent = `Q${currentQuestionIndex + 1}: ${questionData.q}`;
-                quizOptionsContainer.innerHTML = ''; // Clear previous options
-                quizFeedback.textContent = '';
-                quizFeedback.className = ''; // Reset feedback style
-                selectedAnswerIndex = null; // Reset selection
+                // Select 5 random questions (or fewer if not enough available)
+                const allQuestions = quizData[currentChallenge.theme];
+                currentQuizSet = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 5);
 
-                quizSubmitButton.disabled = true; // Disable submit until an option is chosen
-                quizSubmitButton.classList.remove('hidden');
-                quizNextButton.classList.add('hidden');
-
-
-                questionData.o.forEach((option, index) => {
-                    const button = document.createElement('button');
-                    button.textContent = option;
-                    button.dataset.index = index;
-                    button.addEventListener('click', handleOptionSelect);
-                    quizOptionsContainer.appendChild(button);
-                });
-            }
-
-            function handleOptionSelect(event) {
-                // Remove 'selected' from previously selected button
-                const currentlySelected = quizOptionsContainer.querySelector('.selected');
-                if (currentlySelected) {
-                    currentlySelected.classList.remove('selected');
+                if (currentQuizSet.length === 0) {
+                     console.error("No questions found for theme:", currentChallenge.theme);
+                     challengeResultText.textContent = "No questions for this topic yet. Spin again!";
+                     spinButton.disabled = false;
+                     spinButton.classList.remove('hidden');
+                     return;
                 }
 
-                // Add 'selected' to the clicked button
-                selectedAnswerIndex = parseInt(event.target.dataset.index, 10);
-                event.target.classList.add('selected');
-                quizSubmitButton.disabled = false; // Enable submit button
-            }
 
+                quizDisplayTitle.innerHTML = `<i class="fas fa-question-circle"></i> ${currentChallenge.name} Questions`;
+                quizQuestionsContainer.innerHTML = ''; // Clear previous
+                quizSubmitted = false; // Reset submitted flag
+                userSelections = {}; // Clear previous selections
 
-            quizSubmitButton.addEventListener('click', () => {
-                checkAnswer();
-            });
+                currentQuizSet.forEach((qData, index) => {
+                     const questionBlock = document.createElement('div');
+                     questionBlock.classList.add('quiz-question-block');
+                     questionBlock.dataset.qIndex = index; // Store original index if needed
 
-            function checkAnswer() {
-                 if (selectedAnswerIndex === null) return; // Should not happen if button is enabled
+                     const questionText = document.createElement('div');
+                     questionText.classList.add('quiz-question-text');
+                     questionText.textContent = `Q${index + 1}: ${qData.q}`;
 
-                 const questionData = currentQuizQuestions[currentQuestionIndex];
-                 const correctIndex = questionData.a;
-                 const optionButtons = quizOptionsContainer.querySelectorAll('button');
+                     const optionsDiv = document.createElement('div');
+                     optionsDiv.classList.add('quiz-options');
 
-                 // Disable all options
-                 optionButtons.forEach(button => {
-                     button.disabled = true;
+                     qData.o.forEach((option, optionIndex) => {
+                         const button = document.createElement('button');
+                         button.textContent = option;
+                         button.dataset.index = optionIndex;
+                         button.addEventListener('click', () => handleOptionSelect(index, optionIndex, button));
+                         optionsDiv.appendChild(button);
+                     });
+
+                     questionBlock.appendChild(questionText);
+                     questionBlock.appendChild(optionsDiv);
+                     quizQuestionsContainer.appendChild(questionBlock);
                  });
 
-                 quizSubmitButton.classList.add('hidden'); // Hide Submit
-                 quizNextButton.classList.remove('hidden'); // Show Next/Finish
+                 submitQuizButton.classList.remove('hidden'); // Show submit button
+                 playAgainButton.classList.add('hidden'); // Hide play again
+                 quizFeedback.textContent = ''; // Clear feedback
+                 quizDisplayArea.classList.remove('hidden'); // Show the quiz area card
+                 // Trigger fade-in animation
+                  requestAnimationFrame(() => {
+                      quizDisplayArea.classList.add('visible');
+                  });
+            }
 
+            function handleOptionSelect(questionIndex, optionIndex, clickedButton) {
+                 if (quizSubmitted) return; // Don't allow changes after submission
 
-                 if (selectedAnswerIndex === correctIndex) {
-                     sessionScore++;
-                     quizFeedback.textContent = "Correct!";
-                     quizFeedback.className = 'correct';
-                     optionButtons[selectedAnswerIndex].classList.add('correct');
-                     // Optional: Haptic feedback for success
-                      if(tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-                 } else {
-                     quizFeedback.textContent = `Incorrect. The answer was: ${questionData.o[correctIndex]}`;
-                     quizFeedback.className = 'incorrect';
-                     optionButtons[selectedAnswerIndex].classList.add('incorrect');
-                     optionButtons[correctIndex].classList.add('correct'); // Highlight the correct one too
-                      // Optional: Haptic feedback for error
-                       if(tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
-                 }
+                 userSelections[questionIndex] = optionIndex; // Store selection
 
-                 // Change Next button text if it's the last question
-                 if (currentQuestionIndex >= currentQuizQuestions.length - 1) {
-                    quizNextButton.textContent = "Finish Quiz";
-                 } else {
-                    quizNextButton.textContent = "Next Question";
+                 // Update visual selection within the same question block
+                 const questionBlock = clickedButton.closest('.quiz-question-block');
+                 const optionsInBlock = questionBlock.querySelectorAll('.quiz-options button');
+                 optionsInBlock.forEach(btn => {
+                     btn.classList.remove('selected');
+                 });
+                 clickedButton.classList.add('selected');
+
+                 // Enable submit button only if all questions are answered
+                 submitQuizButton.disabled = Object.keys(userSelections).length !== currentQuizSet.length;
+
+            }
+
+            submitQuizButton.addEventListener('click', () => {
+                if (Object.keys(userSelections).length !== currentQuizSet.length) {
+                    if(tg) tg.showAlert("Please answer all questions before submitting.");
+                    else alert("Please answer all questions before submitting.");
+                    return;
+                }
+                checkAllAnswers();
+            });
+
+            function checkAllAnswers() {
+                 quizSubmitted = true; // Mark as submitted
+                 let correctAnswersCount = 0;
+
+                 currentQuizSet.forEach((qData, index) => {
+                      const questionBlock = quizQuestionsContainer.querySelector(`.quiz-question-block[data-q-index="${index}"]`);
+                      if (!questionBlock) return;
+
+                      const optionsInBlock = questionBlock.querySelectorAll('.quiz-options button');
+                      const correctIndex = qData.a;
+                      const selectedIndex = userSelections[index]; // May be undefined if not answered, but checked earlier
+
+                      optionsInBlock.forEach((button, btnIndex) => {
+                           button.disabled = true; // Disable all buttons
+                           button.classList.remove('selected'); // Clear selection style
+
+                           if (btnIndex === correctIndex) {
+                               button.classList.add('correct'); // Always highlight correct
+                           }
+                           if (btnIndex === selectedIndex && selectedIndex !== correctIndex) {
+                               button.classList.add('incorrect'); // Mark selected incorrect
+                           }
+                      });
+
+                      if (selectedIndex === correctIndex) {
+                           correctAnswersCount++;
+                      }
+                 });
+
+                 const pointsEarned = correctAnswersCount; // Simple: 1 point per correct answer
+                 totalWellyPoints += pointsEarned;
+                 updateWellyPointsDisplay();
+                 saveWellyPoints(); // Save updated total
+
+                 // Show feedback
+                 quizFeedback.textContent = `You scored ${correctAnswersCount} out of ${currentQuizSet.length}! (+${pointsEarned} WP)`;
+                 quizFeedback.className = pointsEarned > 0 ? 'correct' : 'incorrect'; // Style feedback based on score
+
+                 submitQuizButton.classList.add('hidden'); // Hide submit
+                 playAgainButton.classList.remove('hidden'); // Show play again
+
+                 // Optional haptic feedback based on score
+                 if (tg && tg.HapticFeedback) {
+                     if (pointsEarned === currentQuizSet.length) tg.HapticFeedback.notificationOccurred('success');
+                     else if (pointsEarned > 0) tg.HapticFeedback.notificationOccurred('warning');
+                     else tg.HapticFeedback.notificationOccurred('error');
                  }
             }
 
-            quizNextButton.addEventListener('click', () => {
-                currentQuestionIndex++;
-                loadQuestion(); // Load next question or trigger endQuiz
+            playAgainButton.addEventListener('click', () => {
+                 resetToWheelView();
             });
 
-             function endQuiz() {
-                 quizQuestionText.textContent = "Quiz Finished!";
-                 quizOptionsContainer.innerHTML = ''; // Clear options
-                 quizSubmitButton.classList.add('hidden');
-                 quizNextButton.classList.add('hidden');
-                 quizFeedback.textContent = '';
-
-                 // Update total score
-                 totalWellyPoints += sessionScore;
-                 wellyPointsDisplay.textContent = totalWellyPoints;
-                 finalScoreDisplay.textContent = sessionScore; // Show session score here
-                 quizEndSection.classList.remove('hidden');
-
-                 // --- Save Score to CloudStorage (Example) ---
-                 // if (tg && tg.CloudStorage) {
-                 //      tg.CloudStorage.setItem('totalWellyPoints', totalWellyPoints.toString(), (error, success) => {
-                 //          if (error) {
-                 //              console.error('Error saving points to CloudStorage:', error);
-                 //               tg.showAlert('Could not save your score.'); // Inform user
-                 //          } else if (success) {
-                 //              console.log('Points saved successfully to CloudStorage.');
-                 //          } else {
-                 //              console.warn('Points might not have been saved (CloudStorage response was false).');
-                 //          }
-                 //      });
-                 // }
-             }
-
-             playAgainButton.addEventListener('click', () => {
-                  resetToWheelView();
-             });
-
-             function resetToWheelView() {
-                  quizSection.classList.add('hidden');
-                  wheelSection.classList.remove('hidden');
-                  spinButton.classList.remove('hidden'); // Show spin button again
-                  resultArea.classList.remove('visible'); // Hide old result
-                  startQuizButton.classList.add('hidden');
-                  challengeResultText.textContent = 'Spin again for a new quest!'; // Update text
-                  resultArea.classList.add('visible');
-                  currentChallenge = null;
-                  if (tg && tg.BackButton.isVisible) tg.BackButton.show(); // Ensure back button is shown on wheel view
-             }
+            function resetToWheelView() {
+                 quizDisplayArea.classList.add('hidden');
+                 quizDisplayArea.classList.remove('visible'); // For animation reset
+                 wheelSection.classList.remove('hidden'); // Show wheel card again
+                 spinButton.classList.remove('hidden'); // Show spin button
+                 spinButton.disabled = false; // Re-enable spin
+                 resultArea.classList.remove('visible'); // Hide result text briefly
+                 challengeResultText.textContent = 'Spin again for a new quest!';
+                 resultArea.classList.add('visible'); // Show updated text
+                 currentChallenge = null;
+                 quizSubmitted = false;
+                 userSelections = {};
+                 if (tg && tg.BackButton.isVisible) tg.BackButton.show();
+            }
 
             // --- Start the app ---
             initializeApp();
         });
     </script>
+
 </body>
 </html>
