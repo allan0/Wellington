@@ -45,7 +45,7 @@
             --bottom-nav-active: var(--primary-color);
             /* Wheel Colors (8 segments) */
             --color1: #ffcb80; --color2: #82d5fb; --color3: #c6e2a6; --color4: #ffac92;
-            --color5: #b49edc; --color6: #fff69e; --color7: #91ccfa; --color8: #f590b2; /* Slightly adjusted */
+            --color5: #b49edc; --color6: #fff69e; --color7: #91ccfa; --color8: #f590b2;
         }
 
         html { scroll-behavior: smooth; }
@@ -91,67 +91,50 @@
 
         /* --- Enhanced Wheel Styles --- */
         #wheel-container {
-            position: relative;
-            width: 90vw; /* Responsive width */
-            max-width: 320px; /* Max size */
-            aspect-ratio: 1 / 1; /* Maintain square shape */
-            margin: 1rem auto;
-            border: 8px solid var(--secondary-color); /* Thicker border */
-            border-radius: 50%;
-            box-shadow: 0 5px 15px rgba(0, 51, 102, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.1); /* Inner/outer shadow */
-            background-color: #eee; /* Fallback */
-            overflow: hidden; /* Clip corners/shadows */
+            position: relative; width: 90vw; max-width: 320px; aspect-ratio: 1 / 1;
+            margin: 1rem auto; border: 8px solid var(--secondary-color); border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 51, 102, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #eee; overflow: hidden;
+             /* Faint logo background */
+             background-image: url('./wellingtoncampus.png'); /* Add path to your logo */
+             background-repeat: no-repeat;
+             background-position: center center;
+             background-size: 60%; /* Adjust size as needed */
+             position: relative; /* Needed for pseudo-element overlay */
         }
+        /* Overlay to make background logo faint */
+         #wheel-container::before {
+             content: '';
+             position: absolute;
+             top: 0; left: 0; right: 0; bottom: 0;
+             background-color: rgba(255, 255, 255, 0.85); /* Adjust opacity (0.8 = 80% white overlay) */
+             border-radius: 50%;
+             z-index: 1; /* Behind SVG, above bg image */
+         }
+
         #wheel-svg {
-            display: block; /* Remove extra space */
-            width: 100%; height: 100%;
+            display: block; width: 100%; height: 100%;
             transform-origin: center center;
             transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1);
-            /* Add rotation via transform */
+            position: relative; z-index: 2; /* Above faint logo overlay */
         }
-        #wheel-svg g#wheel-group { /* Group to rotate */
-            transform-origin: center center;
-        }
-        #wheel-svg path.wheel-segment { /* Style for the SVG path segments */
-            stroke: rgba(255, 255, 255, 0.3); /* Subtle white border */
-            stroke-width: 1;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Pop-out transition */
-            transform-origin: center center; /* Scale from center */
-        }
-        #wheel-svg path.wheel-segment.highlighted-segment {
-             transform: scale(1.05); /* Pop-out effect */
-             filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.3));
-        }
-        #wheel-svg text.segment-label {
-            font-family: 'Poppins', sans-serif;
-            font-size: 9px; /* Adjust as needed */
-            font-weight: 600;
-            fill: var(--secondary-color);
-            text-anchor: middle; /* Center text horizontally */
-            dominant-baseline: middle; /* Center text vertically */
-            pointer-events: none;
-            user-select: none;
-            text-shadow: 0 0 1px white;
-        }
+        #wheel-svg g#wheel-group { transform-origin: center center; }
+        #wheel-svg path.wheel-segment { stroke: rgba(255, 255, 255, 0.3); stroke-width: 1; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-origin: center center; }
+        #wheel-svg path.wheel-segment.highlighted-segment { transform: scale(1.05); filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.3)); }
+        /* Removed .segment-label text style */
         #wheel-svg text.segment-emoji {
-             font-size: 18px; /* Adjust emoji size */
-             text-anchor: middle;
-             dominant-baseline: middle;
-             pointer-events: none;
-             user-select: none;
+            font-size: 24px; /* Larger emoji */
+            text-anchor: middle; dominant-baseline: central; /* Better vertical centering */
+            pointer-events: none; user-select: none;
+            fill: var(--secondary-color); /* Ensure color */
+            filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.2)); /* Slight shadow */
         }
-        /* Center decoration (could be SVG circle or CSS pseudo-element) */
+        /* Center decoration */
          #wheel-container::after {
-              content: '';
-              position: absolute;
-              top: 50%; left: 50%;
-              transform: translate(-50%, -50%);
-              width: 40px; height: 40px; /* Adjust size */
-              background-color: var(--secondary-color);
-              border-radius: 50%;
-              border: 5px solid var(--accent-color);
-              box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-              z-index: 5; /* Above SVG segments */
+              content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+              width: 40px; height: 40px; background-color: var(--secondary-color);
+              border-radius: 50%; border: 5px solid var(--accent-color);
+              box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 5;
          }
 
         #wheel-pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid var(--primary-color); z-index: 10; filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.4)); }
@@ -159,15 +142,38 @@
         #spin-button:hover { background-color: #b8860b; transform: translateY(-2px); }
         #spin-button:active { transform: translateY(1px); box-shadow: 0 2px 5px rgba(212, 175, 55, 0.4); }
         #spin-button:disabled { background-color: #aaa; cursor: not-allowed; box-shadow: none; transform: none; }
-        #result-area { margin-top: 1rem; padding: 0.8rem 1rem; background-color: rgba(255, 255, 255, 0.8); border-radius: var(--border-radius); min-height: 40px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--primary-color); box-shadow: var(--shadow); opacity: 0; transition: opacity 0.5s ease-in-out; }
+
+        /* Result Display Area - now includes Spin Again / Start Quiz buttons */
+        #result-area { margin-top: 1rem; padding: 0.8rem 1rem; background-color: rgba(255, 255, 255, 0.8); border-radius: var(--border-radius); min-height: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid var(--primary-color); box-shadow: var(--shadow); opacity: 0; transition: opacity 0.5s ease-in-out; }
         #result-area.visible { opacity: 1; }
-        #challenge-result-text { font-size: 1.1rem; font-weight: bold; color: var(--secondary-color); font-family: 'Poppins', sans-serif; margin: 0; }
+        #challenge-result-text { font-size: 1.1rem; font-weight: bold; color: var(--secondary-color); font-family: 'Poppins', sans-serif; margin-bottom: 0.8rem; /* Space before buttons */ }
+        #result-buttons { display: flex; gap: 10px; /* Space between buttons */ }
+        #spin-again-button, #start-quiz-button {
+            padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: 20px;
+        }
+         #spin-again-button { background-color: var(--secondary-color); } /* Blue for spin again */
+
+
+        /* --- Full Screen Loader --- */
+        #quiz-loader-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 51, 102, 0.85); /* Dark blue semi-transparent */
+            color: var(--accent-color);
+            display: none; /* Hidden initially */
+            flex-direction: column; align-items: center; justify-content: center;
+            z-index: 1100; /* Above everything */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        #quiz-loader-overlay.visible { display: flex; opacity: 1; }
+        #quiz-loader-overlay .spinner-border { width: 3rem; height: 3rem; color: var(--primary-color); }
+        #quiz-loader-overlay p { margin-top: 1rem; font-size: 1.1rem; font-style: italic; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+
 
         /* Quiz Display Area Styles */
         #quiz-display-area { margin-top: 1.5rem; display: none; text-align: left; opacity: 0; transition: opacity 0.6s ease-out; }
         #quiz-display-area.visible { display: block; opacity: 1; }
-        #quiz-loader { text-align: center; padding: 2rem 0; display: none; }
-        #quiz-loader p { margin-top: 0.8rem; color: var(--secondary-color); font-style: italic; font-size: 0.95rem; }
+        /* Quiz Loader removed from here, now uses overlay */
         .quiz-question-block { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px dashed #ccc; }
         .quiz-question-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         .quiz-question-text { font-size: 1.05rem; font-weight: bold; color: var(--secondary-color); margin-bottom: 1rem; line-height: 1.4; }
@@ -217,20 +223,22 @@
              <div class="content-section-body">
                  <p class="lead mb-2 small text-center">Spin for an AI challenge theme!</p>
                  <div id="wheel-container">
-                     <!-- SVG Wheel - content generated by JS -->
                      <svg id="wheel-svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
-                         <defs>
-                            <!-- Optional: Define gradients or filters here -->
-                         </defs>
                          <g id="wheel-group">
                              <!-- Segments and labels added here by JS -->
                          </g>
                      </svg>
+                     <!-- Removed label container, now part of SVG -->
                      <div id="wheel-pointer"></div>
                  </div>
                  <button id="spin-button" class="btn-custom">Spin the Wheel!</button>
+                 <!-- Result Area Now includes Spin Again / Start Quiz -->
                  <div id="result-area">
                      <div id="challenge-result-text">Spin to receive your AI challenge theme...</div>
+                     <div id="result-buttons" class="mt-2 hidden"> <!-- Hidden initially -->
+                         <button id="spin-again-button" class="btn btn-secondary btn-sm"><i class="fas fa-redo me-1"></i> Spin Again</button>
+                         <button id="start-quiz-button" class="btn btn-primary btn-sm"><i class="fas fa-play me-1"></i> Start Quiz</button>
+                     </div>
                  </div>
              </div>
         </section>
@@ -240,13 +248,6 @@
              <div class="content-section-header">
                  <h2 id="quiz-display-title"><i class="fas fa-question-circle"></i> AI Challenge Questions</h2>
              </div>
-             <!-- Loader -->
-              <div id="quiz-loader">
-                 <div class="spinner-border text-primary spinner-border-sm" role="status">
-                     <span class="visually-hidden">Loading...</span>
-                 </div>
-                 <p>AI generating quiz questions...</p>
-              </div>
              <!-- Question Container -->
              <div class="content-section-body" id="quiz-questions-container">
                  <!-- Quiz questions will be loaded here -->
@@ -260,6 +261,14 @@
         </section>
 
     </div> <!-- End Content Wrapper -->
+
+    <!-- Full Screen Loader Overlay -->
+    <div id="quiz-loader-overlay">
+         <div class="spinner-border" role="status">
+             <span class="visually-hidden">Loading...</span>
+         </div>
+         <p>AI preparing your challenge questions...</p>
+    </div>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav" aria-label="Mobile navigation">
@@ -278,14 +287,17 @@
             // --- DOM Elements ---
             const logo = document.getElementById('header-logo');
             const bodyElement = document.body;
-            const wheelSVG = document.getElementById('wheel-svg'); // SVG Element
-            const wheelGroup = document.getElementById('wheel-group'); // Group within SVG to rotate
+            const wheelSVG = document.getElementById('wheel-svg');
+            const wheelGroup = document.getElementById('wheel-group');
             const spinButton = document.getElementById('spin-button');
             const resultArea = document.getElementById('result-area');
             const challengeResultText = document.getElementById('challenge-result-text');
+            const resultButtonsContainer = document.getElementById('result-buttons'); // New button container
+            const spinAgainButton = document.getElementById('spin-again-button');
+            const startQuizButton = document.getElementById('start-quiz-button');
             const wheelSection = document.getElementById('wheel-section');
             const quizDisplayArea = document.getElementById('quiz-display-area');
-            const quizLoader = document.getElementById('quiz-loader');
+            const quizLoaderOverlay = document.getElementById('quiz-loader-overlay'); // Full screen loader
             const quizDisplayTitle = document.getElementById('quiz-display-title');
             const quizQuestionsContainer = document.getElementById('quiz-questions-container');
             const quizFeedback = document.getElementById('quiz-feedback');
@@ -312,64 +324,64 @@
                  { name: "AI Trivia", theme: "general", emoji: "🧠" }
             ];
 
-            // --- AI-Focused Quiz Questions (MINIMUM 5 PER THEME) ---
-            // **TODO: ADD MORE & BETTER QUESTIONS!**
-            const quizData = {
-                 logistics: [
-                     { q: "How can AI optimize warehouse inventory placement?", o: ["Predicting stockouts", "Alphabetical sorting", "Random placement", "Manual checks"], a: 0 },
-                     { q: "What AI technique is used for demand forecasting in supply chains?", o: ["Image Recognition", "Time Series Analysis", "Natural Language Processing", "Basic Arithmetic"], a: 1 },
-                     { q: "AI-powered route optimization aims primarily to reduce?", o: ["Driver salaries", "Fuel consumption & time", "Vehicle color options", "Warehouse size"], a: 1 },
-                     { q: "Using AI for predictive maintenance on delivery trucks helps prevent?", o: ["Speeding tickets", "Unexpected breakdowns", "Traffic jams", "Bad weather"], a: 1 },
-                     { q: "How might AI improve customs clearance speed?", o: ["Manual form filling", "Automating document checks & risk assessment", "Hiring more officers", "Using slower ships"], a: 1 }
-                 ],
-                 sustainability: [
-                     { q: "AI can analyze satellite imagery to monitor what environmental change?", o: ["Stock market trends", "Deforestation", "Website traffic", "Fashion styles"], a: 1 },
-                     { q: "How can AI optimize energy consumption in smart buildings?", o: ["Turning lights off manually", "Adjusting HVAC based on occupancy/weather", "Installing older thermostats", "Opening windows randomly"], a: 1 },
-                     { q: "What AI field helps identify recyclable materials in waste sorting?", o: ["Natural Language Processing", "Robotics", "Computer Vision", "Predictive Maintenance"], a: 2 },
-                     { q: "AI models predicting extreme weather events contribute to?", o: ["Causing the events", "Better disaster preparedness", "Choosing vacation spots", "Stockpiling snacks"], a: 1 },
-                     { q: "Using AI to design more efficient wind turbine blades is an example of AI for?", o: ["Marketing", "Renewable energy optimization", "Social media analysis", "Fossil fuel extraction"], a: 1 }
-                 ],
-                 healthcare: [
-                      { q: "AI algorithms analyzing medical images (X-rays, CT scans) assist doctors in?", o: ["Making coffee", "Detecting anomalies (e.g., tumors)", "Scheduling appointments", "Patient billing"], a: 1 },
-                      { q: "How can AI personalize treatment plans?", o: ["Using generic plans", "Analyzing patient data for tailored therapies", "Guessing medication", "Asking friends"], a: 1 },
-                      { q: "AI-powered chatbots in healthcare can provide?", o: ["Surgical assistance", "Initial symptom assessment & info", "Driving ambulances", "Prescribing complex drugs"], a: 1 },
-                      { q: "Drug discovery can be accelerated by AI through?", o: ["Manual lab tests only", "Predicting molecule interactions & effectiveness", "Randomly mixing chemicals", "Reading old textbooks"], a: 1 },
-                      { q: "What is a challenge for AI in healthcare regarding patient data?", o: ["Having too much data", "Ensuring privacy and security (HIPAA)", "Data being too organized", "Doctors understanding computers"], a: 1 }
-                 ],
-                  management: [
-                      { q: "AI can assist project managers by predicting potential?", o: ["Team birthdays", "Project risks & delays", "Coffee breaks", "Office plant growth"], a: 1 },
-                      { q: "How can AI automate repetitive project tasks?", o: ["Making tasks harder", "Generating reports & scheduling reminders", "Requiring manual input for everything", "Deleting project files"], a: 1 },
-                      { q: "AI analyzing team communication patterns might help identify?", o: ["Favorite lunch spots", "Potential collaboration issues", "Keyboard types", "Software bugs unrelated to communication"], a: 1 },
-                      { q: "Resource allocation in projects can be optimized by AI based on?", o: ["Guesswork", "Skill availability & task priority", "Manager's favorite color", "Alphabetical order"], a: 1 },
-                      { q: "What is a limitation of AI in project management?", o: ["Understanding complex human factors", "Performing calculations", "Storing data", "Sending emails"], a: 0 }
+             // --- AI-Focused Quiz Questions (MINIMUM 5 PER THEME) ---
+             // **TODO: Add more diverse and challenging questions!**
+             const quizData = {
+                  logistics: [
+                      { q: "AI analyzes shipping data to predict optimal container loading patterns, reducing wasted space. True or False?", o: ["True", "False"], a: 0 },
+                      { q: "Which AI helps logistics companies anticipate disruptions like port closures?", o: ["Predictive Analytics", "Image Recognition", "Chatbots", "Speech Synthesis"], a: 0 },
+                      { q: "An AI system identifying the fastest AND cheapest delivery route is solving a(n) ____ problem.", o: ["Classification", "Optimization", "Clustering", "Generation"], a: 1 },
+                      { q: "Using computer vision AI to automatically scan package labels in sorting hubs improves?", o: ["Driver Morale", "Efficiency & Accuracy", "Fuel Economy", "Building Security"], a: 1 },
+                      { q: "AI predicting future fuel price fluctuations helps logistics companies manage?", o: ["Inventory Levels", "Employee Schedules", "Operating Costs", "Marketing Campaigns"], a: 2 }
                   ],
-                  realestate: [
-                      { q: "AI-powered property valuation models primarily use?", o: ["Astrology charts", "Historical sales data & features", "Owner's height", "Street name popularity"], a: 1 },
-                      { q: "How can AI personalize property recommendations for buyers?", o: ["Showing random houses", "Analyzing buyer preferences & browsing history", "Based on the agent's favorite house", "Only showing expensive houses"], a: 1 },
-                      { q: "AI analyzing market trends helps real estate investors make decisions about?", o: ["Paint colors", "When & where to buy/sell", "Furniture styles", "Local weather"], a: 1 },
-                      { q: "Chatbots on real estate websites use AI for?", o: ["Designing buildings", "Answering common questions 24/7", "Negotiating final price", "Conducting open houses"], a: 1 },
-                      { q: "Using AI for predictive maintenance in large buildings helps owners manage?", o: ["Tenant birthdays", "Repair costs & scheduling", "Building color schemes", "Parking fines"], a: 1 }
+                  sustainability: [
+                      { q: "AI algorithms optimizing power grid distribution based on renewable energy availability help reduce reliance on?", o: ["Solar Panels", "Batteries", "Fossil Fuels", "Wind Turbines"], a: 2 },
+                      { q: "Precision agriculture uses AI and sensors to apply water/fertilizer only where needed, reducing?", o: ["Crop Yields", "Resource Waste", "Farm Size", "Harvest Time"], a: 1 },
+                      { q: "AI analyzing consumption patterns can help individuals and companies reduce their?", o: ["Carbon Footprint", "Internet Speed", "Social Media Followers", "Favorite Colors"], a: 0 },
+                      { q: "Developing new, biodegradable materials can be accelerated by AI predicting?", o: ["Material Properties", "Fashion Trends", "Stock Prices", "Weather Patterns"], a: 0 },
+                      { q: "AI models tracking illegal deforestation or fishing activities primarily use data from?", o: ["Newspapers", "Satellites & Drones", "Social Media", "Cookbooks"], a: 1 }
                   ],
-                  government: [
-                      { q: "AI can analyze traffic patterns to help city planners optimize?", o: ["Park bench locations", "Traffic light timing & flow", "Office coffee quality", "Public library hours"], a: 1 },
-                      { q: "How might AI assist in detecting fraudulent benefit claims?", o: ["Approving all claims", "Analyzing data for suspicious patterns", "Manual review of every claim", "Randomly denying claims"], a: 1 },
-                      { q: "AI-powered translation services can improve government communication with?", o: ["Pets", "Diverse language communities", "Stock markets", "Historical figures"], a: 1 },
-                      { q: "Using AI to predict resource needs (e.g., emergency services) helps improve?", o: ["Response times & allocation", "Holiday decorations", "Office furniture budget", "Employee vacations"], a: 0 },
-                      { q: "A challenge for AI in government is ensuring algorithms are free from?", o: ["Efficiency", "Bias & ensure fairness", "Usefulness", "Speed"], a: 1 }
+                  healthcare: [
+                       { q: "AI analyzing patient records can identify individuals at high risk for certain diseases, enabling?", o: ["Higher Insurance Premiums", "Early Intervention", "Guaranteed Cures", "Longer Wait Times"], a: 1 },
+                       { q: "Robotic surgery systems guided by AI can potentially improve?", o: ["Procedure Precision", "Hospital Food Quality", "Parking Availability", "Recovery Time (by days)", "Both A & D"], a: 4 },
+                       { q: "AI virtual assistants can help patients manage medication schedules and provide?", o: ["Surgical Advice", "Personalized Health Info", "Financial Loans", "Gourmet Recipes"], a: 1 },
+                       { q: "Identifying novel drug candidates from vast chemical libraries is a task well-suited for?", o: ["Manual Searching", "Machine Learning", "Basic Calculators", "Patient Interviews"], a: 1 },
+                       { q: "A major ethical consideration for AI in healthcare is preventing?", o: ["Algorithmic Bias", "Faster Diagnoses", "Lower Costs", "Improved Outcomes"], a: 0 }
                   ],
-                  open: [
-                      { q: "How can AI analyze open datasets (e.g., census data) for insights?", o: ["Ignoring the data", "Identifying trends & correlations", "Deleting the data", "Manually reading every entry"], a: 1 },
-                      { q: "AI platforms can facilitate 'Open Innovation' by connecting companies with?", o: ["Internal teams only", "External problem solvers & ideas", "Competitors' secrets", "Historical archives"], a: 1 },
-                      { q: "Using AI to automatically summarize open research papers helps accelerate?", o: ["Confusion", "Scientific discovery", "Coffee brewing", "Website loading"], a: 1 },
-                      { q: "What AI technique helps categorize large amounts of user feedback from open forums?", o: ["Drawing pictures", "Natural Language Processing (NLP)", "Predictive Maintenance", "Route Optimization"], a: 1 },
-                      { q: "AI analyzing open-source code repositories can help identify?", o: ["Popular programming languages", "Potential security vulnerabilities", "Developer's favorite snacks", "Both A & B"], a: 3 }
-                  ],
-                  general: [
-                      { q: "Who is often called the 'father of Artificial Intelligence'?", o: ["Alan Turing", "John McCarthy", "Isaac Newton", "Albert Einstein"], a: 1 },
-                      { q: "What does 'NLP' stand for in AI?", o: ["Neuro-Linguistic Programming", "Natural Language Processing", "Network Logic Protocol", "Non-Linear Prediction"], a: 1 },
-                      { q: "A 'neural network' in AI is inspired by the structure of the?", o: ["Internet", "Human brain", "Ant colony", "Library catalog"], a: 1 },
-                      { q: "What type of AI allows systems to learn from data without explicit programming?", o: ["General AI", "Symbolic AI", "Machine Learning", "Expert Systems"], a: 2 },
-                      { q: "CAPTCHA tests are designed to distinguish humans from?", o: ["Animals", "AI Bots", "Children", "Experts"], a: 1 }
+                   management: [
+                       { q: "AI tools analyzing past project data can provide more accurate estimations for?", o: ["Team Lunch Preferences", "Future Project Timelines & Budgets", "Office Decor", "Competitor Stock Prices"], a: 1 },
+                       { q: "Natural Language Processing (NLP) can analyze project meeting transcripts to identify?", o: ["Action Items & Key Decisions", "The Best Jokes", "Typing Speed", "Software Bugs Mentioned"], a: 0 }, // D is plausible but A is primary
+                       { q: "AI can help assign tasks to team members based on their?", o: ["Hair Color", "Skills & Availability", "Favorite Music Genre", "Distance from Office"], a: 1 },
+                       { q: "An AI 'risk assessment' tool in project management aims to highlight potential?", o: ["Success Stories", "Problems Before They Occur", "Team Achievements", "Budget Surpluses"], a: 1 },
+                       { q: "Using AI to automate status report generation frees up project managers for more?", o: ["Coffee Breaks", "Strategic Thinking & Problem Solving", "Manual Data Entry", "Vacation Planning"], a: 1 }
+                   ],
+                   realestate: [
+                       { q: "AI algorithms analyzing neighborhood data (crime rates, schools, amenities) contribute to more accurate?", o: ["Weather Forecasts", "Property Valuations", "Restaurant Menus", "Fashion Advice"], a: 1 },
+                       { q: "AI-powered chatbots on property portals can pre-qualify leads by asking initial questions about?", o: ["Favorite Colors", "Budget & Requirements", "Dream Vacation", "Pet Names"], a: 1 },
+                       { q: "Computer vision AI can analyze property photos/videos to automatically identify?", o: ["Potential Buyers", "Key Features & Room Types", "Hidden Treasure", "Nearby Parks"], a: 1 },
+                       { q: "AI analyzing market sentiment (news, social media) can predict shifts in?", o: ["Building Materials", "Property Demand & Prices", "Interior Design Trends", "Commute Times"], a: 1 },
+                       { q: "Optimizing building energy usage with AI falls under the category of?", o: ["Property Marketing", "Smart Building Management", "Tenant Screening", "Virtual Staging"], a: 1 }
+                   ],
+                   government: [
+                       { q: "AI analyzing citizen feedback from multiple channels (email, social media) can help governments identify?", o: ["Popular Memes", "Public Service Improvement Areas", "Weather Patterns", "Stock Market Tips"], a: 1 },
+                       { q: "Using AI for predictive policing is controversial due to concerns about?", o: ["Accuracy", "Bias & Civil Liberties", "Cost Savings", "Computational Speed"], a: 1 },
+                       { q: "AI can help streamline the application process for permits or benefits by?", o: ["Making Forms Longer", "Automating Eligibility Checks & Routing", "Requiring In-Person Visits", "Using Morse Code"], a: 1 },
+                       { q: "Analyzing public health data with AI can help predict and track?", o: ["Fashion Trends", "Disease Outbreaks", "Election Results", "Movie Preferences"], a: 1 },
+                       { q: "An AI system translating laws into plain language improves?", o: ["Legal Complexity", "Citizen Understanding & Access", "Lawyer Job Security", "Judicial Speed"], a: 1 }
+                   ],
+                   open: [
+                       { q: "AI analyzing open climate datasets can help researchers model?", o: ["Next Season's Fashion", "Future Climate Scenarios", "Stock Market Performance", "Traffic Congestion"], a: 1 },
+                       { q: "Using AI to match open innovation challenges with potential solvers relies on understanding?", o: ["Solver Locations", "Problem Details & Solver Expertise", "Company Logos", "Website Colors"], a: 1 },
+                       { q: "AI summarizing open access research helps overcome the challenge of?", o: ["Too Few Publications", "Information Overload", "Lack of Funding", "Slow Internet"], a: 1 },
+                       { q: "Analyzing contributions to open-source software projects with AI can reveal?", o: ["Developer Locations", "Code Quality Trends & Bug Hotspots", "Favorite Programming Fonts", "Project Budget"], a: 1 },
+                       { q: "An 'open' AI model refers to a model whose?", o: ["Predictions are always correct", "Architecture & Code are publicly available", "Use is restricted", "Training data is secret"], a: 1 }
+                   ],
+                   general: [ // AI Trivia / General Knowledge
+                       { q: "What does the 'Turing Test' evaluate in AI?", o: ["Computational Speed", "Ability to Exhibit Human-like Intelligence", "Energy Efficiency", "Artistic Skill"], a: 1 },
+                       { q: "Deep Blue was a famous AI that defeated a world champion in which game?", o: ["Go", "Poker", "Chess", "Checkers"], a: 2 },
+                       { q: "Which tech giant developed the AI assistant 'Alexa'?", o: ["Google", "Apple", "Microsoft", "Amazon"], a: 3 },
+                       { q: "Reinforcement Learning in AI involves training agents through?", o: ["Reading Books", "Rewards & Punishments", "Watching Videos", "Direct Instruction"], a: 1 },
+                       { q: "The term 'Singularity' in AI discussions often refers to a hypothetical point where?", o: ["AI Debugging Ends", "AI Surpasses Human Intelligence", "All Computers Connect", "Robots Take Vacations"], a: 1 }
                   ]
              };
 
@@ -378,8 +390,7 @@
             const numSegments = challenges.length;
             const anglePerSegment = 360 / numSegments;
             const wheelRadius = 100; // SVG viewBox units
-            const labelRadius = wheelRadius * 0.65; // Position labels inwards
-            const emojiRadius = wheelRadius * 0.80; // Position emojis further out
+            const emojiRadius = wheelRadius * 0.70; // Position emojis inwards slightly
             let isSpinning = false;
             let currentRotation = 0;
             let currentChallenge = null;
@@ -389,279 +400,185 @@
 
             // --- Initialization ---
             function initializeApp() {
-                 createWheelSVG(); // Generate the SVG wheel first
+                 createWheelSVG();
                  setupTelegramIntegration();
                  setupLogoScroll();
+                 setupButtonListeners(); // Setup listeners for new buttons
                  resetUI();
             }
 
             // --- SVG Wheel Generation ---
             function createWheelSVG() {
                  if (!wheelGroup) { console.error("SVG group not found!"); return; }
-                 wheelGroup.innerHTML = ''; // Clear previous elements
-
-                 const center = wheelRadius; // Center coordinate for viewBox 0 0 200 200
+                 wheelGroup.innerHTML = '';
+                 const center = wheelRadius;
 
                  challenges.forEach((challenge, index) => {
                      const startAngle = index * anglePerSegment;
                      const endAngle = startAngle + anglePerSegment;
                      const colorVar = `var(--color${(index % 8) + 1})`;
 
-                     // --- Create Segment Path ---
+                     // Segment Path
                      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                     path.setAttribute("d", describeArc(center, center, center - 2, startAngle, endAngle)); // Use helper function
+                     path.setAttribute("d", describeArc(center, center, center - 1, startAngle, endAngle)); // Slightly smaller radius for stroke visibility
                      path.setAttribute("fill", colorVar);
-                     path.setAttribute("id", `segment-${index}`); // ID for highlighting
+                     path.setAttribute("id", `segment-${index}`);
                      path.classList.add('wheel-segment');
                      wheelGroup.appendChild(path);
 
-                     // --- Calculate Label Positions ---
+                     // Emoji Position
                      const midAngle = startAngle + anglePerSegment / 2;
-                     const midAngleRad = midAngle * (Math.PI / 180); // Radians for trig
-
-                     // Position for Text (closer to center)
-                     const textX = center + labelRadius * Math.cos(midAngleRad - Math.PI / 2);
-                     const textY = center + labelRadius * Math.sin(midAngleRad - Math.PI / 2);
-
-                     // Position for Emoji (further from center)
+                     const midAngleRad = midAngle * (Math.PI / 180);
                      const emojiX = center + emojiRadius * Math.cos(midAngleRad - Math.PI / 2);
                      const emojiY = center + emojiRadius * Math.sin(midAngleRad - Math.PI / 2);
 
-                     // --- Create Emoji Text Element ---
+                     // Emoji Text Element
                      const emojiText = document.createElementNS("http://www.w3.org/2000/svg", "text");
                      emojiText.setAttribute("x", emojiX);
                      emojiText.setAttribute("y", emojiY);
-                     emojiText.setAttribute("transform", `rotate(${midAngle}, ${emojiX}, ${emojiY})`); // Rotate text around its position
+                     // No rotation needed if centered like this
+                     // emojiText.setAttribute("transform", `rotate(${midAngle}, ${emojiX}, ${emojiY})`);
                      emojiText.classList.add("segment-emoji");
                      emojiText.textContent = challenge.emoji;
                      wheelGroup.appendChild(emojiText);
-
-                     // --- Create Name Text Element ---
-                     const nameText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                     nameText.setAttribute("x", textX);
-                     nameText.setAttribute("y", textY);
-                     nameText.setAttribute("transform", `rotate(${midAngle}, ${textX}, ${textY})`);
-                     nameText.classList.add("segment-label");
-                     nameText.textContent = challenge.name;
-                     wheelGroup.appendChild(nameText);
                  });
             }
 
-            // Helper function to describe an SVG arc path
+            // Helper function for SVG arc path
             function describeArc(x, y, radius, startAngle, endAngle) {
-                const startRad = (startAngle - 90) * Math.PI / 180; // Adjust for SVG's 0deg at 3 o'clock
+                const startRad = (startAngle - 90) * Math.PI / 180;
                 const endRad = (endAngle - 90) * Math.PI / 180;
                 const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
-
                 const startX = x + radius * Math.cos(startRad);
                 const startY = y + radius * Math.sin(startRad);
                 const endX = x + radius * Math.cos(endRad);
                 const endY = y + radius * Math.sin(endRad);
-
-                // M = move to start, L = line to center, A = arc command, Z = close path
-                const d = [
-                    "M", startX, startY,
-                    "A", radius, radius, 0, largeArcFlag, 1, endX, endY,
-                    "L", x, y,
-                    "Z"
-                ].join(" ");
+                const d = ["M", startX, startY, "A", radius, radius, 0, largeArcFlag, 1, endX, endY, "L", x, y, "Z"].join(" ");
                 return d;
             }
 
-
-             // --- Telegram & Profile ---
+             // --- Telegram & Profile Logic (using CloudStorage) ---
             function setupTelegramIntegration() {
                  if (tg && tg.initDataUnsafe) {
-                     tg.ready();
-                     tg.BackButton.show();
+                     tg.ready(); tg.BackButton.show();
                      tg.onEvent('backButtonClicked', handleBackButton);
                      currentUser = tg.initDataUnsafe.user;
                      updateUserProfileDisplay();
-                     loadWellyPoints(); // Load points after setting up TG
+                     loadWellyPoints(); // Load points on init
                  } else {
                      console.warn("Not running in Telegram context.");
                      const profileElement = document.getElementById('user-profile');
                      if(profileElement) profileElement.style.display = 'none';
-                     updateWellyPointsDisplay(); // Still display 0 if not in TG
+                     updateWellyPointsDisplay(); // Show 0 if no CS
                  }
             }
-
-            function handleBackButton() {
-                if (!quizDisplayArea.classList.contains('hidden')) { resetToWheelView(); }
-                else if (window.history.length > 1) { window.history.back(); }
-                else if (tg && tg.close) { tg.close(); } // Check if tg exists before calling close
-                else { console.log("No history to go back to."); }
-            }
-
-             function updateUserProfileDisplay() {
-                 if (!currentUser) {
-                     if(userNameDisplay) userNameDisplay.textContent = 'Guest';
-                     if(userAvatarContainer) userAvatarContainer.textContent = '👤';
-                     return;
-                 };
-                 if (userNameDisplay) userNameDisplay.textContent = currentUser.first_name || 'Player';
-                 if (userAvatarContainer) { userAvatarContainer.innerHTML = ''; if (currentUser.photo_url) { const img = document.createElement('img'); img.src = currentUser.photo_url; img.alt = `Profile photo`; userAvatarContainer.appendChild(img); } else { userAvatarContainer.textContent = '🎓'; } }
-             }
-
-             function loadWellyPoints() {
-                totalWellyPoints = 0; // Default value
-                 if (tg && tg.CloudStorage) {
-                      console.log("Attempting to load WP from CloudStorage...");
-                      tg.CloudStorage.getItem('totalWellyPoints', (error, value) => {
-                           if (error) {
-                               console.error("CS Load Error:", error);
-                               // Optionally inform user via tg.showAlert('Could not load score.');
-                               totalWellyPoints = 0; // Fallback to 0 on error
-                           } else if (value) {
-                               totalWellyPoints = parseInt(value, 10) || 0;
-                               console.log("Loaded WP from CloudStorage:", totalWellyPoints);
-                           } else {
-                               totalWellyPoints = 0; // No value stored yet
-                               console.log("No WP found in CloudStorage, starting at 0.");
-                           }
-                           updateWellyPointsDisplay(); // Update UI after loading (or failure)
-                      });
-                 } else {
-                     console.warn("CloudStorage not available. Using session score.");
-                     updateWellyPointsDisplay(); // Update UI with default 0
-                 }
-             }
-
-             function updateWellyPointsDisplay() {
-                 if (wellyPointsDisplay) { wellyPointsDisplay.textContent = totalWellyPoints; }
-             }
-
-              function saveWellyPoints() {
-                  console.log("Attempting to save WP:", totalWellyPoints);
-                  if (tg && tg.CloudStorage) {
-                      tg.CloudStorage.setItem('totalWellyPoints', totalWellyPoints.toString(), (error, success) => {
-                           if (error) {
-                                console.error('CS Save Error:', error);
-                               // Optionally inform user via tg.showAlert('Could not save score.');
-                           } else if (!success) {
-                               console.warn('CS Save returned false. Score might not be saved.');
-                           } else {
-                               console.log('CS Points Saved successfully.');
-                           }
-                      });
-                  } else {
-                      console.warn("CloudStorage not available. Score not saved persistently.");
-                  }
-              }
+            function handleBackButton() { if (!quizDisplayArea.classList.contains('hidden')) { resetToWheelView(); } else if (window.history.length > 1) { window.history.back(); } else if (tg && tg.close) { tg.close(); } }
+            function updateUserProfileDisplay() { if (!currentUser) { if(userNameDisplay) userNameDisplay.textContent = 'Guest'; if(userAvatarContainer) userAvatarContainer.textContent = '👤'; return; }; if (userNameDisplay) userNameDisplay.textContent = currentUser.first_name || 'Player'; if (userAvatarContainer) { userAvatarContainer.innerHTML = ''; if (currentUser.photo_url) { const img = document.createElement('img'); img.src = currentUser.photo_url; img.alt = `Profile photo`; userAvatarContainer.appendChild(img); } else { userAvatarContainer.textContent = '🎓'; } } }
+            function loadWellyPoints() { totalWellyPoints = 0; if (tg && tg.CloudStorage) { tg.CloudStorage.getItem('totalWellyPoints', (error, value) => { if (!error && value) { totalWellyPoints = parseInt(value, 10) || 0; } else { totalWellyPoints = 0; if(error) console.error("CS Load Error:", error); } updateWellyPointsDisplay(); console.log("Loaded WP:", totalWellyPoints); }); } else { updateWellyPointsDisplay(); } }
+            function updateWellyPointsDisplay() { if (wellyPointsDisplay) { wellyPointsDisplay.textContent = totalWellyPoints; } }
+            function saveWellyPoints() { console.log("Attempting to save WP:", totalWellyPoints); if (tg && tg.CloudStorage) { tg.CloudStorage.setItem('totalWellyPoints', totalWellyPoints.toString(), (error, success) => { if (error) console.error('CS Save Error:', error); else if (!success) console.warn('CS Save returned false.'); else console.log('CS Points Saved.'); }); } else { console.warn("CloudStorage not available."); } }
 
             // --- Logo Scroll Logic ---
-             function setupLogoScroll() {
-                 if (logo) {
-                     const handleScroll = () => {
-                         const isScrolled = window.scrollY > 30;
-                         logo.classList.toggle('logo-scrolled', isScrolled);
-                         bodyElement.classList.toggle('logo-state-scrolled', isScrolled);
-                     };
-                     logo.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-                     window.addEventListener('scroll', handleScroll, { passive: true });
-                     handleScroll();
-                 }
-             }
+            function setupLogoScroll() { if (logo) { const handleScroll = () => { const isScrolled = window.scrollY > 30; logo.classList.toggle('logo-scrolled', isScrolled); bodyElement.classList.toggle('logo-state-scrolled', isScrolled); }; logo.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }); window.addEventListener('scroll', handleScroll, { passive: true }); handleScroll(); } }
 
-             function resetUI() {
-                 challengeResultText.textContent = 'Spin for your AI challenge theme...';
-                 resultArea.classList.add('visible');
-                 spinButton.disabled = false;
-                 spinButton.classList.remove('hidden');
-                 quizDisplayArea.classList.add('hidden');
-                 quizDisplayArea.classList.remove('visible');
-                 quizLoader.style.display = 'none';
-                 quizQuestionsContainer.innerHTML = '';
-                 quizQuestionsContainer.style.display = 'none';
-                 submitQuizButton.classList.add('hidden');
-                 playAgainButton.classList.add('hidden');
-                 quizFeedback.textContent = '';
-                 quizFeedback.className = '';
-                 quizSubmitted = false;
-                 userSelections = {};
-                 wheelSection.classList.remove('hidden');
-                  // Remove highlight from any segment
-                 wheelGroup.querySelectorAll('.highlighted-segment').forEach(el => el.classList.remove('highlighted-segment'));
-             }
+            // --- Button Listeners ---
+            function setupButtonListeners() {
+                spinButton.addEventListener('click', () => { if (!isSpinning) startSpin(); });
+                spinAgainButton.addEventListener('click', handleSpinAgain);
+                startQuizButton.addEventListener('click', handleStartQuiz);
+                submitQuizButton.addEventListener('click', handleSubmitQuiz);
+                playAgainButton.addEventListener('click', resetToWheelView);
+            }
+
+            function resetUI() {
+                challengeResultText.textContent = 'Spin for your AI challenge theme...';
+                resultArea.classList.add('visible');
+                resultButtonsContainer.classList.add('hidden'); // Hide choice buttons
+                spinButton.disabled = false;
+                spinButton.classList.remove('hidden');
+                quizDisplayArea.classList.add('hidden');
+                quizDisplayArea.classList.remove('visible');
+                quizLoaderOverlay.classList.remove('visible'); // Ensure loader hidden
+                quizQuestionsContainer.innerHTML = '';
+                quizQuestionsContainer.style.display = 'none';
+                submitQuizButton.classList.add('hidden');
+                playAgainButton.classList.add('hidden');
+                quizFeedback.textContent = '';
+                quizFeedback.className = '';
+                quizSubmitted = false;
+                userSelections = {};
+                wheelSection.classList.remove('hidden');
+                wheelGroup.querySelectorAll('.highlighted-segment').forEach(el => el.classList.remove('highlighted-segment'));
+            }
 
             // --- Wheel Logic ---
-            spinButton.addEventListener('click', () => { if (!isSpinning) startSpin(); });
-
             function startSpin() {
                  isSpinning = true; spinButton.disabled = true;
                  resultArea.classList.remove('visible');
+                 resultButtonsContainer.classList.add('hidden'); // Hide choice buttons
                  quizDisplayArea.classList.add('hidden');
                  quizDisplayArea.classList.remove('visible');
                  challengeResultText.textContent = 'Spinning...';
-                 // Remove highlight from previous spin
                  wheelGroup.querySelectorAll('.highlighted-segment').forEach(el => el.classList.remove('highlighted-segment'));
 
                  const randomExtraRotation = Math.random() * 360;
                  const spins = 5 + Math.floor(Math.random() * 3);
                  const targetRotation = currentRotation + spins * 360 + randomExtraRotation;
 
-                 // Apply rotation using CSS transform on the SVG group
                  wheelSVG.style.transition = 'transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)';
                  wheelSVG.style.transform = `rotate(${targetRotation}deg)`;
-
-                 currentRotation = targetRotation; // Store the target angle for next spin
-
-                 // Use setTimeout to detect end, as transitionend might be unreliable with complex SVG
-                 setTimeout(handleSpinEnd, 5100); // Slightly longer than transition
+                 currentRotation = targetRotation;
+                 setTimeout(handleSpinEnd, 5100);
             }
 
             function handleSpinEnd() {
                 isSpinning = false;
-                // Calculate winning segment based on *final* rotation angle
-                // Normalize the angle (0-360)
-                 // The wheel spins clockwise, SVG rotation is also clockwise (+)
                 const finalEffectiveAngle = currentRotation % 360;
-                 // Calculate the angle the pointer points to (relative to the start)
-                 // Pointer is at 12 o'clock (270 deg SVG, or -90 deg)
-                 // Winning segment angle = (360 - finalEffectiveAngle + 270) % 360
-                 // Simpler: (angle pointed to by pointer relative to start) = (360 - finalEffectiveAngle) % 360
-                 const pointerAngle = (360 - finalEffectiveAngle) % 360;
-
-                // Determine the winning segment index
+                const pointerAngle = (360 - finalEffectiveAngle) % 360;
                 const winningIndex = Math.floor(pointerAngle / anglePerSegment);
-
                 currentChallenge = challenges[winningIndex];
 
                 challengeResultText.innerHTML = `Theme: <strong>${currentChallenge.emoji} ${currentChallenge.name}</strong>!`;
                 resultArea.classList.add('visible');
-                spinButton.classList.add('hidden');
+                resultButtonsContainer.classList.remove('hidden'); // Show Spin Again / Start Quiz
+                spinButton.classList.add('hidden'); // Hide main spin button
 
-                // --- Highlight Winning Segment ---
                 const winningSegmentPath = wheelGroup.querySelector(`#segment-${winningIndex}`);
-                if (winningSegmentPath) {
-                    winningSegmentPath.classList.add('highlighted-segment');
-                }
-
-                // --- Start Quiz Generation Simulation ---
-                quizDisplayArea.classList.remove('hidden');
-                quizLoader.style.display = 'block';
-                quizQuestionsContainer.style.display = 'none';
-                submitQuizButton.classList.add('hidden');
-                playAgainButton.classList.add('hidden');
-                quizFeedback.textContent = '';
-
-                const generationTime = 1500 + Math.random() * 1000;
-                setTimeout(() => {
-                    quizLoader.style.display = 'none';
-                    displayQuizForChallenge();
-                }, generationTime);
+                if (winningSegmentPath) { winningSegmentPath.classList.add('highlighted-segment'); }
             }
 
+             // --- New Button Handlers ---
+             function handleSpinAgain() {
+                  spinButton.disabled = false; // Re-enable main button
+                  resultButtonsContainer.classList.add('hidden'); // Hide choice buttons
+                  startSpin(); // Immediately spin again
+             }
+
+             function handleStartQuiz() {
+                 resultButtonsContainer.classList.add('hidden'); // Hide choice buttons
+                 // Show full-screen loader
+                 quizLoaderOverlay.classList.add('visible');
+
+                 const generationTime = 2000; // 2 seconds
+                 setTimeout(() => {
+                     quizLoaderOverlay.classList.remove('visible'); // Hide loader
+                     displayQuizForChallenge(); // Display the quiz questions
+                     // Scroll down after a very short delay to allow rendering
+                     setTimeout(() => {
+                         quizDisplayArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                     }, 100);
+                 }, generationTime);
+             }
+
              // --- Quiz Logic ---
-            function displayQuizForChallenge() {
-                 // (Select questions - same as before)
+             function displayQuizForChallenge() {
                  if (!currentChallenge || !quizData[currentChallenge.theme]) { resetToWheelView(); return; }
                  const allQuestions = quizData[currentChallenge.theme];
                  currentQuizSet = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 5);
                  if (currentQuizSet.length === 0) { resetToWheelView(); return; }
 
                  quizDisplayTitle.innerHTML = `<i class="fas fa-question-circle"></i> ${currentChallenge.name} Quiz`;
-                 quizQuestionsContainer.innerHTML = ''; // Clear previous
+                 quizQuestionsContainer.innerHTML = '';
                  quizSubmitted = false; userSelections = {};
 
                  currentQuizSet.forEach((qData, index) => {
@@ -687,35 +604,34 @@
 
                  quizQuestionsContainer.style.display = 'block';
                  submitQuizButton.classList.remove('hidden');
-                 submitQuizButton.disabled = true; // Disable until all answers selected
+                 submitQuizButton.disabled = true;
                  playAgainButton.classList.add('hidden');
                  quizFeedback.textContent = '';
-                 quizDisplayArea.classList.add('visible');
+                 quizDisplayArea.classList.remove('hidden'); // Show quiz card
+                 quizDisplayArea.classList.add('visible'); // Trigger fade in
             }
 
             function handleOptionSelect(questionIndex, optionIndex, clickedButton) {
-                 // (Same logic as before - select/deselect, enable submit if all answered)
                  if (quizSubmitted) return;
                  userSelections[questionIndex] = optionIndex;
                  const questionBlock = clickedButton.closest('.quiz-question-block');
                  const optionsInBlock = questionBlock.querySelectorAll('.quiz-options button');
-                 optionsInBlock.forEach(btn => { btn.classList.remove('selected'); });
+                 optionsInBlock.forEach(btn => btn.classList.remove('selected'));
                  clickedButton.classList.add('selected');
+                 // Enable submit only when all 5 questions have answers
                  submitQuizButton.disabled = Object.keys(userSelections).length !== currentQuizSet.length;
             }
 
-            submitQuizButton.addEventListener('click', () => {
+            function handleSubmitQuiz() { // Renamed function
                 if (Object.keys(userSelections).length !== currentQuizSet.length) {
                     if(tg && tg.showAlert) tg.showAlert("Please answer all questions."); else alert("Please answer all questions.");
                     return;
                 }
                 checkAllAnswers();
-            });
+            }
 
             function checkAllAnswers() {
-                 // (Same logic as before - check answers, update score, save points, show feedback/buttons)
-                 quizSubmitted = true;
-                 let correctAnswersCount = 0;
+                 quizSubmitted = true; let correctAnswersCount = 0;
                  currentQuizSet.forEach((qData, index) => {
                       const questionBlock = quizQuestionsContainer.querySelector(`.quiz-question-block[data-q-index="${index}"]`);
                       if (!questionBlock) return;
@@ -731,7 +647,7 @@
                  const pointsEarned = correctAnswersCount;
                  totalWellyPoints += pointsEarned;
                  updateWellyPointsDisplay();
-                 saveWellyPoints();
+                 saveWellyPoints(); // Save points to CloudStorage
                  quizFeedback.textContent = `Quiz Complete! Score: ${correctAnswersCount}/${currentQuizSet.length} (+${pointsEarned} WP)`;
                  quizFeedback.className = pointsEarned > 0 ? 'correct' : 'incorrect';
                  submitQuizButton.classList.add('hidden');
@@ -739,21 +655,21 @@
                  if (tg && tg.HapticFeedback) { if (pointsEarned === currentQuizSet.length) tg.HapticFeedback.notificationOccurred('success'); else if (pointsEarned > 0) tg.HapticFeedback.notificationOccurred('warning'); else tg.HapticFeedback.notificationOccurred('error'); }
             }
 
-            playAgainButton.addEventListener('click', () => { resetToWheelView(); });
-
             function resetToWheelView() {
+                 // Reset UI logic remains mostly the same, ensures choice buttons are hidden
                  quizDisplayArea.classList.add('hidden');
                  quizDisplayArea.classList.remove('visible');
                  wheelSection.classList.remove('hidden');
                  spinButton.classList.remove('hidden');
                  spinButton.disabled = false;
-                 resultArea.classList.remove('visible');
+                 resultArea.classList.remove('visible'); // Hide result area briefly
+                 resultButtonsContainer.classList.add('hidden'); // Hide choice buttons
                  challengeResultText.textContent = 'Spin again for a new quest!';
-                 resultArea.classList.add('visible');
+                 resultArea.classList.add('visible'); // Show updated text
                  currentChallenge = null;
                  quizSubmitted = false;
                  userSelections = {};
-                 wheelGroup.querySelectorAll('.highlighted-segment').forEach(el => el.classList.remove('highlighted-segment')); // Remove highlight
+                 wheelGroup.querySelectorAll('.highlighted-segment').forEach(el => el.classList.remove('highlighted-segment'));
                  if (tg && tg.BackButton.isVisible) tg.BackButton.show();
             }
 
