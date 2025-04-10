@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <!-- Essential Mini App Viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
-    <title>Wellington Campus</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+    <title>Wellington Campus - Home</title>
 
     <!-- Standard Meta -->
-    <meta name="description" content="Wellington Campus Mini App: Explore courses, quests, hackathons, and track your progress.">
-    <meta name="keywords" content="Wellington Campus, UAE university, education, courses, admissions, Telegram Mini App, profile, points, leaderboard, quests, hackathon, game, LMS">
+    <meta name="description" content="Welcome to Wellington Campus! Explore courses, quests, hackathons, and track your progress in our Telegram Mini App.">
+    <meta name="keywords" content="Wellington Campus, UAE university, education, courses, admissions, Telegram Mini App, profile, points, leaderboard, quests, hackathon">
     <meta name="author" content="Wellington Campus">
-    <meta property="og:title" content="Wellington Campus Mini App">
+    <meta property="og:title" content="Wellington Campus - Home">
     <meta property="og:description" content="Your hub for Wellington Campus activities: courses, quests, hackathons, and profile management.">
     <meta property="og:type" content="website">
-    <!-- Update URL if deploying -->
     <meta property="og:url" content="https://wellingtoncampus.co/index.html">
     <meta property="og:image" content="./wellingtoncampus.png">
     <meta property="og:image:alt" content="Wellington Campus Logo">
@@ -28,42 +27,167 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
-    <!-- Link to your combined CSS file -->
-    <link rel="stylesheet" href="style.css">
+
+    <!-- Link Shared Styles -->
+    <link rel="stylesheet" href="shared-styles.css">
+
+    <!-- Link Page-Specific Styles (Inline for this example) -->
+    <style>
+        /* --- INDEX.HTML SPECIFIC STYLES --- */
+        .banner {
+            position: relative; background: url('./wellingtoncampus.png') no-repeat center center;
+            background-size: contain; background-color: rgba(0, 51, 102, 0.1);
+            color: var(--text-color); padding: 3rem 1rem 4rem 1rem; /* Adjust padding */
+            text-align: center; border-radius: var(--border-radius); box-shadow: var(--shadow);
+            overflow: hidden; min-height: 280px; /* Adjust height */
+            margin-bottom: 1.5rem; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+        }
+         .banner::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.3); z-index: 1; border-radius: inherit; }
+         .banner h1, .banner p, .banner .btn-custom { position: relative; z-index: 2; color: var(--accent-color); }
+         .banner h1 { text-shadow: 1px 1px 3px rgba(0,0,0,0.4); font-size: 1.8rem; /* Match shared H1 */ }
+         .banner p { font-size: 1.05rem; margin-bottom: 1.2rem; max-width: 600px; }
+
+        .feature-card {
+            padding: 1.2rem; text-align: center; background-color: rgba(255, 255, 255, 0.8); /* Lighter */
+            border-radius: 10px; transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%; display: flex; flex-direction: column; justify-content: space-between;
+            border: 1px solid rgba(0, 51, 102, 0.08);
+            margin-bottom: 1rem; /* Added margin for spacing */
+        }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 15px rgba(0, 51, 102, 0.1); }
+        .feature-card h3 { font-size: 1.1rem; margin-top: 0.5rem;}
+        .feature-card p { font-size: 0.9rem; }
+
+        #intro-video-container { margin-top: 1rem; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 100%; line-height: 0; }
+        #introVideo { width: 100%; height: auto; display: block; max-height: 35vh; object-fit: cover; }
+
+        /* Reusing .card styles from shared-styles.css */
+        .content-section {
+             /* Inherits .card styles essentially */
+             margin-bottom: 1.5rem;
+        }
+        /* No need for separate .content-section-header/body if using .card structure */
+
+        .subscription-form form { margin-top: 1rem; }
+        .subscription-form .form-control { border-radius: 50px; padding: 0.7rem 1.2rem; font-size: 0.9rem;}
+        .subscription-form .btn-custom { border-radius: 50px; padding: 0.7rem 1.5rem; width: 100%; }
+
+        /* Animation styles */
+        .animate-on-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .fade-in { opacity: 0; }
+        .slide-up { transform: translateY(30px); }
+        .slide-left { transform: translateX(-30px); }
+        .slide-right { transform: translateX(30px); }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0) translateX(0); }
+
+    </style>
 </head>
 <body>
-    <!-- Always Fixed User Profile Display -->
+    <!-- Fixed User Profile (Defined in shared-styles.css) -->
     <div id="user-profile" data-bs-toggle="modal" data-bs-target="#userProfileModal">
         <span id="user-avatar">👤</span>
         <span id="user-name-display">Player</span>
         | <i class="fas fa-star"></i>
-        <span id="welly-points">0</span> WP
-        <!-- Fullscreen Toggle Button -->
-        <button id="fullscreen-toggle-btn" title="Toggle Fullscreen" class="btn btn-sm p-0 ms-2">
-            <i class="fas fa-expand"></i>
-        </button>
+        <span id="welly-points">0</span> WP <!-- Use   for spacing -->
     </div>
 
-    <!-- Always Fixed Header Logo -->
+    <!-- Fixed Header Logo (Defined in shared-styles.css) -->
     <img src="./wellingtoncampus.png" alt="Wellington Campus Logo" id="header-logo">
 
-    <!-- Main Content Area (Dynamically Filled) -->
-    <main id="content-area" class="container"></main>
+    <!-- Main Content Area (Uses .container for padding and centering) -->
+    <div class="container" id="home-content">
 
-    <!-- Bottom Navigation (Always Visible unless fullscreen) -->
+         <!-- Page Title -->
+         <h1 style="margin-bottom: 1.5rem;">Welcome to Wellington Campus</h1>
+
+        <!-- Banner -->
+        <section class="banner animate-on-scroll fade-in">
+             <h1>Discover, Learn, Thrive</h1>
+             <p>Spring 2025 Applications Now Open!</p>
+             <a href="#" onclick="alert('Admissions page not implemented yet.'); return false;" class="btn btn-custom">Apply Now</a>
+             <!-- Link updated to prevent actual navigation for now -->
+         </section>
+
+        <!-- Features Section (Using .card structure) -->
+        <section class="card animate-on-scroll slide-up">
+            <div class="card-header"><h2><i class="fas fa-star"></i> Key Features</h2></div>
+            <div class="card-body">
+                 <div class="row g-3"> <!-- Use g-3 for spacing -->
+                     <!-- Feature 1 -->
+                     <div class="col-md-4 col-sm-6 d-flex align-items-stretch">
+                         <div class="feature-card animate-on-scroll slide-left">
+                             <div>
+                                <h3><i class="fas fa-lightbulb text-primary fa-2x mb-3"></i><br>Innovative Courses</h3>
+                                <p class="small">Cutting-edge programs in tech, design, and business.</p>
+                            </div>
+                         </div>
+                    </div>
+                    <!-- Feature 2 -->
+                     <div class="col-md-4 col-sm-6 d-flex align-items-stretch">
+                         <div class="feature-card animate-on-scroll slide-up">
+                             <div>
+                                <h3><i class="fas fa-chalkboard-teacher text-primary fa-2x mb-3"></i><br>Top Instructors</h3>
+                                <p class="small">Learn from industry leaders and renowned academics.</p>
+                             </div>
+                         </div>
+                     </div>
+                     <!-- Feature 3 -->
+                     <div class="col-md-4 col-sm-12 d-flex align-items-stretch"> <!-- Make last one full width on small screens -->
+                         <div class="feature-card animate-on-scroll slide-right">
+                             <div>
+                                 <h3><i class="fas fa-globe text-primary fa-2x mb-3"></i><br>Online Education</h3>
+                                 <p class="small">Flexible learning options available 24/7, anywhere.</p>
+                             </div>
+                         </div>
+                    </div>
+                 </div>
+                 <!-- Video - Placed after the features grid within the card body -->
+                 <div id="intro-video-container" class="mt-4 animate-on-scroll fade-in">
+                     <video id="introVideo" controls muted playsinline preload="metadata" aria-label="Binciya Introduction Video">
+                         <source src="./Binciya-Introduction.mp4#t=38" type="video/mp4">
+                         Your browser does not support the video tag.
+                     </video>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Subscription Section (Using .card structure) -->
+        <section class="card subscription-form animate-on-scroll fade-in">
+            <div class="card-header"><h2><i class="fas fa-envelope-open-text"></i> Stay Informed</h2></div>
+            <div class="card-body">
+                <p class="text-center small">Subscribe for updates on courses, events, and admissions.</p>
+                <form class="row g-2 justify-content-center" aria-label="Subscription form">
+                    <div class="col-md-6 col-8">
+                        <label for="subEmail" class="visually-hidden">Email address</label>
+                        <input type="email" class="form-control form-control-sm" id="subEmail" placeholder="Enter your email" aria-label="Email" required>
+                    </div>
+                    <div class="col-md-3 col-4">
+                        <button type="submit" class="btn btn-custom btn-sm w-100">Subscribe</button>
+                        <!-- Added w-100 for button width -->
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Footer -->
+         <footer class="text-center mt-4 mb-2 text-muted">
+             <small>© 2024-25 Wellington Campus</small>
+         </footer>
+
+    </div> <!-- End .container -->
+
+    <!-- Bottom Navigation (Defined in shared-styles.css) -->
     <nav class="bottom-nav" aria-label="Mobile navigation">
          <div class="d-flex justify-content-around w-100">
-             <!-- Use data-view attribute for easier JS targeting -->
-             <a href="#home" data-view="home" class="btn active"><i class="fas fa-home"></i>Home</a>
-             <a href="#lms" data-view="lms" class="btn"><i class="fas fa-book"></i>LMS</a>
-             <a href="#quest" data-view="quest" class="btn"><i class="fas fa-puzzle-piece"></i>Quest</a>
-             <a href="#hackathon" data-view="hackathon" class="btn"><i class="fas fa-laptop-code"></i>Hackathon</a>
+             <a href="index.html" target="_self" class="btn active"><i class="fas fa-home"></i>Home</a> <!-- Set active -->
+             <a href="courses.html" target="_self" class="btn"><i class="fas fa-book"></i>LMS</a>
+             <a href="game.html" target="_self" class="btn"><i class="fas fa-puzzle-piece"></i>Quest</a>
+             <a href="hackathons.html" target="_self" class="btn"><i class="fas fa-laptop-code"></i>Hackathon</a>
          </div>
      </nav>
 
-    <!-- Modals (Structure only, content handled by JS potentially) -->
-
-    <!-- Profile Modal -->
+    <!-- Profile Modal (Defined in shared-styles.css) -->
     <div class="modal fade" id="userProfileModal" tabindex="-1" aria-labelledby="userProfileModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -80,8 +204,8 @@
                     <div id="profile-rank-display">Rank: Calculating...</div>
                     <div id="profile-leaderboard-section">
                         <h5><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>Leaderboard (Top 5)</h5>
-                        <div id="leaderboard-loading" class="text-center" style="display: none;">Loading leaderboard...</div>
-                        <div id="leaderboard-empty" class="text-center" style="display: none;">Leaderboard is empty or unavailable.</div>
+                        <div id="leaderboard-loading" style="display: none;">Loading leaderboard...</div>
+                        <div id="leaderboard-empty" style="display: none;">Leaderboard is empty or unavailable.</div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover table-sm caption-top" id="profile-leaderboard-table">
                                 <thead><tr><th scope="col" style="width: 15%; text-align: center;">Rank</th><th scope="col">Player</th><th scope="col" style="width: 30%; text-align: right;">Points</th></tr></thead>
@@ -91,11 +215,11 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <div>
+                    <div> <!-- Wrap button and feedback -->
                         <button type="button" class="btn btn-danger btn-sm" id="delete-progress-btn">
                             <i class="fas fa-trash-alt me-1"></i> Reset Progress
                         </button>
-                        <div id="reset-feedback" class="small"></div>
+                        <div id="reset-feedback" class="small"></div> <!-- Feedback area -->
                     </div>
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
                 </div>
@@ -103,90 +227,86 @@
         </div>
     </div>
 
-    <!-- Hackathon: Task Tracker Modal -->
-    <div class="modal fade" id="taskTrackerModal" tabindex="-1" aria-labelledby="taskTrackerModalLabel" aria-hidden="true">
-         <div class="modal-dialog modal-lg modal-dialog-scrollable">
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <h5 class="modal-title" id="taskTrackerModalLabel"><i class="fas fa-tasks me-2"></i>Day 1 Tasks & Points</h5>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                 </div>
-                 <div class="modal-body">
-                     <p class="text-muted small">Tap task to verify & mark complete. Earn Welly Points!</p>
-                     <div id="task-message-area" class="mb-3"></div>
-                     <!-- Checklist items will be added here by JS if needed, or kept in hackathon-content.html -->
-                     <div class="checklist" id="modal-checklist"></div>
-                 </div>
-                 <div class="modal-footer"> <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button> </div>
-             </div>
-         </div>
-     </div>
-
-    <!-- Hackathon: AI Judge Modal -->
-    <div class="modal fade" id="aiJudgeModal" tabindex="-1" aria-labelledby="aiJudgeModalLabel" aria-hidden="true">
-         <div class="modal-dialog modal-lg modal-dialog-scrollable">
-             <div class="modal-content">
-                 <div class="modal-header"> <h5 class="modal-title" id="aiJudgeModalLabel"><i class="fas fa-brain me-2"></i>AI Judge Sim</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>
-                 <div class="modal-body">
-                     <p class="text-muted small">Select a registered team, click Judge.</p>
-                     <div class="row g-2 align-items-end mb-3">
-                         <div class="col-8"> <label for="judgeTeamSelect" class="form-label visually-hidden">Select Team:</label> <select class="form-select form-select-sm" id="judgeTeamSelect"> <option selected disabled value="">-- Choose Registered Team --</option> </select> </div>
-                         <div class="col-4"> <button class="btn btn-primary w-100 btn-sm" type="button" id="judgeProjectBtn"> <i class="fas fa-play me-1"></i> Judge </button> </div>
-                     </div>
-                     <div id="judgeLoader" class="text-center py-3" style="display: none;"> <div class="spinner-border spinner-border-sm text-primary" role="status"> <span class="visually-hidden">Loading...</span> </div> <p class="small mt-2">AI analyzing...</p> </div>
-                     <div id="judgeResultsArea" style="display: none;"> <h5 id="judgeResultTeamName" class="small"></h5> <div id="judgeResultAnalysis"> <h6 class="small">Analysis:</h6> <ul id="judgeResultAnalysisList" class="small list-unstyled"></ul> </div> <div id="judgeResultScore" class="mt-2 fw-bold"></div> </div>
-                     <p class="mb-0 small text-muted fst-italic mt-3"> <i class="fas fa-info-circle me-1"></i> Simulation only. </p>
-                     <hr class="my-3">
-                     <div id="leaderboardSection">
-                         <h5 class="text-center mb-2 small"><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>AI Judge Leaderboard</h5>
-                         <div class="table-responsive">
-                             <table class="table table-striped table-hover table-sm align-middle small">
-                                 <thead class="table-dark small"> <tr> <th scope="col" style="width: 15%; text-align: center;">Rank</th> <th scope="col">Team</th> <th scope="col" style="width: 25%; text-align: center;">Score</th> </tr> </thead>
-                                 <tbody id="leaderboard-body"> <tr id="leaderboard-placeholder"> <td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td> </tr> </tbody>
-                             </table>
-                         </div>
-                     </div>
-                 </div>
-                 <div class="modal-footer"> <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button> </div>
-             </div>
-         </div>
-     </div>
-
-    <!-- Hackathon: Registration Modal -->
-    <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
-         <div class="modal-dialog modal-dialog-centered">
-             <div class="modal-content">
-                 <div class="modal-header"> <h5 class="modal-title" id="registrationModalLabel"><i class="fas fa-users me-2"></i>Hackathon Team Registration</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>
-                 <div class="modal-body">
-                     <form id="registrationForm">
-                         <div class="mb-3"> <label for="participantName" class="form-label small">Your Name:</label> <input type="text" class="form-control form-control-sm" id="participantName" readonly disabled> </div>
-                         <div class="mb-3"> <label for="universityInput" class="form-label small">Your University/Institution:<span class="text-danger">*</span></label> <input type="text" class="form-control form-control-sm" id="universityInput" required placeholder="e.g., Wellington University"> </div>
-                         <hr>
-                         <p class="small text-muted">Choose ONE option below (max 4 members per team):</p>
-                         <div class="mb-3"> <label for="existingTeamSelect" class="form-label small">1. Join Existing Team:</label> <select class="form-select form-select-sm" id="existingTeamSelect"> <option value="">-- Select a team to join --</option> </select> <div id="team-member-count" class="form-text small"></div> </div>
-                         <div class="mb-3 text-center small fw-bold">OR</div>
-                         <div class="mb-3"> <label for="newTeamNameInput" class="form-label small">2. Create New Team:</label> <input type="text" class="form-control form-control-sm" id="newTeamNameInput" placeholder="Enter unique team name"> </div>
-                         <div id="registrationFeedback" class="text-center small mt-2" style="min-height: 1.2em;"></div>
-                     </form>
-                 </div>
-                 <div class="modal-footer"> <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button> <button type="button" class="btn btn-primary btn-sm" id="submitRegistrationBtn"> <i class="fas fa-check me-1"></i> Confirm Registration </button> </div>
-             </div>
-         </div>
-     </div>
-
-    <!-- Quest: Loader Overlay (Moved from game.html) -->
-    <div id="quiz-loader-overlay">
-         <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
-         <p>AI preparing your challenge questions...</p>
-    </div>
-
-    <!-- Universal: Flying Score Element -->
-    <div id="flying-score-element"></div>
-
-    <!-- Bootstrap JS -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <!-- Link to your combined JS file -->
-    <script src="app.js"></script>
+    <!-- Link Shared Script -->
+    <script src="shared-script.js"></script>
+    <!-- Page-Specific Script -->
+    <script>
+        // Ensure shared script is loaded and DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Check if shared functions are available
+            if (!window.wellyShared) {
+                console.error("Shared script (shared-script.js) not loaded or failed!");
+                return;
+            }
+
+            // Get specific elements for this page
+            const videoElement = document.getElementById('introVideo');
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            const subForm = document.querySelector('.subscription-form form');
+
+            // --- Page-Specific Initializations ---
+             function initHomePage() {
+                 console.log("Initializing Home Page specific features...");
+
+                 // Video Intersection Observer
+                 let videoTimeSet = false;
+                 if (videoElement) {
+                     const videoObserver = new IntersectionObserver((entries) => {
+                         entries.forEach(entry => {
+                             if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !videoTimeSet) {
+                                 try {
+                                     videoElement.currentTime = 38;
+                                     videoTimeSet = true;
+                                     console.log("Video time set to 38s");
+                                     // videoObserver.unobserve(videoElement); // Optional
+                                 } catch (e) { console.warn("Could not set video time yet:", e); }
+                             }
+                         });
+                     }, { threshold: 0.5 });
+                     videoObserver.observe(videoElement);
+                 } else { console.warn("Video element (#introVideo) not found."); }
+
+                 // Animation Intersection Observer
+                 if ("IntersectionObserver" in window && animatedElements.length > 0) {
+                     const animationObserver = new IntersectionObserver((entries, observer) => {
+                         entries.forEach(entry => {
+                             if (entry.isIntersecting) {
+                                 entry.target.classList.add('visible');
+                                 observer.unobserve(entry.target);
+                             }
+                         });
+                     }, { threshold: 0.1 });
+                     animatedElements.forEach(el => animationObserver.observe(el));
+                 } else {
+                     animatedElements.forEach(el => el.classList.add('visible'));
+                     console.warn("IntersectionObserver not supported or no elements to animate.");
+                 }
+
+                 // Subscription Form Handler
+                 if (subForm) {
+                     subForm.addEventListener('submit', function(e) {
+                         e.preventDefault();
+                         const emailInput = this.querySelector('input[type="email"]');
+                         const email = emailInput ? emailInput.value : 'N/A';
+                         console.log("Subscription attempt:", email);
+                         if (window.wellyShared.tg && window.wellyShared.tg.showAlert) {
+                             window.wellyShared.tg.showAlert('Thank you for subscribing!');
+                         } else {
+                             alert('Thank you for subscribing!');
+                         }
+                         this.reset();
+                     });
+                 }
+             }
+
+            // Call page-specific init function
+            initHomePage();
+
+        }); // End DOMContentLoaded for page-specific script
+    </script>
 
 </body>
 </html>
