@@ -3,50 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game - Wellington Campus</title>
-    <meta name="description" content="Get ready for an exciting game experience at Wellington Campus.">
-    <meta name="keywords" content="Wellington Campus, game, coming soon">
+    <title>Challenge Wheel - Wellington Campus Hackathon</title>
+    <meta name="description" content="Spin the wheel to get your AI Hackathon challenge assignment!">
+    <meta name="keywords" content="Wellington Campus, hackathon, game, spin the wheel, challenge assignment, AI, Dubai CommerCity">
     <meta name="author" content="Wellington Campus">
-    <meta property="og:title" content="Game - Wellington Campus">
-    <meta property="og:description" content="Stay tuned for our upcoming game!">
+    <meta property="og:title" content="Challenge Wheel - Wellington Campus Hackathon">
+    <meta property="og:description" content="Spin the wheel to get your AI Hackathon challenge!">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://wellingtoncampus.co/game.html">
+    <meta property="og:url" content="https://wellingtoncampus.co/game.html"> <!-- Update with your final URL -->
     <meta property="og:image" content="./wellingtoncampus.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --primary-color: #d4af37;
-            --secondary-color: #6c757d;
+            --primary-color: #d4af37; /* Gold */
+            --secondary-color: #003366; /* Dark Blue */
             --text-color: #212529;
-            --bg-color: #cce5ff;
-            --accent-color: #ffffff;
+            --bg-color: #cce5ff; /* Light Blueish */
+            --accent-color: #ffffff; /* White */
             --shadow: 0 8px 24px rgba(0,0,0,0.1);
+            --border-radius: 15px;
+            --bottom-nav-bg: var(--accent-color);
+            --bottom-nav-icon: #6c757d;
+            --bottom-nav-active: var(--primary-color);
+            /* Wheel Colors */
+            --color1: #ffcc80; /* Light Orange */
+            --color2: #81d4fa; /* Light Blue */
+            --color3: #c5e1a5; /* Light Green */
+            --color4: #ffab91; /* Light Coral */
+            --color5: #b39ddb; /* Light Purple */
+            --color6: #fff59d; /* Light Yellow */
+            --color7: #90caf9; /* Medium Blue */
         }
 
         body {
             font-family: 'Roboto', sans-serif;
             color: var(--text-color);
             background-color: var(--bg-color);
-            font-size: 1.1rem;
-            line-height: 1.7;
-            background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
+             background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
                               linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
             background-size: 20px 20px;
+            font-size: 1.1rem;
+            line-height: 1.7;
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            padding-bottom: 60px; /* Space for bottom nav */
+             display: flex;
+             flex-direction: column;
         }
 
         .navbar-custom {
             background-color: var(--accent-color);
             box-shadow: var(--shadow);
             padding: 1rem 0;
+            flex-shrink: 0; /* Prevent navbar shrinking */
         }
 
         .navbar-brand, .nav-link {
             color: var(--text-color) !important;
             transition: color 0.3s ease;
+            font-family: 'Poppins', sans-serif;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -55,95 +76,172 @@
 
         .content-wrapper {
             position: relative;
-        }
-
-        .coming-soon-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
+            padding: 2rem 1rem; /* Add padding */
+            text-align: center;
+            flex-grow: 1; /* Allow content to fill space */
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            z-index: 10;
+            justify-content: center; /* Center content vertically */
         }
 
-        .coming-soon-overlay h2 {
-            color: var(--primary-color);
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        h1, h2 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--secondary-color);
         }
 
-        .coming-soon-overlay p {
-            font-size: 1.5rem;
+        #wheel-container {
+            position: relative;
+            width: 350px; /* Adjust size as needed */
+            height: 350px;
+            margin: 2rem auto;
         }
 
-        .game-logo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 4rem 0;
-        }
-
-        .game-logo img {
-            max-width: 300px;
+        #spinner-wheel {
             width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #eee; /* Fallback */
+            /* Conic gradient for segments - colors defined in :root */
+            background-image: conic-gradient(
+                var(--color1) 0% var(--segment-angle),
+                var(--color2) var(--segment-angle) calc(2 * var(--segment-angle)),
+                var(--color3) calc(2 * var(--segment-angle)) calc(3 * var(--segment-angle)),
+                var(--color4) calc(3 * var(--segment-angle)) calc(4 * var(--segment-angle)),
+                var(--color5) calc(4 * var(--segment-angle)) calc(5 * var(--segment-angle)),
+                var(--color6) calc(5 * var(--segment-angle)) calc(6 * var(--segment-angle)),
+                var(--color7) calc(6 * var(--segment-angle)) 100%
+            );
+            border: 8px solid var(--secondary-color);
+            box-shadow: 0 0 20px rgba(0, 51, 102, 0.3);
+            transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1); /* Ease-out spin */
+            position: relative;
+            overflow: hidden; /* Hide anything going outside the circle */
         }
 
+        #wheel-pointer {
+            position: absolute;
+            top: -20px; /* Position above the wheel */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid var(--primary-color); /* Pointer color */
+            z-index: 10;
+             filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.4));
+        }
+         /* Optional: Center circle decoration */
+         #spinner-wheel::after {
+             content: '';
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             transform: translate(-50%, -50%);
+             width: 40px;
+             height: 40px;
+             background-color: var(--secondary-color);
+             border-radius: 50%;
+             border: 5px solid var(--accent-color);
+         }
+
+        #spin-button {
+             display: inline-block; /* Allows margin auto to work */
+             margin-top: 1.5rem;
+             padding: 0.8rem 2.5rem;
+             font-size: 1.2rem;
+             font-weight: 600;
+             color: var(--accent-color);
+             background-color: var(--primary-color);
+             border: none;
+             border-radius: 50px;
+             cursor: pointer;
+             transition: background-color 0.3s ease, transform 0.1s ease;
+             box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+             font-family: 'Poppins', sans-serif;
+        }
+
+        #spin-button:hover {
+             background-color: #b8860b; /* Darker Gold */
+             transform: translateY(-2px);
+        }
+         #spin-button:active {
+              transform: translateY(1px);
+              box-shadow: 0 2px 5px rgba(212, 175, 55, 0.4);
+         }
+         #spin-button:disabled {
+             background-color: #aaa;
+             cursor: not-allowed;
+             box-shadow: none;
+             transform: none;
+         }
+
+        #wheel-result {
+             margin-top: 2rem;
+             padding: 1rem 1.5rem;
+             background-color: rgba(255, 255, 255, 0.8);
+             border-radius: var(--border-radius);
+             min-height: 60px; /* Ensure space for text */
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             border: 2px solid var(--primary-color);
+             box-shadow: var(--shadow);
+             font-size: 1.3rem;
+             font-weight: bold;
+             color: var(--secondary-color);
+             font-family: 'Poppins', sans-serif;
+             opacity: 0; /* Hidden initially */
+             transition: opacity 0.5s ease-in-out;
+        }
+        #wheel-result.visible {
+            opacity: 1;
+        }
+
+
+        /* Bottom Navigation */
         .bottom-nav {
             display: none;
             position: fixed;
             bottom: 0;
             width: 100%;
-            background-color: var(--accent-color);
+            background-color: var(--bottom-nav-bg);
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
             padding: 0.5rem 0;
             z-index: 1000;
+            flex-shrink: 0; /* Prevent shrinking */
         }
-
         .bottom-nav .btn {
-            color: var(--secondary-color);
+            color: var(--bottom-nav-icon);
             padding: 0.5rem;
             font-size: 0.9rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             transition: color 0.3s ease;
+            text-decoration: none;
+             border: none; /* Ensure buttons are borderless */
+             background: none; /* Ensure transparent background */
         }
-
         .bottom-nav .btn:hover, .bottom-nav .btn.active {
-            color: var(--primary-color);
+            color: var(--bottom-nav-active);
         }
-
         .bottom-nav i {
             font-size: 1.2rem;
             margin-bottom: 0.2rem;
         }
 
-        .mascot {
-            position: fixed;
-            bottom: 60px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            z-index: 1100;
-            animation: breathe 2s infinite ease-in-out;
-            cursor: pointer;
-        }
-
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
         @media (max-width: 576px) {
             .navbar-custom { display: none; }
             .bottom-nav { display: flex; }
-            .game-logo { padding: 2rem 0; }
-            .mascot { bottom: 70px; }
+            #wheel-container { width: 280px; height: 280px; margin: 1rem auto; } /* Smaller wheel */
+             #wheel-pointer { top: -15px; border-left-width: 15px; border-right-width: 15px; border-top-width: 25px; }
+             #spinner-wheel::after { width: 30px; height: 30px; border-width: 3px;}
+             h1 { font-size: 1.8rem; }
+             #spin-button { font-size: 1rem; padding: 0.6rem 1.8rem;}
+             #wheel-result { font-size: 1.1rem; min-height: 50px;}
+             .content-wrapper { padding: 1rem; }
         }
     </style>
 </head>
@@ -151,69 +249,139 @@
     <!-- Desktop Navbar -->
     <nav class="navbar navbar-expand-lg navbar-custom" aria-label="Main navigation">
         <div class="container">
-            <a class="navbar-brand" href="index.html">Wellington Campus</a>
+            <a class="navbar-brand" href="index.html">
+                <img src="./wellingtoncampus.png" alt="Wellington Logo" height="30" class="d-inline-block align-text-top me-2">
+                Wellington Campus
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Courses</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="bachelors.html">Bachelors</a></li>
-                            <li><a class="dropdown-item" href="masters.html">Masters</a></li>
-                        </ul>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="courses.html">Courses</a></li> <!-- Simplified link -->
                     <li class="nav-item"><a class="nav-link" href="admissions.html">Admissions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="hackathon.html">Hackathon</a></li> <!-- Link to hackathon -->
+                    <li class="nav-item"><a class="nav-link active" href="game.html">Challenge Wheel</a></li> <!-- Active link -->
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">More</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="about.html">About</a></li>
-                            <li><a class="dropdown-item" href="events.html">Campus Events</a></li>
-                            <li><a class="dropdown-item" href="request.html">Request Info</a></li>
-                            <li><a class="dropdown-item" href="blog.html">Blog</a></li>
-                        </ul>
-                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Game Content -->
-    <div class="container" id="game">
-        <div class="content-wrapper">
-            <!-- Coming Soon Overlay -->
-            <div class="coming-soon-overlay">
-                <h2>Coming Soon</h2>
-                <p>Get ready for an exciting game experience!</p>
-            </div>
-            <!-- Game Logo -->
-            <div class="game-logo">
-                <img src="./wellingtoncampus.png" alt="Wellington Campus Logo">
-            </div>
+    <div class="content-wrapper" id="game">
+        <h1>Hackathon Challenge Wheel</h1>
+        <p class="lead mb-4">Spin the wheel to get your assigned challenge!</p>
+
+        <div id="wheel-container">
+            <div id="spinner-wheel"></div>
+            <div id="wheel-pointer"></div>
         </div>
+
+        <button id="spin-button">Spin the Wheel!</button>
+
+        <div id="wheel-result">Spin to find out your challenge...</div>
+
     </div>
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav" aria-label="Mobile navigation">
         <div class="d-flex justify-content-around w-100">
             <a href="index.html" class="btn"><i class="fas fa-home"></i>Home</a>
-            <a href="lms.html" class="btn"><i class="fas fa-book"></i>LMS</a>
-            <a href="game.html" class="btn active"><i class="fas fa-gamepad"></i>Game</a>
-            <a href="hackathons.html" class="btn"><i class="fas fa-laptop-code"></i>Hackathons</a>
+            <a href="courses.html" class="btn"><i class="fas fa-book"></i>LMS</a> <!-- Link to LMS/Courses -->
+            <a href="game.html" class="btn active"><i class="fas fa-dice"></i>Wheel</a> <!-- Updated Icon -->
+            <a href="hackathon.html" class="btn"><i class="fas fa-laptop-code"></i>Hackathon</a>
         </div>
     </nav>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Optional: Telegram Web App Script -->
+    <!-- <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        if (window.Telegram && window.Telegram.WebApp) {
-            Telegram.WebApp.ready();
-            Telegram.WebApp.expand();
-        }
+        // if (window.Telegram && window.Telegram.WebApp) {
+        //     Telegram.WebApp.ready();
+        //     Telegram.WebApp.expand();
+        // }
+    </script> -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const wheel = document.getElementById('spinner-wheel');
+            const spinButton = document.getElementById('spin-button');
+            const resultDisplay = document.getElementById('wheel-result');
+
+            // --- Challenges - MUST match the tracks/themes from hackathon.html ---
+            const challenges = [
+                "Supply Chain & Logistics",
+                "Sustainability & Environment",
+                "Medicine & Healthcare",
+                "Project Management",
+                "Real Estate & Urban Planning",
+                "Government & Public Sector",
+                "Open Innovation"
+            ];
+            // --- End of Challenges ---
+
+            const numSegments = challenges.length;
+            const anglePerSegment = 360 / numSegments;
+
+            // Set the CSS variable for the segment angle
+            document.documentElement.style.setProperty('--segment-angle', `${anglePerSegment}deg`);
+
+            let isSpinning = false;
+            let currentRotation = 0;
+
+            spinButton.addEventListener('click', () => {
+                if (isSpinning) return;
+
+                isSpinning = true;
+                spinButton.disabled = true;
+                resultDisplay.textContent = 'Spinning...';
+                resultDisplay.classList.remove('visible'); // Hide previous result
+
+                // Calculate random rotation
+                const randomExtraRotation = Math.random() * 360; // Random offset
+                const spins = 5 + Math.floor(Math.random() * 3); // Random number of full spins (5-7)
+                const totalRotation = spins * 360 + randomExtraRotation;
+
+                // Apply rotation - add to current rotation to make it spin from current position
+                currentRotation += totalRotation;
+                wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+                // Wait for the transition to end
+                wheel.addEventListener('transitionend', handleSpinEnd, { once: true });
+            });
+
+            function handleSpinEnd() {
+                isSpinning = false;
+                spinButton.disabled = false;
+
+                // Calculate the final angle (0-360)
+                const finalAngle = currentRotation % 360;
+                // Normalize angle to be positive
+                const normalizedAngle = (360 - finalAngle) % 360;
+
+                // Calculate the winning segment index
+                // The pointer is at the top (0 degrees), so segment 0 starts slightly clockwise
+                 // Add half segment angle for better center detection
+                const winningIndex = Math.floor((normalizedAngle + anglePerSegment / 2) % 360 / anglePerSegment);
+
+                // Display the result
+                const winningChallenge = challenges[winningIndex];
+                resultDisplay.textContent = `Your Challenge: ${winningChallenge}!`;
+                resultDisplay.classList.add('visible'); // Show result
+
+                 // Optional: Alert or further actions
+                 // alert(`Your challenge is: ${winningChallenge}`);
+                 // You could potentially store this result or pass it somewhere
+            }
+
+            // Initial setup text
+            resultDisplay.textContent = 'Spin to find out your challenge...';
+            resultDisplay.classList.add('visible'); // Show initial text
+        });
     </script>
 </body>
 </html>
