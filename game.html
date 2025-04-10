@@ -2,21 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Challenge Wheel - Wellington Campus Hackathon</title>
-    <meta name="description" content="Spin the wheel to get your AI Hackathon challenge assignment!">
-    <meta name="keywords" content="Wellington Campus, hackathon, game, spin the wheel, challenge assignment, AI, Dubai CommerCity">
+    <!-- Essential Mini App Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+    <title>Challenge Quest - Wellington Campus</title> <!-- Updated Title -->
+
+    <!-- Standard Meta -->
+    <meta name="description" content="Spin the wheel, take the challenge quiz, and earn Welly Points!">
+    <meta name="keywords" content="Wellington Campus, hackathon, game, spin the wheel, quiz, challenge, AI, points">
     <meta name="author" content="Wellington Campus">
-    <meta property="og:title" content="Challenge Wheel - Wellington Campus Hackathon">
-    <meta property="og:description" content="Spin the wheel to get your AI Hackathon challenge!">
+    <meta property="og:title" content="Challenge Quest - Wellington Campus">
+    <meta property="og:description" content="Spin the wheel, take the quiz, earn points!">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://wellingtoncampus.co/game.html"> <!-- Update with your final URL -->
-    <meta property="og:image" content="./wellingtoncampus.png">
+    <meta property="og:url" content="https://wellingtoncampus.co/game.html"> <!-- Update -->
+    <meta property="og:image" content="./wellingtoncampus.png"> <!-- Update Path -->
+
+    <!-- Stylesheets -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+    <!-- **Telegram Mini App Script - MUST be first script** -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
         :root {
@@ -25,19 +33,16 @@
             --text-color: #212529;
             --bg-color: #cce5ff; /* Light Blueish */
             --accent-color: #ffffff; /* White */
+            --correct-color: #28a745; /* Green */
+            --incorrect-color: #dc3545; /* Red */
             --shadow: 0 8px 24px rgba(0,0,0,0.1);
             --border-radius: 15px;
             --bottom-nav-bg: var(--accent-color);
             --bottom-nav-icon: #6c757d;
             --bottom-nav-active: var(--primary-color);
             /* Wheel Colors */
-            --color1: #ffcc80; /* Light Orange */
-            --color2: #81d4fa; /* Light Blue */
-            --color3: #c5e1a5; /* Light Green */
-            --color4: #ffab91; /* Light Coral */
-            --color5: #b39ddb; /* Light Purple */
-            --color6: #fff59d; /* Light Yellow */
-            --color7: #90caf9; /* Medium Blue */
+            --color1: #ffcc80; --color2: #81d4fa; --color3: #c5e1a5; --color4: #ffab91;
+            --color5: #b39ddb; --color6: #fff59d; --color7: #90caf9;
         }
 
         body {
@@ -52,236 +57,260 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            padding-bottom: 60px; /* Space for bottom nav */
-             display: flex;
-             flex-direction: column;
-        }
-
-        .navbar-custom {
-            background-color: var(--accent-color);
-            box-shadow: var(--shadow);
-            padding: 1rem 0;
-            flex-shrink: 0; /* Prevent navbar shrinking */
-        }
-
-        .navbar-brand, .nav-link {
-            color: var(--text-color) !important;
-            transition: color 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-color) !important;
-        }
-
-        .content-wrapper {
-            position: relative;
-            padding: 2rem 1rem; /* Add padding */
-            text-align: center;
-            flex-grow: 1; /* Allow content to fill space */
+            min-height: var(--tg-viewport-height, 100vh);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center; /* Center content vertically */
+            box-sizing: border-box;
         }
 
-        h1, h2 {
-            font-family: 'Poppins', sans-serif;
-            color: var(--secondary-color);
-        }
-
-        #wheel-container {
-            position: relative;
-            width: 350px; /* Adjust size as needed */
-            height: 350px;
-            margin: 2rem auto;
-        }
-
-        #spinner-wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background-color: #eee; /* Fallback */
-            /* Conic gradient for segments - colors defined in :root */
-            background-image: conic-gradient(
-                var(--color1) 0% var(--segment-angle),
-                var(--color2) var(--segment-angle) calc(2 * var(--segment-angle)),
-                var(--color3) calc(2 * var(--segment-angle)) calc(3 * var(--segment-angle)),
-                var(--color4) calc(3 * var(--segment-angle)) calc(4 * var(--segment-angle)),
-                var(--color5) calc(4 * var(--segment-angle)) calc(5 * var(--segment-angle)),
-                var(--color6) calc(5 * var(--segment-angle)) calc(6 * var(--segment-angle)),
-                var(--color7) calc(6 * var(--segment-angle)) 100%
-            );
-            border: 8px solid var(--secondary-color);
-            box-shadow: 0 0 20px rgba(0, 51, 102, 0.3);
-            transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1); /* Ease-out spin */
-            position: relative;
-            overflow: hidden; /* Hide anything going outside the circle */
-        }
-
-        #wheel-pointer {
-            position: absolute;
-            top: -20px; /* Position above the wheel */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 30px solid var(--primary-color); /* Pointer color */
-            z-index: 10;
-             filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.4));
-        }
-         /* Optional: Center circle decoration */
-         #spinner-wheel::after {
-             content: '';
-             position: absolute;
-             top: 50%;
-             left: 50%;
-             transform: translate(-50%, -50%);
-             width: 40px;
-             height: 40px;
-             background-color: var(--secondary-color);
-             border-radius: 50%;
-             border: 5px solid var(--accent-color);
-         }
-
-        #spin-button {
-             display: inline-block; /* Allows margin auto to work */
-             margin-top: 1.5rem;
-             padding: 0.8rem 2.5rem;
-             font-size: 1.2rem;
-             font-weight: 600;
-             color: var(--accent-color);
-             background-color: var(--primary-color);
-             border: none;
-             border-radius: 50px;
-             cursor: pointer;
-             transition: background-color 0.3s ease, transform 0.1s ease;
-             box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
-             font-family: 'Poppins', sans-serif;
-        }
-
-        #spin-button:hover {
-             background-color: #b8860b; /* Darker Gold */
-             transform: translateY(-2px);
-        }
-         #spin-button:active {
-              transform: translateY(1px);
-              box-shadow: 0 2px 5px rgba(212, 175, 55, 0.4);
-         }
-         #spin-button:disabled {
-             background-color: #aaa;
-             cursor: not-allowed;
-             box-shadow: none;
-             transform: none;
-         }
-
-        #wheel-result {
-             margin-top: 2rem;
-             padding: 1rem 1.5rem;
-             background-color: rgba(255, 255, 255, 0.8);
-             border-radius: var(--border-radius);
-             min-height: 60px; /* Ensure space for text */
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             border: 2px solid var(--primary-color);
-             box-shadow: var(--shadow);
-             font-size: 1.3rem;
-             font-weight: bold;
-             color: var(--secondary-color);
-             font-family: 'Poppins', sans-serif;
-             opacity: 0; /* Hidden initially */
-             transition: opacity 0.5s ease-in-out;
-        }
-        #wheel-result.visible {
-            opacity: 1;
-        }
-
-
-        /* Bottom Navigation */
+        /* --- Mini App Specific Adjustments --- */
+        .navbar-custom { display: none; } /* Hide desktop nav */
         .bottom-nav {
-            display: none;
+            display: flex; /* Show bottom nav */
             position: fixed;
             bottom: 0;
             width: 100%;
             background-color: var(--bottom-nav-bg);
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            padding: 0.5rem 0;
+            /* Account for safe area */
+            padding: 0.5rem 0 max(0.5rem, var(--tg-safe-area-inset-bottom, 0.5rem));
             z-index: 1000;
-            flex-shrink: 0; /* Prevent shrinking */
+            flex-shrink: 0;
         }
-        .bottom-nav .btn {
-            color: var(--bottom-nav-icon);
-            padding: 0.5rem;
-            font-size: 0.9rem;
+         /* Add padding to body bottom to prevent overlap with fixed nav */
+        body { padding-bottom: 80px; } /* Adjust height based on nav */
+
+        /* --- General & Game Styles --- */
+        .content-wrapper {
+            position: relative;
+            padding: 1rem;
+            text-align: center;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: color 0.3s ease;
-            text-decoration: none;
-             border: none; /* Ensure buttons are borderless */
-             background: none; /* Ensure transparent background */
-        }
-        .bottom-nav .btn:hover, .bottom-nav .btn.active {
-            color: var(--bottom-nav-active);
-        }
-        .bottom-nav i {
-            font-size: 1.2rem;
-            margin-bottom: 0.2rem;
+            justify-content: center; /* Center content */
+            overflow-y: auto; /* Allow scrolling if content overflows */
         }
 
-        @media (max-width: 576px) {
-            .navbar-custom { display: none; }
-            .bottom-nav { display: flex; }
-            #wheel-container { width: 280px; height: 280px; margin: 1rem auto; } /* Smaller wheel */
-             #wheel-pointer { top: -15px; border-left-width: 15px; border-right-width: 15px; border-top-width: 25px; }
-             #spinner-wheel::after { width: 30px; height: 30px; border-width: 3px;}
-             h1 { font-size: 1.8rem; }
-             #spin-button { font-size: 1rem; padding: 0.6rem 1.8rem;}
-             #wheel-result { font-size: 1.1rem; min-height: 50px;}
-             .content-wrapper { padding: 1rem; }
+        h1, h2 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
         }
+        h1 { font-size: 1.8rem; }
+        h2 { font-size: 1.5rem; }
+
+        /* User Profile Area */
+        #user-profile {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 5px 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+             z-index: 5; /* Above content, below modals if any */
+        }
+        #user-profile i { margin-right: 5px; color: var(--primary-color); }
+        #welly-points { font-weight: bold; margin-left: 5px; }
+
+        /* Wheel Styles */
+        #wheel-section { /* Container for wheel elements */
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             width: 100%; /* Take full width */
+        }
+        #wheel-container {
+            position: relative;
+            width: 280px; /* Mobile-friendly size */
+            height: 280px;
+            margin: 1rem auto;
+        }
+        #spinner-wheel {
+            width: 100%; height: 100%; border-radius: 50%;
+            background-color: #eee;
+            background-image: conic-gradient( /* Defined via JS */ );
+            border: 6px solid var(--secondary-color);
+            box-shadow: 0 0 15px rgba(0, 51, 102, 0.2);
+            transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            position: relative; overflow: hidden;
+        }
+        #wheel-pointer {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 0; border-left: 15px solid transparent;
+            border-right: 15px solid transparent; border-top: 25px solid var(--primary-color);
+            z-index: 10; filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.4));
+        }
+         #spinner-wheel::after { /* Center circle */
+             content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+             width: 30px; height: 30px; background-color: var(--secondary-color);
+             border-radius: 50%; border: 4px solid var(--accent-color);
+         }
+        #spin-button { /* Style for main action button */
+             display: inline-block; margin-top: 1rem; padding: 0.7rem 2rem; font-size: 1.1rem;
+             font-weight: 600; color: var(--accent-color); background-color: var(--primary-color);
+             border: none; border-radius: 50px; cursor: pointer;
+             transition: background-color 0.3s ease, transform 0.1s ease;
+             box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4); font-family: 'Poppins', sans-serif;
+        }
+        #spin-button:hover { background-color: #b8860b; transform: translateY(-2px); }
+        #spin-button:active { transform: translateY(1px); box-shadow: 0 2px 5px rgba(212, 175, 55, 0.4); }
+        #spin-button:disabled { background-color: #aaa; cursor: not-allowed; box-shadow: none; transform: none; }
+
+        /* Result Display Area */
+        #result-area {
+             margin-top: 1.5rem; padding: 1rem; background-color: rgba(255, 255, 255, 0.8);
+             border-radius: var(--border-radius); min-height: 50px;
+             display: flex; flex-direction: column; align-items: center; justify-content: center;
+             border: 2px solid var(--primary-color); box-shadow: var(--shadow);
+             opacity: 0; /* Hidden initially */ transition: opacity 0.5s ease-in-out;
+        }
+        #result-area.visible { opacity: 1; }
+        #challenge-result-text {
+             font-size: 1.2rem; font-weight: bold; color: var(--secondary-color);
+             font-family: 'Poppins', sans-serif; margin-bottom: 0.5rem;
+        }
+         #start-quiz-button { /* Specific style for quiz start */
+              margin-top: 0.5rem; padding: 0.5rem 1.5rem; font-size: 1rem;
+         }
+
+        /* Quiz Section Styles */
+        #quiz-section {
+            display: none; /* Hidden by default */
+            width: 100%;
+            max-width: 500px; /* Limit width on larger screens */
+            margin-top: 1rem;
+            padding: 1.5rem;
+            background-color: var(--accent-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: left;
+        }
+        #quiz-question {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+        .quiz-options button {
+            display: block;
+            width: 100%;
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            text-align: left;
+            font-size: 1rem;
+            background-color: #f8f9fa; /* Light gray background */
+            border: 2px solid #dee2e6; /* Gray border */
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .quiz-options button:hover {
+            background-color: #e9ecef;
+            border-color: #adb5bd;
+        }
+         .quiz-options button.selected {
+             background-color: var(--primary-color);
+             border-color: #b8860b;
+             color: white;
+         }
+         .quiz-options button.correct {
+             background-color: var(--correct-color);
+             border-color: #1e7e34;
+             color: white;
+         }
+         .quiz-options button.incorrect {
+             background-color: var(--incorrect-color);
+             border-color: #b21f2d;
+             color: white;
+         }
+         .quiz-options button:disabled {
+             opacity: 0.7;
+             cursor: not-allowed;
+         }
+        #quiz-feedback {
+            margin-top: 1rem;
+            font-weight: bold;
+            min-height: 24px; /* Reserve space */
+        }
+        #quiz-feedback.correct { color: var(--correct-color); }
+        #quiz-feedback.incorrect { color: var(--incorrect-color); }
+        #quiz-submit-button, #quiz-next-button {
+            margin-top: 1.5rem;
+            float: right; /* Position buttons to the right */
+        }
+         #quiz-end-section {
+              text-align: center;
+              margin-top: 1.5rem;
+         }
+
+
+        /* Bottom Nav Styles */
+        .bottom-nav .btn {
+            color: var(--bottom-nav-icon); padding: 0.5rem; font-size: 0.9rem;
+            display: flex; flex-direction: column; align-items: center;
+            transition: color 0.3s ease; text-decoration: none; border: none; background: none;
+        }
+        .bottom-nav .btn:hover, .bottom-nav .btn.active { color: var(--bottom-nav-active); }
+        .bottom-nav i { font-size: 1.2rem; margin-bottom: 0.2rem; }
+
+         /* Helper class */
+         .hidden { display: none !important; }
+
     </style>
 </head>
 <body>
-    <!-- Desktop Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-custom" aria-label="Main navigation">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="./wellingtoncampus.png" alt="Wellington Logo" height="30" class="d-inline-block align-text-top me-2">
-                Wellington Campus
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="courses.html">Courses</a></li> <!-- Simplified link -->
-                    <li class="nav-item"><a class="nav-link" href="admissions.html">Admissions</a></li>
-                    <li class="nav-item"><a class="nav-link" href="hackathon.html">Hackathon</a></li> <!-- Link to hackathon -->
-                    <li class="nav-item"><a class="nav-link active" href="game.html">Challenge Wheel</a></li> <!-- Active link -->
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                </ul>
+    <!-- User Profile Display (Top Right) -->
+    <div id="user-profile">
+        <i class="fas fa-user-circle"></i>
+        <span id="user-name-display">Player</span>
+        | <i class="fas fa-star" style="color: var(--primary-color);"></i>
+        <span id="welly-points">0</span> WP
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+
+        <!-- Wheel Section -->
+        <div id="wheel-section">
+            <h1>Challenge Quest</h1>
+            <p class="lead mb-2">Spin for a challenge, test your knowledge!</p>
+
+            <div id="wheel-container">
+                <div id="spinner-wheel"></div>
+                <div id="wheel-pointer"></div>
+            </div>
+
+            <button id="spin-button" class="btn-custom">Spin the Wheel!</button>
+
+            <div id="result-area">
+                <div id="challenge-result-text">Spin to find out your challenge...</div>
+                <button id="start-quiz-button" class="btn-custom hidden">Start Challenge Quiz!</button>
             </div>
         </div>
-    </nav>
 
-    <!-- Game Content -->
-    <div class="content-wrapper" id="game">
-        <h1>Hackathon Challenge Wheel</h1>
-        <p class="lead mb-4">Spin the wheel to get your assigned challenge!</p>
-
-        <div id="wheel-container">
-            <div id="spinner-wheel"></div>
-            <div id="wheel-pointer"></div>
+        <!-- Quiz Section (Initially Hidden) -->
+        <div id="quiz-section" class="hidden">
+            <h2 id="quiz-challenge-title">Challenge Quiz</h2>
+            <div id="quiz-question">Question text goes here...</div>
+            <div id="quiz-options" class="quiz-options">
+                <!-- Option buttons will be added dynamically -->
+            </div>
+            <div id="quiz-feedback"></div>
+            <button id="quiz-submit-button" class="btn-custom">Submit Answer</button>
+            <button id="quiz-next-button" class="btn-custom hidden">Next Question</button>
+             <div id="quiz-end-section" class="hidden">
+                 <h3>Quiz Complete!</h3>
+                 <p>Your Score: <span id="final-score">0</span> Welly Points</p>
+                 <button id="play-again-button" class="btn-custom">Spin Again</button>
+             </div>
         </div>
-
-        <button id="spin-button">Spin the Wheel!</button>
-
-        <div id="wheel-result">Spin to find out your challenge...</div>
 
     </div>
 
@@ -289,98 +318,370 @@
     <nav class="bottom-nav" aria-label="Mobile navigation">
         <div class="d-flex justify-content-around w-100">
             <a href="index.html" class="btn"><i class="fas fa-home"></i>Home</a>
-            <a href="courses.html" class="btn"><i class="fas fa-book"></i>LMS</a> <!-- Link to LMS/Courses -->
-            <a href="game.html" class="btn active"><i class="fas fa-dice"></i>Wheel</a> <!-- Updated Icon -->
+            <a href="courses.html" class="btn"><i class="fas fa-book"></i>LMS</a>
+            <a href="game.html" class="btn active"><i class="fas fa-puzzle-piece"></i>Quest</a> <!-- Updated Name/Icon -->
             <a href="hackathon.html" class="btn"><i class="fas fa-laptop-code"></i>Hackathon</a>
         </div>
     </nav>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Optional: Telegram Web App Script -->
-    <!-- <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        // if (window.Telegram && window.Telegram.WebApp) {
-        //     Telegram.WebApp.ready();
-        //     Telegram.WebApp.expand();
-        // }
-    </script> -->
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements ---
             const wheel = document.getElementById('spinner-wheel');
             const spinButton = document.getElementById('spin-button');
-            const resultDisplay = document.getElementById('wheel-result');
+            const resultArea = document.getElementById('result-area');
+            const challengeResultText = document.getElementById('challenge-result-text');
+            const startQuizButton = document.getElementById('start-quiz-button');
+            const wheelSection = document.getElementById('wheel-section');
+            const quizSection = document.getElementById('quiz-section');
+            const quizChallengeTitle = document.getElementById('quiz-challenge-title');
+            const quizQuestionText = document.getElementById('quiz-question');
+            const quizOptionsContainer = document.getElementById('quiz-options');
+            const quizFeedback = document.getElementById('quiz-feedback');
+            const quizSubmitButton = document.getElementById('quiz-submit-button');
+            const quizNextButton = document.getElementById('quiz-next-button');
+            const quizEndSection = document.getElementById('quiz-end-section');
+            const finalScoreDisplay = document.getElementById('final-score');
+            const playAgainButton = document.getElementById('play-again-button');
+            const userNameDisplay = document.getElementById('user-name-display');
+            const wellyPointsDisplay = document.getElementById('welly-points');
 
-            // --- Challenges - MUST match the tracks/themes from hackathon.html ---
-            const challenges = [
-                "Supply Chain & Logistics",
-                "Sustainability & Environment",
-                "Medicine & Healthcare",
-                "Project Management",
-                "Real Estate & Urban Planning",
-                "Government & Public Sector",
-                "Open Innovation"
-            ];
-            // --- End of Challenges ---
+             // --- Telegram WebApp ---
+             const tg = window.Telegram.WebApp;
+             let currentUser = null;
+             let totalWellyPoints = 0; // This will hold the score across the app session or loaded from CloudStorage
 
+            // --- Challenges ---
+             const challenges = [
+                { name: "Supply Chain & Logistics", theme: "logistics" },
+                { name: "Sustainability & Environment", theme: "sustainability" },
+                { name: "Medicine & Healthcare", theme: "healthcare" },
+                { name: "Project Management", theme: "management" },
+                { name: "Real Estate & Urban Planning", theme: "realestate" },
+                { name: "Government & Public Sector", theme: "government" },
+                { name: "Open Innovation", theme: "open" }
+             ];
+
+            // --- Quiz Questions (Example Structure) ---
+            const quizData = {
+                logistics: [
+                    { q: "What does 'last-mile delivery' refer to?", o: ["Warehouse sorting", "Final step to customer", "International shipping", "Manufacturing"], a: 1 },
+                    { q: "Which technology helps track goods in real-time?", o: ["Blockchain", "Email", "GPS & RFID", "Spreadsheets"], a: 2 },
+                ],
+                sustainability: [
+                    { q: "What is carbon footprint?", o: ["Shoe size", "Amount of CO2 emitted", "Water usage", "Forest area"], a: 1 },
+                    { q: "Which is a renewable energy source?", o: ["Coal", "Natural Gas", "Solar Power", "Nuclear Fission"], a: 2 },
+                ],
+                healthcare: [
+                     { q: "What does AI assist with in diagnostics?", o: ["Making coffee", "Image analysis", "Scheduling appointments", "Billing"], a: 1 },
+                     { q: "Telemedicine allows patients to consult doctors via?", o: ["Mail", "Fax", "Video calls", "Carrier pigeon"], a: 2 },
+                ],
+                 management: [
+                     { q: "What is a common project management methodology?", o: ["Waterfall", "Agile", "Both A & B", "Neither"], a: 2 },
+                     { q: "A 'Gantt chart' is used for?", o: ["Budgeting", "Task scheduling", "Team meetings", "Marketing"], a: 1 },
+                ],
+                 realestate: [
+                     { q: "What is 'proptech'?", o: ["Property tax", "Tech for real estate", "Building props", "Selling techniques"], a: 1 },
+                     { q: "Virtual property tours use which technology?", o: ["AI", "VR/360 imaging", "Drones", "Satellites"], a: 1 },
+                ],
+                 government: [
+                     { q: "Digital transformation in government aims to improve?", o: ["Citizen services", "Bureaucracy", "Waiting times", "Paper usage"], a: 0 },
+                     { q: "What is 'GovTech'?", o: ["Government TV", "Technology for public sector", "Tech regulation", "Political polling"], a: 1 },
+                ],
+                 open: [
+                     { q: "'Open Innovation' involves using ideas from?", o: ["Only internal R&D", "Only competitors", "Both internal and external sources", "Only universities"], a: 2 },
+                     { q: "Crowdsourcing is a form of?", o: ["Marketing", "Financing", "Open innovation", "Closed research"], a: 2 },
+                ],
+                 // Add more questions for each theme
+            };
+
+
+            // --- Game State ---
             const numSegments = challenges.length;
             const anglePerSegment = 360 / numSegments;
-
-            // Set the CSS variable for the segment angle
-            document.documentElement.style.setProperty('--segment-angle', `${anglePerSegment}deg`);
-
             let isSpinning = false;
             let currentRotation = 0;
+            let currentChallenge = null; // Stores the {name, theme} object
+            let currentQuizQuestions = [];
+            let currentQuestionIndex = 0;
+            let sessionScore = 0; // Score for the current quiz session
+            let selectedAnswerIndex = null;
 
+            // --- Initialization ---
+            function initializeApp() {
+                // Set wheel segments dynamically
+                const gradientColors = challenges.map((challenge, index) => {
+                     const colorVar = `var(--color${(index % 7) + 1})`; // Cycle through 7 colors
+                     const startAngle = index * anglePerSegment;
+                     const endAngle = (index + 1) * anglePerSegment;
+                     return `${colorVar} ${startAngle}deg ${endAngle}deg`;
+                }).join(', ');
+                wheel.style.backgroundImage = `conic-gradient(${gradientColors})`;
+
+                // Set initial text
+                challengeResultText.textContent = 'Spin to begin your quest!';
+                resultArea.classList.add('visible');
+
+                // Setup Telegram Integration
+                if (tg && tg.initData) {
+                    tg.ready();
+                    // tg.expand(); // Optional: Make app full height
+
+                    // Configure Back Button (Game page is not home)
+                    tg.BackButton.show();
+                    tg.onEvent('backButtonClicked', () => {
+                        // If in quiz, go back to wheel, else try history or close
+                        if (quizSection.style.display !== 'none') {
+                            resetToWheelView();
+                        } else if (window.history.length > 1) {
+                            window.history.back();
+                        } else {
+                            tg.close();
+                        }
+                    });
+
+                    // Get User Data (Unsafe, for display only)
+                    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                        currentUser = tg.initDataUnsafe.user;
+                        userNameDisplay.textContent = currentUser.first_name || 'Player';
+                        // Optional: Add username display:
+                        // if(currentUser.username) {
+                        //     userNameDisplay.textContent += ` (@${currentUser.username})`;
+                        // }
+                    }
+
+                    // --- Load Total Score from CloudStorage (Example) ---
+                    // tg.CloudStorage.getItem('totalWellyPoints', (error, value) => {
+                    //     if (error) {
+                    //         console.error('Error getting points from CloudStorage:', error);
+                    //         // Optionally show an error to the user via tg.showAlert
+                    //         totalWellyPoints = 0; // Start fresh if error
+                    //     } else if (value) {
+                    //         totalWellyPoints = parseInt(value, 10) || 0;
+                    //         console.log('Loaded points from CloudStorage:', totalWellyPoints);
+                    //     } else {
+                    //         totalWellyPoints = 0; // No value stored yet
+                    //         console.log('No points found in CloudStorage, starting at 0.');
+                    //     }
+                    //     wellyPointsDisplay.textContent = totalWellyPoints;
+                    // });
+                    // For now, just display 0 until CloudStorage is implemented
+                     wellyPointsDisplay.textContent = totalWellyPoints;
+
+
+                } else {
+                     console.warn("Not running in Telegram Mini App context or initData unavailable.");
+                     // Handle non-Telegram environment if needed
+                }
+            }
+
+            // --- Wheel Logic ---
             spinButton.addEventListener('click', () => {
                 if (isSpinning) return;
-
-                isSpinning = true;
-                spinButton.disabled = true;
-                resultDisplay.textContent = 'Spinning...';
-                resultDisplay.classList.remove('visible'); // Hide previous result
-
-                // Calculate random rotation
-                const randomExtraRotation = Math.random() * 360; // Random offset
-                const spins = 5 + Math.floor(Math.random() * 3); // Random number of full spins (5-7)
-                const totalRotation = spins * 360 + randomExtraRotation;
-
-                // Apply rotation - add to current rotation to make it spin from current position
-                currentRotation += totalRotation;
-                wheel.style.transform = `rotate(${currentRotation}deg)`;
-
-                // Wait for the transition to end
-                wheel.addEventListener('transitionend', handleSpinEnd, { once: true });
+                startSpin();
             });
+
+            function startSpin() {
+                 isSpinning = true;
+                 spinButton.disabled = true;
+                 resultArea.classList.remove('visible');
+                 startQuizButton.classList.add('hidden'); // Hide quiz button during spin
+                 challengeResultText.textContent = 'Spinning...';
+
+                 const randomExtraRotation = Math.random() * 360;
+                 const spins = 5 + Math.floor(Math.random() * 3);
+                 const totalRotation = spins * 360 + randomExtraRotation;
+
+                 currentRotation += totalRotation;
+                 wheel.style.transform = `rotate(${currentRotation}deg)`;
+                 wheel.addEventListener('transitionend', handleSpinEnd, { once: true });
+            }
+
 
             function handleSpinEnd() {
                 isSpinning = false;
-                spinButton.disabled = false;
+                spinButton.disabled = false; // Re-enable spin for now, might change later
 
-                // Calculate the final angle (0-360)
                 const finalAngle = currentRotation % 360;
-                // Normalize angle to be positive
                 const normalizedAngle = (360 - finalAngle) % 360;
-
-                // Calculate the winning segment index
-                // The pointer is at the top (0 degrees), so segment 0 starts slightly clockwise
-                 // Add half segment angle for better center detection
                 const winningIndex = Math.floor((normalizedAngle + anglePerSegment / 2) % 360 / anglePerSegment);
 
-                // Display the result
-                const winningChallenge = challenges[winningIndex];
-                resultDisplay.textContent = `Your Challenge: ${winningChallenge}!`;
-                resultDisplay.classList.add('visible'); // Show result
-
-                 // Optional: Alert or further actions
-                 // alert(`Your challenge is: ${winningChallenge}`);
-                 // You could potentially store this result or pass it somewhere
+                currentChallenge = challenges[winningIndex];
+                challengeResultText.textContent = `Challenge: ${currentChallenge.name}!`;
+                resultArea.classList.add('visible');
+                startQuizButton.classList.remove('hidden'); // Show quiz button
+                spinButton.classList.add('hidden'); // Hide spin button after getting challenge
             }
 
-            // Initial setup text
-            resultDisplay.textContent = 'Spin to find out your challenge...';
-            resultDisplay.classList.add('visible'); // Show initial text
+            // --- Quiz Logic ---
+            startQuizButton.addEventListener('click', () => {
+                startQuiz();
+            });
+
+            function startQuiz() {
+                if (!currentChallenge || !quizData[currentChallenge.theme]) {
+                     console.error("Cannot start quiz: No challenge theme selected or no questions found.");
+                     tg.showAlert("Error starting quiz. Please spin again."); // Inform user
+                     return;
+                }
+
+                wheelSection.classList.add('hidden');
+                quizSection.classList.remove('hidden');
+                if (tg && tg.BackButton.isVisible) tg.BackButton.show(); // Ensure back button is shown in quiz view
+
+                quizChallengeTitle.textContent = `${currentChallenge.name} Quiz`;
+                currentQuizQuestions = [...quizData[currentChallenge.theme]]; // Get questions for the theme
+                // Optional: Shuffle questions: currentQuizQuestions.sort(() => Math.random() - 0.5);
+                currentQuestionIndex = 0;
+                sessionScore = 0; // Reset score for this quiz session
+                selectedAnswerIndex = null;
+
+                quizSubmitButton.classList.remove('hidden');
+                quizNextButton.classList.add('hidden');
+                quizEndSection.classList.add('hidden');
+                quizFeedback.textContent = ''; // Clear previous feedback
+
+                loadQuestion();
+            }
+
+            function loadQuestion() {
+                if (currentQuestionIndex >= currentQuizQuestions.length) {
+                    endQuiz();
+                    return;
+                }
+
+                const questionData = currentQuizQuestions[currentQuestionIndex];
+                quizQuestionText.textContent = `Q${currentQuestionIndex + 1}: ${questionData.q}`;
+                quizOptionsContainer.innerHTML = ''; // Clear previous options
+                quizFeedback.textContent = '';
+                quizFeedback.className = ''; // Reset feedback style
+                selectedAnswerIndex = null; // Reset selection
+
+                quizSubmitButton.disabled = true; // Disable submit until an option is chosen
+                quizSubmitButton.classList.remove('hidden');
+                quizNextButton.classList.add('hidden');
+
+
+                questionData.o.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.dataset.index = index;
+                    button.addEventListener('click', handleOptionSelect);
+                    quizOptionsContainer.appendChild(button);
+                });
+            }
+
+            function handleOptionSelect(event) {
+                // Remove 'selected' from previously selected button
+                const currentlySelected = quizOptionsContainer.querySelector('.selected');
+                if (currentlySelected) {
+                    currentlySelected.classList.remove('selected');
+                }
+
+                // Add 'selected' to the clicked button
+                selectedAnswerIndex = parseInt(event.target.dataset.index, 10);
+                event.target.classList.add('selected');
+                quizSubmitButton.disabled = false; // Enable submit button
+            }
+
+
+            quizSubmitButton.addEventListener('click', () => {
+                checkAnswer();
+            });
+
+            function checkAnswer() {
+                 if (selectedAnswerIndex === null) return; // Should not happen if button is enabled
+
+                 const questionData = currentQuizQuestions[currentQuestionIndex];
+                 const correctIndex = questionData.a;
+                 const optionButtons = quizOptionsContainer.querySelectorAll('button');
+
+                 // Disable all options
+                 optionButtons.forEach(button => {
+                     button.disabled = true;
+                 });
+
+                 quizSubmitButton.classList.add('hidden'); // Hide Submit
+                 quizNextButton.classList.remove('hidden'); // Show Next/Finish
+
+
+                 if (selectedAnswerIndex === correctIndex) {
+                     sessionScore++;
+                     quizFeedback.textContent = "Correct!";
+                     quizFeedback.className = 'correct';
+                     optionButtons[selectedAnswerIndex].classList.add('correct');
+                     // Optional: Haptic feedback for success
+                      if(tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+                 } else {
+                     quizFeedback.textContent = `Incorrect. The answer was: ${questionData.o[correctIndex]}`;
+                     quizFeedback.className = 'incorrect';
+                     optionButtons[selectedAnswerIndex].classList.add('incorrect');
+                     optionButtons[correctIndex].classList.add('correct'); // Highlight the correct one too
+                      // Optional: Haptic feedback for error
+                       if(tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
+                 }
+
+                 // Change Next button text if it's the last question
+                 if (currentQuestionIndex >= currentQuizQuestions.length - 1) {
+                    quizNextButton.textContent = "Finish Quiz";
+                 } else {
+                    quizNextButton.textContent = "Next Question";
+                 }
+            }
+
+            quizNextButton.addEventListener('click', () => {
+                currentQuestionIndex++;
+                loadQuestion(); // Load next question or trigger endQuiz
+            });
+
+             function endQuiz() {
+                 quizQuestionText.textContent = "Quiz Finished!";
+                 quizOptionsContainer.innerHTML = ''; // Clear options
+                 quizSubmitButton.classList.add('hidden');
+                 quizNextButton.classList.add('hidden');
+                 quizFeedback.textContent = '';
+
+                 // Update total score
+                 totalWellyPoints += sessionScore;
+                 wellyPointsDisplay.textContent = totalWellyPoints;
+                 finalScoreDisplay.textContent = sessionScore; // Show session score here
+                 quizEndSection.classList.remove('hidden');
+
+                 // --- Save Score to CloudStorage (Example) ---
+                 // if (tg && tg.CloudStorage) {
+                 //      tg.CloudStorage.setItem('totalWellyPoints', totalWellyPoints.toString(), (error, success) => {
+                 //          if (error) {
+                 //              console.error('Error saving points to CloudStorage:', error);
+                 //               tg.showAlert('Could not save your score.'); // Inform user
+                 //          } else if (success) {
+                 //              console.log('Points saved successfully to CloudStorage.');
+                 //          } else {
+                 //              console.warn('Points might not have been saved (CloudStorage response was false).');
+                 //          }
+                 //      });
+                 // }
+             }
+
+             playAgainButton.addEventListener('click', () => {
+                  resetToWheelView();
+             });
+
+             function resetToWheelView() {
+                  quizSection.classList.add('hidden');
+                  wheelSection.classList.remove('hidden');
+                  spinButton.classList.remove('hidden'); // Show spin button again
+                  resultArea.classList.remove('visible'); // Hide old result
+                  startQuizButton.classList.add('hidden');
+                  challengeResultText.textContent = 'Spin again for a new quest!'; // Update text
+                  resultArea.classList.add('visible');
+                  currentChallenge = null;
+                  if (tg && tg.BackButton.isVisible) tg.BackButton.show(); // Ensure back button is shown on wheel view
+             }
+
+            // --- Start the app ---
+            initializeApp();
         });
     </script>
 </body>
