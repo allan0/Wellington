@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dubai CommerCity x Wellington AI Hackathon - Day 1</title>
-    <meta name="description" content="Day 1 Agenda and details for the Dubai CommerCity x Wellington Campus AI Hackathon - 'Shaping Tomorrow’s Solution'.">
-    <meta name="keywords" content="Wellington Campus, Dubai CommerCity, DAFZ, hackathon, AI, Artificial Intelligence, coding, competition, Dubai, UAE, teams, tech challenge, industry challenges, innovation, Python, Day 1, agenda, mentors, support">
+    <meta name="description" content="Day 1 Agenda and details for the Dubai CommerCity x Wellington Campus AI Hackathon - 'Shaping Tomorrow’s Solution'. Includes AI Judge Simulation.">
+    <meta name="keywords" content="Wellington Campus, Dubai CommerCity, DAFZ, hackathon, AI, Artificial Intelligence, coding, competition, Dubai, UAE, teams, tech challenge, industry challenges, innovation, Python, Day 1, agenda, mentors, support, AI judge">
     <meta name="author" content="Wellington Campus & Dubai CommerCity">
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Dubai CommerCity x Wellington AI Hackathon - Day 1">
-    <meta property="og:description" content="Detailed Day 1 Agenda and Support Info for the 'Shaping Tomorrow’s Solution' AI Hackathon.">
+    <meta property="og:description" content="Detailed Day 1 Agenda and Support Info for the 'Shaping Tomorrow’s Solution' AI Hackathon, featuring an AI Judge Simulation.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wellingtoncampus.co/hackathon.html"> <!-- Update with your final URL -->
     <meta property="og:image" content="./wellingtoncampus.png"> <!-- Ensure this path is correct -->
@@ -49,12 +49,12 @@
             background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1)),
                               linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%, rgba(255,255,255,0.1));
             background-size: 20px 20px;
-            font-size: 1.05rem; /* Slightly smaller base font */
+            font-size: 1.05rem;
             line-height: 1.6;
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            padding-bottom: 80px;
+            padding-bottom: 150px; /* Increased padding for two floating buttons */
         }
 
         h1, h2, h3, h4, h5 {
@@ -69,49 +69,38 @@
         .card {
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            margin-bottom: 1rem; /* Reduced margin between cards */
+            margin-bottom: 1rem;
             border: none;
             background-color: var(--card-bg-color);
-            overflow: hidden; /* Important for collapse transitions */
+            overflow: hidden;
         }
         .card-header {
             background-color: var(--secondary-color);
             color: var(--accent-color);
             font-weight: 600;
             border-bottom: 3px solid var(--primary-color);
-            padding: 0.9rem 1.5rem; /* Slightly reduced padding */
+            padding: 0.9rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             transition: background-color 0.2s ease;
         }
-        .card-header h2 { color: var(--accent-color); margin: 0; font-size: 1.3rem; } /* Reduced header font size */
-        .card-header i { margin-right: 0.75rem; font-size: 1.1rem; } /* Reduced icon size */
+        .card-header h2 { color: var(--accent-color); margin: 0; font-size: 1.3rem; }
+        .card-header i { margin-right: 0.75rem; font-size: 1.1rem; }
 
-        /* --- Collapsible Header Styling --- */
-        .card-header[data-bs-toggle="collapse"] {
-            cursor: pointer;
-        }
-        .card-header[data-bs-toggle="collapse"]:hover {
-            background-color: #004a8d; /* Darken header on hover */
-        }
-        .card-header .chevron-icon {
-            font-size: 0.9rem;
-            transition: transform 0.3s ease;
-             margin-left: auto; /* Push icon to the right */
-             padding-left: 1rem; /* Space between title and icon */
-        }
+        /* Collapsible Header Styling */
+        .card-header[data-bs-toggle="collapse"] { cursor: pointer; }
+        .card-header[data-bs-toggle="collapse"]:hover { background-color: #004a8d; }
+        .card-header .chevron-icon { font-size: 0.9rem; transition: transform 0.3s ease; margin-left: auto; padding-left: 1rem; }
         .card-header .chevron-down { display: inline-block; }
         .card-header .chevron-up { display: none; }
-        /* State when collapsed (closed) */
         .card-header.collapsed .chevron-down { display: inline-block; }
         .card-header.collapsed .chevron-up { display: none; }
-        /* State when not collapsed (open) */
         .card-header:not(.collapsed) .chevron-down { display: none; }
-        .card-header:not(.collapsed) .chevron-up { display: inline-block; transform: rotate(180deg); } /* Rotate chevron */
+        .card-header:not(.collapsed) .chevron-up { display: inline-block; transform: rotate(180deg); }
 
         .card-title { color: var(--secondary-color); margin-bottom: 1rem; font-size: 1.2rem; }
-        .card-body { padding: 1.5rem; } /* Reduced body padding */
+        .card-body { padding: 1.5rem; }
         .card-body h3 { margin-top: 0.5rem; font-size: 1.4rem; }
 
         .list-unstyled li, .list-group-item { margin-bottom: 0.8rem; display: flex; align-items: flex-start; line-height: 1.5; font-size: 1rem; }
@@ -161,15 +150,81 @@
          .list-unstyled i, .list-group-item i { vertical-align: middle; }
          .card ul { list-style: none; padding-left: 0; }
 
-        /* Task Tracker Floating Button */
-         .task-tracker-button { position: fixed; bottom: 75px; right: 20px; width: 60px; height: 60px; background-color: var(--secondary-color); color: var(--accent-color); border: 2px solid var(--primary-color); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; box-shadow: 0 4px 15px rgba(0, 51, 102, 0.4); cursor: pointer; z-index: 1050; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; }
-         .task-tracker-button:hover { background-color: #004a8d; transform: scale(1.1); box-shadow: 0 6px 20px rgba(0, 51, 102, 0.6); }
+        /* --- Floating Buttons --- */
+         .floating-button {
+             position: fixed;
+             right: 20px;
+             width: 60px;
+             height: 60px;
+             background-color: var(--secondary-color);
+             color: var(--accent-color);
+             border: 2px solid var(--primary-color);
+             border-radius: 50%;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             font-size: 1.8rem;
+             box-shadow: 0 4px 15px rgba(0, 51, 102, 0.4);
+             cursor: pointer;
+             z-index: 1050;
+             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+         }
+         .floating-button:hover {
+             background-color: #004a8d;
+             transform: scale(1.1);
+             box-shadow: 0 6px 20px rgba(0, 51, 102, 0.6);
+         }
+         /* Positioning */
+         #task-tracker-btn { bottom: 150px; /* Position above the judge button */ }
+         #ai-judge-btn { bottom: 75px; background-color: var(--primary-color); color: var(--secondary-color); border-color: var(--secondary-color); } /* Different color for judge btn */
+         #ai-judge-btn:hover { background-color: #b8860b; color: var(--secondary-color); }
 
         /* Modal Styling Enhancements */
         .modal-header { background-color: var(--secondary-color); color: var(--accent-color); border-bottom: 2px solid var(--primary-color); }
         .modal-header .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
         .modal-title { font-family: 'Poppins', sans-serif; }
         #task-message-area .alert { margin-top: 1rem; padding: 0.8rem 1.2rem; font-size: 0.95rem; }
+
+        /* --- AI Judge Modal Specific Styles --- */
+        #aiJudgeModal .modal-body { min-height: 350px; /* Ensure space for results */ }
+        #judgeLoader { text-align: center; padding: 3rem 0; display: none; /* Hidden initially */ }
+        #judgeLoader p { margin-top: 1rem; color: var(--secondary-color); font-style: italic; }
+        #judgeResultsArea { display: none; /* Hidden initially */ }
+        #judgeResultTeamName { font-weight: bold; margin-bottom: 1rem; font-size: 1.2rem; }
+        #judgeResultAnalysis ul { list-style: none; padding-left: 0; margin-top: 1rem; }
+        #judgeResultAnalysis li {
+            font-size: 1rem;
+            padding: 0.6rem 0.8rem;
+            background-color: rgba(0, 51, 102, 0.05);
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 0.75rem;
+            border-radius: 5px;
+            opacity: 0; /* Start hidden for animation */
+            transform: translateX(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+         #judgeResultAnalysis li.visible {
+             opacity: 1;
+             transform: translateX(0);
+         }
+        #judgeResultScore {
+            margin-top: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            color: var(--secondary-color);
+            padding: 1rem;
+            background-color: rgba(212, 175, 55, 0.15);
+            border-radius: var(--border-radius);
+        }
+        #judgeResultScore span {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            display: block;
+             margin-top: 0.5rem;
+             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
 
         /* Bottom Navigation Styles */
         .bottom-nav { display: none; position: fixed; bottom: 0; width: 100%; background-color: var(--bottom-nav-bg); box-shadow: 0 -2px 10px rgba(0,0,0,0.1); padding: 0.5rem 0; z-index: 1040; }
@@ -180,8 +235,9 @@
         /* Media query to show bottom nav on small screens */
         @media (max-width: 576px) {
              .bottom-nav { display: flex; }
-             body { padding-bottom: 60px; }
-             .task-tracker-button { bottom: 75px; }
+             body { padding-bottom: 60px; } /* Reset body padding if bottom nav is shown */
+             #task-tracker-btn { bottom: 150px; }
+             #ai-judge-btn { bottom: 75px; }
              h1 { font-size: 1.8rem; }
              .hackathon-subtitle { font-size: 1.1rem;}
              .card-header h2 { font-size: 1.1rem; }
@@ -191,6 +247,10 @@
              .agenda-time { font-size: 0.9rem;}
              .agenda-details p { font-size: 0.9rem; }
              .agenda-speaker { font-size: 0.85rem; }
+             /* Adjust floating button size on small screens */
+             .floating-button { width: 50px; height: 50px; font-size: 1.5rem; right: 15px;}
+             #task-tracker-btn { bottom: 130px; }
+             #ai-judge-btn { bottom: 65px; }
         }
 
         /* Quick Info Card Styling */
@@ -217,41 +277,40 @@
 <body>
     <!-- Main Content -->
     <div class="container mt-4" id="hackathon">
-        <header class="text-center mb-4"> <!-- Reduced bottom margin -->
+        <header class="text-center mb-4">
             <img src="./wellingtoncampus.png" alt="Wellington Campus Logo" style="max-width: 120px; margin-bottom: 0.8rem;">
              <h1><i class="fas fa-cogs me-2"></i>AI Hackathon: Shaping Tomorrow's Solution</h1>
             <p class="hackathon-subtitle">Dubai CommerCity x Wellington Campus - Day 1</p>
         </header>
 
          <!-- Progress Bar -->
-         <section id="progress" class="mb-4 card"> <!-- Reduced margin -->
+         <section id="progress" class="mb-4 card">
              <div class="card-header">
                  <h2><i class="fas fa-tasks"></i>Team Progress Overview</h2>
              </div>
             <div class="card-body">
                 <p>Track your Day 1 task completion using the <i class="fas fa-tasks"></i> Task Tracker button (bottom right).</p>
                 <div class="progress" role="progressbar" aria-label="Hackathon Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%">0% Day 1 Tasks Complete</div> <!-- Updated Text & JS -->
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%">0% Day 1 Tasks Complete</div>
                 </div>
             </div>
          </section>
 
         <!-- Quick Info Summary Card -->
-        <section id="quick-info" class="card mb-4"> <!-- Reduced margin -->
+        <section id="quick-info" class="card mb-4">
             <div class="card-body">
                 <h3><i class="fas fa-bolt me-2"></i>Quick Info - Day 1</h3>
                 <ul class="list-unstyled">
                     <li><i class="fas fa-calendar-alt"></i> <strong>Event:</strong> Shaping Tomorrow’s Solution Hackathon</li>
-                    <li><i class="fas fa-calendar-day"></i> <strong>Date:</strong> [Insert Date, e.g., Monday, 21st April 2025]</li>
+                    <li><i class="fas fa-calendar-day"></i> <strong>Date:</strong> Monday, 21st April 2025</li> <!-- Example Date -->
                     <li><i class="fas fa-clock"></i> <strong>Time:</strong> 08:30 AM - 02:00 PM (Wrap-up)</li>
-                    <li><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> Dubai CommerCity (Specific Hall/Area TBC)</li>
+                    <li><i class="fas fa-map-marker-alt"></i> <strong>Venue:</strong> Dubai CommerCity (Hall TBC)</li>
                     <li><i class="fas fa-users"></i> <strong>Organizers:</strong> Dubai CommerCity (DAFZ) & Wellington Campus</li>
                 </ul>
             </div>
         </section>
 
-        <!-- Collapsible Sections Parent (Optional, for accordion effect) -->
-        <!-- <div class="accordion" id="hackathonAccordion"> -->
+        <!-- Collapsible Sections -->
 
         <!-- Detailed Hackathon Agenda (Open by Default) -->
         <section id="agenda" class="card mb-4">
@@ -259,11 +318,11 @@
                  <h2><i class="fas fa-calendar-alt"></i>Day 1 Agenda</h2>
                  <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
              </div>
-             <div class="collapse show" id="collapseAgenda"> <!-- Added "show" -->
+             <div class="collapse show" id="collapseAgenda">
                  <div class="card-body">
-                     <h3 class="mb-3 mt-0" style="color: var(--primary-color);"><i class="fas fa-flag-checkered me-2"></i>Monday, [Date] - Shaping Tomorrow's Solution</h3>
+                     <h3 class="mb-3 mt-0" style="color: var(--primary-color);"><i class="fas fa-flag-checkered me-2"></i>Monday, 21st April 2025</h3> <!-- Example Date -->
                      <ul class="agenda-list">
-                         <li>
+                          <li>
                             <span class="agenda-time"><i class="fas fa-sign-in-alt"></i>08:30 - 09:00</span>
                             <span class="agenda-details"><strong>Team Registrations & Check-in</strong><p>Arrive, check-in, get kits, enjoy refreshments.</p></span>
                             <span class="agenda-speaker"><small>DAFZ & Wellington</small></span>
@@ -299,7 +358,7 @@
                              <span class="agenda-speaker"><small>Wellington Campus</small></span>
                         </li>
                          <li class="agenda-break">
-                            <span class="agenda-time"><i class="fas fa-utensils"></i>TBC</span>
+                            <span class="agenda-time"><i class="fas fa-utensils"></i>~12:30 PM</span> <!-- Example Time -->
                             <span class="agenda-details"><strong>Lunch/Refreshment Break</strong><p>Refuel and network.</p></span>
                             <span class="agenda-speaker">-</span>
                          </li>
@@ -464,7 +523,7 @@
          <!-- DAFZ/CommerCity Logistics Request (Collapsed) -->
         <section id="logistics-info" class="card mb-4">
              <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLogistics" aria-expanded="false" aria-controls="collapseLogistics">
-                <h3><i class="fas fa-building me-2"></i>Venue Logistics Notes</h3>
+                <h2><i class="fas fa-building me-2"></i>Venue Logistics Notes</h2> <!-- Changed H3 to H2 -->
                  <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span>
              </div>
             <div class="collapse" id="collapseLogistics">
@@ -513,8 +572,8 @@
                           <div class="col-md-6">
                              <strong>Dubai CommerCity (Venue & Logistics):</strong>
                              <ul class="list-unstyled mt-2">
-                                  <li><i class="fas fa-envelope-open-text"></i> [Insert DAFZ Contact Email]</li>
-                                  <li><i class="fas fa-phone"></i> [Insert DAFZ Contact Phone]</li>
+                                  <li><i class="fas fa-envelope-open-text"></i> DCC-Logistics@example.com</li> <!-- Example Email -->
+                                  <li><i class="fas fa-phone"></i> +971 X XXX XXXX</li> <!-- Example Phone -->
                                   <li><i class="fas fa-info-circle"></i> DAFZ team manages check-in.</li>
                              </ul>
                          </div>
@@ -523,8 +582,6 @@
             </div>
         </section>
 
-        <!-- </div> End Accordion Parent -->
-
          <!-- Footer -->
          <footer class="text-center mt-4 mb-4 text-muted">
             <small>© 2024-2025 Dubai CommerCity & Wellington Campus. All Rights Reserved.</small>
@@ -532,10 +589,14 @@
 
     </div> <!-- End Main Container -->
 
-    <!-- Task Tracker Floating Button -->
-    <button class="task-tracker-button" id="task-tracker-btn" title="Open Task Tracker" data-bs-toggle="modal" data-bs-target="#taskTrackerModal">
+    <!-- Floating Buttons -->
+    <button class="floating-button" id="task-tracker-btn" title="Open Task Tracker" data-bs-toggle="modal" data-bs-target="#taskTrackerModal">
         <i class="fas fa-tasks"></i>
     </button>
+    <button class="floating-button" id="ai-judge-btn" title="AI Judge Simulation" data-bs-toggle="modal" data-bs-target="#aiJudgeModal">
+        <i class="fas fa-gavel"></i> <!-- Judge icon -->
+    </button>
+
 
     <!-- Task Tracker Modal -->
     <div class="modal fade" id="taskTrackerModal" tabindex="-1" aria-labelledby="taskTrackerModalLabel" aria-hidden="true">
@@ -548,7 +609,6 @@
                 <div class="modal-body">
                     <p class="text-muted small">Click tasks to mark complete (saved locally).</p>
                     <div id="task-message-area" class="mb-3"></div>
-                    <!-- Updated Day 1 Checklist - Must be defined here -->
                     <div class="checklist" id="modal-checklist">
                          <div class="checklist-item" data-task-id="register"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Register & Check-in:</strong> Arrive and get kit.</div> </div>
                          <div class="checklist-item" data-task-id="briefing"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Attend Briefing:</strong> Understand rules & conduct.</div> </div>
@@ -568,6 +628,72 @@
         </div>
     </div>
 
+    <!-- AI Judge Modal -->
+    <div class="modal fade" id="aiJudgeModal" tabindex="-1" aria-labelledby="aiJudgeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="aiJudgeModalLabel"><i class="fas fa-brain me-2"></i>AI Judging Simulation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small">Select a team and click 'Judge Project' to run a simulated AI evaluation based on predefined criteria.</p>
+
+                    <!-- Team Selection -->
+                     <div class="row g-3 align-items-end mb-4">
+                         <div class="col-md-8">
+                             <label for="judgeTeamSelect" class="form-label">Select Team to Judge:</label>
+                             <select class="form-select form-select-sm" id="judgeTeamSelect">
+                                 <option selected disabled value="">-- Choose a Team --</option>
+                                 <option value="Team Alpha">Team Alpha (Logistics Track)</option>
+                                 <option value="Team Beta">Team Beta (Sustainability Track)</option>
+                                 <option value="Team Gamma">Team Gamma (Healthcare Track)</option>
+                                 <option value="Team Delta">Team Delta (Open Innovation)</option>
+                                 <option value="The AI Mavericks">The AI Mavericks (Project Management)</option>
+                             </select>
+                         </div>
+                         <div class="col-md-4">
+                             <button class="btn btn-primary w-100 btn-sm" type="button" id="judgeProjectBtn">
+                                 <i class="fas fa-play me-1"></i> Judge Project
+                             </button>
+                         </div>
+                     </div>
+
+                    <!-- Loader -->
+                      <div id="judgeLoader">
+                         <div class="spinner-border text-primary" role="status">
+                             <span class="visually-hidden">Loading...</span>
+                         </div>
+                         <p>AI analyzing project submission...</p>
+                      </div>
+
+                    <!-- Results Area -->
+                     <div id="judgeResultsArea">
+                         <h5 id="judgeResultTeamName"></h5>
+                         <div id="judgeResultAnalysis">
+                            <h6>Analysis:</h6>
+                            <ul>
+                                <!-- Analysis points will appear here -->
+                            </ul>
+                         </div>
+                         <div id="judgeResultScore">
+                             <!-- Score will appear here -->
+                         </div>
+                     </div>
+
+                     <p class="mb-0 small text-muted fst-italic mt-4">
+                         <i class="fas fa-info-circle me-1"></i> This is a <strong>simulation</strong> for demonstration purposes. Actual judging involves comprehensive review by human judges based on the official criteria.
+                     </p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
      <!-- Bottom Navigation for Mobile -->
      <nav class="bottom-nav" aria-label="Mobile navigation">
          <div class="d-flex justify-content-around w-100">
@@ -581,17 +707,16 @@
     <!-- Bootstrap Bundle JS -->
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-    <!-- Custom JS for Task Tracker -->
+    <!-- Custom JS for Task Tracker & AI Judge -->
     <script id="feature-script">
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Common Elements & State ---
+
+            // --- Task Tracker Logic (Keep as is) ---
             const modalChecklist = document.getElementById('modal-checklist');
             const messageArea = document.getElementById('task-message-area');
-            const storageKey = 'hackathonDay1TaskStatus'; // Specific key for Day 1
+            const storageKey = 'hackathonDay1TaskStatus';
             const progressBar = document.querySelector('#progress .progress-bar');
-            let taskState = loadTaskState(); // Load initial state
-
-            // --- Task Tracker Elements & Logic ---
+            let taskState = loadTaskState();
             const taskModalElement = document.getElementById('taskTrackerModal');
 
             function loadTaskState() {
@@ -601,30 +726,25 @@
             function saveTaskState(state) {
                 localStorage.setItem(storageKey, JSON.stringify(state));
             }
-
             function updateTaskUI(taskId, isCompleted) {
                 const modalItem = modalChecklist?.querySelector(`.checklist-item[data-task-id="${taskId}"]`);
                 if (modalItem) { modalItem.classList.toggle('completed', isCompleted); }
             }
-
             function showMessage(message, type = 'success') {
-                if (messageArea) {
-                   messageArea.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show small p-2" role="alert">${message}<button type="button" class="btn-close btn-sm p-2" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
-                }
-            }
+                 if (messageArea) {
+                    messageArea.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show small p-2" role="alert">${message}<button type="button" class="btn-close btn-sm p-2" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+                 }
+             }
             function clearMessages() {
                  if (messageArea) { messageArea.innerHTML = ''; }
             }
-
             function updateProgressBar() {
                  const state = loadTaskState();
                  const taskItems = modalChecklist?.querySelectorAll('.checklist-item[data-task-id]');
-                 if (!taskItems || taskItems.length === 0 || !progressBar) return; // More robust check
-
+                 if (!taskItems || taskItems.length === 0 || !progressBar) return;
                  const totalTasks = taskItems.length;
                  const completedTasks = Object.values(state).filter(status => status === true).length;
                  const progressPercent = Math.round((completedTasks / totalTasks) * 100);
-
                  progressBar.style.width = progressPercent + '%';
                  progressBar.textContent = `${progressPercent}% Day 1 Tasks Complete`;
                  progressBar.setAttribute('aria-valuenow', progressPercent);
@@ -633,84 +753,216 @@
                  progressBar.classList.toggle('progress-bar-striped', progressPercent < 100);
             }
 
-            // Initial Load for Task Tracker UI state
-             if (modalChecklist) {
+            if (modalChecklist) {
                 modalChecklist.querySelectorAll('.checklist-item[data-task-id]').forEach(item => {
                     const taskId = item.dataset.taskId;
-                    if (taskId && taskState[taskId]) {
-                         item.classList.add('completed');
-                    } else {
-                         item.classList.remove('completed');
-                    }
+                    if (taskId && taskState[taskId]) { item.classList.add('completed'); }
+                    else { item.classList.remove('completed'); }
                 });
-             } else {
-                 console.warn("Modal checklist container (#modal-checklist) not found.");
-             }
-             updateProgressBar(); // Initial progress bar update
-
-            // Event Listener for Modal Task Clicks
-             if (modalChecklist) {
                 modalChecklist.addEventListener('click', function(event) {
                     const taskItem = event.target.closest('.checklist-item[data-task-id]');
                     if (taskItem) {
                         const taskId = taskItem.dataset.taskId;
-                        const isNowCompleted = !taskState[taskId]; // Toggle state
-                        taskState[taskId] = isNowCompleted; // Update local state variable
-                        saveTaskState(taskState); // Save updated state
-                        updateTaskUI(taskId, isNowCompleted); // Update checklist visually
+                        const isNowCompleted = !taskState[taskId];
+                        taskState[taskId] = isNowCompleted;
+                        saveTaskState(taskState);
+                        updateTaskUI(taskId, isNowCompleted);
                         clearMessages();
                         const taskNameElement = taskItem.querySelector('strong');
                         const taskName = taskNameElement ? taskNameElement.textContent.trim() : `Task ${taskId}`;
                         if (isNowCompleted) { showMessage(`Task "${taskName}" marked complete!`, 'success'); }
                         else { showMessage(`Task "${taskName}" marked as incomplete.`, 'warning'); }
-                        updateProgressBar(); // Update progress bar on click
+                        updateProgressBar();
                     }
                 });
+            } else { console.warn("Modal checklist container (#modal-checklist) not found."); }
+
+            if (taskModalElement) { taskModalElement.addEventListener('hidden.bs.modal', clearMessages); }
+            updateProgressBar(); // Initial progress bar update
+
+            // --- END Task Tracker Logic ---
+
+
+            // --- AI Judge Simulation Logic ---
+            const judgeModalElement = document.getElementById('aiJudgeModal');
+            const judgeTeamSelect = document.getElementById('judgeTeamSelect');
+            const judgeProjectBtn = document.getElementById('judgeProjectBtn');
+            const judgeLoader = document.getElementById('judgeLoader');
+            const judgeResultsArea = document.getElementById('judgeResultsArea');
+            const judgeResultTeamName = document.getElementById('judgeResultTeamName');
+            const judgeResultAnalysis = document.getElementById('judgeResultAnalysis ul'); // Target the UL directly
+            const judgeResultScore = document.getElementById('judgeResultScore');
+
+            // Placeholder analysis data based on team/track
+            const teamAnalysisData = {
+                "Team Alpha": [
+                    "Strong technical implementation using predictive models for route optimization.",
+                    "Good use of sample datasets, demonstrating clear data processing steps.",
+                    "Innovation score moderate; solution addresses known logistics problems effectively.",
+                    "Feasibility high, potential for real-world deployment with more robust data.",
+                    "Presentation needs more polish, focus on visual clarity.",
+                ],
+                 "Team Beta": [
+                     "Creative approach to environmental monitoring using image recognition.",
+                     "Code structure is well-organized, utilizes relevant Python libraries.",
+                     "High innovation potential, tackles a challenging sustainability issue.",
+                     "Feasibility needs further validation regarding data sources and scaling.",
+                     "Impact analysis is compelling, clearly articulated value proposition.",
+                 ],
+                 "Team Gamma": [
+                     "Leverages NLP for analyzing patient feedback data - technically sound.",
+                     "Addresses a relevant healthcare challenge regarding patient experience.",
+                     "Implementation is clean, but demo lacks user-friendliness.",
+                     "Potential impact is significant if integrated into hospital systems.",
+                     "Innovation score solid; practical application of AI in healthcare.",
+                 ],
+                  "Team Delta": [
+                      "Novelty factor is very high, combining AI with [Specific Open Innovation Field].",
+                      "Technical execution shows promise but requires further development.",
+                      "Feasibility assessment is optimistic; market validation needed.",
+                      "Pitch effectively conveys the unique vision and potential disruption.",
+                      "Completion level adequate for hackathon, good foundation.",
+                  ],
+                  "The AI Mavericks": [
+                      "AI-driven risk prediction for project tasks is well-implemented.",
+                      "Good integration with simulated project management data.",
+                      "Solution is practical and addresses a common pain point.",
+                      "Technical depth is good, showing understanding of PM complexities.",
+                      "Presentation clear, demo effectively showcases core functionality."
+                  ]
+            };
+
+            // Function to simulate typing/sequential display
+            function displayAnalysisSequentially(analysisPoints) {
+                 judgeResultAnalysis.innerHTML = ''; // Clear previous results
+                 let delay = 0;
+                 const interval = 800; // Milliseconds between each point appearing
+
+                 analysisPoints.forEach(point => {
+                     setTimeout(() => {
+                         const li = document.createElement('li');
+                         li.textContent = point;
+                         judgeResultAnalysis.appendChild(li);
+                         // Force reflow to apply transition
+                         void li.offsetWidth;
+                         li.classList.add('visible');
+                     }, delay);
+                     delay += interval;
+                 });
+
+                 // Return the total delay for showing the score afterwards
+                 return delay;
+            }
+
+             // Function to generate a score (simple simulation)
+            function generateScore(teamName) {
+                 // Base score + some randomness + small bonus for certain teams
+                 let baseScore = 6.0;
+                 let randomness = Math.random() * 2.0; // 0.0 to 2.0
+                 let bonus = 0;
+
+                 if (teamName === "Team Beta" || teamName === "The AI Mavericks") bonus = 0.5 + Math.random(); // Slightly higher potential
+                 if (teamName === "Team Delta") bonus = Math.random() * 1.5; // Higher variance
+
+                 let finalScore = baseScore + randomness + bonus;
+                 finalScore = Math.min(Math.max(finalScore, 4.0), 9.8); // Clamp score between 4.0 and 9.8
+                 return finalScore.toFixed(1); // Return score rounded to one decimal place
              }
 
-             // Optional: Clear messages when modal is closed
-             if (taskModalElement) {
-                taskModalElement.addEventListener('hidden.bs.modal', clearMessages);
-             }
 
-             // --- Smooth scroll for internal links ---
+            if (judgeProjectBtn && judgeTeamSelect && judgeLoader && judgeResultsArea && judgeResultAnalysis && judgeResultScore) {
+                judgeProjectBtn.addEventListener('click', function() {
+                    const selectedTeam = judgeTeamSelect.value;
+
+                    if (!selectedTeam) {
+                        // Simple alert or feedback if no team is selected
+                         judgeResultsArea.style.display = 'block';
+                         judgeLoader.style.display = 'none';
+                         judgeResultTeamName.textContent = "Error";
+                         judgeResultAnalysis.innerHTML = '<li>Please select a team first.</li>';
+                         judgeResultScore.innerHTML = '';
+                         // Make the error list item visible
+                         const errorLi = judgeResultAnalysis.querySelector('li');
+                         if (errorLi) {
+                            void errorLi.offsetWidth; // Trigger reflow
+                            errorLi.classList.add('visible');
+                         }
+                        return;
+                    }
+
+                    // Start Simulation
+                    judgeResultsArea.style.display = 'none'; // Hide previous results
+                    judgeResultAnalysis.innerHTML = ''; // Clear analysis points
+                    judgeResultScore.innerHTML = ''; // Clear score
+                    judgeLoader.style.display = 'block'; // Show loader
+                    judgeProjectBtn.disabled = true;
+                    judgeTeamSelect.disabled = true;
+
+                    // Simulate 5-second processing + sequential display time
+                    const processingTime = 5000;
+                    const analysisPoints = teamAnalysisData[selectedTeam] || ["Standard analysis indicates project meets baseline criteria.", "Further review required for detailed assessment."]; // Default analysis
+
+                    setTimeout(() => {
+                        judgeLoader.style.display = 'none'; // Hide loader
+                        judgeResultsArea.style.display = 'block'; // Show results container
+                        judgeResultTeamName.textContent = `AI Evaluation: ${selectedTeam}`;
+
+                        // Display analysis points one by one
+                        const totalDisplayTime = displayAnalysisSequentially(analysisPoints);
+
+                         // Display score after the last analysis point has appeared
+                        setTimeout(() => {
+                             const score = generateScore(selectedTeam);
+                             judgeResultScore.innerHTML = `Simulated Score: <span>${score}/10</span>`;
+                             judgeProjectBtn.disabled = false; // Re-enable button
+                             judgeTeamSelect.disabled = false;
+                         }, totalDisplayTime); // Wait for analysis points to finish displaying
+
+                    }, processingTime); // Initial 5 seconds processing delay
+                });
+            } else {
+                console.warn("One or more AI Judging modal elements not found. Feature disabled.");
+            }
+            // --- END AI Judge Simulation Logic ---
+
+
+            // --- Smooth Scroll Logic (Keep as is) ---
              document.querySelectorAll('.scroll-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const targetId = this.getAttribute('href');
-                    if (targetId && targetId.startsWith('#')) {
-                        e.preventDefault();
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            // If target is inside a collapsed element, open it first
-                            const collapseTarget = targetElement.closest('.collapse:not(.show)');
-                            if(collapseTarget) {
-                                const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseTarget);
-                                collapseTarget.addEventListener('shown.bs.collapse', () => {
-                                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                    highlightElement(targetElement);
-                                }, { once: true });
-                                bsCollapse.show();
-                            } else {
-                                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                highlightElement(targetElement);
-                            }
-                        }
-                    }
-                });
-            });
+                 link.addEventListener('click', function(e) {
+                     const targetId = this.getAttribute('href');
+                     if (targetId && targetId.startsWith('#')) {
+                         e.preventDefault();
+                         const targetElement = document.querySelector(targetId);
+                         if (targetElement) {
+                             const collapseTarget = targetElement.closest('.collapse:not(.show)');
+                             if(collapseTarget) {
+                                 const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseTarget);
+                                 collapseTarget.addEventListener('shown.bs.collapse', () => {
+                                     targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                     highlightElement(targetElement);
+                                 }, { once: true });
+                                 bsCollapse.show();
+                             } else {
+                                 targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                 highlightElement(targetElement);
+                             }
+                         }
+                     }
+                 });
+             });
 
-            function highlightElement(element) {
-                 // Slightly more prominent highlight
+             function highlightElement(element) {
                  element.style.transition = 'background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out';
-                 element.style.backgroundColor = 'rgba(212, 175, 55, 0.2)'; // Use primary color with alpha
-                 element.style.boxShadow = '0 0 0 3px rgba(212, 175, 55, 0.3)'; // Add a subtle glow
+                 element.style.backgroundColor = 'rgba(212, 175, 55, 0.2)';
+                 element.style.boxShadow = '0 0 0 3px rgba(212, 175, 55, 0.3)';
                  setTimeout(() => {
                      element.style.backgroundColor = '';
                      element.style.boxShadow = '';
-                     // Remove transition style
                      setTimeout(() => { element.style.transition = ''; }, 200);
                  }, 1800);
-            }
+             }
+            // --- END Smooth Scroll Logic ---
+
          });
     </script>
 
