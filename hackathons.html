@@ -90,7 +90,7 @@
         #user-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
         #user-name-display { font-weight: 600; margin-right: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
         #welly-points { font-weight: bold; margin-left: 5px; }
-        #user-profile .fa-star { margin-left: 5px; }
+        #user-profile .fa-star { margin-left: 5px; color: var(--primary-color); } /* Ensure star color */
 
         /* --- Welly Points Gain Animation (Keep existing) --- */
         .welly-points-gain {
@@ -116,7 +116,7 @@
         /* --- Main Container (Keep existing) --- */
         .container { flex-grow: 1; width: 100%; }
 
-        /* --- Other Existing Styles (Keep as before, truncated for brevity) --- */
+        /* --- Other Existing Styles (Minor Adjustments) --- */
          h1, h2, h3, h4, h5 { font-family: 'Poppins', sans-serif; color: var(--secondary-color); margin-top: 1rem; }
          h1 { color: var(--secondary-color); font-size: 1.8rem; }
          h1 .fa-cogs { color: var(--primary-color); }
@@ -157,11 +157,36 @@
          .progress { height: 18px; font-size: 0.75rem; border-radius: 50px; background-color: #e9ecef; }
          .progress-bar { background-color: var(--primary-color); font-weight: bold; color: var(--accent-color); display: flex; align-items: center; justify-content: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); transition: width 0.6s ease; }
          .agenda-list { list-style: none; padding-left: 0; }
+         .agenda-list li { margin-bottom: 1rem; display: flex; align-items: flex-start; }
+         .agenda-time { flex: 0 0 70px; font-weight: bold; color: var(--secondary-color); display: flex; align-items: center; font-size: 0.9em; }
+         .agenda-time i { margin-right: 5px; width: 15px; text-align: center;}
+         .agenda-details { flex-grow: 1; margin-left: 10px; }
+         .agenda-details strong { display: block; font-size: 0.95em; }
+         .agenda-details p { font-size: 0.85em; margin-bottom: 0; color: #555; line-height: 1.3; }
+         .agenda-speaker { flex: 0 0 100px; text-align: right; font-size: 0.8em; color: #6c757d; font-style: italic; margin-left: 10px; }
+         .agenda-break { background-color: rgba(212,175,55,0.1); padding: 5px 0; border-left: 3px solid var(--primary-color); border-radius: 4px; margin-left: 5px; }
+         .agenda-break .agenda-time { color: var(--primary-color); }
          #task-message-area .alert { margin-top: 1rem; padding: 0.7rem 1rem; font-size: 0.9rem; }
          #aiJudgeModal .modal-body { min-height: 300px; }
          #judgeLoader { text-align: center; padding: 2rem 0; display: none; }
          #judgeLoader p { margin-top: 0.8rem; color: var(--secondary-color); font-style: italic; font-size: 0.9rem;}
          #judgeResultsArea { display: none; }
+         #judgeResultTeamName { margin-bottom: 0.5rem; color: var(--secondary-color); font-weight: bold;}
+         #judgeResultAnalysis { margin-bottom: 1rem; }
+         #judgeResultAnalysisList li { margin-bottom: 0.3rem; opacity: 0; transition: opacity 0.4s ease-in; padding-left: 1em; position: relative;}
+         #judgeResultAnalysisList li::before { content: '✓'; position: absolute; left: 0; color: var(--success-color); font-weight: bold;}
+         #judgeResultAnalysisList li.visible { opacity: 1; }
+         #judgeResultScore { font-size: 1.1rem; font-weight: bold; color: var(--primary-color); text-align: center; margin-top: 1rem; padding: 0.5rem; background-color: rgba(0,51,102,0.05); border-radius: 5px;}
+         #leaderboardSection { margin-top: 1rem; opacity: 0; transition: opacity 0.5s ease; }
+         #leaderboardSection.visible { opacity: 1; }
+         #leaderboardSection .table th, #leaderboardSection .table td { padding: 0.4rem 0.5rem; }
+         .rank-badge { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 50%; background-color: var(--primary-color); color: var(--accent-color); font-weight: bold; font-size: 0.8em; }
+         #leaderboard-body tr:nth-child(1) .rank-badge { background-color: #ffd700; color: #333;}
+         #leaderboard-body tr:nth-child(2) .rank-badge { background-color: #c0c0c0; color: #333;}
+         #leaderboard-body tr:nth-child(3) .rank-badge { background-color: #cd7f32; color: #fff;}
+         #leaderboard-body tr.highlight-new td { background-color: rgba(212, 175, 55, 0.2); transition: background-color 1s ease-out; }
+         #flying-score-element { position: fixed; z-index: 1100; font-size: 1.2rem; font-weight: bold; color: var(--primary-color); background: rgba(255,255,255,0.9); padding: 5px 10px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); opacity: 0; transition: top 0.6s ease-in-out, left 0.6s ease-in-out, opacity 0.6s ease-in-out, transform 0.6s ease-in-out; pointer-events: none; transform-origin: center center; }
+
          .bottom-nav .btn { color: var(--bottom-nav-icon); background-color: transparent; border: none; padding: 0.5rem; font-size: 0.85rem; display: flex; flex-direction: column; align-items: center; transition: color 0.3s ease; text-decoration: none; }
          .bottom-nav i { font-size: 1.1rem; margin-bottom: 0.15rem; }
          .bottom-nav .btn.active { color: var(--bottom-nav-active); font-weight: 600;}
@@ -212,6 +237,9 @@
         #reset-feedback { font-size: 0.8rem; margin-top: 5px; min-height: 1.2rem; }
         .feedback-success { color: var(--success-color, green); }
         .feedback-error { color: var(--danger-color); }
+
+        /* Registration Modal Specifics */
+        #team-member-count { min-height: 1.2em; margin-top: 0.25rem; } /* Add space for member count */
 
     </style>
 </head>
@@ -274,7 +302,17 @@
                 <div class="collapse show" id="collapseAgenda" data-bs-parent="#accordionHackathon">
                     <div class="card-body">
                          <h3 class="mb-3 mt-0 small" style="color: var(--primary-color);"><i class="fas fa-flag-checkered me-2"></i>Monday, 21st April 2025</h3>
-                         <ul class="agenda-list"> <li> <span class="agenda-time"><i class="fas fa-sign-in-alt"></i>08:30</span> <span class="agenda-details"><strong>Registrations & Check-in</strong><p>Arrival, kits, refreshments.</p></span> <span class="agenda-speaker"><small>DAFZ & Wellington</small></span> </li> <li> <span class="agenda-time"><i class="fas fa-bullhorn"></i>09:00</span> <span class="agenda-details"><strong>Opening Speech</strong><p>Kick-off.</p></span> <span class="agenda-speaker"><small>Wellington</small></span> </li> <li> <span class="agenda-time"><i class="fas fa-scroll"></i>09:05</span> <span class="agenda-details"><strong>Code of Conduct</strong><p>Rules & IP.</p></span> <span class="agenda-speaker"><small>Coordinator</small></span> </li> <li> <span class="agenda-time"><i class="fas fa-users"></i>09:10</span> <span class="agenda-details"><strong>Team Intros</strong><p>Ice-breaker.</p></span> <span class="agenda-speaker"><small>All Teams</small></span> </li> <li> <span class="agenda-time"><i class="fas fa-dice"></i>09:20</span> <span class="agenda-details"><strong>Challenge Assignment</strong><p>Spin Wheel. <a href="game.html" target="_self" class="link-secondary small">(Go to Wheel)</a></p></span> <span class="agenda-speaker"><small>Facilitated</small></span> </li> <li> <span class="agenda-time"><i class="fas fa-laptop-code"></i>09:30</span> <span class="agenda-details"><strong>Hacking Begins!</strong></span> <span class="agenda-speaker">-</span> </li> <li class="agenda-break"> <span class="agenda-time"><i class="fas fa-headset"></i>Ongoing</span> <span class="agenda-details"><strong>Support Active</strong><p>Mentors, Help Desk, Pitch Coach.</p></span> <span class="agenda-speaker"><small>Wellington</small></span> </li> <li class="agenda-break"> <span class="agenda-time"><i class="fas fa-utensils"></i>~12:30</span> <span class="agenda-details"><strong>Lunch Break</strong></span> <span class="agenda-speaker">-</span> </li> <li> <span class="agenda-time"><i class="fas fa-flag-checkered"></i>14:00</span> <span class="agenda-details"><strong>Day 1 Wrap-Up & Submit</strong><p>Submit rough model & deck draft.</p></span> <span class="agenda-speaker"><small>Via Link</small></span> </li> </ul>
+                         <ul class="agenda-list">
+                             <li> <span class="agenda-time"><i class="fas fa-sign-in-alt"></i>08:30</span> <span class="agenda-details"><strong>Registrations & Check-in</strong><p>Arrival, kits, refreshments.</p></span> <span class="agenda-speaker"><small>DAFZ & Wellington</small></span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-bullhorn"></i>09:00</span> <span class="agenda-details"><strong>Opening Speech</strong><p>Kick-off.</p></span> <span class="agenda-speaker"><small>Wellington</small></span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-scroll"></i>09:05</span> <span class="agenda-details"><strong>Code of Conduct</strong><p>Rules & IP.</p></span> <span class="agenda-speaker"><small>Coordinator</small></span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-users"></i>09:10</span> <span class="agenda-details"><strong>Team Intros</strong><p>Ice-breaker.</p></span> <span class="agenda-speaker"><small>All Teams</small></span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-dice"></i>09:20</span> <span class="agenda-details"><strong>Challenge Assignment</strong><p>Spin Wheel. <a href="game.html" target="_self" class="link-secondary small">(Go to Wheel)</a></p></span> <span class="agenda-speaker"><small>Facilitated</small></span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-laptop-code"></i>09:30</span> <span class="agenda-details"><strong>Hacking Begins!</strong></span> <span class="agenda-speaker">-</span> </li>
+                             <li class="agenda-break"> <span class="agenda-time"><i class="fas fa-headset"></i>Ongoing</span> <span class="agenda-details"><strong>Support Active</strong><p>Mentors, Help Desk, Pitch Coach.</p></span> <span class="agenda-speaker"><small>Wellington</small></span> </li>
+                             <li class="agenda-break"> <span class="agenda-time"><i class="fas fa-utensils"></i>~12:30</span> <span class="agenda-details"><strong>Lunch Break</strong></span> <span class="agenda-speaker">-</span> </li>
+                             <li> <span class="agenda-time"><i class="fas fa-flag-checkered"></i>14:00</span> <span class="agenda-details"><strong>Day 1 Wrap-Up & Submit</strong><p>Submit rough model & deck draft.</p></span> <span class="agenda-speaker"><small>Via Link</small></span> </li>
+                         </ul>
                     </div>
                 </div>
             </section>
@@ -284,9 +322,9 @@
              <section id="tracks" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTracks" aria-expanded="false" aria-controls="collapseTracks"> <h2><i class="fas fa-stream"></i>Themes</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseTracks" data-bs-parent="#accordionHackathon"> <div class="card-body"> <ul class="list-unstyled"> <li><i class="fas fa-truck-loading"></i> Supply Chain</li> <li><i class="fas fa-leaf"></i> Sustainability</li> <li><i class="fas fa-briefcase-medical"></i> Healthcare</li> <li><i class="fas fa-tasks"></i> Project Mgmt</li> <li><i class="fas fa-city"></i> Real Estate</li> <li><i class="fas fa-landmark"></i> Government</li> <li><i class="fas fa-lightbulb"></i> Open Innovation</li> </ul> <p class="small text-muted mt-2">Assigned via <a href="game.html" target="_self">Spin the Wheel</a>.</p> </div> </div> </section>
              <section id="preparation" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapsePrep" aria-expanded="false" aria-controls="collapsePrep"> <h2><i class="fas fa-laptop-code"></i>Preparation</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapsePrep" data-bs-parent="#accordionHackathon"> <div class="card-body"> <h5 class="card-title small"><i class="fas fa-laptop me-2"></i>Hardware</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fas fa-check-circle"></i> Laptop</li> <li><i class="fas fa-check-circle"></i> Charger</li> <li><i class="fas fa-check-circle"></i> Wi-Fi @ Venue</li> </ul> <h5 class="card-title small mt-2"><i class="fas fa-tools me-2"></i>Software</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fab fa-python"></i> Python 3.8+</li> <li><i class="fas fa-book"></i> Jupyter/Editor</li> <li><i class="fas fa-code-branch"></i> Git/GitHub</li> <li><i class="fas fa-brain"></i> AI Libs (Opt)</li> <li><i class="fas fa-cloud-upload-alt"></i> Cloud Acct (Opt)</li> </ul> <h5 class="card-title small mt-2"><i class="fas fa-lightbulb me-2"></i>Knowledge</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fas fa-check"></i> Python Basics</li> <li><i class="fas fa-check"></i> Basic AI/ML</li> <li><i class="fas fa-check"></i> Teamwork!</li> </ul> </div> </div> </section>
              <section id="prizes" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapsePrizes" aria-expanded="false" aria-controls="collapsePrizes"> <h2><i class="fas fa-trophy"></i>Prizes</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapsePrizes" data-bs-parent="#accordionHackathon"> <div class="card-body"> <ul class="list-unstyled small"> <li><i class="fas fa-trophy"></i> 1st: AED 10k, Swag, Ops</li> <li><i class="fas fa-medal"></i> 2nd: AED 5k, Swag</li> <li><i class="fas fa-award"></i> 3rd: AED 2.5k, Swag</li> <li><i class="fas fa-lightbulb"></i> Innovation Award</li> <li><i class="fas fa-gifts"></i> All: Certificate, Swag</li> <li><i class="fas fa-handshake"></i> Networking</li> </ul> </div> </div> </section>
-             <section id="judging" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseJudging" aria-expanded="false" aria-controls="collapseJudging"> <h2><i class="fas fa-gavel"></i>Judging</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseJudging" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Final judging (Day 2) considers:</p> <ul class="list-unstyled small"> <li><i class="fas fa-cogs"></i> Technical</li> <li><i class="fas fa-lightbulb"></i> Innovation</li> <li><i class="fas fa-bullseye"></i> Impact</li> <li><i class="fas fa-presentation"></i> Pitch/Demo</li> <li><i class="fas fa-check-circle"></i> Completion</li> </ul> <p class="small mt-2">Note: AI Judge Sim (<i class="fas fa-gavel"></i> button) provides simulated scores for fun/practice.</p> </div> </div> </section>
+             <section id="judging" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseJudging" aria-expanded="false" aria-controls="collapseJudging"> <h2><i class="fas fa-gavel"></i>Judging</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseJudging" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Final judging (Day 2) considers:</p> <ul class="list-unstyled small"> <li><i class="fas fa-cogs"></i> Technical</li> <li><i class="fas fa-lightbulb"></i> Innovation</li> <li><i class="fas fa-bullseye"></i> Impact</li> <li><i class="fas fa-presentation"></i> Pitch/Demo</li> <li><i class="fas fa-check-circle"></i> Completion</li> </ul> <p class="small mt-2">Note: AI Judge Sim (<i class="fas fa-gavel"></i> button) provides simulated scores for fun/practice using registered teams.</p> </div> </div> </section>
              <section id="logistics-info" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLogistics" aria-expanded="false" aria-controls="collapseLogistics"> <h2><i class="fas fa-building me-2"></i>Logistics</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseLogistics" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Venue requests:</p> <ul class="list-unstyled small"> <li><i class="fas fa-users"></i> Breakout spaces</li> <li><i class="fas fa-desktop"></i> Screen/Projector</li> <li><i class="fas fa-video"></i> Basic Recording?</li> </ul> </div> </div> </section>
-             <section id="registration-note" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseRegNote" aria-expanded="false" aria-controls="collapseRegNote"> <h2><i class="fas fa-user-check"></i>Registration Info</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseRegNote" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Official registration was managed via prior communication. Use the 'Register / View Team' button above to confirm/join your team in the app (max 4 members/team). This is required for AI Judge inclusion.</p> </div> </div> </section>
+             <section id="registration-note" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseRegNote" aria-expanded="false" aria-controls="collapseRegNote"> <h2><i class="fas fa-user-check"></i>Registration Info</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseRegNote" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Official registration was managed via prior communication. Use the 'Register / View Team' button above to confirm/join your team within this app (max 4 members/team). This helps link your progress and is required for the AI Judge simulation.</p> </div> </div> </section>
              <section id="contact" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseContact" aria-expanded="false" aria-controls="collapseContact"> <h2><i class="fas fa-envelope"></i>Contact</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseContact" data-bs-parent="#accordionHackathon"> <div class="card-body"> <div class="row small"> <div class="col-6 mb-2"> <strong>Wellington:</strong> <ul class="list-unstyled mt-1"> <li><i class="fas fa-envelope-open-text"></i> <a href="mailto:info@wellingtoncampus.co">Email</a></li> <li><i class="fas fa-phone"></i> <a href="tel:+971542523922">Call</a></li> </ul> </div> <div class="col-6 mb-2"> <strong>CommerCity:</strong> <ul class="list-unstyled mt-1"> <li><i class="fas fa-envelope-open-text"></i> Email DCC</li> <li><i class="fas fa-phone"></i> Call DCC</li> </ul> </div> </div> </div> </div> </section>
         </div> <!-- End Accordion -->
 
@@ -337,7 +375,7 @@
 
     <!-- AI Judge Modal (MODIFIED Select Options) -->
     <div class="modal fade" id="aiJudgeModal" tabindex="-1" aria-labelledby="aiJudgeModalLabel" aria-hidden="true">
-         <div class="modal-dialog modal-lg modal-dialog-scrollable"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="aiJudgeModalLabel"><i class="fas fa-brain me-2"></i>AI Judge Sim</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <p class="text-muted small">Select a registered team, click Judge.</p> <div class="row g-2 align-items-end mb-3"> <div class="col-8"> <label for="judgeTeamSelect" class="form-label visually-hidden">Select Team:</label> <select class="form-select form-select-sm" id="judgeTeamSelect"> <option selected disabled value="">-- Choose Registered Team --</option> <!-- Options will be populated dynamically --> </select> </div> <div class="col-4"> <button class="btn btn-primary w-100 btn-sm" type="button" id="judgeProjectBtn"> <i class="fas fa-play me-1"></i> Judge </button> </div> </div> <div id="judgeLoader"> <div class="spinner-border spinner-border-sm text-primary" role="status"> <span class="visually-hidden">Loading...</span> </div> <p class="small">AI analyzing...</p> </div> <div id="judgeResultsArea"> <h5 id="judgeResultTeamName" class="small"></h5> <div id="judgeResultAnalysis"> <h6 class="small">Analysis:</h6> <ul id="judgeResultAnalysisList" class="small"></ul> </div> <div id="judgeResultScore"></div> </div> <p class="mb-0 small text-muted fst-italic mt-3"> <i class="fas fa-info-circle me-1"></i> Simulation only. </p> <hr class="my-3"> <div id="leaderboardSection"> <h5 class="text-center mb-2 small"><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>AI Judge Leaderboard</h5> <div class="table-responsive"> <table class="table table-striped table-hover table-sm align-middle small"> <thead class="table-dark small"> <tr> <th scope="col" style="width: 15%; text-align: center;">Rank</th> <th scope="col">Team</th> <th scope="col" style="width: 25%; text-align: center;">Score</th> </tr> </thead> <tbody id="leaderboard-body"> <tr id="leaderboard-placeholder"> <td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td> </tr> </tbody> </table> </div> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button> </div> </div> </div>
+         <div class="modal-dialog modal-lg modal-dialog-scrollable"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="aiJudgeModalLabel"><i class="fas fa-brain me-2"></i>AI Judge Sim</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <p class="text-muted small">Select a registered team, click Judge to get a simulated score.</p> <div class="row g-2 align-items-end mb-3"> <div class="col-sm-8"> <label for="judgeTeamSelect" class="form-label visually-hidden">Select Team:</label> <select class="form-select form-select-sm" id="judgeTeamSelect"> <option selected disabled value="">-- Choose Registered Team --</option> <!-- Options will be populated dynamically --> </select> </div> <div class="col-sm-4"> <button class="btn btn-primary w-100 btn-sm" type="button" id="judgeProjectBtn"> <i class="fas fa-play me-1"></i> Judge </button> </div> </div> <div id="judgeLoader"> <div class="spinner-border spinner-border-sm text-primary" role="status"> <span class="visually-hidden">Loading...</span> </div> <p class="small">AI analyzing...</p> </div> <div id="judgeResultsArea"> <h5 id="judgeResultTeamName" class="small"></h5> <div id="judgeResultAnalysis"> <h6 class="small">Analysis:</h6> <ul id="judgeResultAnalysisList" class="small list-unstyled"></ul> </div> <div id="judgeResultScore"></div> </div> <p class="mb-0 small text-muted fst-italic mt-3"> <i class="fas fa-info-circle me-1"></i> Simulation only. Not official judging. </p> <hr class="my-3"> <div id="leaderboardSection"> <h5 class="text-center mb-2 small"><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>AI Judge Leaderboard (Simulated)</h5> <div class="table-responsive"> <table class="table table-striped table-hover table-sm align-middle small"> <thead class="table-dark small"> <tr> <th scope="col" style="width: 15%; text-align: center;">Rank</th> <th scope="col">Team</th> <th scope="col" style="width: 25%; text-align: center;">Score</th> </tr> </thead> <tbody id="leaderboard-body"> <tr id="leaderboard-placeholder"> <td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td> </tr> </tbody> </table> </div> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button> </div> </div> </div>
     </div>
 
     <!-- ADDED: Registration Modal -->
@@ -401,6 +439,7 @@
                         <i class="fas fa-star"></i> <span id="modal-welly-points">0</span> WP
                     </div>
                     <div id="profile-rank-display">Rank: Calculating...</div>
+                    <hr class="my-3">
                     <div id="profile-leaderboard-section">
                         <h5><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>Points Leaderboard (Top 5)</h5>
                         <div id="leaderboard-loading" style="display: none;">Loading leaderboard...</div>
@@ -478,6 +517,8 @@
             const modalUserName = document.getElementById('modal-user-name');
             const modalWellyPoints = document.getElementById('modal-welly-points');
             const profileRankDisplay = document.getElementById('profile-rank-display');
+            const profileLeaderboardSection = document.getElementById('profile-leaderboard-section');
+            const profileLeaderboardTable = document.getElementById('profile-leaderboard-table');
             const profileLeaderboardTableBody = document.getElementById('profile-leaderboard-body');
             const profileLeaderboardLoading = document.getElementById('leaderboard-loading');
             const profileLeaderboardEmpty = document.getElementById('leaderboard-empty');
@@ -515,12 +556,13 @@
             let userRegisteredTeam = null; // Store the team name the current user is registered to
 
             // --- PRESET TEAMS (Optional: For initial AI Judge list if desired) ---
+            // Can be assigned themes manually here or via an assignment mechanism later
             const PRESET_TEAMS = [
-                 { name: "Team Alpha", theme: "Logistics" },
+                 { name: "Team Alpha", theme: "Supply Chain" },
                  { name: "Team Beta", theme: "Sustainability" },
                  { name: "Team Gamma", theme: "Healthcare" },
                  { name: "Team Delta", theme: "Open Innovation" },
-                 { name: "The AI Mavericks", theme: "Proj Mgmt" }
+                 { name: "The AI Mavericks", theme: "Project Mgmt" }
             ];
 
 
@@ -530,12 +572,18 @@
                     if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
                         tg.ready();
                         tg.expand();
-                        tg.BackButton.show();
-                        tg.onEvent('backButtonClicked', handleBackButton);
+                        // Only show back button if there's history or a way to close
+                        if (window.history.length > 1 || (tg && tg.close)) {
+                            tg.BackButton.show();
+                            tg.onEvent('backButtonClicked', handleBackButton);
+                        } else {
+                            tg.BackButton.hide();
+                        }
+
 
                         currentUser = tg.initDataUnsafe.user;
                         console.log("User Initialized:", currentUser);
-                        updateUserProfileDisplay(); // Update header and potentially modal elements if open
+                        updateUserProfileDisplay(); // Update header
 
                         // Enable registration button only after user is loaded
                         if (registerTeamBtn) registerTeamBtn.disabled = false;
@@ -569,6 +617,8 @@
                         taskState = loadTaskStateLocal();
                         initializeTaskUI();
                         updateProgressBar();
+                        // Update AI Judge dropdown with presets only for guests
+                        updateAiJudgeTeamsDropdown();
                     }
                 } catch (error) {
                      console.error("Error during Telegram App Initialization:", error);
@@ -579,38 +629,43 @@
 
             function displayGuestProfile() {
                  if(userProfileElement) {
-                     userProfileElement.style.display = 'none';
-                     userProfileElement.removeAttribute('data-bs-toggle');
+                     userProfileElement.style.display = 'flex'; // Keep it visible but...
+                     userProfileElement.removeAttribute('data-bs-toggle'); // ...not clickable for modal
                      userProfileElement.removeAttribute('data-bs-target');
                      userProfileElement.style.cursor = 'default';
                  }
                  if(registerTeamBtn) {
                      registerTeamBtn.disabled = true;
-                     registerTeamBtn.textContent = 'Login via Telegram to Register';
+                     registerTeamBtn.innerHTML = '<i class="fas fa-lock me-2"></i> Login via Telegram';
+                      if (registrationStatusMsg) registrationStatusMsg.textContent = "Login to register or view teams.";
                  }
                  if(userNameDisplay) userNameDisplay.textContent = 'Guest';
                  if(userAvatarContainer) userAvatarContainer.innerHTML = '👤';
                  if(wellyPointsDisplay) wellyPointsDisplay.textContent = '0';
-                 if (deleteProgressBtn) deleteProgressBtn.disabled = true;
+                 if (deleteProgressBtn) deleteProgressBtn.disabled = true; // Disable reset for guests
             }
 
             function handleBackButton() {
+                // Prefer history back if available
                 if (window.history.length > 1) {
                     window.history.back();
                 } else if (tg && tg.close) {
+                    // If no history, try closing the Mini App
                     tg.close();
                 } else {
-                    console.log("No history to go back to.");
-                    // window.location.href = 'index.html'; // Optional fallback
+                    // Fallback if neither is possible (e.g., opened directly)
+                    console.log("No history or close method available.");
+                    // Optionally navigate to a default page:
+                    // window.location.href = 'index.html';
                 }
             }
 
             // Combined function to update user profile display (header and potentially modal)
             function updateUserProfileDisplay() {
-                 if (!currentUser) return; // Ensure currentUser is loaded
-
-                 const displayName = currentUser.first_name || 'Player';
-                 const photoUrl = currentUser.photo_url;
+                 const isGuest = !currentUser;
+                 const displayName = isGuest ? 'Guest' : (currentUser.first_name || 'Player');
+                 const photoUrl = isGuest ? null : currentUser.photo_url;
+                 const currentPoints = isGuest ? 0 : totalWellyPoints;
 
                  // Header Update
                  if (userNameDisplay) userNameDisplay.textContent = displayName;
@@ -622,32 +677,37 @@
                          img.alt = `${displayName}'s photo`;
                          userAvatarContainer.appendChild(img);
                      } else {
-                         userAvatarContainer.textContent = '🎓'; // Fallback icon
+                         userAvatarContainer.textContent = isGuest ? '👤' : '🎓'; // Different fallback icons
                      }
                  }
-                 if (wellyPointsDisplay) wellyPointsDisplay.textContent = totalWellyPoints;
+                 if (wellyPointsDisplay) wellyPointsDisplay.textContent = currentPoints;
 
-                 // Profile Modal Update (if it exists)
-                 if (modalUserName) modalUserName.textContent = displayName;
-                 if (modalUserAvatar) {
-                     modalUserAvatar.innerHTML = '';
-                     if (photoUrl) {
-                         const img = document.createElement('img');
-                         img.src = photoUrl;
-                         img.alt = `Profile picture`;
-                         modalUserAvatar.appendChild(img);
-                     } else {
-                         modalUserAvatar.textContent = '🎓';
-                     }
+                 // Profile Modal Update (if it exists and user is not guest)
+                 if (!isGuest) {
+                    if (modalUserName) modalUserName.textContent = displayName;
+                    if (modalUserAvatar) {
+                        modalUserAvatar.innerHTML = '';
+                        if (photoUrl) {
+                            const img = document.createElement('img');
+                            img.src = photoUrl;
+                            img.alt = `Profile picture`;
+                            modalUserAvatar.appendChild(img);
+                        } else {
+                            modalUserAvatar.textContent = '🎓';
+                        }
+                    }
+                    if (modalWellyPoints) modalWellyPoints.textContent = currentPoints;
+                 } else {
+                    // Hide or disable profile modal elements for guests if needed
+                    // (Currently handled by not adding data-bs-toggle for guests)
                  }
-                 if (modalWellyPoints) modalWellyPoints.textContent = totalWellyPoints; // Update points in modal too
             }
 
              // --- Welly Points Management (Adapted Key) ---
              function loadWellyPoints() {
                  return new Promise((resolve) => {
-                     totalWellyPoints = 0;
-                     if (tg && tg.CloudStorage) {
+                     totalWellyPoints = 0; // Default
+                     if (currentUser && tg && tg.CloudStorage) {
                           tg.CloudStorage.getItem(POINTS_KEY, (error, value) => {
                                if (error) {
                                    console.error(`CS Load Error (${POINTS_KEY}):`, error);
@@ -656,13 +716,13 @@
                                    totalWellyPoints = parseInt(value, 10) || 0;
                                    console.log(`Loaded WP from CloudStorage (${POINTS_KEY}):`, totalWellyPoints);
                                } else {
-                                   console.log(`${POINTS_KEY} not found in CS, starting at 0.`);
+                                   console.log(`${POINTS_KEY} not found in CS for user ${currentUser.id}, starting at 0.`);
                                }
                                updateUserProfileDisplay(); // Update UI after loading/defaulting
                                resolve();
                           });
                      } else {
-                         console.warn("CloudStorage not available for points.");
+                         // Not logged in or no CS
                          updateUserProfileDisplay();
                          resolve();
                      }
@@ -671,13 +731,13 @@
 
             function saveWellyPoints() {
                  return new Promise((resolve, reject) => {
-                     if (tg && tg.CloudStorage) {
+                     if (currentUser && tg && tg.CloudStorage) {
                          tg.CloudStorage.setItem(POINTS_KEY, totalWellyPoints.toString(), (error, success) => {
                               if (error) {
                                   console.error(`CS Save Error (${POINTS_KEY}):`, error);
                                   reject(error); // Reject promise on error
                               } else if (success) {
-                                  console.log(`WP saved successfully to CS (${POINTS_KEY}):`, totalWellyPoints);
+                                  console.log(`WP saved successfully to CS (${POINTS_KEY}) for user ${currentUser.id}:`, totalWellyPoints);
                                   resolve(true); // Resolve promise on success
                               } else {
                                    console.warn(`WP save call (${POINTS_KEY}) completed, but success flag was not true.`);
@@ -685,7 +745,7 @@
                               }
                          });
                      } else {
-                          console.warn("CloudStorage not available. Points not saved.");
+                          console.warn("CloudStorage/User not available. Points not saved.");
                           resolve(false); // Resolve with false if CS not available
                      }
                  });
@@ -706,9 +766,11 @@
                  gainElement.style.opacity = '0'; // Start invisible
                  gainElement.style.transform = 'translateX(-50%) scale(0.8)';
                  void gainElement.offsetWidth; // Reflow
-                 gainElement.style.top = `${startY - 40}px`;
-                 gainElement.style.opacity = '1';
-                 gainElement.style.transform = 'translateX(-50%) scale(1)';
+                 requestAnimationFrame(() => {
+                    gainElement.style.top = `${startY - 40}px`;
+                    gainElement.style.opacity = '1';
+                    gainElement.style.transform = 'translateX(-50%) scale(1)';
+                 });
                  setTimeout(() => {
                      gainElement.style.opacity = '0';
                      gainElement.style.transform = 'translateX(-50%) scale(0.8)';
@@ -731,43 +793,97 @@
                  }
             }
 
-            // --- Task Tracker Logic (Keep Existing - Uses TASK_STATE_KEY_CS/LS) ---
+            // --- Task Tracker Logic (Adapted slightly for points update propagation) ---
             function loadTaskState() {
                 return new Promise((resolve) => {
-                    if (tg && tg.CloudStorage) {
+                    taskState = {}; // Reset before loading
+                    if (currentUser && tg && tg.CloudStorage) {
                         tg.CloudStorage.getItem(TASK_STATE_KEY_CS, (error, value) => {
                             if (error) { console.error("CS Task Load Error:", error); taskState = loadTaskStateLocal(); }
                             else if (value) { try { taskState = JSON.parse(value); console.log("Loaded Task State from CS:", taskState); } catch (e) { console.error("Error parsing Task State from CS:", e); taskState = loadTaskStateLocal(); } }
                             else { console.log("No Task State in CS, trying LS."); taskState = loadTaskStateLocal(); }
                             resolve();
                         });
-                    } else { console.warn("CloudStorage not available for tasks. Using LS."); taskState = loadTaskStateLocal(); resolve(); }
+                    } else { console.warn("CloudStorage/User not available for tasks. Using LS."); taskState = loadTaskStateLocal(); resolve(); }
                 });
             }
             function loadTaskStateLocal() { const storedState = localStorage.getItem(TASK_STATE_KEY_LS); try { return storedState ? JSON.parse(storedState) : {}; } catch (e) { console.error("Error parsing Task State from LS:", e); return {}; } }
             function saveTaskState(state) {
                  const stateString = JSON.stringify(state);
-                 if (tg && tg.CloudStorage) {
+                 if (currentUser && tg && tg.CloudStorage) {
                      tg.CloudStorage.setItem(TASK_STATE_KEY_CS, stateString, (error, success) => { if (error) console.error("CS Task Save Error:", error); else if (success) console.log("Task State saved to CS."); else console.warn("Task State CS save call completed, but success flag false."); });
                  }
                  try { localStorage.setItem(TASK_STATE_KEY_LS, stateString); console.log("Task State saved to LS."); } catch (e) { console.error("Error saving Task State to LS:", e); }
             }
             function initializeTaskUI() { if (!modalChecklist) return; modalChecklist.querySelectorAll('.checklist-item[data-task-id]').forEach(item => { const taskId = item.dataset.taskId; updateTaskUI(taskId, taskState[taskId] === true); }); }
             function updateTaskUI(taskId, isCompleted) { const modalItem = modalChecklist?.querySelector(`.checklist-item[data-task-id="${taskId}"]`); if (modalItem) { modalItem.classList.toggle('completed', isCompleted); } }
-            function showMessage(message, type = 'success', area = messageArea) { if (area) { area.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show small p-2" role="alert">${message}<button type="button" class="btn-close btn-sm p-2" data-bs-dismiss="alert" aria-label="Close"></button></div>`; } }
+            function showMessage(message, type = 'success', area = messageArea, clearPrevious = true) {
+                if (area) {
+                    if (clearPrevious) area.innerHTML = '';
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = `alert alert-${type} alert-dismissible fade show small p-2`;
+                    alertDiv.setAttribute('role', 'alert');
+                    alertDiv.innerHTML = `${message}<button type="button" class="btn-close btn-sm p-2" data-bs-dismiss="alert" aria-label="Close"></button>`;
+                    area.appendChild(alertDiv);
+                }
+            }
             function clearMessages(area = messageArea) { if (area) area.innerHTML = ''; }
             function updateProgressBar() { const taskItems = modalChecklist?.querySelectorAll('.checklist-item[data-task-id]'); if (!taskItems || taskItems.length === 0 || !progressBar) return; const totalTasks = taskItems.length; const completedTasks = Object.values(taskState).filter(status => status === true).length; const progressPercent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0; progressBar.style.width = progressPercent + '%'; progressBar.textContent = `${progressPercent}%`; progressBar.setAttribute('aria-valuenow', progressPercent); progressBar.classList.toggle('bg-success', progressPercent === 100); progressBar.classList.toggle('progress-bar-animated', progressPercent < 100); progressBar.classList.toggle('progress-bar-striped', progressPercent < 100); }
+
+            // Modified Task Click Handler
             if (modalChecklist) {
-                modalChecklist.addEventListener('click', function(event) {
-                    const taskItem = event.target.closest('.checklist-item[data-task-id]'); if (!taskItem) return; const taskId = taskItem.dataset.taskId; const taskNameElement = taskItem.querySelector('strong'); const taskName = taskNameElement ? taskNameElement.textContent.trim() : `Task ${taskId}`; const pointsToAdd = parseInt(taskItem.dataset.points || '0', 10); const isCurrentlyCompleted = taskState[taskId] === true; clearMessages();
+                modalChecklist.addEventListener('click', async function(event) { // Make async
+                    const taskItem = event.target.closest('.checklist-item[data-task-id]');
+                    if (!taskItem || !currentUser) return; // Require user to be logged in
+
+                    const taskId = taskItem.dataset.taskId;
+                    const taskNameElement = taskItem.querySelector('strong');
+                    const taskName = taskNameElement ? taskNameElement.textContent.trim() : `Task ${taskId}`;
+                    const pointsToAdd = parseInt(taskItem.dataset.points || '0', 10);
+                    const isCurrentlyCompleted = taskState[taskId] === true;
+                    clearMessages();
+
                     if (isCurrentlyCompleted) {
-                         if (confirm(`Mark "${taskName}" as incomplete? (Points will not be deducted)`)) { taskState[taskId] = false; saveTaskState(taskState); updateTaskUI(taskId, false); updateProgressBar(); showMessage(`Task "${taskName}" marked incomplete.`, 'warning'); }
+                        // Undoing task completion (Points are NOT deducted usually)
+                        if (confirm(`Mark "${taskName}" as incomplete? (Points will not be deducted)`)) {
+                             taskState[taskId] = false;
+                             saveTaskState(taskState); // Save immediately
+                             updateTaskUI(taskId, false);
+                             updateProgressBar();
+                             showMessage(`Task "${taskName}" marked incomplete.`, 'warning');
+                        }
                     } else {
-                         if (confirm(`Mark "${taskName}" as complete and claim ${pointsToAdd} WP?`)) { taskState[taskId] = true; saveTaskState(taskState); updateTaskUI(taskId, true); if (pointsToAdd > 0) { totalWellyPoints += pointsToAdd; saveWellyPoints(); updateUserProfileDisplay(); showPointsGainAnimation(pointsToAdd); showMessage(`Task "${taskName}" complete! +${pointsToAdd} WP earned.`, 'success'); } else { showMessage(`Task "${taskName}" complete!`, 'success'); } updateProgressBar(); }
+                        // Completing a task
+                        if (confirm(`Mark "${taskName}" as complete and claim ${pointsToAdd} WP?`)) {
+                            taskState[taskId] = true;
+                            saveTaskState(taskState); // Save task state
+                            updateTaskUI(taskId, true);
+                            updateProgressBar();
+
+                            if (pointsToAdd > 0) {
+                                totalWellyPoints += pointsToAdd;
+                                try {
+                                    await saveWellyPoints(); // Wait for points to save
+                                    updateUserProfileDisplay(); // Update header display
+                                    showPointsGainAnimation(pointsToAdd);
+                                    showMessage(`Task "${taskName}" complete! +${pointsToAdd} WP earned.`, 'success');
+                                    // Update leaderboard data in the background (no need to await)
+                                    updatePointsLeaderboardWithCurrentUser(totalWellyPoints);
+                                } catch (error) {
+                                    console.error("Failed to save points or update leaderboard after task completion:", error);
+                                    showMessage(`Task marked complete, but failed to save points. Error: ${error.message}`, 'danger');
+                                    // Optionally revert points locally? Depends on desired behavior.
+                                    totalWellyPoints -= pointsToAdd;
+                                }
+                            } else {
+                                showMessage(`Task "${taskName}" complete!`, 'success');
+                            }
+                        }
                     }
                 });
             } else console.warn("Modal checklist container (#modal-checklist) not found.");
-            if (taskModalElement) taskModalElement.addEventListener('hidden.bs.modal', clearMessages);
+
+            if (taskModalElement) taskModalElement.addEventListener('hidden.bs.modal', () => clearMessages());
             // --- END Task Tracker Logic ---
 
 
@@ -779,6 +895,7 @@
             function loadHackathonTeams() {
                 return new Promise((resolve) => {
                     hackathonTeamsData = {}; // Reset
+                    // No user check here - team data is global
                     if (tg && tg.CloudStorage) {
                         tg.CloudStorage.getItem(HACKATHON_TEAMS_KEY, (error, value) => {
                             if (error) { console.error(`CS Load Error (${HACKATHON_TEAMS_KEY}):`, error); }
@@ -792,6 +909,7 @@
 
             function saveHackathonTeams() {
                 return new Promise((resolve, reject) => {
+                     // No user check here - team data is global
                     if (tg && tg.CloudStorage) {
                         tg.CloudStorage.setItem(HACKATHON_TEAMS_KEY, JSON.stringify(hackathonTeamsData), (error, success) => {
                             if (error) { console.error(`CS Save Error (${HACKATHON_TEAMS_KEY}):`, error); reject(error); }
@@ -809,11 +927,13 @@
                     if (userRegKey && tg && tg.CloudStorage) {
                         tg.CloudStorage.getItem(userRegKey, (error, value) => {
                             if (error) { console.error(`CS Load Error (${userRegKey}):`, error); }
-                            else if (value) { userRegisteredTeam = value; console.log(`User ${currentUser.id} is registered to team: ${userRegisteredTeam}`); }
-                            else { console.log(`User ${currentUser.id} not found registered.`); }
+                            else if (value && value.trim() !== '') { // Ensure value is not empty
+                                userRegisteredTeam = value.trim();
+                                console.log(`User ${currentUser.id} is registered to team: ${userRegisteredTeam}`);
+                             } else { console.log(`User ${currentUser.id} not found registered or key value is empty.`); }
                             resolve();
                         });
-                    } else { resolve(); } // Resolve immediately if no key or CS
+                    } else { resolve(); } // Resolve immediately if no key or CS or user
                 });
             }
 
@@ -821,12 +941,27 @@
                  return new Promise((resolve, reject) => {
                      const userRegKey = getUserRegistrationKey();
                      if (userRegKey && tg && tg.CloudStorage) {
+                         // Save the team name (string)
                          tg.CloudStorage.setItem(userRegKey, teamName, (error, success) => {
                              if (error) { console.error(`CS Save Error (${userRegKey}):`, error); reject(error); }
                              else if (success) { userRegisteredTeam = teamName; console.log(`User ${currentUser.id} registration saved for team: ${teamName}`); resolve(true); }
                              else { console.warn(`User reg save call (${userRegKey}) completed, but success flag false.`); resolve(false); }
                          });
                      } else { console.warn("CloudStorage/UserKey not available. User registration not saved."); resolve(false); }
+                 });
+            }
+
+            // --- NEW: Function to remove user registration (e.g., if admin needs to change team) ---
+            function removeUserRegistration() {
+                 return new Promise((resolve, reject) => {
+                     const userRegKey = getUserRegistrationKey();
+                     if (userRegKey && tg && tg.CloudStorage) {
+                         tg.CloudStorage.removeItem(userRegKey, (error, success) => {
+                             if (error) { console.error(`CS Remove Error (${userRegKey}):`, error); reject(error); }
+                             else if (success) { userRegisteredTeam = null; console.log(`User ${currentUser.id} registration removed.`); resolve(true); }
+                             else { console.warn(`User reg remove call (${userRegKey}) completed, but success flag false.`); resolve(false); }
+                         });
+                     } else { console.warn("CloudStorage/UserKey not available. User registration not removed."); resolve(false); }
                  });
             }
 
@@ -844,17 +979,21 @@
                  if (universityInput) universityInput.value = ''; // Clear university field
                  if (registrationFeedback) registrationFeedback.innerHTML = '';
                  if (teamMemberCountDisplay) teamMemberCountDisplay.textContent = '';
+                 if (existingTeamSelect) existingTeamSelect.disabled = false; // Re-enable dropdown
+                 if (newTeamNameInput) newTeamNameInput.disabled = false; // Re-enable input
+                 if (universityInput) universityInput.disabled = false; // Re-enable university input
 
                  // Populate existing teams dropdown
                  Object.entries(hackathonTeamsData).forEach(([teamName, teamData]) => {
                     if (teamData && teamData.members) {
                         const memberCount = teamData.members.length;
+                        // Add to dropdown ONLY if team is not full
                         if (memberCount < MAX_TEAM_MEMBERS) {
                             const option = document.createElement('option');
                             option.value = teamName;
                             option.textContent = `${teamName} (${memberCount}/${MAX_TEAM_MEMBERS} members)`;
                             option.dataset.count = memberCount; // Store count for easy access
-                             if (existingTeamSelect) existingTeamSelect.appendChild(option);
+                            if (existingTeamSelect) existingTeamSelect.appendChild(option);
                         }
                     }
                  });
@@ -865,33 +1004,48 @@
                          const selectedOption = existingTeamSelect.options[existingTeamSelect.selectedIndex];
                          if(selectedOption && selectedOption.value){
                              const count = selectedOption.dataset.count || 0;
-                             teamMemberCountDisplay.textContent = `This team has ${count} member(s). Joining will make it ${parseInt(count) + 1}.`;
+                             const newCount = parseInt(count) + 1;
+                             teamMemberCountDisplay.textContent = `This team has ${count} member(s). Joining makes ${newCount}.`;
+                             teamMemberCountDisplay.className = `form-text small ${newCount > MAX_TEAM_MEMBERS ? 'text-danger' : ''}`;
                          } else {
                               teamMemberCountDisplay.textContent = '';
                          }
                      });
                  }
 
-                 // Disable fields if user is already registered
+                 // Disable fields and show message if user is already registered
                  const isRegistered = !!userRegisteredTeam;
-                 if(universityInput) universityInput.disabled = isRegistered;
-                 if(existingTeamSelect) existingTeamSelect.disabled = isRegistered;
-                 if(newTeamNameInput) newTeamNameInput.disabled = isRegistered;
-                 if(submitRegistrationBtn) submitRegistrationBtn.disabled = isRegistered;
-
                  if (isRegistered) {
-                    showMessage(`You are already registered in team: <strong>${userRegisteredTeam}</strong>. Contact support to change teams.`, 'info', registrationFeedback);
+                    if(universityInput) universityInput.disabled = true; // Can't change uni after reg?
+                    if(existingTeamSelect) existingTeamSelect.disabled = true;
+                    if(newTeamNameInput) newTeamNameInput.disabled = true;
+                    if(submitRegistrationBtn) submitRegistrationBtn.disabled = true;
+                    showMessage(`You are already registered in team: <strong>${userRegisteredTeam}</strong>. Contact support to change teams.`, 'info', registrationFeedback, false);
+
+                    // Optionally, pre-fill university from their registered team data
+                    if (hackathonTeamsData[userRegisteredTeam] && universityInput) {
+                        const memberData = hackathonTeamsData[userRegisteredTeam].members.find(m => m.id === currentUser.id);
+                        if (memberData && memberData.university) {
+                            universityInput.value = memberData.university;
+                        }
+                    }
+                 } else {
+                     if(submitRegistrationBtn) submitRegistrationBtn.disabled = false; // Ensure button is enabled if not registered
                  }
              }
 
             function updateRegistrationButtonState() {
                 if (registerTeamBtn) {
                     if (userRegisteredTeam) {
-                        registerTeamBtn.innerHTML = `<i class="fas fa-check-circle me-2"></i> View Your Team: ${userRegisteredTeam}`;
-                        if (registrationStatusMsg) registrationStatusMsg.textContent = "Click to view team details (registration closed).";
-                    } else {
+                        registerTeamBtn.innerHTML = `<i class="fas fa-check-circle me-2 text-success"></i> View Team: ${userRegisteredTeam}`;
+                        if (registrationStatusMsg) registrationStatusMsg.textContent = "Click to view registration details.";
+                    } else if (currentUser) { // Logged in but not registered
                         registerTeamBtn.innerHTML = `<i class="fas fa-users me-2"></i> Register / Join Team`;
-                         if (registrationStatusMsg) registrationStatusMsg.textContent = "Register your team to appear in the AI Judge.";
+                        if (registrationStatusMsg) registrationStatusMsg.textContent = "Register your team to appear in the AI Judge.";
+                    } else { // Guest
+                         registerTeamBtn.innerHTML = '<i class="fas fa-lock me-2"></i> Login via Telegram';
+                         if (registrationStatusMsg) registrationStatusMsg.textContent = "Login to register or view teams.";
+                         registerTeamBtn.disabled = true;
                     }
                 }
             }
@@ -913,33 +1067,39 @@
                 let targetTeamName = '';
                 let isNewTeam = false;
 
-                try {
-                    // Disable button during processing
-                    if(submitRegistrationBtn) submitRegistrationBtn.disabled = true;
+                // Disable button during processing
+                if(submitRegistrationBtn) submitRegistrationBtn.disabled = true;
+                if(existingTeamSelect) existingTeamSelect.disabled = true;
+                if(newTeamNameInput) newTeamNameInput.disabled = true;
+                if(universityInput) universityInput.disabled = true; // Disable uni field during processing too
 
+                try {
                     // Reload latest team data just before saving to minimize race conditions
                     await loadHackathonTeams();
 
                     if (selectedTeam) {
                         // --- Join Existing Team ---
-                        if (!hackathonTeamsData[selectedTeam] || !hackathonTeamsData[selectedTeam].members) {
-                            showMessage(`Selected team "${selectedTeam}" seems invalid. Please refresh and try again.`, 'danger', registrationFeedback);
-                            if(submitRegistrationBtn) submitRegistrationBtn.disabled = false; populateRegistrationForm(); // Refresh dropdown
-                            return;
-                        }
-                        if (hackathonTeamsData[selectedTeam].members.length >= MAX_TEAM_MEMBERS) {
-                            showMessage(`Team "${selectedTeam}" is already full (${MAX_TEAM_MEMBERS} members).`, 'danger', registrationFeedback);
-                             if(submitRegistrationBtn) submitRegistrationBtn.disabled = false; populateRegistrationForm(); // Refresh dropdown
-                            return;
-                        }
                         targetTeamName = selectedTeam;
+                        if (!hackathonTeamsData[targetTeamName] || !hackathonTeamsData[targetTeamName].members) {
+                            throw new Error(`Selected team "${targetTeamName}" seems invalid. Please refresh and try again.`);
+                        }
+                        if (hackathonTeamsData[targetTeamName].members.length >= MAX_TEAM_MEMBERS) {
+                            throw new Error(`Team "${targetTeamName}" is already full (${MAX_TEAM_MEMBERS} members).`);
+                        }
+                         // Check if user is already in *this* team (shouldn't happen if userRegisteredTeam is null, but belt-and-suspenders)
+                         if (hackathonTeamsData[targetTeamName].members.some(m => m.id === currentUser.id)) {
+                             throw new Error(`You seem to already be in team "${targetTeamName}".`);
+                         }
                     } else {
                         // --- Create New Team ---
-                        if (newTeamName.length < 3) { showMessage("New team name must be at least 3 characters.", 'danger', registrationFeedback); newTeamNameInput.focus(); if(submitRegistrationBtn) submitRegistrationBtn.disabled = false; return; }
-                        if (hackathonTeamsData[newTeamName] || PRESET_TEAMS.some(t => t.name.toLowerCase() === newTeamName.toLowerCase())) { // Check against existing and presets
-                            showMessage(`Team name "${newTeamName}" is already taken. Please choose another.`, 'danger', registrationFeedback); newTeamNameInput.focus(); if(submitRegistrationBtn) submitRegistrationBtn.disabled = false; return;
-                        }
                         targetTeamName = newTeamName;
+                        if (targetTeamName.length < 3) { throw new Error("New team name must be at least 3 characters."); }
+                        // Case-insensitive check against existing teams AND presets
+                        const existingTeamKey = Object.keys(hackathonTeamsData).find(key => key.toLowerCase() === targetTeamName.toLowerCase());
+                        const presetTeamExists = PRESET_TEAMS.some(t => t.name.toLowerCase() === targetTeamName.toLowerCase());
+                        if (existingTeamKey || presetTeamExists) {
+                            throw new Error(`Team name "${targetTeamName}" is already taken. Please choose another.`);
+                        }
                         isNewTeam = true;
                     }
 
@@ -947,52 +1107,71 @@
                     const newUserMember = {
                         id: currentUser.id,
                         name: currentUser.first_name || 'Player',
-                        university: university
+                        university: university // Store the entered university
                     };
 
                     // --- Update Team Data Structure ---
                     if (isNewTeam) {
                         hackathonTeamsData[targetTeamName] = { members: [newUserMember], theme: null }; // Initialize new team
                     } else {
-                        // Add to existing team (double-check member doesn't already exist - unlikely but good practice)
-                         if (!hackathonTeamsData[targetTeamName].members.some(m => m.id === currentUser.id)) {
-                             hackathonTeamsData[targetTeamName].members.push(newUserMember);
-                         } else {
-                             console.warn(`User ${currentUser.id} already found in team ${targetTeamName} members list?`);
-                         }
+                        // Add to existing team
+                         hackathonTeamsData[targetTeamName].members.push(newUserMember);
                     }
 
                     // --- Save Updates ---
                     const teamsSaved = await saveHackathonTeams();
+                    if (!teamsSaved) throw new Error("Failed to save team data to cloud.");
+
                     const registrationSaved = await saveUserRegistration(targetTeamName);
+                     if (!registrationSaved) {
+                         // Attempt to rollback team change if user registration fails?
+                         console.error("Failed to save user registration after saving team data! Potential inconsistency.");
+                          // Try to remove the user we just added from the team data locally
+                         if (isNewTeam) {
+                             delete hackathonTeamsData[targetTeamName];
+                         } else {
+                             hackathonTeamsData[targetTeamName].members = hackathonTeamsData[targetTeamName].members.filter(m => m.id !== currentUser.id);
+                         }
+                         // Attempt to re-save the rolled-back team data
+                         await saveHackathonTeams();
+                         throw new Error("Failed to save your registration link to the team.");
+                     }
 
-                    if (teamsSaved && registrationSaved) {
-                         showMessage(`Successfully registered for team: <strong>${targetTeamName}</strong>!`, 'success', registrationFeedback);
-                         updateAiJudgeTeamsDropdown(); // Update judge list immediately
-                         updateRegistrationButtonState(); // Update main button text
+                    // --- Success ---
+                    showMessage(`Successfully registered for team: <strong>${targetTeamName}</strong>!`, 'success', registrationFeedback);
+                    updateAiJudgeTeamsDropdown(); // Update judge list immediately
+                    updateRegistrationButtonState(); // Update main button text
 
-                         // Optionally close modal after delay
-                         setTimeout(() => {
-                            const modalInstance = bootstrap.Modal.getInstance(registrationModalElement);
-                            if (modalInstance) modalInstance.hide();
-                         }, 1500);
-                    } else {
-                        showMessage("Registration failed. Could not save data. Please try again.", 'danger', registrationFeedback);
-                        // Attempt to revert local changes if save failed? More complex.
-                        if(submitRegistrationBtn) submitRegistrationBtn.disabled = false;
-                    }
+                    // Close modal after delay
+                    setTimeout(() => {
+                        const modalInstance = bootstrap.Modal.getInstance(registrationModalElement);
+                        if (modalInstance) modalInstance.hide();
+                    }, 1500);
 
                 } catch (error) {
                      console.error("Registration Error:", error);
-                     showMessage(`An error occurred: ${error.message || error}`, 'danger', registrationFeedback);
-                     if(submitRegistrationBtn) submitRegistrationBtn.disabled = false;
+                     showMessage(`${error.message || 'An unknown error occurred during registration.'}`, 'danger', registrationFeedback);
+                     // Re-enable form fields on error *if* user is not registered
+                     if (!userRegisteredTeam) {
+                         if(submitRegistrationBtn) submitRegistrationBtn.disabled = false;
+                         if(existingTeamSelect) existingTeamSelect.disabled = false;
+                         if(newTeamNameInput) newTeamNameInput.disabled = false;
+                         if(universityInput) universityInput.disabled = false;
+                         populateRegistrationForm(); // Re-populate to show current state
+                     }
                 }
             }
 
 
             // Add listeners for registration modal
             if (registrationModalElement) {
-                 registrationModalElement.addEventListener('show.bs.modal', populateRegistrationForm);
+                 // Use 'show.bs.modal' to ensure data is loaded before form population
+                 registrationModalElement.addEventListener('show.bs.modal', async () => {
+                     // Ensure latest team data is loaded before showing
+                     await loadHackathonTeams();
+                     await checkUserRegistration(); // Re-check just in case
+                     populateRegistrationForm();
+                 });
             }
             if (submitRegistrationBtn) {
                  submitRegistrationBtn.addEventListener('click', handleRegistrationSubmit);
@@ -1007,61 +1186,193 @@
                  const currentValue = judgeTeamSelect.value; // Preserve selection if possible
                  judgeTeamSelect.innerHTML = '<option selected disabled value="">-- Choose Registered Team --</option>'; // Clear existing
 
-                 // Combine presets and registered teams, ensuring uniqueness
-                 const allTeamNames = new Set([
-                     ...PRESET_TEAMS.map(t => t.name), // Add preset names first
-                     ...Object.keys(hackathonTeamsData) // Add registered team names
-                 ]);
+                 // Get names of teams with actual members
+                 const registeredTeamNames = Object.entries(hackathonTeamsData)
+                     .filter(([name, data]) => data && data.members && data.members.length > 0)
+                     .map(([name]) => name);
+
+                 // Combine registered teams and presets, ensure uniqueness, sort alphabetically
+                 const allTeamNames = [...new Set([
+                     ...PRESET_TEAMS.map(t => t.name), // Add preset names
+                     ...registeredTeamNames            // Add registered team names
+                 ])].sort((a, b) => a.localeCompare(b));
 
 
                  allTeamNames.forEach(teamName => {
-                     const teamData = hackathonTeamsData[teamName];
-                     const memberCount = teamData?.members?.length ?? 0;
-                     // Only add teams that have at least one registered member OR are presets
-                     if (memberCount > 0 || PRESET_TEAMS.some(t => t.name === teamName)) {
-                        const presetInfo = PRESET_TEAMS.find(t => t.name === teamName);
-                        const theme = teamData?.theme || presetInfo?.theme || 'Unknown Theme'; // Get theme if available
-                        const option = document.createElement('option');
-                        option.value = teamName;
-                        // Add member count for registered teams
-                        option.textContent = `${teamName} (${theme})${memberCount > 0 ? ` [${memberCount} reg.]`:''}`;
-                        judgeTeamSelect.appendChild(option);
-                     }
+                    const teamData = hackathonTeamsData[teamName];
+                    const memberCount = teamData?.members?.length ?? 0;
+                    const presetInfo = PRESET_TEAMS.find(t => t.name === teamName);
+                    // Determine theme: prefer registered team data, fallback to preset, else 'Unknown'
+                    const theme = teamData?.theme || presetInfo?.theme || 'Unknown Theme';
+
+                    const option = document.createElement('option');
+                    option.value = teamName;
+                    // Add member count only if > 0
+                    option.textContent = `${teamName} (${theme})${memberCount > 0 ? ` [${memberCount} Member${memberCount > 1 ? 's' : ''}]` : ' [Preset]'}`;
+                    judgeTeamSelect.appendChild(option);
                  });
 
                  // Try to restore previous selection
                  if (currentValue && judgeTeamSelect.querySelector(`option[value="${currentValue}"]`)) {
                     judgeTeamSelect.value = currentValue;
+                 } else {
+                    judgeTeamSelect.selectedIndex = 0; // Reset to default prompt
                  }
             }
 
 
-            // Keep existing AI Judge logic, but use updated dropdown
-            const teamAnalysisData = { /* (Keep existing data or potentially make it dynamic) */ "Team Alpha": ["Strong logistics model.", "Good data processing.", "Innovation moderate.", "High feasibility.", "Presentation needs polish."], "Team Beta": ["Creative environment monitoring.", "Well-organized code.", "High innovation potential.", "Needs validation.", "Compelling impact analysis."], "Team Gamma": ["Sound NLP for feedback.", "Relevant healthcare problem.", "Demo lacks user-friendliness.", "Significant potential impact.", "Solid innovation."], "Team Delta": ["Very high novelty factor.", "Promising tech execution.", "Optimistic feasibility.", "Pitch conveys vision.", "Adequate completion."], "The AI Mavericks": ["Well-implemented risk prediction.", "Good data integration.", "Practical solution.", "Good technical depth.", "Clear presentation & demo."] };
-            function displayAnalysisSequentially(analysisPoints) { /* (Keep existing) */ if (!judgeResultAnalysisList) return 0; judgeResultAnalysisList.innerHTML = ''; let delay = 0; const interval = 400; analysisPoints.forEach(point => { setTimeout(() => { const li = document.createElement('li'); li.textContent = point; judgeResultAnalysisList.appendChild(li); void li.offsetWidth; li.classList.add('visible'); }, delay); }); return delay; }
+            // AI Judge Simulation Data (Example)
+            const teamAnalysisData = {
+                "Team Alpha": ["Strong logistics model.", "Good data processing.", "Innovation moderate.", "High feasibility.", "Presentation needs polish."],
+                "Team Beta": ["Creative environment monitoring.", "Well-organized code.", "High innovation potential.", "Needs validation.", "Compelling impact analysis."],
+                "Team Gamma": ["Sound NLP for feedback.", "Relevant healthcare problem.", "Demo lacks user-friendliness.", "Significant potential impact.", "Solid innovation."],
+                "Team Delta": ["Very high novelty factor.", "Promising tech execution.", "Optimistic feasibility.", "Pitch conveys vision.", "Adequate completion."],
+                "The AI Mavericks": ["Well-implemented risk prediction.", "Good data integration.", "Practical solution.", "Good technical depth.", "Clear presentation & demo."] ,
+                // Add more entries if needed, or handle unknown teams generically
+            };
+             function displayAnalysisSequentially(analysisPoints) {
+                 if (!judgeResultAnalysisList) return 0;
+                 judgeResultAnalysisList.innerHTML = ''; // Clear previous
+                 let delay = 0;
+                 const interval = 300; // Slightly faster
+                 analysisPoints.forEach((point, index) => {
+                     setTimeout(() => {
+                         const li = document.createElement('li');
+                         li.textContent = point;
+                         judgeResultAnalysisList.appendChild(li);
+                         // Trigger reflow to ensure transition works
+                         void li.offsetWidth;
+                         li.classList.add('visible');
+                         // Scroll the modal body to keep the latest item visible
+                         const modalBody = judgeModalElement.querySelector('.modal-body');
+                         if (modalBody) modalBody.scrollTop = modalBody.scrollHeight;
+                     }, delay);
+                     delay += interval;
+                 });
+                 return delay; // Return total time for analysis display
+             }
             function generateScore(teamName) { /* (Keep existing) */ let baseScore = 6.0; let randomness = Math.random() * 2.0; let bonus = 0; if (teamName === "Team Beta" || teamName === "The AI Mavericks") bonus = 0.5 + Math.random(); if (teamName === "Team Delta") bonus = Math.random() * 1.5; let finalScore = baseScore + randomness + bonus; finalScore = Math.min(Math.max(finalScore, 4.0), 9.8); return parseFloat(finalScore.toFixed(1)); }
             function updateAiJudgeLeaderboardData(teamName, score) { /* (Keep existing) */ const existingIndex = aiJudgeLeaderboardData.findIndex(item => item.teamName === teamName); if (existingIndex > -1) { aiJudgeLeaderboardData[existingIndex].score = score; } else { aiJudgeLeaderboardData.push({ teamName: teamName, score: score }); } aiJudgeLeaderboardData.sort((a, b) => b.score - a.score); }
             function animateTextWordByWord(element, text, speed = 50) { /* (Keep existing) */ element.innerHTML = ''; const words = text.split(' '); let currentWordIndex = 0; const intervalId = setInterval(() => { if (currentWordIndex < words.length) { const span = document.createElement('span'); span.textContent = words[currentWordIndex] + ' '; element.appendChild(span); setTimeout(() => span.classList.add('visible'), 10); currentWordIndex++; } else { clearInterval(intervalId); } }, speed); }
-            function renderAiJudgeLeaderboard(highlightTeam = null) { /* (Keep existing - uses aiJudgeLeaderboardBody) */ if (!aiJudgeLeaderboardBody) return; aiJudgeLeaderboardBody.innerHTML = ''; if (aiJudgeLeaderboardData.length === 0) { aiJudgeLeaderboardBody.innerHTML = `<tr id="leaderboard-placeholder"><td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td></tr>`; aiJudgeLeaderboardSection.classList.remove('visible'); return; } aiJudgeLeaderboardPlaceholder?.remove(); aiJudgeLeaderboardSection.classList.add('visible'); aiJudgeLeaderboardData.forEach((item, index) => { const rank = index + 1; const row = document.createElement('tr'); row.setAttribute('data-team', item.teamName); row.innerHTML = `<td class="text-center"><span class="rank-badge">${rank}</span></td><td class="team-name-cell">${item.teamName}</td><td class="text-center score-display">${item.score.toFixed(1)}</td>`; aiJudgeLeaderboardBody.appendChild(row); if (item.teamName === highlightTeam) { row.classList.add('highlight-new'); setTimeout(() => { row.classList.remove('highlight-new'); }, 1500); } }); }
-            function animateScoreToLeaderboard(teamName, score) { /* (Keep existing - targets aiJudgeLeaderboardBody) */ if (!flyingScoreElement || !judgeResultScore || !aiJudgeLeaderboardBody) return; const rank = aiJudgeLeaderboardData.findIndex(item => item.teamName === teamName) + 1; let targetRow = aiJudgeLeaderboardBody.querySelector(`tr:nth-child(${rank})`); let targetY, targetX; const tableRect = aiJudgeLeaderboardBody.getBoundingClientRect(); if (targetRow) { const rowRect = targetRow.getBoundingClientRect(); targetY = rowRect.top + (rowRect.height / 2); targetX = rowRect.left + (rowRect.width / 2); } else { targetY = tableRect.top + (rank * 25); targetX = tableRect.left + (tableRect.width / 2); } const startRect = judgeResultScore.getBoundingClientRect(); const startY = startRect.top + (startRect.height / 2); const startX = startRect.left + (startRect.width / 2); flyingScoreElement.textContent = `${score.toFixed(1)}`; flyingScoreElement.style.top = `${startY}px`; flyingScoreElement.style.left = `${startX}px`; flyingScoreElement.style.opacity = '1'; flyingScoreElement.style.transform = 'scale(1)'; requestAnimationFrame(() => { flyingScoreElement.style.top = `${targetY}px`; flyingScoreElement.style.left = `${targetX}px`; flyingScoreElement.style.opacity = '0'; flyingScoreElement.style.transform = 'scale(0.3)'; }); flyingScoreElement.addEventListener('transitionend', () => { flyingScoreElement.style.opacity = '0'; flyingScoreElement.style.transform = 'scale(1)'; renderAiJudgeLeaderboard(teamName); const newlyRenderedRow = aiJudgeLeaderboardBody.querySelector(`tr[data-team="${teamName}"]`); if (newlyRenderedRow) { const nameCell = newlyRenderedRow.querySelector('.team-name-cell'); if (nameCell) { /* Find item again to pass to animateText */ const itemData = aiJudgeLeaderboardData.find(i => i.teamName === teamName); if (itemData) animateTextWordByWord(nameCell, itemData.teamName, 75); } } }, { once: true }); }
+            function renderAiJudgeLeaderboard(highlightTeam = null) {
+                if (!aiJudgeLeaderboardBody || !aiJudgeLeaderboardSection) return;
+                aiJudgeLeaderboardBody.innerHTML = ''; // Clear previous content
+
+                if (aiJudgeLeaderboardData.length === 0) {
+                     // Use the placeholder row if it exists, otherwise create it
+                    if(aiJudgeLeaderboardPlaceholder) {
+                        aiJudgeLeaderboardBody.appendChild(aiJudgeLeaderboardPlaceholder);
+                        aiJudgeLeaderboardPlaceholder.style.display = ''; // Ensure visible
+                    } else {
+                        aiJudgeLeaderboardBody.innerHTML = `<tr id="leaderboard-placeholder"><td colspan="3" class="text-center text-muted fst-italic py-2 small">Judge teams to populate...</td></tr>`;
+                    }
+                    aiJudgeLeaderboardSection.classList.remove('visible');
+                    return;
+                }
+
+                aiJudgeLeaderboardPlaceholder?.remove(); // Remove placeholder if we have data
+                aiJudgeLeaderboardSection.classList.add('visible');
+
+                aiJudgeLeaderboardData.forEach((item, index) => {
+                     const rank = index + 1;
+                     const row = document.createElement('tr');
+                     row.setAttribute('data-team', item.teamName); // For targeting animation
+                     row.innerHTML = `
+                         <td class="text-center"><span class="rank-badge">${rank}</span></td>
+                         <td class="team-name-cell">${item.teamName}</td>
+                         <td class="text-center score-display">${item.score.toFixed(1)}</td>
+                     `;
+                     aiJudgeLeaderboardBody.appendChild(row);
+
+                     // Highlight the newly added/updated team
+                     if (item.teamName === highlightTeam) {
+                         row.classList.add('highlight-new');
+                         // Remove the highlight class after the animation/transition duration
+                         setTimeout(() => {
+                             row.classList.remove('highlight-new');
+                         }, 1500); // Match CSS transition duration if specified
+                     }
+                 });
+            }
+            function animateScoreToLeaderboard(teamName, score) {
+                if (!flyingScoreElement || !judgeResultScore || !aiJudgeLeaderboardBody || !judgeModalElement) return;
+
+                const rank = aiJudgeLeaderboardData.findIndex(item => item.teamName === teamName) + 1;
+                // Find the target row *after* potential re-render
+                const targetRow = aiJudgeLeaderboardBody.querySelector(`tr:nth-child(${rank})`);
+                let targetY, targetX;
+                const modalRect = judgeModalElement.getBoundingClientRect(); // Use modal for relative positioning
+
+                if (targetRow) {
+                     const rowRect = targetRow.getBoundingClientRect();
+                     targetY = rowRect.top + (rowRect.height / 2) - modalRect.top; // Relative to modal top
+                     targetX = rowRect.left + (rowRect.width / 2) - modalRect.left; // Relative to modal left
+                 } else {
+                     // Fallback if row not found (e.g., leaderboard scrolled out of view)
+                     // Target roughly below the judge button area
+                     const tableRect = aiJudgeLeaderboardBody.getBoundingClientRect();
+                     targetY = tableRect.top + 20 - modalRect.top;
+                     targetX = tableRect.left + (tableRect.width / 2) - modalRect.left;
+                 }
+
+
+                 const startRect = judgeResultScore.getBoundingClientRect();
+                 const startY = startRect.top + (startRect.height / 2) - modalRect.top; // Relative to modal top
+                 const startX = startRect.left + (startRect.width / 2) - modalRect.left; // Relative to modal left
+
+                 flyingScoreElement.textContent = `${score.toFixed(1)}`;
+                 // Position relative to the modal dialog
+                 flyingScoreElement.style.position = 'absolute'; // Change from fixed if needed
+                 flyingScoreElement.style.top = `${startY}px`;
+                 flyingScoreElement.style.left = `${startX}px`;
+                 flyingScoreElement.style.opacity = '1';
+                 flyingScoreElement.style.transform = 'scale(1)';
+                 judgeModalElement.querySelector('.modal-dialog').appendChild(flyingScoreElement); // Append to modal
+
+
+                 requestAnimationFrame(() => {
+                     flyingScoreElement.style.top = `${targetY}px`;
+                     flyingScoreElement.style.left = `${targetX}px`;
+                     flyingScoreElement.style.opacity = '0';
+                     flyingScoreElement.style.transform = 'scale(0.3)';
+                 });
+
+                 flyingScoreElement.addEventListener('transitionend', () => {
+                     flyingScoreElement.remove(); // Clean up the element
+                     renderAiJudgeLeaderboard(teamName); // Re-render leaderboard highlighting the team
+                 }, { once: true });
+             }
              if (judgeProjectBtn && judgeTeamSelect && judgeLoader && judgeResultsArea && judgeResultAnalysisList && judgeResultScore) {
                 judgeProjectBtn.addEventListener('click', function() {
                     const selectedTeam = judgeTeamSelect.value;
-                    if (!selectedTeam) { /* (Keep existing error handling) */ judgeResultsArea.style.display = 'block'; judgeLoader.style.display = 'none'; judgeResultTeamName.textContent = "Error"; judgeResultAnalysisList.innerHTML = '<li class="visible" style="border-color: var(--error-color);">Please select a team.</li>'; judgeResultScore.innerHTML = ''; return; }
-                    judgeResultsArea.style.display = 'none'; judgeResultAnalysisList.innerHTML = ''; judgeResultScore.innerHTML = ''; judgeLoader.style.display = 'block'; judgeProjectBtn.disabled = true; judgeTeamSelect.disabled = true; aiJudgeLeaderboardSection.classList.remove('visible'); const processingTime = 2500;
-                    const analysisPoints = teamAnalysisData[selectedTeam] || ["Standard analysis.", "Details pending.", `Simulating for: ${selectedTeam}`]; // Default analysis
+                    if (!selectedTeam) { /* (Keep existing error handling) */ judgeResultsArea.style.display = 'block'; judgeLoader.style.display = 'none'; judgeResultTeamName.textContent = "Error"; judgeResultAnalysisList.innerHTML = '<li class="visible" style="color: var(--error-color);">Please select a team first.</li>'; judgeResultScore.innerHTML = ''; return; }
+                    judgeResultsArea.style.display = 'none'; judgeResultAnalysisList.innerHTML = ''; judgeResultScore.innerHTML = ''; judgeLoader.style.display = 'block'; judgeProjectBtn.disabled = true; judgeTeamSelect.disabled = true; aiJudgeLeaderboardSection.classList.remove('visible'); const processingTime = 1500 + Math.random() * 1000; // Randomize slightly
+                    // Use analysis data or provide a default
+                    const analysisPoints = teamAnalysisData[selectedTeam] || ["Generic AI analysis in progress...", "Evaluating potential...", `Simulating for team: ${selectedTeam}.`, "Results generated."];
                     setTimeout(() => {
-                        judgeLoader.style.display = 'none'; judgeResultsArea.style.display = 'block'; judgeResultTeamName.textContent = `Eval: ${selectedTeam}`;
+                        judgeLoader.style.display = 'none'; judgeResultsArea.style.display = 'block'; judgeResultTeamName.textContent = `Evaluation: ${selectedTeam}`;
                         const totalDisplayTime = displayAnalysisSequentially(analysisPoints);
                         setTimeout(() => {
-                            const score = generateScore(selectedTeam); judgeResultScore.innerHTML = `Score: <span>${score.toFixed(1)}/10</span>`;
+                            const score = generateScore(selectedTeam); judgeResultScore.innerHTML = `Score: <span>${score.toFixed(1)} / 10.0</span>`;
                             updateAiJudgeLeaderboardData(selectedTeam, score); // Use AI Judge data
-                            setTimeout(() => { animateScoreToLeaderboard(selectedTeam, score); }, 150);
+                            setTimeout(() => { animateScoreToLeaderboard(selectedTeam, score); }, 150); // Delay before animating
                             judgeProjectBtn.disabled = false; judgeTeamSelect.disabled = false;
-                        }, totalDisplayTime + 100);
+                        }, totalDisplayTime + 100); // Wait for analysis text to finish
                     }, processingTime);
                 });
-                judgeModalElement.addEventListener('shown.bs.modal', () => { renderAiJudgeLeaderboard(); }); // Render AI Judge board on show
+                // Render AI Judge board on modal show
+                 judgeModalElement.addEventListener('shown.bs.modal', () => {
+                    updateAiJudgeTeamsDropdown(); // Ensure dropdown is up-to-date when opened
+                    renderAiJudgeLeaderboard();
+                });
+                // Clear results when modal is hidden
+                 judgeModalElement.addEventListener('hidden.bs.modal', () => {
+                    judgeResultsArea.style.display = 'none';
+                    judgeResultAnalysisList.innerHTML = '';
+                    judgeResultScore.innerHTML = '';
+                    judgeLoader.style.display = 'none';
+                    judgeTeamSelect.selectedIndex = 0; // Reset dropdown
+                });
             } else { console.error("AI Judging elements not found."); }
             // --- END AI Judge & Leaderboard Logic ---
 
@@ -1078,48 +1389,63 @@
                              else if (value) { try { data = JSON.parse(value); if (!Array.isArray(data)) data = []; console.log(`Loaded ${POINTS_LEADERBOARD_KEY} from CS:`, data.length, "entries"); } catch (e) { console.error(`Error parsing ${POINTS_LEADERBOARD_KEY}:`, e); data = []; } }
                              else console.log(`${POINTS_LEADERBOARD_KEY} not found in CS.`);
 
-                             // Ensure current user is in the list ONLY IF currentUser exists
+                             // Ensure current user is in the list ONLY IF currentUser exists and has points > 0? Or always include? Let's always include if logged in.
                              if (currentUser) {
                                 const userExists = data.some(entry => entry.userId === currentUser.id);
-                                if (!userExists) { data.push({ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: totalWellyPoints }); }
+                                if (!userExists) {
+                                    // Add user only if they exist (to avoid adding guests)
+                                    data.push({ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: totalWellyPoints });
+                                    console.log("Added current user to local leaderboard data before resolving.");
+                                }
                              }
                              resolve(data);
                          });
                      } else {
                          console.warn("CloudStorage not available for points leaderboard.");
+                         // Return only current user if logged in, else empty array
                          resolve(currentUser ? [{ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: totalWellyPoints }] : []);
                      }
                  });
             }
 
             async function savePointsLeaderboardData(data) {
-                if (!Array.isArray(data)) return;
+                 if (!Array.isArray(data)) return false; // Indicate failure
                  if (tg && tg.CloudStorage) {
-                     tg.CloudStorage.setItem(POINTS_LEADERBOARD_KEY, JSON.stringify(data), (error, success) => {
-                         if (error) console.error(`CS Error saving ${POINTS_LEADERBOARD_KEY}:`, error);
-                         else if (success) console.log(`Saved ${POINTS_LEADERBOARD_KEY} to CS.`);
-                         else console.warn(`CS save call for ${POINTS_LEADERBOARD_KEY} failed silently.`);
+                     return new Promise((resolve) => {
+                          tg.CloudStorage.setItem(POINTS_LEADERBOARD_KEY, JSON.stringify(data), (error, success) => {
+                              if (error) { console.error(`CS Error saving ${POINTS_LEADERBOARD_KEY}:`, error); resolve(false); }
+                              else if (success) { console.log(`Saved ${POINTS_LEADERBOARD_KEY} to CS.`); resolve(true); }
+                              else { console.warn(`CS save call for ${POINTS_LEADERBOARD_KEY} failed silently.`); resolve(false); }
+                          });
                      });
-                 } else console.warn("CloudStorage not available. Points leaderboard not saved.");
+                 } else {
+                     console.warn("CloudStorage not available. Points leaderboard not saved.");
+                     return false; // Indicate failure
+                 }
             }
 
+            // Updates the *global* leaderboard data with the current user's points and name
             async function updatePointsLeaderboardWithCurrentUser(currentPoints) {
-                if (!currentUser) return;
+                if (!currentUser) return; // Don't run for guests
                 try {
-                    let leaderboard = await getPointsLeaderboardData();
+                    let leaderboard = await getPointsLeaderboardData(); // Get latest data
                     const userIndex = leaderboard.findIndex(entry => entry.userId === currentUser.id);
                     let changed = false;
                     const userName = currentUser.first_name || 'Player';
 
                     if (userIndex > -1) {
+                        // User exists, update if points or name changed
                         if (leaderboard[userIndex].points !== currentPoints || leaderboard[userIndex].firstName !== userName) {
                              leaderboard[userIndex].points = currentPoints;
                              leaderboard[userIndex].firstName = userName;
                              changed = true;
+                             console.log(`Updating user ${currentUser.id} in leaderboard to ${currentPoints} points.`);
                         }
                     } else {
+                        // User doesn't exist, add them
                         leaderboard.push({ userId: currentUser.id, firstName: userName, points: currentPoints });
                         changed = true;
+                         console.log(`Adding user ${currentUser.id} to leaderboard with ${currentPoints} points.`);
                     }
 
                     if (changed) {
@@ -1128,35 +1454,61 @@
                     }
                 } catch (error) {
                     console.error("Failed to update points leaderboard:", error);
+                     // Optionally show a non-blocking error to the user?
                 }
             }
 
-            async function fetchAndDisplayPointsLeaderboard(currentPoints) {
-                if (!profileLeaderboardLoading || !profileLeaderboardTableBody || !profileRankDisplay || !profileLeaderboardEmpty || !currentUser) return;
+            async function fetchAndDisplayPointsLeaderboard() {
+                if (!profileLeaderboardLoading || !profileLeaderboardTableBody || !profileRankDisplay || !profileLeaderboardEmpty || !profileLeaderboardSection || !profileLeaderboardTable) {
+                    console.error("Profile leaderboard elements missing.");
+                    return;
+                }
+                if (!currentUser) { // Handle guest case explicitly
+                     profileRankDisplay.textContent = 'Rank: N/A (Guest)';
+                     profileLeaderboardEmpty.textContent = 'Login via Telegram to see leaderboard.';
+                     profileLeaderboardEmpty.style.display = 'block';
+                     profileLeaderboardLoading.style.display = 'none';
+                     profileLeaderboardTable.style.display = 'none'; // Hide table
+                     return;
+                }
 
                 profileLeaderboardLoading.style.display = 'block';
                 profileLeaderboardTableBody.innerHTML = '';
                 profileLeaderboardEmpty.style.display = 'none';
+                profileLeaderboardTable.style.display = ''; // Ensure table is visible
                 profileRankDisplay.textContent = 'Rank: Calculating...';
 
                 try {
+                     // 1. Ensure local points are loaded/up-to-date
+                     await loadWellyPoints();
+                     const currentPoints = totalWellyPoints; // Use the loaded value
+
+                    // 2. Fetch leaderboard data (this inherently includes the current user from getPointsLeaderboardData)
                     let leaderboard = await getPointsLeaderboardData();
 
-                    // Ensure current user's points are up-to-date before display/ranking
-                    const userIndex = leaderboard.findIndex(entry => entry.userId === currentUser.id);
-                    if (userIndex > -1) {
-                         if (leaderboard[userIndex].points !== currentPoints) { leaderboard[userIndex].points = currentPoints; }
-                         if (leaderboard[userIndex].firstName !== (currentUser.first_name || 'Player')) { leaderboard[userIndex].firstName = currentUser.first_name || 'Player';}
-                    } else {
+                     // 3. Ensure current user's points in the fetched data match the latest local points
+                     const userIndex = leaderboard.findIndex(entry => entry.userId === currentUser.id);
+                     if (userIndex > -1 && leaderboard[userIndex].points !== currentPoints) {
+                         console.log(`Leaderboard data for user ${currentUser.id} (${leaderboard[userIndex].points}pts) differs from local (${currentPoints}pts). Updating leaderboard entry.`);
+                         leaderboard[userIndex].points = currentPoints;
+                         // Re-sort if points changed
+                         leaderboard.sort((a, b) => b.points - a.points);
+                          // Optionally re-save leaderboard data here if discrepancy found, or rely on updatePointsLeaderboardWithCurrentUser called elsewhere
+                         // await savePointsLeaderboardData(leaderboard); // Be careful about frequent saves
+                     } else if (userIndex === -1) {
+                         // This case should be handled by getPointsLeaderboardData, but as a fallback:
                          leaderboard.push({ userId: currentUser.id, firstName: currentUser.first_name || 'Player', points: currentPoints });
-                    }
+                         leaderboard.sort((a, b) => b.points - a.points);
+                         console.warn("Current user was missing from getPointsLeaderboardData result, added manually.");
+                     }
 
-                    leaderboard.sort((a, b) => b.points - a.points); // Sort *after* ensuring user data is correct
 
+                    // 4. Display Leaderboard
                     if (leaderboard.length === 0) {
                         profileRankDisplay.textContent = 'Rank: N/A';
                         profileLeaderboardEmpty.textContent = 'Leaderboard is empty.';
                         profileLeaderboardEmpty.style.display = 'block';
+                         profileLeaderboardTable.style.display = 'none';
                     } else {
                         const userRank = leaderboard.findIndex(entry => entry.userId === currentUser.id) + 1;
                         const totalPlayers = leaderboard.length;
@@ -1166,15 +1518,17 @@
                         leaderboard.slice(0, topN).forEach((entry, index) => {
                             const rank = index + 1;
                             const row = profileLeaderboardTableBody.insertRow();
+                            const isCurrentUser = entry.userId === currentUser.id;
                             row.innerHTML = `
                                 <td class="text-center"><span class="rank-badge">${rank}</span></td>
-                                <td>${entry.firstName || 'Player'} ${entry.userId === currentUser.id ? '<small class="text-muted">(You)</small>' : ''}</td>
+                                <td>${entry.firstName || 'Player'} ${isCurrentUser ? '<small class="text-muted fst-italic">(You)</small>' : ''}</td>
                                 <td class="points-cell">${entry.points}</td>
                             `;
-                             if (entry.userId === currentUser.id) {
+                             if (isCurrentUser) {
                                  row.classList.add('table-info'); // Highlight user
                              }
                         });
+                         profileLeaderboardTable.style.display = ''; // Ensure visible
                     }
 
                     profileLeaderboardLoading.style.display = 'none';
@@ -1185,6 +1539,7 @@
                      profileLeaderboardEmpty.textContent = 'Error loading leaderboard.';
                      profileLeaderboardEmpty.style.display = 'block';
                      profileLeaderboardLoading.style.display = 'none';
+                     profileLeaderboardTable.style.display = 'none';
                  }
             }
 
@@ -1193,10 +1548,10 @@
             if (profileModalElement) {
                 profileModalElement.addEventListener('show.bs.modal', async function () {
                     if (!currentUser) {
-                        console.error("Cannot open profile modal: User not initialized.");
+                        // This case should ideally be prevented by not setting data-bs-toggle on the profile div for guests
+                        console.error("Attempted to open profile modal for guest.");
                         const modalInstance = bootstrap.Modal.getInstance(profileModalElement);
                         if (modalInstance) modalInstance.hide();
-                        tg.showAlert("Could not load profile data.");
                         return;
                     }
                     console.log("Profile modal opening...");
@@ -1205,66 +1560,68 @@
                     if (resetFeedbackArea) resetFeedbackArea.textContent = '';
                     if (deleteProgressBtn) deleteProgressBtn.disabled = false;
 
-                    try {
-                        // Re-fetch points first to ensure leaderboard has correct value
-                        await loadWellyPoints();
-                        await fetchAndDisplayPointsLeaderboard(totalWellyPoints); // Display points leaderboard
-                        // Update points leaderboard in background
-                        updatePointsLeaderboardWithCurrentUser(totalWellyPoints);
-                    } catch (error) {
-                        console.error("Error loading data for profile modal:", error);
-                        if (modalWellyPoints) modalWellyPoints.textContent = 'Error';
-                        if (profileRankDisplay) profileRankDisplay.textContent = 'Rank: Error';
-                    }
+                    // Fetch and display the leaderboard
+                    await fetchAndDisplayPointsLeaderboard();
+                    // Trigger a background update just in case points changed elsewhere
+                    updatePointsLeaderboardWithCurrentUser(totalWellyPoints);
                 });
             }
 
-            // Delete Progress Button Listener (Simplified - only points/tasks/points-leaderboard)
-             if (deleteProgressBtn && currentUser) {
+            // Delete Progress Button Listener (Reset Points, Tasks, User's Leaderboard Entry)
+             if (deleteProgressBtn && currentUser) { // Only add listener if button exists and user is logged in
                  deleteProgressBtn.addEventListener('click', function() {
-                     if(resetFeedbackArea) resetFeedbackArea.textContent = '';
-                     if (!tg || !tg.showConfirm) {
+                     if(resetFeedbackArea) resetFeedbackArea.textContent = ''; // Clear previous feedback
+                     if (!tg || !tg.showConfirm) { // Check if Telegram confirmation is available
                          if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Action only available in Telegram.'; resetFeedbackArea.className = 'small feedback-error'; }
                          else { alert("This action is only available within the Telegram app."); }
                          return;
                      }
 
-                     tg.showConfirm("Reset ALL Points and Task Progress?\nThis cannot be undone.", async (confirmed) => {
+                     tg.showConfirm("Reset ALL your Points and Task Progress?\nThis cannot be undone.", async (confirmed) => {
                          if (confirmed) {
                              console.log("User confirmed progress reset.");
-                             deleteProgressBtn.disabled = true;
+                             deleteProgressBtn.disabled = true; // Disable button during reset
                              if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Resetting...'; resetFeedbackArea.className = 'small text-muted'; }
 
                              try {
-                                 // 1. Reset Points
+                                 // 1. Reset Points Locally and Save
                                  totalWellyPoints = 0;
-                                 await saveWellyPoints(); // Save 0 points
-                                 updateUserProfileDisplay(); // Update UI
+                                 const pointsSaved = await saveWellyPoints();
+                                 if (!pointsSaved) console.warn("Failed to confirm points save during reset.");
+                                 updateUserProfileDisplay(); // Update header & potentially modal if still open
 
-                                 // 2. Reset Tasks
+                                 // 2. Reset Tasks Locally and Save
                                  taskState = {};
-                                 saveTaskState(taskState); // Save empty task state
-                                 initializeTaskUI(); // Update task UI in modal
-                                 updateProgressBar(); // Update progress bar
+                                 saveTaskState(taskState); // Saves to CS and LS
+                                 initializeTaskUI(); // Update task UI in modal checklist
+                                 updateProgressBar(); // Update progress bar display
 
-                                 // 3. Clear Points Leaderboard (Optional: remove user or clear all?)
-                                 // Let's clear the user's entry or reset their points in the leaderboard
-                                 await updatePointsLeaderboardWithCurrentUser(0); // Set user points to 0 on leaderboard
+                                 // 3. Update User's Points on Leaderboard to 0
+                                 // We don't delete the user, just set their score to 0
+                                 await updatePointsLeaderboardWithCurrentUser(0);
 
-                                 // 4. Update Modal UI Immediately
-                                 if (modalWellyPoints) modalWellyPoints.textContent = '0';
-                                 await fetchAndDisplayPointsLeaderboard(0); // Refresh leaderboard view
+                                 // 4. Refresh Leaderboard Display in Modal
+                                 await fetchAndDisplayPointsLeaderboard(); // Re-fetch and display with 0 points
 
 
                                  // 5. Show Success Feedback
-                                 if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Points & Tasks Reset!'; resetFeedbackArea.className = 'small feedback-success'; }
-                                 tg.showAlert("Your points and task progress have been reset.");
+                                 if(resetFeedbackArea) { resetFeedbackArea.textContent = 'Points & Tasks Reset Successfully!'; resetFeedbackArea.className = 'small feedback-success'; }
+                                 // Optionally show a Telegram popup confirmation
+                                 // tg.showAlert("Your points and task progress have been reset.");
+
+                                 // Re-enable button after a short delay? Or keep disabled until modal close? Let's keep disabled.
 
                              } catch (error) {
                                  console.error("Error during progress reset:", error);
                                  if(resetFeedbackArea) { resetFeedbackArea.textContent = `Reset failed: ${error.message || 'Unknown error'}`; resetFeedbackArea.className = 'small feedback-error'; }
                                  tg.showAlert(`An error occurred while resetting progress: ${error.message || error}`);
-                                 deleteProgressBtn.disabled = false; // Re-enable on error
+                                 deleteProgressBtn.disabled = false; // Re-enable button on error
+                                  // Reload points/tasks to revert local state if save failed?
+                                 await loadWellyPoints();
+                                 await loadTaskState();
+                                 updateUserProfileDisplay();
+                                 initializeTaskUI();
+                                 updateProgressBar();
                              }
                          } else {
                              console.log("User cancelled progress reset.");
@@ -1272,6 +1629,8 @@
                          }
                      });
                  });
+             } else if (deleteProgressBtn && !currentUser) {
+                 deleteProgressBtn.disabled = true; // Ensure disabled for guests
              }
             // --- END Profile Modal Logic ---
 
