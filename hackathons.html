@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
-    <title>AI Hackathon - Wellington (Web Version)</title>
+    <title>AI Hackathon - Wellington (Backend Connected)</title>
 
     <!-- Standard Meta -->
-    <meta name="description" content="Agenda, Registration, Tasks, and AI Judge Simulation for the Wellington AI Hackathon. Earn Welly Points! Accessible on Web.">
-    <meta name="keywords" content="Wellington Campus, hackathon, AI, agenda, judge, leaderboard, profile, points, tasks, welly points, registration, teams, groups, web app">
+    <meta name="description" content="Agenda, Registration, Tasks, and AI Judge Simulation for the Wellington AI Hackathon. Data synced with backend.">
+    <meta name="keywords" content="Wellington Campus, hackathon, AI, agenda, judge, leaderboard, profile, points, tasks, welly points, registration, teams, groups, web app, backend">
     <meta name="author" content="Wellington Campus & Partners">
-    <meta property="og:title" content="Wellington AI Hackathon (Web App)">
-    <meta property="og:description" content="Web-Accessible Hackathon App: Agenda, Registration, Task Tracker with Welly Points, and AI Judge Simulation.">
+    <meta property="og:title" content="Wellington AI Hackathon (Backend Connected)">
+    <meta property="og:description" content="Hackathon App with Central Data: Agenda, Registration, Task Tracker, AI Judge Simulation.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://allan0.github.io/Wellington/hackathons.html"> <!-- Update if URL changes -->
     <meta property="og:image" content="./wellingtoncampus.png"> <!-- Update Path -->
@@ -25,43 +25,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
 
     <style>
+        /* --- ALL CSS Rules are the same as the previous version --- */
+        /* --- Copy and paste all the <style> content from the previous version here --- */
         :root {
-            --primary-color: #d4af37; /* Gold */
-            --secondary-color: #003366; /* Dark Blue */
-            --text-color: #212529;
-            --bg-color: #f0f4f8; /* Lighter, cleaner background */
-            --accent-color: #ffffff; /* White */
-            --card-bg-color: rgba(255, 255, 255, 0.95);
-            --success-color: #198754; /* Bootstrap 5 success */
-            --error-color: #dc3545; /* Bootstrap 5 danger */
-            --danger-color: #dc3545;
-            --info-color: #0dcaf0;  /* Bootstrap 5 info */
-            --warning-color: #ffc107; /* Bootstrap 5 warning */
-            --shadow: 0 6px 18px rgba(0,0,0,0.08);
-            --border-radius: 12px;
-            --bottom-nav-bg: var(--accent-color);
-            --bottom-nav-icon: #6c757d;
+            --primary-color: #d4af37; --secondary-color: #003366; --text-color: #212529;
+            --bg-color: #f0f4f8; --accent-color: #ffffff; --card-bg-color: rgba(255, 255, 255, 0.95);
+            --success-color: #198754; --error-color: #dc3545; --danger-color: #dc3545;
+            --info-color: #0dcaf0; --warning-color: #ffc107; --shadow: 0 6px 18px rgba(0,0,0,0.08);
+            --border-radius: 12px; --bottom-nav-bg: var(--accent-color); --bottom-nav-icon: #6c757d;
             --bottom-nav-active: var(--primary-color);
         }
         html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Roboto', sans-serif; color: var(--text-color); background-color: var(--bg-color);
-            font-size: 1.0rem; line-height: 1.6; margin: 0; padding: 0; min-height: 100vh;
-            box-sizing: border-box; overflow-x: hidden;
-            padding-bottom: 80px; /* Space for bottom nav */
-            display: flex; flex-direction: column;
-        }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); background-color: var(--bg-color); font-size: 1.0rem; line-height: 1.6; margin: 0; padding: 0; min-height: 100vh; box-sizing: border-box; overflow-x: hidden; padding-bottom: 80px; display: flex; flex-direction: column; }
         #main-header { text-align: center; margin-bottom: 1rem; position: relative; padding-top: 1rem; flex-shrink: 0; }
         #header-logo { display: block; margin: 0 auto 0.5rem auto; max-width: 100px; width: 100px; height: auto; position: relative; top: 0; left: 0; z-index: 10; cursor: pointer; transition: all 0.4s ease-in-out; }
         #header-logo.logo-scrolled { position: fixed; top: 8px; left: 12px; width: 45px; max-width: 45px; height: auto; z-index: 1045; margin: 0; background-color: rgba(255, 255, 255, 0.85); padding: 4px; border-radius: 50%; box-shadow: 0 3px 8px rgba(0, 51, 102, 0.3); }
         body.logo-state-scrolled .container { padding-top: 60px; }
-        #user-profile {
-            position: fixed; top: 8px; right: 12px; font-size: 0.85rem;
-            color: var(--secondary-color); background-color: rgba(255, 255, 255, 0.9);
-            padding: 5px 12px; border-radius: 20px; display: flex; align-items: center;
-            z-index: 1045; box-shadow: 0 2px 5px rgba(0, 51, 102, 0.15);
-            transition: top 0.4s ease-in-out, background-color 0.2s ease; cursor: pointer;
-        }
+        #user-profile { position: fixed; top: 8px; right: 12px; font-size: 0.85rem; color: var(--secondary-color); background-color: rgba(255, 255, 255, 0.9); padding: 5px 12px; border-radius: 20px; display: flex; align-items: center; z-index: 1045; box-shadow: 0 2px 5px rgba(0, 51, 102, 0.15); transition: all 0.4s ease; cursor: pointer; }
         #user-profile:hover { background-color: rgba(235, 235, 235, 0.95); }
         #user-avatar { display: inline-block; width: 28px; height: 28px; border-radius: 50%; margin-right: 8px; vertical-align: middle; background-color: #e9ecef; text-align: center; line-height: 28px; font-size: 18px; overflow: hidden; }
         #user-avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -95,18 +75,18 @@
         .list-unstyled li, .list-group-item { margin-bottom: 0.7rem; display: flex; align-items: flex-start; line-height: 1.5; font-size: 0.95rem; }
         .list-unstyled i.fas, .list-unstyled i.fab, .list-group-item i.fas { color: var(--primary-color); margin-right: 0.8rem; width: 18px; text-align: center; flex-shrink: 0; margin-top: 0.15em; }
         .checklist { padding-left: 0; list-style: none; margin-top: 1rem; }
-        .checklist-item { background-color: #e9ecef; padding: 0.8rem 1rem; border-radius: 8px; margin-bottom: 0.6rem; transition: all 0.3s ease; display: flex; align-items: center; line-height: 1.4; border-left: 4px solid var(--secondary-color); cursor: pointer; font-size: 0.9rem; } /* Always clickable */
+        .checklist-item { background-color: #e9ecef; padding: 0.8rem 1rem; border-radius: 8px; margin-bottom: 0.6rem; transition: all 0.3s ease; display: flex; align-items: center; line-height: 1.4; border-left: 4px solid var(--secondary-color); cursor: pointer; font-size: 0.9rem; }
         .checklist-item:hover { background-color: #dfe6ec; }
         .checklist-item i.fa-circle { color: var(--secondary-color); margin-right: 0.75rem; font-size: 1em; transition: transform 0.2s ease; }
         .checklist-item i.fa-check-circle { color: var(--success-color); display: none; margin-right: 0.75rem; font-size: 1em; transition: transform 0.2s ease; }
-        .checklist-item.completed { background-color: #d1e7dd; color: #0f5132; border-left: 4px solid var(--success-color); cursor: default; } /* Adjusted completed style */
+        .checklist-item.completed { background-color: #d1e7dd; color: #0f5132; border-left: 4px solid var(--success-color); cursor: default; }
         .checklist-item.completed i.fa-circle { display: none; }
         .checklist-item.completed i.fa-check-circle { display: inline-block; transform: scale(1.1); }
         .celebration-emoji { display: inline-block; margin-left: 10px; font-size: 1.2em; opacity: 0; transform: scale(0.5); transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
         .checklist-item.completed .celebration-emoji { opacity: 1; transform: scale(1); }
         .progress { height: 18px; font-size: 0.75rem; border-radius: 50px; background-color: #e9ecef; }
         .progress-bar { background-color: var(--primary-color); font-weight: bold; color: var(--accent-color); display: flex; align-items: center; justify-content: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); transition: width 0.6s ease; }
-        .agenda-list { list-style: none; padding-left: 0; } /* Keep agenda styling */
+        .agenda-list { list-style: none; padding-left: 0; }
         .agenda-list li { margin-bottom: 1rem; display: flex; align-items: flex-start; }
         .agenda-time { flex: 0 0 70px; font-weight: bold; color: var(--secondary-color); display: flex; align-items: center; font-size: 0.9em; }
         .agenda-time i { margin-right: 5px; width: 15px; text-align: center;}
@@ -118,7 +98,7 @@
         .agenda-break .agenda-time { color: var(--primary-color); }
         #task-message-area .alert { margin-top: 1rem; padding: 0.7rem 1rem; font-size: 0.9rem; }
         #aiJudgeModal .modal-body { min-height: 300px; }
-        #judgeLoader { text-align: center; padding: 1rem 0; display: none; } /* Reduced padding */
+        #judgeLoader { text-align: center; padding: 1rem 0; display: none; }
         #judgeLoader p { margin-top: 0.8rem; color: var(--secondary-color); font-style: italic; font-size: 0.9rem;}
         #judgeResultsArea { display: none; }
         #judgeResultTeamName { margin-bottom: 0.5rem; color: var(--secondary-color); font-weight: bold;}
@@ -158,12 +138,12 @@
         #modal-welly-points-display { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); margin-bottom: 1rem; }
         #modal-welly-points-display .fa-star { font-size: 1.5rem; margin-right: 5px; vertical-align: middle; }
         #profile-rank-display { font-size: 0.95rem; color: var(--text-color); margin-bottom: 0.5rem; background-color: rgba(0, 51, 102, 0.05); padding: 0.5rem; border-radius: 8px; border-left: 4px solid var(--secondary-color); }
-        #profile-team-display { font-size: 0.9rem; margin-bottom: 1.5rem; } /* Adjusted team display margin */
+        #profile-team-display { font-size: 0.9rem; margin-bottom: 1.5rem; }
         #profile-leaderboard-section h5 { color: var(--secondary-color); margin-bottom: 0.8rem; font-size: 1.1rem; }
         #profile-leaderboard-table { font-size: 0.9rem; }
         #profile-leaderboard-table thead { background-color: var(--secondary-color); color: var(--accent-color); }
         #profile-leaderboard-body tr td { vertical-align: middle; }
-        #profile-leaderboard-body .rank-badge { /* Keep styles */ }
+        #profile-leaderboard-body .rank-badge { }
         #profile-leaderboard-body tr:nth-child(1) .rank-badge { background-color: #ffd700; color: #333; }
         #profile-leaderboard-body tr:nth-child(2) .rank-badge { background-color: #c0c0c0; color: #333; }
         #profile-leaderboard-body tr:nth-child(3) .rank-badge { background-color: #cd7f32; color: #fff; }
@@ -179,13 +159,32 @@
         .feedback-info { color: var(--info-color); }
         .feedback-warning { color: var(--warning-color); }
         .text-muted { color: #6c757d !important; }
-
-        /* Ensure modals are scrollable on small screens */
         .modal-dialog-scrollable .modal-body { overflow-y: auto; }
+
+        /* Added styles for loading overlay */
+        #loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000; /* High z-index */
+            flex-direction: column;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #loading-overlay.show { opacity: 1; visibility: visible; }
+        #loading-overlay p { margin-top: 1rem; font-weight: 500; color: var(--secondary-color); }
+
 
     </style>
 </head>
 <body>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p>Loading Hackathon Data...</p>
+    </div>
+
     <!-- User Profile Display (Top Right) -->
     <div id="user-profile" data-bs-toggle="modal" data-bs-target="#userProfileModal">
         <span id="user-avatar">👤</span>
@@ -201,16 +200,15 @@
         <header id="main-header">
             <img src="./wellingtoncampus.png" alt="Wellington Campus Logo" id="header-logo">
             <h1><i class="fas fa-cogs me-2"></i>AI Hackathon</h1>
-            <p class="hackathon-subtitle">Web App Version</p>
+            <p class="hackathon-subtitle">Central Backend Version</p>
         </header>
 
         <!-- Registration Button Section -->
         <section id="registration-action" class="text-center mb-4">
-             <!-- Button enabled by default for web -->
-            <button class="btn btn-custom btn-lg" id="registerTeamBtn" data-bs-toggle="modal" data-bs-target="#registrationModal">
-                <i class="fas fa-users me-2"></i> Register / View Team
+            <button class="btn btn-custom btn-lg" id="registerTeamBtn" data-bs-toggle="modal" data-bs-target="#registrationModal" disabled>
+                <i class="fas fa-spinner fa-spin me-2"></i> Loading...
             </button>
-            <p id="registration-status-message" class="small text-muted mt-1 fst-italic">Register or view your team status.</p>
+            <p id="registration-status-message" class="small text-muted mt-1 fst-italic">Checking registration status...</p>
         </section>
 
         <!-- Progress Bar Section -->
@@ -266,7 +264,7 @@
              <section id="tracks" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTracks" aria-expanded="false" aria-controls="collapseTracks"> <h2><i class="fas fa-stream"></i>Themes</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseTracks" data-bs-parent="#accordionHackathon"> <div class="card-body"> <ul class="list-unstyled"> <li><i class="fas fa-truck-loading"></i> Supply Chain</li> <li><i class="fas fa-leaf"></i> Sustainability</li> <li><i class="fas fa-briefcase-medical"></i> Healthcare</li> <li><i class="fas fa-tasks"></i> Project Mgmt</li> <li><i class="fas fa-city"></i> Real Estate</li> <li><i class="fas fa-landmark"></i> Government</li> <li><i class="fas fa-lightbulb"></i> Open Innovation</li> </ul> <p class="small text-muted mt-2">Assigned via Spin the Wheel (External).</p> </div> </div> </section>
              <section id="preparation" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapsePrep" aria-expanded="false" aria-controls="collapsePrep"> <h2><i class="fas fa-laptop-code"></i>Preparation</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapsePrep" data-bs-parent="#accordionHackathon"> <div class="card-body"> <h5 class="card-title small"><i class="fas fa-laptop me-2"></i>Hardware</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fas fa-check-circle"></i> Laptop</li> <li><i class="fas fa-check-circle"></i> Charger</li> <li><i class="fas fa-check-circle"></i> Wi-Fi @ Venue</li> </ul> <h5 class="card-title small mt-2"><i class="fas fa-tools me-2"></i>Software</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fab fa-python"></i> Python 3.8+</li> <li><i class="fas fa-book"></i> Jupyter/Editor</li> <li><i class="fas fa-code-branch"></i> Git/GitHub</li> <li><i class="fas fa-brain"></i> AI Libs (Opt)</li> <li><i class="fas fa-cloud-upload-alt"></i> Cloud Acct (Opt)</li> </ul> <h5 class="card-title small mt-2"><i class="fas fa-lightbulb me-2"></i>Knowledge</h5> <ul class="list-unstyled ps-2 small"> <li><i class="fas fa-check"></i> Python Basics</li> <li><i class="fas fa-check"></i> Basic AI/ML</li> <li><i class="fas fa-check"></i> Teamwork!</li> </ul> </div> </div> </section>
              <section id="prizes" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapsePrizes" aria-expanded="false" aria-controls="collapsePrizes"> <h2><i class="fas fa-trophy"></i>Prizes</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapsePrizes" data-bs-parent="#accordionHackathon"> <div class="card-body"> <ul class="list-unstyled small"> <li><i class="fas fa-trophy"></i> 1st: AED 10k, Swag, Ops</li> <li><i class="fas fa-medal"></i> 2nd: AED 5k, Swag</li> <li><i class="fas fa-award"></i> 3rd: AED 2.5k, Swag</li> <li><i class="fas fa-lightbulb"></i> Innovation Award</li> <li><i class="fas fa-gifts"></i> All: Certificate, Swag</li> <li><i class="fas fa-handshake"></i> Networking</li> </ul> </div> </div> </section>
-             <section id="judging" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseJudging" aria-expanded="false" aria-controls="collapseJudging"> <h2><i class="fas fa-gavel"></i>Judging</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseJudging" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Final judging (Day 2) considers:</p> <ul class="list-unstyled small"> <li><i class="fas fa-cogs"></i> Technical</li> <li><i class="fas fa-lightbulb"></i> Innovation</li> <li><i class="fas fa-bullseye"></i> Impact</li> <li><i class="fas fa-presentation"></i> Pitch/Demo</li> <li><i class="fas fa-check-circle"></i> Completion</li> </ul> <p class="small mt-2">Note: AI Judge Sim (<i class="fas fa-gavel"></i> button) provides simulated scores for fun/practice using teams registered *in this browser*.</p> </div> </div> </section>
+             <section id="judging" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseJudging" aria-expanded="false" aria-controls="collapseJudging"> <h2><i class="fas fa-gavel"></i>Judging</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseJudging" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Final judging (Day 2) considers:</p> <ul class="list-unstyled small"> <li><i class="fas fa-cogs"></i> Technical</li> <li><i class="fas fa-lightbulb"></i> Innovation</li> <li><i class="fas fa-bullseye"></i> Impact</li> <li><i class="fas fa-presentation"></i> Pitch/Demo</li> <li><i class="fas fa-check-circle"></i> Completion</li> </ul> <p class="small mt-2">Note: AI Judge Sim (<i class="fas fa-gavel"></i> button) provides simulated scores based on backend data.</p> </div> </div> </section>
              <section id="logistics-info" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseLogistics" aria-expanded="false" aria-controls="collapseLogistics"> <h2><i class="fas fa-building me-2"></i>Logistics</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseLogistics" data-bs-parent="#accordionHackathon"> <div class="card-body"> <p class="small">Venue requests:</p> <ul class="list-unstyled small"> <li><i class="fas fa-users"></i> Breakout spaces</li> <li><i class="fas fa-desktop"></i> Screen/Projector</li> <li><i class="fas fa-video"></i> Basic Recording?</li> </ul> </div> </div> </section>
              <section id="contact" class="card mb-3"> <div class="card-header collapsed" data-bs-toggle="collapse" data-bs-target="#collapseContact" aria-expanded="false" aria-controls="collapseContact"> <h2><i class="fas fa-envelope"></i>Contact</h2> <span class="chevron-icon ms-auto"> <i class="fas fa-chevron-down chevron-down"></i><i class="fas fa-chevron-up chevron-up"></i></span> </div> <div class="collapse" id="collapseContact" data-bs-parent="#accordionHackathon"> <div class="card-body"> <div class="row small"> <div class="col-6 mb-2"> <strong>Wellington:</strong> <ul class="list-unstyled mt-1"> <li><i class="fas fa-envelope-open-text"></i> <a href="mailto:info@wellingtoncampus.co">Email</a></li> <li><i class="fas fa-phone"></i> <a href="tel:+971542523922">Call</a></li> </ul> </div> <div class="col-6 mb-2"> <strong>CommerCity:</strong> <ul class="list-unstyled mt-1"> <li><i class="fas fa-envelope-open-text"></i> Email DCC</li> <li><i class="fas fa-phone"></i> Call DCC</li> </ul> </div> </div> </div> </div> </section>
         </div> <!-- End Accordion -->
@@ -309,7 +307,7 @@
                         <div class="checklist-item" data-task-id="pitch-coach" data-points="10"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Pitch Coach Session (Optional)</strong></div> <span class="task-points">+10 WP</span><span class="celebration-emoji">🎤</span></div>
                         <div class="checklist-item" data-task-id="day1-submit" data-points="20"> <i class="far fa-circle"></i><i class="far fa-check-circle"></i> <div><strong>Submit Day 1 Drafts</strong></div> <span class="task-points">+20 WP</span><span class="celebration-emoji">🚀</span></div>
                     </div>
-                    <p class="small text-muted mt-3 fst-italic">*Points are saved locally in your browser.</p>
+                    <p class="small text-muted mt-3 fst-italic">*Progress saved to central server.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
@@ -320,15 +318,16 @@
 
     <!-- AI Judge Modal -->
     <div class="modal fade" id="aiJudgeModal" tabindex="-1" aria-labelledby="aiJudgeModalLabel" aria-hidden="true">
-         <div class="modal-dialog modal-lg modal-dialog-scrollable"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="aiJudgeModalLabel"><i class="fas fa-brain me-2"></i>AI Judge Sim & Groups</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <p class="text-muted small">Select a team/group created in this browser, click Judge for a simulated score, or view the current groups.</p>
+         <div class="modal-dialog modal-lg modal-dialog-scrollable"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="aiJudgeModalLabel"><i class="fas fa-brain me-2"></i>AI Judge Sim & Teams</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div> <div class="modal-body"> <p class="text-muted small">Select a registered team, click Judge for a simulated score, or view the current teams.</p>
 
             <!-- Judge Simulation Area -->
             <div class="border rounded p-3 mb-3 bg-light">
                 <div class="row g-2 align-items-end">
                     <div class="col-sm-8">
-                         <label for="judgeTeamSelect" class="form-label small fw-bold">Select Team/Group for Judging:</label>
+                         <label for="judgeTeamSelect" class="form-label small fw-bold">Select Team for Judging:</label>
                          <select class="form-select form-select-sm" id="judgeTeamSelect">
-                             <option selected disabled value="">-- Choose Registered Team/Group --</option>
+                             <option selected disabled value="">-- Choose Registered Team --</option>
+                             <!-- Populated by API -->
                          </select>
                     </div>
                     <div class="col-sm-4">
@@ -346,22 +345,22 @@
                      </div>
                      <div id="judgeResultScore"></div>
                  </div>
-                 <p class="mb-0 small text-muted fst-italic mt-2"> <i class="fas fa-info-circle me-1"></i> Simulation only. Scores saved locally. </p>
+                 <p class="mb-0 small text-muted fst-italic mt-2"> <i class="fas fa-info-circle me-1"></i> Simulation only. Score stored centrally. </p>
             </div>
 
              <hr class="my-4">
 
              <!-- Groups/Leaderboard Area -->
              <div id="groupsLeaderboardSection">
-                 <h5 class="text-center mb-3"><i class="fas fa-users-cog me-2" style="color: var(--secondary-color);"></i>Teams / Groups & Simulated Scores (Local)</h5>
-                 <div id="ai-leaderboard-loading" style="display: none;" class="text-center text-muted small py-3">Loading groups...</div>
-                 <div id="ai-leaderboard-empty" style="display: none;" class="text-center text-muted small py-3">No teams/groups registered in this browser yet.</div>
+                 <h5 class="text-center mb-3"><i class="fas fa-users-cog me-2" style="color: var(--secondary-color);"></i>Registered Teams & Simulated Scores</h5>
+                 <div id="ai-leaderboard-loading" class="text-center text-muted small py-3"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div> Loading Teams...</div>
+                 <div id="ai-leaderboard-empty" style="display: none;" class="text-center text-muted small py-3">No teams registered yet.</div>
                  <div class="table-responsive">
-                     <table class="table table-striped table-hover table-sm align-middle small" id="aiLeaderboardTable">
+                     <table class="table table-striped table-hover table-sm align-middle small" id="aiLeaderboardTable" style="display: none;"> <!-- Hide initially -->
                          <thead class="table-dark small">
                              <tr>
                                  <th scope="col" style="width: 15%; text-align: center;">Rank</th>
-                                 <th scope="col">Team / Group Name</th>
+                                 <th scope="col">Team Name</th>
                                  <th scope="col" style="width: 35%;">Members</th>
                                  <th scope="col" style="width: 15%; text-align: center;">Score</th>
                              </tr>
@@ -387,7 +386,6 @@
                         <!-- User Info Section -->
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <!-- Name is now editable -->
                                 <label for="participantName" class="form-label small">Your Name:<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm" id="participantName" required placeholder="Enter your display name">
                             </div>
@@ -424,11 +422,15 @@
 
                         <!-- Team Selection Section -->
                         <div id="teamSelectionArea">
-                            <p class="small text-muted mb-2">Choose ONE option below (max 4 members per team/group):</p>
+                             <div class="alert alert-info small p-2" role="alert">
+                                <i class="fas fa-info-circle me-1"></i> Fill your details above first. If creating a new team, you will be the Team Leader.
+                             </div>
+                            <p class="small text-muted mb-2">Choose ONE option below (max 4 members per team):</p>
                             <div class="mb-3">
-                                <label for="existingTeamSelect" class="form-label small">1. Join Existing Team/Group (Local):</label>
+                                <label for="existingTeamSelect" class="form-label small">1. Join Existing Team:</label>
                                 <select class="form-select form-select-sm" id="existingTeamSelect">
-                                    <option value="">-- Select a team/group to join --</option>
+                                    <option value="">-- Select a team to join --</option>
+                                     <!-- Populated by API -->
                                 </select>
                                 <div id="team-member-count" class="form-text small"></div>
                             </div>
@@ -443,10 +445,19 @@
 
                         <!-- Already Registered View -->
                         <div id="alreadyRegisteredView" style="display: none;">
-                            <h5 class="text-center mb-3" style="color: var(--secondary-color);">Your Current Team (Local)</h5>
+                            <h5 class="text-center mb-3" style="color: var(--secondary-color);">Your Current Team</h5>
                             <p class="text-center">You are registered in team: <strong id="registeredTeamNameDisplay"></strong></p>
                             <p class="text-center small text-muted">Members:</p>
-                            <ul id="registeredTeamMembersList" class="list-group list-group-flush text-center small mb-3"></ul>
+                            <ul id="registeredTeamMembersList" class="list-group list-group-flush text-center small mb-3">
+                                <!-- Populated by API -->
+                            </ul>
+                             <!-- Add Members button - requires more complex logic & backend support
+                             <div class="text-center mb-3">
+                                 <button type="button" class="btn btn-success btn-sm" id="addMemberBtn" disabled>
+                                     <i class="fas fa-user-plus me-1"></i> Add Member (Future Feature)
+                                 </button>
+                             </div>
+                             -->
                             <p class="text-center small fst-italic">To change teams, please Reset your progress via the Profile modal first.</p>
                         </div>
 
@@ -468,25 +479,24 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="userProfileModalLabel">Your Profile & Progress (Local)</h5>
+                    <h5 class="modal-title" id="userProfileModalLabel">Your Profile & Progress</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="modal-user-avatar">👤</div> <!-- Static icon for web -->
+                    <div id="modal-user-avatar">👤</div>
                     <h4 id="modal-user-name">Player Name</h4>
                     <div id="modal-welly-points-display">
                         <i class="fas fa-star"></i> <span id="modal-welly-points">0</span> WP
                     </div>
-                    <div id="profile-rank-display">Rank: N/A (Local Data)</div> <!-- No global rank -->
-                    <div id="profile-team-display" class="small text-muted mb-3">Team: Not Registered</div>
+                    <div id="profile-rank-display">Rank: Loading...</div>
+                    <div id="profile-team-display" class="small text-muted mb-3">Team: Loading...</div>
                     <hr class="my-3">
                     <div id="profile-leaderboard-section">
-                        <h5><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>Points Leaderboard (Local Top 5)</h5>
-                         <p class="small text-muted fst-italic">(Shows top players registered in this browser)</p>
-                        <div id="leaderboard-loading" style="display: none;">Loading leaderboard...</div>
+                        <h5><i class="fas fa-trophy me-2" style="color: var(--primary-color);"></i>Points Leaderboard (Top 5)</h5>
+                        <div id="leaderboard-loading" class="text-center text-muted small py-3"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div> Loading Leaderboard...</div>
                         <div id="leaderboard-empty" style="display: none;">Leaderboard is empty.</div>
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover table-sm caption-top" id="profile-leaderboard-table">
+                            <table class="table table-striped table-hover table-sm caption-top" id="profile-leaderboard-table" style="display: none;"> <!-- Hide initially -->
                                 <thead><tr><th scope="col" style="width: 15%; text-align: center;">Rank</th><th scope="col">Player</th><th scope="col" style="width: 30%; text-align: right;">Points</th></tr></thead>
                                 <tbody id="profile-leaderboard-body"></tbody>
                             </table>
@@ -496,7 +506,7 @@
                 <div class="modal-footer justify-content-between align-items-center">
                     <div style="flex-grow: 1; text-align: left;">
                         <button type="button" class="btn btn-danger btn-sm" id="reset-progress-btn">
-                            <i class="fas fa-trash-alt me-1"></i> Reset All (Local)
+                            <i class="fas fa-trash-alt me-1"></i> Reset All Data
                         </button>
                         <div id="reset-feedback" class="small d-block mt-1"></div>
                     </div>
@@ -512,7 +522,6 @@
     <!-- Bottom Navigation -->
     <nav class="bottom-nav" aria-label="Mobile navigation">
          <div class="d-flex justify-content-around w-100">
-             <!-- Update links if other pages exist -->
              <a href="#" target="_self" class="btn"><i class="fas fa-home"></i>Home</a>
              <a href="#" target="_self" class="btn"><i class="fas fa-book"></i>LMS</a>
              <a href="#" target="_self" class="btn"><i class="fas fa-puzzle-piece"></i>Quest</a>
@@ -523,18 +532,21 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-    <!-- Web App Script -->
+    <!-- Backend Connected App Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const MAX_TEAM_MEMBERS = 4;
-            const TOTAL_PRESET_GROUPS = 10;
+             // !!! IMPORTANT: Replace with your actual backend API URL !!!
+             const API_BASE_URL = 'http://localhost:3000/api'; // Example for local testing
+            // const API_BASE_URL = 'https://your-ddns-hostname.com/api'; // Example for production
 
             // --- Element References ---
+            const loadingOverlay = document.getElementById('loading-overlay');
             const logo = document.getElementById('header-logo');
             const bodyElement = document.body;
             const userNameDisplay = document.getElementById('user-name-display');
             const wellyPointsDisplay = document.getElementById('welly-points');
-            const userAvatarContainer = document.getElementById('user-avatar'); // Will remain static icon
+            const userAvatarContainer = document.getElementById('user-avatar');
             const userProfileElement = document.getElementById('user-profile');
             const modalChecklist = document.getElementById('modal-checklist');
             const messageArea = document.getElementById('task-message-area');
@@ -557,7 +569,7 @@
 
             // Profile Modal Elements
             const profileModalElement = document.getElementById('userProfileModal');
-            const modalUserAvatar = document.getElementById('modal-user-avatar'); // Static icon
+            const modalUserAvatar = document.getElementById('modal-user-avatar');
             const modalUserName = document.getElementById('modal-user-name');
             const modalWellyPoints = document.getElementById('modal-welly-points');
             const profileRankDisplay = document.getElementById('profile-rank-display');
@@ -591,171 +603,260 @@
             const registeredTeamNameDisplay = document.getElementById('registeredTeamNameDisplay');
             const registeredTeamMembersList = document.getElementById('registeredTeamMembersList');
 
-            // --- LocalStorage Keys ---
-            const USER_DATA_KEY = 'hackathonUser_vWeb1'; // Stores { name, points, registeredTeamName }
-            const TASK_STATE_KEY = 'hackathonTasks_vWeb1';
-            const TEAMS_DATA_KEY = 'hackathonTeams_vWeb1'; // Stores all teams created/joined in this browser
-            const LEADERBOARD_KEY = 'hackathonLeaderboard_vWeb1'; // Stores local leaderboard entries { name, points }
-
             // --- State Variables ---
-            let currentUserData = { name: 'Player', points: 0, registeredTeamName: null, id: `local_${Date.now()}` }; // Simulate user object with a local ID
-            let taskState = {};
-            let hackathonTeamsData = {}; // Structure: { teamName: { members: [{id, name, university, age?, phone?, experience?, skills?}], theme: null, score: 0 } }
-            let localLeaderboardData = []; // Structure: [{ name, points, id }]
+            // These hold the data fetched from the backend
+            let currentUserData = { id: null, name: 'Player', points: 0, registeredTeamName: null, tasks: {} };
+            let hackathonTeamsData = {}; // Structure: { teamName: { members: [...], theme: null, score: 0 } }
+            let pointsLeaderboardData = []; // Structure: [{ id, name, points }]
 
-            // --- PRESET GROUP NAMES (For initial structure if no local data) ---
-            const PRESET_GROUP_NAMES = Array.from({ length: TOTAL_PRESET_GROUPS }, (_, i) => `Group ${String.fromCharCode(65 + i)}`); // Group A, Group B, ... Group J
+            // --- Helper Functions ---
+            function showLoading(message = "Loading...") {
+                if (loadingOverlay) {
+                    loadingOverlay.querySelector('p').textContent = message;
+                    loadingOverlay.classList.add('show');
+                }
+            }
+            function hideLoading() { if (loadingOverlay) loadingOverlay.classList.remove('show'); }
+            function showMessage(message, type = 'success', area = messageArea, clearPrevious = true) { /* (Identical) */ if (area) { if (clearPrevious) area.innerHTML = ''; const alertDiv = document.createElement('div'); alertDiv.className = `alert alert-${type} alert-dismissible fade show small p-2`; alertDiv.setAttribute('role', 'alert'); alertDiv.innerHTML = `${message}<button type="button" class="btn-close btn-sm p-2" data-bs-dismiss="alert" aria-label="Close"></button>`; area.appendChild(alertDiv); } }
+            function clearMessages(area = messageArea) { /* (Identical) */ if (area) area.innerHTML = ''; }
+            function showPointsGainAnimation(points) { /* (Identical) */ if (!userProfileElement || points <= 0) return; const gainElement = document.createElement('div'); gainElement.textContent = `+${points} WP`; gainElement.className = 'welly-points-gain'; document.body.appendChild(gainElement); const profileRect = userProfileElement.getBoundingClientRect(); const startX = profileRect.left + profileRect.width / 2; const startY = profileRect.bottom + 10; gainElement.style.left = `${startX}px`; gainElement.style.top = `${startY}px`; gainElement.style.opacity = '0'; gainElement.style.transform = 'translateX(-50%) scale(0.8)'; requestAnimationFrame(() => { gainElement.style.top = `${startY - 40}px`; gainElement.style.opacity = '1'; gainElement.style.transform = 'translateX(-50%) scale(1)'; }); setTimeout(() => { gainElement.style.opacity = '0'; gainElement.style.transform = 'translateX(-50%) scale(0.8)'; setTimeout(() => gainElement.remove(), 800); }, 1000); }
+            function setupLogoScroll() { /* (Identical) */ if (logo) { const handleScroll = () => { const isScrolled = window.scrollY > 30; logo.classList.toggle('logo-scrolled', isScrolled); bodyElement.classList.toggle('logo-state-scrolled', isScrolled); }; logo.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }); window.addEventListener('scroll', handleScroll, { passive: true }); handleScroll(); } }
 
-            // --- Initialization ---
-            function initializeApp() {
-                console.log("Initializing Web App...");
-                loadUserDataLocal();
-                loadTaskStateLocal();
-                loadTeamsLocal(); // Load teams structure
-                loadLeaderboardLocal(); // Load points leaderboard
-
-                // Check if user is registered (part of the loaded user data)
-                // Note: registeredTeamName is now part of currentUserData
-
-                initializeTaskUI();
-                updateProgressBar();
-                updateAiJudgeModal(); // Update judge dropdown AND leaderboard
-                updateRegistrationButtonState();
-                updateUserProfileDisplay(); // Update header profile last
-
-                console.log("Web App Initialized.");
-                console.log("Current User Data:", currentUserData);
-                console.log("Teams Data:", hackathonTeamsData);
+            // --- API Interaction Functions ---
+            // Helper to include auth/user identifier if needed (e.g., from Telegram initData or a token)
+            function getApiHeaders() {
+                const headers = { 'Content-Type': 'application/json' };
+                // Example: If using Telegram Mini App for identification
+                const tg = window.Telegram?.WebApp;
+                 if (tg && tg.initData) {
+                     headers['X-Telegram-Init-Data'] = tg.initData; // Send initData for backend validation/user identification
+                 }
+                // Or if using a token stored elsewhere:
+                // const token = localStorage.getItem('authToken');
+                // if (token) headers['Authorization'] = `Bearer ${token}`;
+                return headers;
             }
 
-            // --- Local Data Management ---
-            function loadUserDataLocal() {
+            // Fetch initial user data, tasks, teams, leaderboard
+            async function apiFetchInitialData() {
+                showLoading("Loading Hackathon Data...");
                 try {
-                    const storedData = localStorage.getItem(USER_DATA_KEY);
-                    if (storedData) {
-                        currentUserData = JSON.parse(storedData);
-                        // Ensure default fields exist if loading older data
-                        currentUserData.name = currentUserData.name || 'Player';
-                        currentUserData.points = currentUserData.points || 0;
-                        currentUserData.registeredTeamName = currentUserData.registeredTeamName || null;
-                        currentUserData.id = currentUserData.id || `local_${Date.now()}`; // Assign local ID if missing
-                    } else {
-                        // First visit, save defaults
-                        saveUserDataLocal();
+                    const headers = getApiHeaders();
+                    const response = await fetch(`${API_BASE_URL}/initial-data`, { headers }); // Endpoint to get user status, tasks, teams, leaderboard in one go
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`API Error (${response.status}): ${errorText}`);
                     }
-                } catch (e) {
-                    console.error("Error loading user data from localStorage:", e);
-                    // Reset to defaults if parsing fails
-                    currentUserData = { name: 'Player', points: 0, registeredTeamName: null, id: `local_${Date.now()}` };
+                    const data = await response.json();
+
+                    // Update local state variables
+                    currentUserData = {
+                        id: data.user?.id || null, // Backend should provide a stable user ID
+                        name: data.user?.name || 'Player',
+                        points: data.user?.points || 0,
+                        registeredTeamName: data.user?.registeredTeamName || null,
+                        tasks: data.user?.tasks || {} // Expect tasks as { taskId: true/false }
+                    };
+                    hackathonTeamsData = data.teams || {}; // Expect teams as { teamName: { members: [...], score: ... } }
+                    pointsLeaderboardData = data.leaderboard || []; // Expect leaderboard as [{ id, name, points }]
+
+                    console.log("Initial data loaded:", { currentUserData, hackathonTeamsData, pointsLeaderboardData });
+
+                    // Update UI based on loaded data
+                    updateUserProfileDisplay();
+                    initializeTaskUI(); // Uses currentUserData.tasks
+                    updateProgressBar();
+                    updateRegistrationButtonState();
+                    updateAiJudgeModal(); // Uses hackathonTeamsData
+                    displayPointsLeaderboard(); // Uses pointsLeaderboardData
+
+                } catch (error) {
+                    console.error("Failed to fetch initial data:", error);
+                    alert(`Error loading data: ${error.message}. Please check your connection or contact support.`);
+                    // Handle inability to load critical data (e.g., show error message, disable functionality)
+                    if (registerTeamBtn) {
+                         registerTeamBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Load Failed';
+                         registerTeamBtn.disabled = true;
+                    }
+                } finally {
+                    hideLoading();
                 }
             }
 
-            function saveUserDataLocal() {
+            // Register user (or join/create team)
+            async function apiRegister(registrationData) {
+                // registrationData should contain all fields + isNewTeam flag + selectedTeam/newTeamName
+                showLoading("Registering...");
                 try {
-                    localStorage.setItem(USER_DATA_KEY, JSON.stringify(currentUserData));
-                } catch (e) {
-                    console.error("Error saving user data to localStorage:", e);
-                    alert("Could not save user data. LocalStorage might be full or disabled.");
-                }
-            }
-
-            function loadTaskStateLocal() {
-                 try {
-                     const storedState = localStorage.getItem(TASK_STATE_KEY);
-                     taskState = storedState ? JSON.parse(storedState) : {};
-                 } catch (e) {
-                     console.error("Error loading task state from localStorage:", e);
-                     taskState = {};
-                 }
-            }
-
-            function saveTaskStateLocal() {
-                 try {
-                     localStorage.setItem(TASK_STATE_KEY, JSON.stringify(taskState));
-                 } catch (e) {
-                     console.error("Error saving task state to localStorage:", e);
-                 }
-            }
-
-            function loadTeamsLocal() {
-                try {
-                    const storedTeams = localStorage.getItem(TEAMS_DATA_KEY);
-                    if (storedTeams) {
-                        hackathonTeamsData = JSON.parse(storedTeams);
-                    } else {
-                         // Initialize with preset groups if no data exists
-                         hackathonTeamsData = PRESET_GROUP_NAMES.reduce((acc, name) => {
-                             acc[name] = { members: [], theme: "Preset Theme", score: 0 };
-                             return acc;
-                         }, {});
-                    }
-                    // Ensure preset groups exist even if data was loaded
-                    PRESET_GROUP_NAMES.forEach(name => {
-                       if (!hackathonTeamsData[name]) {
-                           hackathonTeamsData[name] = { members: [], theme: "Preset Theme", score: 0 };
-                       }
+                    const headers = getApiHeaders();
+                    const response = await fetch(`${API_BASE_URL}/register`, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify(registrationData)
                     });
-                } catch (e) {
-                    console.error("Error loading teams data from localStorage:", e);
-                    hackathonTeamsData = {}; // Reset on error
-                     PRESET_GROUP_NAMES.forEach(name => { // Add presets on error too
-                         hackathonTeamsData[name] = { members: [], theme: "Preset Theme", score: 0 };
-                     });
-                }
-            }
 
-            function saveTeamsLocal() {
-                try {
-                    localStorage.setItem(TEAMS_DATA_KEY, JSON.stringify(hackathonTeamsData));
-                } catch (e) {
-                    console.error("Error saving teams data to localStorage:", e);
-                }
-            }
-
-             function loadLeaderboardLocal() {
-                try {
-                    const storedLeaderboard = localStorage.getItem(LEADERBOARD_KEY);
-                    localLeaderboardData = storedLeaderboard ? JSON.parse(storedLeaderboard) : [];
-                    // Ensure it's an array
-                    if (!Array.isArray(localLeaderboardData)) {
-                        localLeaderboardData = [];
+                    if (!response.ok) {
+                        let errorMsg = `Registration failed (${response.status})`;
+                        try {
+                            const errorData = await response.json();
+                            errorMsg = errorData.message || errorMsg;
+                        } catch (_) { /* Ignore if response body is not JSON */ }
+                        throw new Error(errorMsg);
                     }
-                } catch (e) {
-                    console.error("Error loading leaderboard data from localStorage:", e);
-                    localLeaderboardData = [];
-                }
-            }
 
-            function saveLeaderboardLocal() {
-                try {
-                    // Sort before saving
-                    localLeaderboardData.sort((a, b) => b.points - a.points);
-                    localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(localLeaderboardData));
-                } catch (e) {
-                    console.error("Error saving leaderboard data to localStorage:", e);
-                }
-            }
+                    const result = await response.json(); // Expect { success: true, registeredTeamName: "...", pointsAwarded: 10 }
 
-            // Update or add the current user to the local leaderboard data
-            function updateLeaderboardWithCurrentUser() {
-                const userIndex = localLeaderboardData.findIndex(entry => entry.id === currentUserData.id);
-                const userName = currentUserData.name || 'Player';
-                const userPoints = currentUserData.points || 0;
-
-                if (userIndex > -1) {
-                    // User exists, update if name or points changed
-                     if (localLeaderboardData[userIndex].name !== userName || localLeaderboardData[userIndex].points !== userPoints) {
-                         localLeaderboardData[userIndex].name = userName;
-                         localLeaderboardData[userIndex].points = userPoints;
-                         saveLeaderboardLocal(); // Save if updated
+                    // Update local state based on response
+                    currentUserData.name = registrationData.name; // Update name locally too
+                    currentUserData.registeredTeamName = result.registeredTeamName;
+                    if (result.pointsAwarded) {
+                        currentUserData.points = (currentUserData.points || 0) + result.pointsAwarded;
+                         // Assume 'join_group' task is completed by backend if points are awarded
+                         currentUserData.tasks['join_group'] = true;
                     }
-                } else {
-                    // User doesn't exist, add them
-                    localLeaderboardData.push({ id: currentUserData.id, name: userName, points: userPoints });
-                    saveLeaderboardLocal(); // Save after adding
+
+                    console.log("Registration successful:", result);
+                    return result; // Return success data
+
+                } catch (error) {
+                    console.error("API Registration Error:", error);
+                    throw error; // Re-throw to be caught by the calling function
+                } finally {
+                    hideLoading();
                 }
-                // No need to sort here, saveLeaderboardLocal handles sorting
             }
+
+             // Mark a task complete
+             async function apiCompleteTask(taskId, pointsToAdd) {
+                showLoading("Saving Task...");
+                try {
+                    const headers = getApiHeaders();
+                    const response = await fetch(`${API_BASE_URL}/tasks/${taskId}`, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify({ points: pointsToAdd }) // Send points in case backend calculates/validates
+                    });
+                     if (!response.ok) {
+                        let errorMsg = `Failed to complete task (${response.status})`;
+                        try { const errorData = await response.json(); errorMsg = errorData.message || errorMsg; } catch (_) {}
+                        throw new Error(errorMsg);
+                    }
+                    const result = await response.json(); // Expect { success: true, newTotalPoints: X }
+
+                    // Update local state from response
+                    currentUserData.points = result.newTotalPoints;
+                    currentUserData.tasks[taskId] = true;
+
+                    return result;
+
+                } catch (error) {
+                    console.error(`API Error completing task ${taskId}:`, error);
+                     // Revert local state if API call failed?
+                     currentUserData.tasks[taskId] = false; // Mark as not completed locally
+                     updateTaskUI(taskId, false); // Update UI back
+                    throw error;
+                } finally {
+                    hideLoading();
+                }
+             }
+
+             // Get latest team data (for AI judge modal or registration form)
+             async function apiGetTeams() {
+                // This might not be needed if initial load is sufficient,
+                // but useful if teams can change frequently by others.
+                 showLoading("Fetching Teams...");
+                 try {
+                    const headers = getApiHeaders(); // No body for GET
+                    const response = await fetch(`${API_BASE_URL}/teams`, { headers });
+                    if (!response.ok) throw new Error(`Failed to fetch teams (${response.status})`);
+                    const teams = await response.json(); // Expect { teamName: { members: [...], score: ... } }
+                    hackathonTeamsData = teams; // Update local cache
+                    return teams;
+                } catch (error) {
+                    console.error("API Error fetching teams:", error);
+                    throw error;
+                } finally {
+                    hideLoading();
+                }
+             }
+
+              // Get latest points leaderboard
+              async function apiGetLeaderboard() {
+                  showLoading("Fetching Leaderboard...");
+                  try {
+                    const headers = getApiHeaders();
+                    const response = await fetch(`${API_BASE_URL}/leaderboard`, { headers });
+                    if (!response.ok) throw new Error(`Failed to fetch leaderboard (${response.status})`);
+                    const leaderboard = await response.json(); // Expect [{ id, name, points }]
+                    pointsLeaderboardData = leaderboard; // Update local cache
+                    return leaderboard;
+                 } catch (error) {
+                    console.error("API Error fetching leaderboard:", error);
+                    throw error;
+                 } finally {
+                    hideLoading();
+                 }
+              }
+
+             // Judge a team (send team name, backend calculates/updates score)
+             async function apiJudgeTeam(teamName) {
+                 showLoading(`Judging ${teamName}...`);
+                 try {
+                    const headers = getApiHeaders();
+                    const response = await fetch(`${API_BASE_URL}/judge/${teamName}`, {
+                        method: 'POST', // Or PUT? Depends on backend design
+                        headers: headers
+                    });
+                     if (!response.ok) {
+                         let errorMsg = `Judging failed (${response.status})`;
+                         try { const errorData = await response.json(); errorMsg = errorData.message || errorMsg; } catch (_) {}
+                         throw new Error(errorMsg);
+                     }
+                     const result = await response.json(); // Expect { score: X, analysis: [...] }
+                     // Update local team data cache with the new score
+                     if (hackathonTeamsData[teamName]) {
+                         hackathonTeamsData[teamName].score = result.score;
+                     }
+                     return result;
+                 } catch (error) {
+                     console.error(`API Error judging team ${teamName}:`, error);
+                     throw error;
+                 } finally {
+                     hideLoading();
+                 }
+             }
+
+              // Reset user data (points, tasks, registration)
+              async function apiResetUserData() {
+                  showLoading("Resetting Data...");
+                  try {
+                    const headers = getApiHeaders();
+                    const response = await fetch(`${API_BASE_URL}/user/reset`, {
+                        method: 'DELETE',
+                        headers: headers
+                    });
+                     if (!response.ok) {
+                         let errorMsg = `Reset failed (${response.status})`;
+                         try { const errorData = await response.json(); errorMsg = errorData.message || errorMsg; } catch (_) {}
+                         throw new Error(errorMsg);
+                     }
+                     const result = await response.json(); // Expect { success: true }
+
+                     // Reset local state AFTER successful API call
+                     currentUserData.points = 0;
+                     currentUserData.registeredTeamName = null;
+                     currentUserData.tasks = {};
+                     // Note: We don't reset currentUserData.name or id here
+
+                     console.log("User data reset via API.");
+                     return result;
+                  } catch (error) {
+                     console.error("API Error resetting user data:", error);
+                     throw error;
+                  } finally {
+                    hideLoading();
+                  }
+              }
 
 
             // --- UI Update Functions ---
@@ -764,37 +865,47 @@
                  const currentPoints = currentUserData.points || 0;
 
                  if (userNameDisplay) userNameDisplay.textContent = displayName;
-                 if (userAvatarContainer) userAvatarContainer.innerHTML = '👤'; // Static icon
+                 if (userAvatarContainer) userAvatarContainer.innerHTML = '👤'; // Static icon for web
                  if (wellyPointsDisplay) wellyPointsDisplay.textContent = currentPoints;
 
-                 // Profile Modal Update
                  if (modalUserName) modalUserName.textContent = displayName;
-                 if (modalUserAvatar) modalUserAvatar.innerHTML = '👤'; // Static icon
+                 if (modalUserAvatar) modalUserAvatar.innerHTML = '👤';
                  if (modalWellyPoints) modalWellyPoints.textContent = currentPoints;
                  if (profileTeamDisplay) {
                      profileTeamDisplay.textContent = currentUserData.registeredTeamName ? `Team: ${currentUserData.registeredTeamName}` : 'Team: Not Registered';
                      profileTeamDisplay.className = `small mb-3 ${currentUserData.registeredTeamName ? 'text-success fw-bold' : 'text-muted'}`;
                  }
-                  // Update rank display (local context)
-                 if (profileRankDisplay) {
-                    const userRankData = getLocalUserRank();
-                    profileRankDisplay.textContent = userRankData.rank ? `Your Local Rank: #${userRankData.rank} of ${userRankData.total}` : 'Rank: N/A (Local Data)';
-                 }
+                 if (profileRankDisplay) { profileRankDisplay.textContent = "Rank: Loading..."; } // Will be updated when leaderboard loads
             }
 
-            function initializeTaskUI() { /* (Identical to previous version) */ if (!modalChecklist) return; modalChecklist.querySelectorAll('.checklist-item[data-task-id]').forEach(item => { const taskId = item.dataset.taskId; updateTaskUI(taskId, taskState[taskId] === true); }); }
-            function updateTaskUI(taskId, isCompleted) { /* (Identical to previous version) */ const modalItem = modalChecklist?.querySelector(`.checklist-item[data-task-id="${taskId}"]`); if (modalItem) { modalItem.classList.toggle('completed', isCompleted); modalItem.style.cursor = isCompleted ? 'default' : 'pointer'; } }
-            function showMessage(message, type = 'success', area = messageArea, clearPrevious = true) { /* (Identical) */ if (area) { if (clearPrevious) area.innerHTML = ''; const alertDiv = document.createElement('div'); alertDiv.className = `alert alert-${type} alert-dismissible fade show small p-2`; alertDiv.setAttribute('role', 'alert'); alertDiv.innerHTML = `${message}<button type="button" class="btn-close btn-sm p-2" data-bs-dismiss="alert" aria-label="Close"></button>`; area.appendChild(alertDiv); } }
-            function clearMessages(area = messageArea) { /* (Identical) */ if (area) area.innerHTML = ''; }
-            function updateProgressBar() { /* (Identical) */ const taskItems = modalChecklist?.querySelectorAll('.checklist-item[data-task-id]'); if (!taskItems || taskItems.length === 0 || !progressBar) return; const totalTasks = taskItems.length; const completedTasks = Object.values(taskState).filter(status => status === true).length; const progressPercent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0; progressBar.style.width = progressPercent + '%'; progressBar.textContent = `${progressPercent}%`; progressBar.setAttribute('aria-valuenow', progressPercent); progressBar.classList.toggle('bg-success', progressPercent === 100); progressBar.classList.toggle('progress-bar-animated', progressPercent < 100); progressBar.classList.toggle('progress-bar-striped', progressPercent < 100); }
-            function showPointsGainAnimation(points) { /* (Identical) */ if (!userProfileElement || points <= 0) return; const gainElement = document.createElement('div'); gainElement.textContent = `+${points} WP`; gainElement.className = 'welly-points-gain'; document.body.appendChild(gainElement); const profileRect = userProfileElement.getBoundingClientRect(); const startX = profileRect.left + profileRect.width / 2; const startY = profileRect.bottom + 10; gainElement.style.left = `${startX}px`; gainElement.style.top = `${startY}px`; gainElement.style.opacity = '0'; gainElement.style.transform = 'translateX(-50%) scale(0.8)'; requestAnimationFrame(() => { gainElement.style.top = `${startY - 40}px`; gainElement.style.opacity = '1'; gainElement.style.transform = 'translateX(-50%) scale(1)'; }); setTimeout(() => { gainElement.style.opacity = '0'; gainElement.style.transform = 'translateX(-50%) scale(0.8)'; setTimeout(() => gainElement.remove(), 800); }, 1000); }
-            function setupLogoScroll() { /* (Identical) */ if (logo) { const handleScroll = () => { const isScrolled = window.scrollY > 30; logo.classList.toggle('logo-scrolled', isScrolled); bodyElement.classList.toggle('logo-state-scrolled', isScrolled); }; logo.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }); window.addEventListener('scroll', handleScroll, { passive: true }); handleScroll(); } }
+            function initializeTaskUI() {
+                if (!modalChecklist) return;
+                modalChecklist.querySelectorAll('.checklist-item[data-task-id]').forEach(item => {
+                    const taskId = item.dataset.taskId;
+                    // Use currentUserData.tasks directly
+                    updateTaskUI(taskId, currentUserData.tasks[taskId] === true);
+                });
+            }
+            function updateTaskUI(taskId, isCompleted) { /* (Identical) */ const modalItem = modalChecklist?.querySelector(`.checklist-item[data-task-id="${taskId}"]`); if (modalItem) { modalItem.classList.toggle('completed', isCompleted); modalItem.style.cursor = isCompleted ? 'default' : 'pointer'; } }
 
-            // --- Task Click Handler ---
+            function updateProgressBar() {
+                if (!modalChecklist || !progressBar) return;
+                const taskItems = modalChecklist.querySelectorAll('.checklist-item[data-task-id]');
+                const totalTasks = taskItems.length;
+                // Count completed tasks based on currentUserData.tasks
+                const completedTasks = Object.values(currentUserData.tasks || {}).filter(status => status === true).length;
+                const progressPercent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+                progressBar.style.width = progressPercent + '%'; progressBar.textContent = `${progressPercent}%`; progressBar.setAttribute('aria-valuenow', progressPercent); progressBar.classList.toggle('bg-success', progressPercent === 100); progressBar.classList.toggle('progress-bar-animated', progressPercent < 100); progressBar.classList.toggle('progress-bar-striped', progressPercent < 100);
+            }
+
+            // --- Task Click Handler (Calls API) ---
             if (modalChecklist) {
-                modalChecklist.addEventListener('click', function(event) {
+                modalChecklist.addEventListener('click', async function(event) { // Made async
                     const taskItem = event.target.closest('.checklist-item[data-task-id]');
-                    if (!taskItem || taskItem.classList.contains('completed')) return; // Ignore clicks on completed
+                    if (!taskItem || taskItem.classList.contains('completed') || !currentUserData.id) {
+                        // Ignore clicks on completed or if user isn't loaded/identified
+                        return;
+                    }
 
                     const taskId = taskItem.dataset.taskId;
                     const taskNameElement = taskItem.querySelector('strong');
@@ -810,33 +921,45 @@
 
                     // Use standard browser confirm
                     if (confirm(`Mark "${taskName}" as complete and claim ${pointsToAdd} WP?`)) {
-                        taskState[taskId] = true;
-                        saveTaskStateLocal();
-                        updateTaskUI(taskId, true);
-                        updateProgressBar();
+                         taskItem.style.pointerEvents = 'none'; // Prevent double clicks while processing
+                         taskItem.style.opacity = '0.7';
 
-                        if (pointsToAdd > 0) {
-                            currentUserData.points = (currentUserData.points || 0) + pointsToAdd;
-                            saveUserDataLocal(); // Save updated points
-                            updateUserProfileDisplay();
-                            showPointsGainAnimation(pointsToAdd);
-                            showMessage(`Task "${taskName}" complete! +${pointsToAdd} WP earned. <span class="celebration-emoji">${taskItem.querySelector('.celebration-emoji')?.textContent || '✅'}</span>`, 'success');
-                            updateLeaderboardWithCurrentUser(); // Update local leaderboard
-                        } else {
-                            showMessage(`Task "${taskName}" complete! <span class="celebration-emoji">${taskItem.querySelector('.celebration-emoji')?.textContent || '✅'}</span>`, 'success');
-                        }
+                         try {
+                             const result = await apiCompleteTask(taskId, pointsToAdd); // Call API
+
+                             // UI updates based on API success (local state updated within apiCompleteTask)
+                             updateTaskUI(taskId, true);
+                             updateProgressBar();
+                             updateUserProfileDisplay(); // Reflect new points total
+                             showPointsGainAnimation(pointsToAdd);
+                             showMessage(`Task "${taskName}" complete! +${pointsToAdd} WP earned. <span class="celebration-emoji">${taskItem.querySelector('.celebration-emoji')?.textContent || '✅'}</span>`, 'success');
+                             // Trigger leaderboard refresh in background? Or rely on modal open.
+                             apiGetLeaderboard().then(displayPointsLeaderboard).catch(console.error);
+
+
+                         } catch (error) {
+                             console.error(`Failed to complete task ${taskId}:`, error);
+                             showMessage(`Error completing task: ${error.message}`, 'danger');
+                             // UI state already reverted within apiCompleteTask on error
+                         } finally {
+                             taskItem.style.pointerEvents = 'auto';
+                             taskItem.style.opacity = '1';
+                         }
                     }
                 });
             } else console.warn("Modal checklist container (#modal-checklist) not found.");
             if (taskModalElement) taskModalElement.addEventListener('hidden.bs.modal', () => clearMessages());
 
 
-            // --- Registration Logic ---
-             function populateRegistrationForm() {
+            // --- Registration Logic (Calls API) ---
+             async function populateRegistrationForm() { // Make async to allow fetching teams
                  if (!registrationModalElement) return;
 
-                 // Pre-fill user info from local state if available
-                 if (participantNameInput) participantNameInput.value = currentUserData.name === 'Player' ? '' : currentUserData.name; // Don't prefill 'Player'
+                  // Pre-fill known user details (name should be editable if not registered)
+                 if (participantNameInput) {
+                    participantNameInput.value = currentUserData.name !== 'Player' ? currentUserData.name : '';
+                    participantNameInput.disabled = !!currentUserData.registeredTeamName; // Disable if registered
+                 }
 
                  // Clear dynamic fields initially
                  if (universityInput) universityInput.value = '';
@@ -844,54 +967,65 @@
                  if (participantPhoneInput) participantPhoneInput.value = '';
                  if (participantExperienceSelect) participantExperienceSelect.selectedIndex = 0;
                  if (participantSkillsInput) participantSkillsInput.value = '';
-                 if (existingTeamSelect) { existingTeamSelect.innerHTML = '<option value="">-- Select a team/group to join --</option>'; }
+                 if (existingTeamSelect) { existingTeamSelect.innerHTML = '<option value="">-- Select a team to join --</option>'; }
                  if (newTeamNameInput) newTeamNameInput.value = '';
                  if (registrationFeedback) registrationFeedback.innerHTML = '';
                  if (teamMemberCountDisplay) teamMemberCountDisplay.textContent = '';
 
-                  // Populate existing teams dropdown (from local storage)
-                 Object.entries(hackathonTeamsData)
-                    .sort(([nameA], [nameB]) => nameA.localeCompare(nameB)) // Sort alphabetically
-                    .forEach(([teamName, teamData]) => {
-                        if (teamData && teamData.members) {
-                            const memberCount = teamData.members.length;
-                            // Add to dropdown ONLY if team is not full
-                            if (memberCount < MAX_TEAM_MEMBERS) {
-                                const option = document.createElement('option');
-                                option.value = teamName;
-                                option.textContent = `${teamName} (${memberCount}/${MAX_TEAM_MEMBERS} members)`;
-                                option.dataset.count = memberCount;
-                                if (existingTeamSelect) existingTeamSelect.appendChild(option);
+                 // Fetch latest team list for the dropdown
+                 try {
+                     const teams = await apiGetTeams(); // Fetch fresh team data
+
+                     // Populate existing teams dropdown
+                     Object.entries(teams)
+                        .sort(([nameA], [nameB]) => nameA.localeCompare(nameB))
+                        .forEach(([teamName, teamData]) => {
+                            if (teamData && teamData.members) {
+                                const memberCount = teamData.members.length;
+                                if (memberCount < MAX_TEAM_MEMBERS) {
+                                    const option = document.createElement('option');
+                                    option.value = teamName;
+                                    option.textContent = `${teamName} (${memberCount}/${MAX_TEAM_MEMBERS} members)`;
+                                    option.dataset.count = memberCount;
+                                    if (existingTeamSelect) existingTeamSelect.appendChild(option);
+                                }
                             }
-                        }
-                    });
+                        });
+                 } catch (error) {
+                      console.error("Failed to populate teams dropdown:", error);
+                      showMessage("Could not load available teams. Please try again later.", 'warning', registrationFeedback);
+                      if (existingTeamSelect) existingTeamSelect.disabled = true;
+                 }
+
 
                  // Listener for member count
                  if(existingTeamSelect && teamMemberCountDisplay){
-                     existingTeamSelect.removeEventListener('change', updateMemberCountDisplay); // Remove previous listener if exists
+                     existingTeamSelect.removeEventListener('change', updateMemberCountDisplay);
                      existingTeamSelect.addEventListener('change', updateMemberCountDisplay);
                  }
 
                  // Check registration status and update UI accordingly
                  if (currentUserData.registeredTeamName && hackathonTeamsData[currentUserData.registeredTeamName]) {
-                    // User IS registered locally
+                    // User IS registered
                     teamSelectionArea.style.display = 'none';
                     alreadyRegisteredView.style.display = 'block';
                     submitRegistrationBtn.style.display = 'none';
                     registeredTeamNameDisplay.textContent = currentUserData.registeredTeamName;
 
-                    // Populate member list and pre-fill fields
+                    // Populate member list and pre-fill fields (if needed, backend might return full user profile)
                     registeredTeamMembersList.innerHTML = '';
                     const team = hackathonTeamsData[currentUserData.registeredTeamName];
                     let userDetailsFound = false;
                     team.members.forEach(member => {
                         const li = document.createElement('li');
-                        li.className = 'list-group-item';
-                        li.textContent = member.name || `User ID: ${member.id}`;
-                        if (member.id === currentUserData.id) { // Match based on local ID
-                            li.innerHTML += ' <small class="text-muted fst-italic">(You)</small>';
-                            // Pre-fill fields from stored member data
-                            if (participantNameInput) participantNameInput.value = member.name || '';
+                        li.className = 'list-group-item d-flex justify-content-between align-items-center'; // Use flex for layout
+                        let memberHtml = member.name || `User ID: ${member.id}`;
+                        if (member.isLeader) { // Check for leader flag from backend
+                             memberHtml += ' <span class="badge bg-primary ms-2">Leader</span>';
+                        }
+                        if (member.id === currentUserData.id) {
+                            memberHtml += ' <small class="text-muted fst-italic ms-1">(You)</small>';
+                            // Pre-fill fields from current user data if available (or backend should provide this)
                             if (universityInput) universityInput.value = member.university || '';
                             if (participantAgeInput) participantAgeInput.value = member.age || '';
                             if (participantPhoneInput) participantPhoneInput.value = member.phone || '';
@@ -899,11 +1033,12 @@
                             if (participantSkillsInput) participantSkillsInput.value = member.skills || '';
                             userDetailsFound = true;
                         }
+                        li.innerHTML = memberHtml;
                         registeredTeamMembersList.appendChild(li);
                     });
 
-                    // Disable fields in 'view' mode (Name might still be editable if needed, but let's disable all for consistency)
-                    participantNameInput.disabled = true;
+
+                    // Disable fields in 'view' mode
                     universityInput.disabled = true;
                     participantAgeInput.disabled = true;
                     participantPhoneInput.disabled = true;
@@ -913,19 +1048,18 @@
                     if (!userDetailsFound) { console.warn("User registered, but member data mismatch in team list."); }
 
                  } else {
-                    // User is NOT registered locally
+                    // User is NOT registered
                     teamSelectionArea.style.display = 'block';
                     alreadyRegisteredView.style.display = 'none';
                     submitRegistrationBtn.style.display = 'inline-block';
                     submitRegistrationBtn.disabled = false;
                     // Enable form fields
-                    participantNameInput.disabled = false; // Allow name input for unregistered users
                     universityInput.disabled = false;
                     participantAgeInput.disabled = false;
                     participantPhoneInput.disabled = false;
                     participantExperienceSelect.disabled = false;
                     participantSkillsInput.disabled = false;
-                    existingTeamSelect.disabled = false;
+                    existingTeamSelect.disabled = false; // Re-enable in case it was disabled by error
                     newTeamNameInput.disabled = false;
                  }
              }
@@ -934,21 +1068,27 @@
 
             function updateRegistrationButtonState() {
                 if (registerTeamBtn) {
-                    if (currentUserData.registeredTeamName) {
+                    if (!currentUserData.id) { // Still loading initial data
+                         registerTeamBtn.innerHTML = `<i class="fas fa-spinner fa-spin me-2"></i> Loading...`;
+                         registerTeamBtn.disabled = true;
+                         if (registrationStatusMsg) registrationStatusMsg.textContent = "Checking registration status...";
+                    } else if (currentUserData.registeredTeamName) {
                         registerTeamBtn.innerHTML = `<i class="fas fa-users-cog me-2 text-success"></i> View Team: ${currentUserData.registeredTeamName}`;
+                        registerTeamBtn.disabled = false;
                         if (registrationStatusMsg) registrationStatusMsg.textContent = "Click to view details or change team via Profile Reset.";
                     } else {
                         registerTeamBtn.innerHTML = `<i class="fas fa-user-plus me-2"></i> Register / Join Team`;
-                        if (registrationStatusMsg) registrationStatusMsg.textContent = "Register yourself or join a team/group.";
+                        registerTeamBtn.disabled = false;
+                        if (registrationStatusMsg) registrationStatusMsg.textContent = "Register yourself or join a team.";
                     }
                 }
             }
 
-            function handleRegistrationSubmit() {
-                if (currentUserData.registeredTeamName) { showMessage("You are already registered in this browser.", 'warning', registrationFeedback); return; }
+            async function handleRegistrationSubmit() { // Make async
+                if (currentUserData.registeredTeamName) { showMessage("You are already registered.", 'warning', registrationFeedback); return; }
 
                 clearMessages(registrationFeedback);
-                const participantName = participantNameInput.value.trim(); // Get name from input
+                const participantName = participantNameInput.value.trim();
                 const university = universityInput.value.trim();
                 const age = participantAgeInput.value.trim();
                 const phone = participantPhoneInput.value.trim();
@@ -964,88 +1104,43 @@
                 if (!selectedTeam && !newTeamName) { showMessage("Please either select an existing team/group or enter a new team name.", 'danger', registrationFeedback); return; }
                 if (selectedTeam && newTeamName) { showMessage("Please choose only ONE option: Join OR Create team.", 'danger', registrationFeedback); return; }
 
-                let targetTeamName = '';
-                let isNewTeam = false;
+                let registrationData = {
+                    name: participantName,
+                    university: university,
+                    age: age || null,
+                    phone: phone || null,
+                    experience: experience || null,
+                    skills: skills || null,
+                    userId: currentUserData.id // Include user ID if available/needed by backend
+                };
+
+                if (selectedTeam) {
+                    registrationData.joinTeamName = selectedTeam;
+                    registrationData.isNewTeam = false;
+                } else {
+                    registrationData.newTeamName = newTeamName;
+                    registrationData.isNewTeam = true;
+                }
 
                 // Disable button/fields
                 submitRegistrationBtn.disabled = true;
                 const formElements = registrationForm.elements;
                 for (let i = 0; i < formElements.length; i++) { formElements[i].disabled = true; }
-                showMessage("Processing registration...", 'info', registrationFeedback);
+                // showMessage("Processing registration...", 'info', registrationFeedback); // Replaced by showLoading
 
                 try {
-                    // No need to reload teams, already using local state
-
-                    if (selectedTeam) {
-                        // --- Join Existing Team/Group ---
-                        targetTeamName = selectedTeam;
-                        if (!hackathonTeamsData[targetTeamName] || !hackathonTeamsData[targetTeamName].members) { throw new Error(`Selected team/group "${targetTeamName}" seems invalid. Please refresh and try again.`); }
-                        if (hackathonTeamsData[targetTeamName].members.length >= MAX_TEAM_MEMBERS) { throw new Error(`Team/Group "${targetTeamName}" is already full.`); }
-                        if (hackathonTeamsData[targetTeamName].members.some(m => m.id === currentUserData.id)) { throw new Error(`You seem to already be in team/group "${targetTeamName}".`); }
-                    } else {
-                        // --- Create New Team ---
-                        targetTeamName = newTeamName;
-                        if (targetTeamName.length < 3) { throw new Error("New team name must be at least 3 characters."); }
-                        const existingTeamKey = Object.keys(hackathonTeamsData).find(key => key.toLowerCase() === targetTeamName.toLowerCase());
-                        if (existingTeamKey) { throw new Error(`Team name "${targetTeamName}" is already taken locally. Choose another.`); }
-                        isNewTeam = true;
-                    }
-
-                    // --- Update User Data (Name) ---
-                    currentUserData.name = participantName; // Update name in user data
-
-                    // --- Prepare User Member Data ---
-                    const newUserMember = {
-                        id: currentUserData.id, // Use the local ID
-                        name: participantName,
-                        university: university,
-                        age: age || null,
-                        phone: phone || null,
-                        experience: experience || null,
-                        skills: skills || null,
-                    };
-
-                    // --- Update Team Data Structure ---
-                    if (isNewTeam) {
-                        hackathonTeamsData[targetTeamName] = { members: [newUserMember], theme: null, score: 0 };
-                    } else {
-                        hackathonTeamsData[targetTeamName].members.push(newUserMember);
-                    }
-                    saveTeamsLocal(); // Save updated teams
-
-                    // --- Update User's Registered Team Name ---
-                    currentUserData.registeredTeamName = targetTeamName;
-                    saveUserDataLocal(); // Save user data (with updated name and registered team)
+                    const result = await apiRegister(registrationData); // Call API
 
                     // --- Success ---
-                    showMessage(`Successfully registered for team: <strong>${targetTeamName}</strong>!`, 'success', registrationFeedback);
-                    updateAiJudgeModal();
-                    updateRegistrationButtonState();
-                    updateUserProfileDisplay();
-                    updateLeaderboardWithCurrentUser(); // Add/update user in local leaderboard
+                    showMessage(`Successfully registered for team: <strong>${result.registeredTeamName}</strong>!`, 'success', registrationFeedback);
 
-                    // Trigger the 'join_group' task automatically
-                    if (!taskState['join_group']) {
-                        console.log("Auto-completing 'join_group' task.");
-                        taskState['join_group'] = true;
-                        saveTaskStateLocal();
-                        updateTaskUI('join_group', true);
-                        updateProgressBar();
-                        const joinPoints = parseInt(modalChecklist?.querySelector('.checklist-item[data-task-id="join_group"]')?.dataset.points || '0', 10);
-                        if (joinPoints > 0) {
-                            currentUserData.points = (currentUserData.points || 0) + joinPoints;
-                            saveUserDataLocal();
-                            updateUserProfileDisplay();
-                            showPointsGainAnimation(joinPoints);
-                             updateLeaderboardWithCurrentUser(); // Ensure leaderboard reflects points gain
-                        }
-                    }
+                    // Refresh ALL data to ensure consistency after registration
+                    await apiFetchInitialData();
 
                     // Close modal after delay
                     setTimeout(() => {
                         const modalInstance = bootstrap.Modal.getInstance(registrationModalElement);
                         if (modalInstance) modalInstance.hide();
-                         // Re-enable form fields AFTER modal closes
                          registrationModalElement.addEventListener('hidden.bs.modal', () => {
                               for (let i = 0; i < formElements.length; i++) { formElements[i].disabled = false; }
                          }, { once: true });
@@ -1053,30 +1148,30 @@
 
                 } catch (error) {
                      console.error("Registration Error:", error);
-                     showMessage(`${error.message || 'An unknown error occurred.'}`, 'danger', registrationFeedback);
-                     // Re-enable form fields only if still not registered
+                     showMessage(error.message || 'An unknown error occurred.', 'danger', registrationFeedback);
+                     // Re-enable form fields only if still not registered (check local state which didn't change on error)
                      if (!currentUserData.registeredTeamName) {
                           for (let i = 0; i < formElements.length; i++) { formElements[i].disabled = false; }
                           submitRegistrationBtn.disabled = false;
                      }
                 }
+                 // Hide loading indicator handled within apiRegister
             }
 
             // Add listeners for registration modal
             if (registrationModalElement) {
                  registrationModalElement.addEventListener('show.bs.modal', () => {
-                     // Load latest local data before showing
-                     loadTeamsLocal();
-                     loadUserDataLocal(); // Reload user data to get latest registered team status
-                     populateRegistrationForm(); // Populate based on latest local data
+                    // Fetch latest data or rely on initial load? Let's rely on initial/periodic refresh for now.
+                     // If teams change very often, could add await apiGetTeams(); here.
+                     populateRegistrationForm();
                  });
             }
             if (submitRegistrationBtn) {
                  submitRegistrationBtn.addEventListener('click', handleRegistrationSubmit);
             }
 
-            // --- AI Judge & Group/Leaderboard Logic (Uses Local Data) ---
-            function updateAiJudgeModal() {
+            // --- AI Judge & Group/Leaderboard Logic (Uses API Data) ---
+            async function updateAiJudgeModal() { // Make async
                  if (!judgeTeamSelect || !aiLeaderboardBody || !aiLeaderboardLoading || !aiLeaderboardEmpty || !aiLeaderboardTable) return;
 
                  aiLeaderboardLoading.style.display = 'block';
@@ -1084,81 +1179,88 @@
                  aiLeaderboardEmpty.style.display = 'none';
                  aiLeaderboardBody.innerHTML = '';
                  const judgeDropdownCurrentValue = judgeTeamSelect.value;
-                 judgeTeamSelect.innerHTML = '<option selected disabled value="">-- Choose Registered Team/Group --</option>';
+                 judgeTeamSelect.innerHTML = '<option selected disabled value="">-- Choose Registered Team --</option>';
 
-                 const teamsArray = Object.entries(hackathonTeamsData)
-                     .map(([name, data]) => ({ name, ...data }))
-                     .filter(team => team.members && team.members.length > 0) // Only show teams with members
-                     .sort((a, b) => (b.score || 0) - (a.score || 0)); // Sort by score DESC
+                 try {
+                    // Fetch fresh team data for the modal display
+                    const teams = await apiGetTeams();
 
-                 if (teamsArray.length === 0) {
-                     aiLeaderboardLoading.style.display = 'none';
+                    const teamsArray = Object.entries(teams)
+                        .map(([name, data]) => ({ name, ...data }))
+                        .filter(team => team.members && team.members.length > 0)
+                        .sort((a, b) => (b.score || 0) - (a.score || 0));
+
+                    if (teamsArray.length === 0) {
+                        aiLeaderboardEmpty.textContent = 'No teams registered yet.';
+                        aiLeaderboardEmpty.style.display = 'block';
+                    } else {
+                        aiLeaderboardTable.style.display = 'table';
+
+                        teamsArray.forEach((team, index) => {
+                            const rank = index + 1;
+                            const teamName = team.name;
+                            const score = team.score || 0;
+                            const members = team.members || [];
+
+                            // Add to Leaderboard Table
+                            const row = aiLeaderboardBody.insertRow();
+                            row.setAttribute('data-team', teamName);
+                             const membersHtml = members.map(m => {
+                                 let nameHtml = m.name || `User ${m.id}`;
+                                 if (m.isLeader) nameHtml += ' <span class="badge bg-primary">Leader</span>'; // Display leader badge if API provides 'isLeader'
+                                 return nameHtml;
+                             }).join(', ') || '<em class="text-muted">No members yet</em>';
+                            row.innerHTML = `
+                                <td class="text-center"><span class="rank-badge">${rank}</span></td>
+                                <td class="fw-bold">${teamName}</td>
+                                <td class="small">${membersHtml}</td>
+                                <td class="text-center score-display">${score.toFixed(1)}</td>
+                            `;
+
+                            // Add to Judge Dropdown
+                            const option = document.createElement('option');
+                            option.value = teamName;
+                            option.textContent = `${teamName} (${members.length} Member${members.length !== 1 ? 's' : ''})`;
+                            judgeTeamSelect.appendChild(option);
+                        });
+
+                        if (judgeDropdownCurrentValue && judgeTeamSelect.querySelector(`option[value="${judgeDropdownCurrentValue}"]`)) {
+                            judgeTeamSelect.value = judgeDropdownCurrentValue;
+                        }
+                    }
+                 } catch (error) {
+                     console.error("Failed to update AI Judge modal:", error);
+                     aiLeaderboardEmpty.textContent = 'Error loading teams.';
                      aiLeaderboardEmpty.style.display = 'block';
-                     aiLeaderboardEmpty.textContent = 'No teams registered in this browser yet.';
-                 } else {
+                 } finally {
                      aiLeaderboardLoading.style.display = 'none';
-                     aiLeaderboardTable.style.display = 'table';
-
-                     teamsArray.forEach((team, index) => {
-                         const rank = index + 1;
-                         const teamName = team.name;
-                         const score = team.score || 0;
-                         const members = team.members || [];
-
-                         // Add to Leaderboard Table
-                         const row = aiLeaderboardBody.insertRow();
-                         row.setAttribute('data-team', teamName);
-                         const membersHtml = members.map(m => m.name || `User ${m.id}`).join(', ') || '<em class="text-muted">No members yet</em>';
-                         row.innerHTML = `
-                             <td class="text-center"><span class="rank-badge">${rank}</span></td>
-                             <td class="fw-bold">${teamName}</td>
-                             <td class="small">${membersHtml}</td>
-                             <td class="text-center score-display">${score.toFixed(1)}</td>
-                         `;
-
-                         // Add to Judge Dropdown
-                         const option = document.createElement('option');
-                         option.value = teamName;
-                         option.textContent = `${teamName} (${members.length} Member${members.length !== 1 ? 's' : ''})`;
-                         judgeTeamSelect.appendChild(option);
-                     });
-
-                     if (judgeDropdownCurrentValue && judgeTeamSelect.querySelector(`option[value="${judgeDropdownCurrentValue}"]`)) {
-                         judgeTeamSelect.value = judgeDropdownCurrentValue;
-                     }
                  }
             }
-            const teamAnalysisData = { /* (Keep existing or expand) */ };
-            function displayAnalysisSequentially(analysisPoints) { /* (Identical) */ if (!judgeResultAnalysisList) return 0; judgeResultAnalysisList.innerHTML = ''; let delay = 0; const interval = 250; analysisPoints.forEach((point) => { setTimeout(() => { const li = document.createElement('li'); li.textContent = point; judgeResultAnalysisList.appendChild(li); requestAnimationFrame(() => li.classList.add('visible')); const modalBody = judgeModalElement.querySelector('.modal-body'); if (modalBody) modalBody.scrollTop = modalBody.scrollHeight; }, delay); delay += interval; }); return delay; }
-            function generateScore(teamName) { /* (Identical) */ let base = 6.0 + Math.random() * 1.5; let bonus = PRESET_GROUP_NAMES.includes(teamName) ? Math.random() * 0.5 : Math.random(); let score = Math.min(Math.max(base + bonus, 4.0), 9.8); return parseFloat(score.toFixed(1)); }
 
-            function runJudgeSimulationLocal(teamName) {
-                 if (!teamName || !hackathonTeamsData[teamName]) { throw new Error("Invalid team selected for judging."); }
-                 const score = generateScore(teamName);
-                 const analysisPoints = teamAnalysisData[teamName] || [`Analyzing local team "${teamName}"...`, "Checking member synergy...", "Evaluating potential score...", "Score generated."];
-                 hackathonTeamsData[teamName].score = score; // Update score in local data structure
-                 saveTeamsLocal(); // Save updated team data locally
-                 return { score, analysisPoints };
-             }
-             function animateScoreToLeaderboard(teamName, score) { /* (Identical - targets local aiLeaderboardBody) */ if (!flyingScoreElement || !judgeResultScore || !aiLeaderboardBody || !judgeModalElement) return; const targetRow = aiLeaderboardBody.querySelector(`tr[data-team="${teamName}"]`); let targetY, targetX; const modalRect = judgeModalElement.getBoundingClientRect(); if (targetRow) { const rowRect = targetRow.getBoundingClientRect(); targetY = rowRect.top + (rowRect.height / 2) - modalRect.top; targetX = rowRect.left + rowRect.width - 30 - modalRect.left; } else { const tableRect = aiLeaderboardBody.getBoundingClientRect(); targetY = tableRect.top + 20 - modalRect.top; targetX = tableRect.right - 50 - modalRect.left; } const startRect = judgeResultScore.getBoundingClientRect(); const startY = startRect.top + (startRect.height / 2) - modalRect.top; const startX = startRect.left + (startRect.width / 2) - modalRect.left; flyingScoreElement.textContent = `${score.toFixed(1)}`; flyingScoreElement.style.position = 'absolute'; flyingScoreElement.style.top = `${startY}px`; flyingScoreElement.style.left = `${startX}px`; flyingScoreElement.style.opacity = '1'; flyingScoreElement.style.transform = 'scale(1)'; judgeModalElement.querySelector('.modal-dialog .modal-content .modal-body').appendChild(flyingScoreElement); requestAnimationFrame(() => { flyingScoreElement.style.top = `${targetY}px`; flyingScoreElement.style.left = `${targetX}px`; flyingScoreElement.style.opacity = '0'; flyingScoreElement.style.transform = 'scale(0.3)'; }); flyingScoreElement.addEventListener('transitionend', () => { flyingScoreElement.remove(); updateAiJudgeModal(); }, { once: true }); }
+            // --- REMOVED teamAnalysisData --- Backend should provide analysis
+            function displayAnalysisSequentially(analysisPoints = []) { /* (Identical) */ if (!judgeResultAnalysisList) return 0; judgeResultAnalysisList.innerHTML = ''; let delay = 0; const interval = 250; analysisPoints.forEach((point) => { setTimeout(() => { const li = document.createElement('li'); li.textContent = point; judgeResultAnalysisList.appendChild(li); requestAnimationFrame(() => li.classList.add('visible')); const modalBody = judgeModalElement.querySelector('.modal-body'); if (modalBody) modalBody.scrollTop = modalBody.scrollHeight; }, delay); delay += interval; }); return delay; }
+            // --- REMOVED generateScore --- Backend handles scoring
+            // --- REMOVED runJudgeSimulationLocal --- Use apiJudgeTeam
+
+             function animateScoreToLeaderboard(teamName, score) { /* (Identical - targets aiLeaderboardBody) */ if (!flyingScoreElement || !judgeResultScore || !aiLeaderboardBody || !judgeModalElement) return; const targetRow = aiLeaderboardBody.querySelector(`tr[data-team="${teamName}"]`); let targetY, targetX; const modalRect = judgeModalElement.getBoundingClientRect(); if (targetRow) { const rowRect = targetRow.getBoundingClientRect(); targetY = rowRect.top + (rowRect.height / 2) - modalRect.top; targetX = rowRect.left + rowRect.width - 30 - modalRect.left; } else { const tableRect = aiLeaderboardBody.getBoundingClientRect(); targetY = tableRect.top + 20 - modalRect.top; targetX = tableRect.right - 50 - modalRect.left; } const startRect = judgeResultScore.getBoundingClientRect(); const startY = startRect.top + (startRect.height / 2) - modalRect.top; const startX = startRect.left + (startRect.width / 2) - modalRect.left; flyingScoreElement.textContent = `${score.toFixed(1)}`; flyingScoreElement.style.position = 'absolute'; flyingScoreElement.style.top = `${startY}px`; flyingScoreElement.style.left = `${startX}px`; flyingScoreElement.style.opacity = '1'; flyingScoreElement.style.transform = 'scale(1)'; judgeModalElement.querySelector('.modal-dialog .modal-content .modal-body').appendChild(flyingScoreElement); requestAnimationFrame(() => { flyingScoreElement.style.top = `${targetY}px`; flyingScoreElement.style.left = `${targetX}px`; flyingScoreElement.style.opacity = '0'; flyingScoreElement.style.transform = 'scale(0.3)'; }); flyingScoreElement.addEventListener('transitionend', () => { flyingScoreElement.remove(); updateAiJudgeModal(); }, { once: true }); }
 
              if (judgeProjectBtn) {
-                 judgeProjectBtn.addEventListener('click', function() {
+                 judgeProjectBtn.addEventListener('click', async function() { // Make async
                      const selectedTeam = judgeTeamSelect.value;
                      if (!selectedTeam) { judgeResultTeamName.textContent = "Error"; judgeResultAnalysisList.innerHTML = '<li class="visible feedback-error">Please select a team first.</li>'; judgeResultScore.innerHTML = ''; return; }
                      judgeResultsArea.style.display = 'none'; judgeLoader.style.display = 'block'; judgeProjectBtn.disabled = true; judgeTeamSelect.disabled = true;
+
                      try {
-                         // Simulate processing time
+                         const result = await apiJudgeTeam(selectedTeam); // Call API to judge
+
+                         judgeLoader.style.display = 'none'; judgeResultsArea.style.display = 'block';
+                         judgeResultTeamName.textContent = `Evaluation: ${selectedTeam}`;
+                         const displayTime = displayAnalysisSequentially(result.analysis); // Use analysis from API
                          setTimeout(() => {
-                             const { score, analysisPoints } = runJudgeSimulationLocal(selectedTeam); // Use local simulation
-                             judgeLoader.style.display = 'none'; judgeResultsArea.style.display = 'block'; judgeResultTeamName.textContent = `Evaluation: ${selectedTeam}`;
-                             const displayTime = displayAnalysisSequentially(analysisPoints);
-                             setTimeout(() => {
-                                 judgeResultScore.innerHTML = `Score: <span>${score.toFixed(1)} / 10.0</span>`;
-                                 setTimeout(() => { animateScoreToLeaderboard(selectedTeam, score); }, 150);
-                                 judgeProjectBtn.disabled = false; judgeTeamSelect.disabled = false;
-                             }, displayTime + 100);
-                         }, 500 + Math.random() * 500); // Faster simulation for web
+                             judgeResultScore.innerHTML = `Score: <span>${result.score.toFixed(1)} / 10.0</span>`;
+                             setTimeout(() => { animateScoreToLeaderboard(selectedTeam, result.score); }, 150);
+                             judgeProjectBtn.disabled = false; judgeTeamSelect.disabled = false;
+                         }, displayTime + 100);
                      } catch (error) {
                          console.error("Judging Error:", error);
                          judgeLoader.style.display = 'none'; judgeResultsArea.style.display = 'block';
@@ -1166,61 +1268,68 @@
                          judgeProjectBtn.disabled = false; judgeTeamSelect.disabled = false;
                      }
                  });
-                 judgeModalElement.addEventListener('show.bs.modal', () => { updateAiJudgeModal(); });
+
+                 judgeModalElement.addEventListener('show.bs.modal', () => {
+                     updateAiJudgeModal(); // Refresh teams when modal opens
+                 });
                  judgeModalElement.addEventListener('hidden.bs.modal', () => { judgeResultsArea.style.display = 'none'; judgeLoader.style.display = 'none'; judgeTeamSelect.selectedIndex = 0; });
             } else { console.error("AI Judging elements not found."); }
 
-            // --- Profile Modal & Reset Logic (Local Data) ---
-             function getLocalUserRank() {
-                 // Ensure leaderboard is sorted by points
-                 const sortedLeaderboard = [...localLeaderboardData].sort((a, b) => b.points - a.points);
-                 const userRank = sortedLeaderboard.findIndex(entry => entry.id === currentUserData.id) + 1;
-                 const totalPlayers = sortedLeaderboard.length;
-                 return { rank: userRank > 0 ? userRank : null, total: totalPlayers };
-             }
 
-            function displayLocalPointsLeaderboard() {
+            // --- Profile Modal & Reset Logic (Uses API Data) ---
+            async function displayPointsLeaderboard() { // Make async
                 if (!profileLeaderboardTableBody || !profileLeaderboardLoading || !profileLeaderboardEmpty) return;
 
                 profileLeaderboardLoading.style.display = 'block';
+                profileLeaderboardTable.style.display = 'none';
                 profileLeaderboardTableBody.innerHTML = '';
                 profileLeaderboardEmpty.style.display = 'none';
-                profileLeaderboardTable.style.display = 'none';
+                 profileRankDisplay.textContent = "Rank: Loading..."; // Show loading rank
 
-                updateLeaderboardWithCurrentUser(); // Ensure current user is in the list
-                const sortedLeaderboard = [...localLeaderboardData].sort((a, b) => b.points - a.points);
+                try {
+                    // Fetch fresh leaderboard data
+                    const leaderboard = await apiGetLeaderboard(); // Updates local pointsLeaderboardData
 
-                if (sortedLeaderboard.length === 0) {
-                    profileLeaderboardEmpty.textContent = 'Leaderboard is empty (local data).';
-                    profileLeaderboardEmpty.style.display = 'block';
-                } else {
-                    const topN = 5;
-                    sortedLeaderboard.slice(0, topN).forEach((entry, index) => {
-                        const rank = index + 1;
-                        const isCurrentUser = entry.id === currentUserData.id;
-                        const row = profileLeaderboardTableBody.insertRow();
-                        row.innerHTML = `
-                            <td class="text-center"><span class="rank-badge">${rank}</span></td>
-                            <td>${entry.name || 'Player'} ${isCurrentUser ? '<small class="text-muted fst-italic">(You)</small>' : ''}</td>
-                            <td class="points-cell">${entry.points || 0}</td>
-                        `;
-                         if (isCurrentUser) {
-                             row.classList.add('table-info');
-                         }
-                    });
-                    profileLeaderboardTable.style.display = 'table';
+                    if (leaderboard.length === 0) {
+                        profileLeaderboardEmpty.textContent = 'Leaderboard is empty.';
+                        profileLeaderboardEmpty.style.display = 'block';
+                         profileRankDisplay.textContent = "Rank: N/A";
+                    } else {
+                         // Find user's rank in the fetched, sorted data (backend should ideally sort)
+                         const userRank = leaderboard.findIndex(entry => entry.id === currentUserData.id) + 1;
+                         const totalPlayers = leaderboard.length;
+                         profileRankDisplay.textContent = userRank > 0 ? `Your Rank: #${userRank} of ${totalPlayers}` : 'Rank: N/A (Not on leaderboard?)';
+
+                        const topN = 5;
+                        leaderboard.slice(0, topN).forEach((entry, index) => {
+                            const rank = index + 1;
+                            const isCurrentUser = entry.id === currentUserData.id;
+                            const row = profileLeaderboardTableBody.insertRow();
+                            row.innerHTML = `
+                                <td class="text-center"><span class="rank-badge">${rank}</span></td>
+                                <td>${entry.name || 'Player'} ${isCurrentUser ? '<small class="text-muted fst-italic">(You)</small>' : ''}</td>
+                                <td class="points-cell">${entry.points || 0}</td>
+                            `;
+                            if (isCurrentUser) row.classList.add('table-info');
+                        });
+                        profileLeaderboardTable.style.display = 'table';
+                    }
+                } catch (error) {
+                     console.error("Error displaying points leaderboard:", error);
+                     profileRankDisplay.textContent = 'Rank: Error';
+                     profileLeaderboardEmpty.textContent = 'Error loading leaderboard.';
+                     profileLeaderboardEmpty.style.display = 'block';
+                } finally {
+                     profileLeaderboardLoading.style.display = 'none';
                 }
-                profileLeaderboardLoading.style.display = 'none';
-                 // Update rank display after leaderboard is processed
-                 updateUserProfileDisplay();
             }
 
             if (profileModalElement) {
-                profileModalElement.addEventListener('show.bs.modal', function () {
-                    updateUserProfileDisplay(); // Update basic info + team status
+                profileModalElement.addEventListener('show.bs.modal', async function () { // Make async
+                    updateUserProfileDisplay(); // Update basic info
                     if (resetFeedbackArea) resetFeedbackArea.textContent = '';
                     if (resetProgressBtn) resetProgressBtn.disabled = false;
-                    displayLocalPointsLeaderboard(); // Fetch and display local leaderboard
+                    await displayPointsLeaderboard(); // Fetch and display points leaderboard
                 });
             }
 
@@ -1228,63 +1337,28 @@
                  resetProgressBtn.addEventListener('click', function() {
                      if(resetFeedbackArea) resetFeedbackArea.textContent = '';
 
-                     if (confirm("Reset ALL your Points, Tasks, AND Team Registration stored in this browser?\nThis cannot be undone locally.")) {
-                         console.log("User confirmed local data reset.");
+                     if (confirm("Reset ALL your Points, Tasks, AND Team Registration on the server?\nThis cannot be undone.")) {
+                         console.log("User confirmed data reset.");
                          resetProgressBtn.disabled = true;
-                         setResetFeedback('Resetting local data...', 'info');
+                         setResetFeedback('Resetting data on server...', 'info');
 
-                         try {
-                             // 1. Reset User Data (Points, Team Registration)
-                             const oldName = currentUserData.name; // Keep name? Or reset? Let's keep name.
-                             const oldId = currentUserData.id;     // Keep local ID
-                             currentUserData = { name: oldName, points: 0, registeredTeamName: null, id: oldId };
-                             saveUserDataLocal();
-
-                             // 2. Reset Tasks
-                             taskState = {};
-                             saveTaskStateLocal();
-
-                             // 3. Remove User from their Team in local teams data
-                             let teamDataModified = false;
-                             const teamNameToRemoveFrom = localStorage.getItem(USER_DATA_KEY) ? JSON.parse(localStorage.getItem(USER_DATA_KEY)).registeredTeamName : null; // Get team name before reset
-
-                             if (teamNameToRemoveFrom && hackathonTeamsData[teamNameToRemoveFrom]) {
-                                  const initialMemberCount = hackathonTeamsData[teamNameToRemoveFrom].members.length;
-                                  hackathonTeamsData[teamNameToRemoveFrom].members = hackathonTeamsData[teamNameToRemoveFrom].members.filter(m => m.id !== currentUserData.id);
-                                  if (hackathonTeamsData[teamNameToRemoveFrom].members.length < initialMemberCount) {
-                                      teamDataModified = true;
-                                       saveTeamsLocal(); // Save modified team data
-                                       console.log(`Removed user ${currentUserData.id} from local team ${teamNameToRemoveFrom}`);
-                                  }
-                             }
-
-                            // 4. Reset user's score in Leaderboard (or remove entry?) Let's reset points.
-                             const userIndexLB = localLeaderboardData.findIndex(e => e.id === currentUserData.id);
-                             if(userIndexLB > -1) {
-                                localLeaderboardData[userIndexLB].points = 0;
-                                saveLeaderboardLocal();
-                             } // If not found, that's fine.
-
-                             // --- Update UI ---
-                             updateUserProfileDisplay();
-                             initializeTaskUI();
-                             updateProgressBar();
-                             updateRegistrationButtonState();
-                             updateAiJudgeModal(); // Update AI judge list (user removed from team)
-                             displayLocalPointsLeaderboard(); // Refresh leaderboard in profile modal
-
-                             setResetFeedback('Local Reset Complete!', 'success');
-                             alert("Your local points, tasks, and registration have been reset.");
-
-                         } catch (error) {
-                             console.error("Error during local data reset:", error);
-                             setResetFeedback(`Reset failed: ${error.message || 'Unknown error'}`, 'error');
-                             alert(`An error occurred during reset: ${error.message || error}`);
-                         } finally {
-                              setTimeout(() => { if (resetProgressBtn) resetProgressBtn.disabled = false; }, 1000);
-                         }
+                         apiResetUserData() // Call the reset API endpoint
+                            .then(async () => { // Use async here to wait for data refresh
+                                setResetFeedback('Reset Complete!', 'success');
+                                alert("Your points, tasks, and registration have been reset.");
+                                // Refresh ALL data from server after reset
+                                await apiFetchInitialData();
+                            })
+                            .catch(error => {
+                                console.error("Error during data reset:", error);
+                                setResetFeedback(`Reset failed: ${error.message || 'Unknown error'}`, 'error');
+                                alert(`An error occurred during reset: ${error.message || error}`);
+                            })
+                            .finally(() => {
+                                setTimeout(() => { if (resetProgressBtn) resetProgressBtn.disabled = false; }, 1000);
+                            });
                      } else {
-                         console.log("User cancelled local data reset.");
+                         console.log("User cancelled data reset.");
                          setResetFeedback('Reset cancelled.', 'warning');
                      }
                  });
@@ -1292,10 +1366,9 @@
 
              function setResetFeedback(message, type) { /* (Identical) */ if (resetFeedbackArea) { resetFeedbackArea.textContent = message; resetFeedbackArea.className = `small d-block mt-1 feedback-${type}`; } }
 
-
             // --- Final Initializations ---
-            initializeApp(); // Start the web app initialization
             setupLogoScroll();
+            apiFetchInitialData(); // Start the app by fetching data from backend
 
         });
     </script>
